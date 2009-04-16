@@ -1,0 +1,93 @@
+One way to organize this is by section
+
+* introduction
+** write the introduction last
+** you have most of a pretty decent intro, so just follow _Style_ advice
+** you may need to brainstorm about this for a bit more
+* TODO theory
+** introduction to theory section
+   so, you want to give an overview here of the main points of this section.
+   In doing so, hopefully you'll prepare the reader for the stuff you're going to discuss.
+   Maybe do around one paragraph each?
+*** importance of avg future performance and expected future performance
+**** expected future performance is more important for decisionmaking
+**** average future performance might be of interest to a cover-your-ass decisionmaker
+**** average future performance is more falisfiable
+*** independence of theta-hat and the test sample
+*** requirement that P^2/R be small
+** DONE assumptions
+   This section seems like it can be pretty short and doesn't require much different from what you have.
+** TODO mixingale construction
+   the point here is to explain where the dependence is coming from --
+   the unknown coefficients.  You also want to give some intuition for
+   why they're independent, why the series is weakly independent, and
+   why it's not NED.
+*** What the hell am I trying to say?
+**** Under increasing-k asymptotics, the out-of-sample average doesn't
+     converge to E(L(y - x'beta-true))
+**** It does converge to E(L(y - x'beta-hat-R))
+*** TODO rhetorical points to make
+**** pseudo-out-of-sample period behaves as though it is independent of beta-hat-R
+**** true-out-of-sample period behaves as though it is independent of period-T information
+**** also get mixingale behavior for covariance estimate
+*** DONE Theorems to prove in this section
+**** DONE L_2-mixingale after centering
+**** DONE Asymptotic normality centered at M(theta-hat-R)
+** TODO test statistics
+*** TODO motivate that we should care about M(theta-hat-T)
+**** true out-of-sample average loss is centered at M(theta-hat-T)
+***** do CLT for true oos loss?
+**** Expected value in period-T is also centered there
+*** TODO justify requirement that P^2/R -> 0
+**** DONE present Lemma that the difference is of order P/root-R
+**** give example for P/root-R -> infinity and the variance of the difference blowing up.
+*** TODO "hypothesis test" for expected future performance
+    The proof here is actually kind of tricky
+**** simple cases
+***** assume that M(theta-hat-T) were normal.
+***** assume another distribution for M(theta-hat-T)
+*** confidence interval for average future performance
+    the proof here is pretty straighforward
+**** DONE do for P/root-R converging to zero
+**** show that the intervals need to explode for P/root-R diverging
+* TODO comparison to previous theory
+** TODO nonconvergence -- don't get an estimate of expected loss (at true betas)
+*** give an example demonstrating
+*** don't worry about giving a general proof that you can never get it
+** TODO positive definiteness
+*** TODO lay out a simple example showing where pd breaks down in West
+**** do iid data - white noise plus one regressor for each model
+**** make the example be for non-nested models
+*** TODO give some conditions demonstrating that pd holds
+* TODO empirical exercise
+** TODO stock and watson JEL
+   so in stock and watson's paper, they run a bunch of F-tests on spit
+   samples and conclude that there must be breaks because the F-tests
+   find significance but those models do poorly over the second sample.
+*** TODO procedural - get the data and program up their models
+**** TODO import the data
+     this is mostly done; I just have to get the 'gap' variables in
+**** TODO estimate their models
+     now, they basically do bivariate AR models.
+*** calculate intervals for average out-of-sample loss using in-sample techniques
+*** calculate intervals for average out-of-sample loss using your technique
+**** vary P -- how do the intervals vary
+*** examine what the actual coverage for these intervals is
+**** they use different countries' data, so you have a kind of nice exercise here
+** possible extension to Stock and Watson (maybe split off into third chapter)
+*** calculate intervals for performance over "future" -- ie the gap between when their study ended and now
+**** for averge loss
+**** for E_T of average loss (shouldn't be that different)
+*** check coverage
+* TODO simulations
+  so the plan here is going to be to simulate data from different
+  proposed exchange rate models (with different coefficients) then see
+  whether E_T L is "good".  We also want to see the "size" for
+  standard in-sample and out-of-sample approaches -- block on the
+  model and the coefficients.
+** decide on the DGPs
+** draft code
+*** simulate data from dgp
+*** estimate recursive forecasts from regression models
+*** calculate test statistics for each regression model
+** output - do basic contingency table (see sheet)

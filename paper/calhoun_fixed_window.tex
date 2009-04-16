@@ -1,0 +1,1091 @@
+\documentclass[11pt]{article} \def\baselinestretch{1.08}
+\usepackage{amssymb,amsmath,amsthm,harvard,graphicx, color, enumerate}
+\usepackage[T1]{fontenc} \setcounter{MaxMatrixCols}{10}
+
+% -- Margins for Editing --
+\setlength{\voffset}{0.22in} \setlength{\hoffset}{-0.06in}
+\setlength{\topmargin}{0in} \setlength{\headheight}{0in}
+\setlength{\headsep}{0in} \setlength{\textheight}{7.33in}
+\setlength{\oddsidemargin}{0in} \setlength{\textwidth}{5.67in}
+
+\newcommand{\pp}[1]{#1} \newcommand{\intro}[1]{#1}
+\newcommand{\context}{} \newcommand{\problem}{} \newcommand{\sowhat}{}
+\newcommand{\solution}{} \newcommand{\point}[1]{#1}
+
+\renewcommand{\qedsymbol}{\ensuremath \blacksquare}
+
+%\newcommand{\pp}[1]{\textbf{#1}}
+%\newcommand{\intro}[1]{\textsc{#1}}
+%\newcommand{\context}{\subsubsection*{Shared Context}}
+%\newcommand{\problem}{\subsubsection*{Statement of Problem}}
+%\newcommand{\sowhat}{\subsubsection*{So What?}} 
+%\newcommand{\solution}{\subsubsection*{Statement of Solution}}
+%\newcommand{\point}[1]{\subsubsection*{Key Point} {#1}}
+
+\input{../bib/definitions} \input{def}
+\begin{document}
+
+\title{Limit Theory for Overfit Forecasts} \author{Gray Calhoun}
+\maketitle
+
+\begin{abstract}
+This paper proposes a new limit theory for statistics that evaluate
+estimated models out-of-sample.  This theory implies out-of-sample
+averages are asymptotically normal even when the models are nested and
+are valid even when the models are overfit.  We introduce overfit by
+assuming that the forecasts are produced by 
+linear models and allowing the number of predictors, $K$, to increase
+with the number of observations, $T$.  For at least one forecast, the
+ratio $K/T$ converges to a positive constant, so in-sample statistics,
+like the F-test, fail but, as we show, out-of-sample averages do not.
+\end{abstract}
+%%
+\section{Introduction} 
+%%
+\context 
+\intro{Consider two sequences of prediction errors, each of
+  length $P$, the result of forecasting the same variable with two
+  different estimated models.  The $R$ observations used to estimate
+  the models are called, collectively, the estimation window, and the
+  $P$ observations used to produce the errors are called the test
+  sample.  There are $T$ observations in all, and $R + P = T$.
+  \pp{This paper introduces a new asymptotic theory for the sample
+  moments of these prediction errors that assumes at least one model
+  is overfit, that statistics calculated from that model's sample
+  residuals are unreliable because its estimated coefficients match
+  the data too well.}}
+
+If one of these models nests the other, a researcher can determine
+whether the additional regressors help predict the dependent variable
+(in population) by using one of two representative methods.  He or she
+can run a regression over the full dataset and use a robust F-test to
+directly test whether the coefficients on the extra predictors equal
+zero.  Or he or she could instead produce a series of forecasts with each
+model, and then test whether the models' predictive mean squared errors
+(PMSE) are equal.  The first test is simple and easy, and the second
+test is not; \citeasnoun{clark_tests_2001} and
+\citeasnoun{mccracken_asymptotics_2007} show that the test statistic 
+is not asymptotically normal and that the critical values must be
+calculated by monte-carlo or bootstrap.  But the out-of-sample test
+is much more popular among forecasters because it is believed to be
+more reliable: see \citeasnoun{meese_empirical_1983},
+\citeasnoun{stock_forecasting_2003} and
+\citeasnoun{lettau_consumption_2001} for prominent examples. 
+
+The asymptotic theory used to derive these out-of-sample
+statistics, however, does not imply that they are any more reliable
+than their in-sample counterparts.  There are two main approaches to
+approximate these statistics' distributions.  The first, begun by
+\citeasnoun{diebold_comparing_1995} and
+\citeasnoun{west_asymptotic_1996} and extended to nested models by
+\citeasnoun{clark_tests_2001}, \citeasnoun{chao_out_2001},
+\citeasnoun{corradi_consistent_2002}, and
+\citeasnoun{mccracken_asymptotics_2007}, finds the limit distribution
+as though all of values of the models' coefficients were known, and
+then adjusts that distribution to account for estimation
+error.\footnote{Diebold and Mariano (1995) assume that the
+  coefficients are known.  West (1996) 
+  introduces the adjustment.} This adjustment requires the estimated
+coefficients to be consistent and asymptotically normal.  But if they
+were, a forecaster could instead just use an F-test directly on the
+coefficients.
+
+The second method, proposed by \citeasnoun{giacomini_tests_2006}, is
+becoming a popular alternative to
+\possessivecite{west_asymptotic_1996} 
+approach because it always
+gives an asymptotically normal statistic.  Their method
+requires that the forecaster use a fixed-length rolling estimation
+window --- the model for each forecast is estimated over the
+previous $R$ observations --- and they derive a statistic to test
+whether the difference between the models' forecasts is 
+predictable.\footnote{Although \citeasnoun{giacomini_tests_2006} claim that
+  their results also apply to fixed-length fixed window schemes, their
+  proofs do not apply to that situation.  For a rolling window of
+  length $R$, the period-$s$ prediction error only depends on the
+  observations of period $s-R-1$ through period $s$, and so, for any 
+  finite $R$, this sequence inherits mixing from the underlying
+  observations.  But for a fixed window of length $R$, the
+  period-$s$ prediction error depends on all of the past
+  observations, periods $1$ through $s$, and so does not inherit
+  mixing  from the underlying observations. Giacomini and White's
+  proofs  require the prediction errors to be mixing.}
+This rolling window can be appropriate if the series exhibit
+substantial instability, so \possessivecite{giacomini_tests_2006}
+out-of-sample 
+statistic should be reliable in settings where an in-sample statistic
+is not.  But, by its nature, their statistic measures the forecasting
+performance of the estimated models, and does not reflect the
+predictive content of their variables in population.  So Giacomini and
+White's method suggests a new criterion to use to choose between
+forecasting methods, but does not indicate why a researcher who wants
+to study the true relationship between several series should use an
+out-of-sample statistic.
+
+Although the foundation of West's approach --- asymptotic
+normality of the coefficient estimates --- implies that in-sample
+and out-of-sample statistics should behave similarly, in practice they
+do not.  \citeasnoun{stock_forecasting_2003}, for example, show that
+in-sample tests of Granger Causality are much more likely to find
+predictive relationships when predicting output and inflation than
+out-of-sample tests. As \citeasnoun{inoue_in-sample_2005} argue, this
+fact can support either approach: either the in-sample tests do not
+preserve size, or the out-of-sample tests have low power.  The monte
+carlo evidence is mixed.\footnote{This issue has been studied both
+  analytically and in simulations by
+  \citename{inoue_in-sample_2005} (\citeyear*{inoue_in-sample_2005},
+  \citeyear*{inoue_selection_2006}),
+  \citeasnoun{mccracken_data_1998}, \citeasnoun{clark_can_2004}, 
+  \citeasnoun{clark_power_2005}, and \citeasnoun{chen_note_2005}.}
+
+\solution
+\intro{This paper introduces a new approximation for out-of-sample
+  sample averages
+  that does not require the coefficient estimates to be consistent or
+  asymptotically normal.  This approximation allows us to study the
+  behavior of out-of-sample statistics when one of the models is
+  overfit, and we find that these statistics can be reliable even when
+  in-sample statistics are not.  We impose overfit by studying
+  the limit distribution of a sequence of linear regression models in
+  which the ratio $K/T$ remains positive; $K$ is the number of
+  predictors.  \citeasnoun{huber_robust_1973} shows that the OLS
+  estimators are not asymptotically normal under this limit theory and
+  that they have positive variance in the limit, so robust F-tests
+  should be invalid. \pp{This new approximation
+    gives evidence that the out-of-sample average loss is a reliable
+    statistic for comparing complex, overfit models to a simple
+    benchmark and that ad hoc critical values, such as
+    \possessivecite{clark_tests_2001}, are not necessary; using the
+    standard normal critical values gives valid but conservative
+    tests.  The approximation also leads to a new criterion to use to
+    evaluate a model's expected forecasting performance.}}
+
+\pp{This increasing-dimension asymptotic theory is discussed in detail
+  in Sections \ref{sec_asmp} and \ref{sec_lit}.}  Section
+  \ref{sec_asmp} presents the notation, assumptions, and models that
+  the rest of the paper will use, and Section \ref{sec_lit} studies
+  the behavior of \possessivecite{west_asymptotic_1996} approximation
+  under this new limit theory.  West's asymptotic distribution no
+  longer holds because the
+  test statistics are not centered on the expected loss of the
+  pseudo-true models. Section \ref{sec_lit} also presents the results
+  of a brief  
+simulation demonstrating that conventional fixed-$K$ asymptotic theory
+can be inaccurate in finite samples when $K/T$ is as small $0.03$.
+
+\pp{Section \ref{sec_mr} presents our new approximation.}  
+The fixed-window average loss converges to a measure of the expected
+performance of the estimated models and is asymptotically normal
+in most applications. Section \ref{sec_nested} shows that this average
+can be used to compare nested models when the larger model is overfit, and that
+using standard normal critical values leads to an asymptotically valid
+(if conservative) test statistic.  
+
+Section \ref{sec_perf} discusses the relationship between the
+models' average loss and their future forecasting performance and
+ shows that the conventional wisdom articulated by
+ \citeasnoun{hastie_elements_2003} among others, that one should split
+ the dataset in  half or in thirds is wrong: to estimate a model's
+ future performance (under this paper's limit theory) $P/T$ must
+ converge to zero and to construct a confidence interval, $P^2/T$ must
+ converge to zero.
+
+\pp{Section \ref{sec_mc} presents additional simulations.  The first
+  simulation examines the size and power of naive one-sided tests for
+  nested models and confirms that the true size is less than the
+  nominal size.  The second simulation studies the use of the
+  fixed-window average loss as a decision criterion for choosing a
+  forecast.}
+
+\point{
+In short, this paper studies out-of-sample averages to see if they are
+more robust to overfit than in-sample statistics and finds that they
+are.  It shows that using a one-sided t-test to compare nested models
+is conservative but preserves size as long as the benchmark is simple,
+consistent with simulations presented in
+\citeasnoun{clark_approximately_2007} but in 
+contrast to existing theory.  It also shows that the test sample must
+be much smaller than is commonly used if one hopes to accurately
+compare the performance of the full-sample models that will be used to
+produce real forecasts.} 
+%%
+\section{Notation and Assumptions} \label{sec_asmp}  
+%%
+This paper does not define a specific data generating process but
+instead assumes that there are two competing forecasting models and both 
+are misspecified.
+\pp{The underlying data are represented as a stationary and absolutely
+  regular stochastic array:
+  \begin{equation} \label{eq_define_array}
+  \{(\yT{t}, \xT{1}{t}, \xT{2}{t});\;t = 1,\dotsc,T+1;\;T\;\text{an integer}\},
+  \end{equation}
+and $\FT{t}$ denotes the information available in period $t$:
+\[
+\FT{t} \equiv \sigma(\yT{1},\xT{1}{1},\xT{2}{1},\dotsc,
+\yT{t},\xT{1}{t},\xT{2}{t}).
+\]}
+The first model uses $\xT{1}{t}$ as predictors for $\yT{t}$ and the second
+uses $\xT{2}{t}$. Each vector $\xT{j}{s}$ has $K_{jT}$ elements;
+$K_{jT}$ can change with $T$, but is always assumed to be less than
+$R_T$ (the sequence of estimation window sizes, $\{R_T\}$,
+will be discussed in detail later in the paper).  Moreover,
+$T$ and $R_T$ are implicitly assumed to be large enough that all of
+the operations in this paper are well defined.  To keep the
+presentation relatively clean, the $T$ subscript will be removed
+whenever possible.  Although we only present results for one-period
+forecasts, these results can be generalized easily to multi-period
+forecasts. 
+
+Assumption \ref{asmp_array} states the moment and dependence conditions
+that the array \eqref{eq_define_array} must satisfy.
+\begin{asmp} \label{asmp_array}
+  The random array \eqref{eq_define_array} 
+  is stationary and absolutely regular with coefficients $\beta_\tau$ of
+  size $- \rho/(\rho-2)$; $\rho$ is greater than two and discussed further
+  in Assumption \ref{asmp_loss_bound}.  The variance of $\yT{t}$ is
+  uniformly positive and finite, and all of the eigenvalues of the
+  covariance matrices of $\xT{j}{T}$ are uniformly positive and finite
+  as well. 
+  \qed
+\end{asmp}
+
+Each forecast is produced by a linear model; \pp{model $j$'s forecast for 
+  period $T+1$ is $\x{j}{T+1}'\b{j}{T}$, with $\b{j}{S}$ the OLS
+  estimate using observations one through $S$.}
+The models' pseudo-true coefficients are denoted
+$\B{j}$ and defined by
+\[
+\BT{j} \equiv \argmin_\theta \E (\yT{T+1} - \xT{j}{T+1}'\theta)^2.
+\]
+Assumption \ref{asmp_pseudo_true} rules out the uninteresting cases
+where the forecast error vanishes.
+\begin{asmp} \label{asmp_pseudo_true}
+  The Euclidean norm of the pseudo-true coefficients satisfies
+  $|\BT{j}|_2 = O(1)$, and the population residuals,
+  $\epT{j}{t} \equiv \yT{t} - \xT{j}{t}'\BT{j}$, have uniformly positive and finite
+  variance.
+\qed
+\end{asmp}
+
+\pp{Since this paper will apply limit theory to the average loss over the test
+sample, the observed test sample loss satisfies moment restrictions.}
+The observed loss for model $j$ in period $s$ is $\f{j}{s}$ which is 
+defined by
+\[
+\f{j}{s} = L(\e{j}{t}) \equiv L(\y{s} - \x{j}{s}'\b{j}{R});
+\]
+$L$ is the loss function of interest.  The period-$s$ loss for the
+forecast produced by model $j$'s pseudo-true coefficients is
+$\ft{j}{s} \equiv L(\ep{j}{s})$,
+and the period-$s$ loss for the forecast produced by the full-sample
+estimates is
+$\ff{j}{s} \equiv L(\y{s} - \x{j}{s}'\b{j}{T})$.
+
+The vector $\el{}$ denotes the average loss of the estimated models
+over the test sample: 
+\[
+\el{j} \equiv P^{-1} \sum_{s=R+1}^T \f{j}{s}.
+\]
+Assumption \ref{asmp_loss_bound} restricts the moments of $\f{}{s}$.
+\begin{asmp}\label{asmp_loss_bound}
+The loss function $L$ is convex and there is a constant $B_L$
+such that $\|\fT{j}{s}\|_\rho \leq B_L$ for all $j$, $s$, and $T$.
+Moreover, the function $\E L(\yT{T+1} -
+\xT{j}{T+1}'\theta)$ is continuously differentiable in $\theta$.
+\qed
+\end{asmp}
+
+Finally, $|\cdot|_v$ is the $l_v$-norm for vectors in $\R^p$ 
+($p$ arbitrary) and $\|\cdot\|_v$ the $L_v$-norm for $L_v$-integrable 
+random variables.  The functions $\lambda_i(\cdot)$ take a 
+square matrix argument
+and return its $i$th eigenvalue.  All limits are stated for 
+$T\to\infty$ unless explicitly labeled otherwise.
+%%
+\section{Background} \label{sec_lit}
+%%
+\intro{A large sample does not guarantee the accuracy of an asymptotic 
+result; other factors come into play, among them the complexity of the model
+estimated.  \citetwo{clark_using_2006}{clark_approximately_2007} show
+that parameter estimation error 
+affects the analysis of nested models in practice, making
+\possessivecite{west_asymptotic_1996} 
+limit theory unreliable.  
+\pp{This section shows that the same problems occur without nesting and
+motivates the use of increasing-$K$ asymptotics as a method of studying
+that estimation error formally.}}\footnote{For this section,
+assume that there is only one model under consideration.}
+
+\intro{\pp{It is natural to use sequences of models with $K/T$
+    positive to study the failure of in-sample asymptotics}} because
+\pp{applied researchers choosing between models routinely make adjustments
+  that are proportional to $K/T$.}  Statisticians have proposed model 
+selection criteria, such as Mallow's $C_p$
+\cite{mallows_comments_1973}, the AIC, \cite{akaike_information_1973}
+and cross validation, because a model's {\it apparent error}, its 
+average loss over the dataset used to estimate its unknown
+    coefficients, is a biased estimator of the expected loss one encounters after using that 
+model to predict new observations. The bias is proportional to $K/T$,
+and these criteria are estimated by correcting the apparent error by 
+a term proportional to $K/T$ (see, for example,
+    \citename{efron_biased_1986} \citeyear*{efron_biased_1986},
+    \citeyear*{efron_estimation_2004}). 
+
+Moreover, \pp{since the variance of each element of $\b{}{T}$ is of
+  order $T^{-1}$, the variance of this vector does not vanish if $K/T$
+  remains positive.}  The behavior of M-estimators in this setting has
+  been studied by Huber (1973), Yohai and Marona (1979), and Portnoy
+  (1985, 1986).  If the coefficients are estimated by OLS, they are
+  consistent and asymptotically normal only if $K/T$ converges to
+  zero; if they are general M-estimates they require a faster rate of
+  convergence.  By keeping $K/T$ positive, one can keep the variance
+  of the coefficient estimates positive.  Since the coefficients are
+  not asymptotically normal, the F-test is not necessarily
+  asymptotically chi-square, so in-sample tests are unavailable.
+
+  \intro{\pp{Expansions of $\el{}$ around the pseudo-true coefficients,
+      like \possessivecite{west_asymptotic_1996} and
+      \possessivecite{clark_tests_2001}, also do not hold when $K/T$ remains positive.}}
+\pp{These approximations require that the coefficient
+  estimates be root-$R$ consistent.} For a short illustration,
+suppose that the underlying series are stationary; that the same
+loss function is used to estimate the coefficients and evaluate
+the forecasts; that $P$ and $R$ both equal $T/2$; and that a
+fixed-window is used for evaluation.\footnote{These assumptions
+  are not necessary, but simplify equation \eqref{eq_west}.} In this
+special case, West's theory gives the approximation
+\[
+  P^{1/2} (\el{} - \E \ft{}{T+1})
+  = P^{-1/2} \sum_{s=R+1}^T (\ft{}{s} - \E \ft{}{s})
+  + o_p(R^{1/2} |\b{}{R} - \B{}|_2).
+\]
+
+Under conventional (fixed-$K$) asymptotic theory, $R^{1/2} |\b{}{R} -
+\B{}|_2$ is tight, and the last term of the approximation converges to
+zero in probability.  Then $P^{1/2}(\el{} - \E \ft{}{T+1})$ is
+asymptotically normal as long as $P^{-1/2}\sum_s (\ft{}{s} - \E
+\ft{}{s})$ is. But when $K$ grows proportionally to $T$, $R^{1/2}
+|\b{}{R} - \B{}|_2$ is not tight. And since $\b{}{R}$ is not
+asymptotically normal, the distribution of the remainder term is not
+known.  In general, the variance of the fixed-window average remains
+positive asymptotically, so $\el{}$ does not converge to any
+non-random value.  Sections \ref{sec_mr} and \ref{sec_nested} will
+explore this convergence in more detail. 
+
+\intro{In practice, $K/T$ will always be positive, so this discussion
+indicates that West's approximation is unreliable unless this ratio is
+close to zero, but it is not necessarily clear how small the ratio
+must be to make West's results accurate.  \pp{Some brief simulations
+  demonstrate that 
+the size of his tests can be too high even when $K/T$ is as small as
+$0.03$, and empirically relevant values of $K/T$ seem to be from
+$0.01$ to about $0.2$.}} Economists are sometimes interested in
+studying tightly parameterized models, but they are often interested
+in larger structural models.  \possessivecite{meese_empirical_1983}
+seminal study 
+of exchange rate models, for example, includes some models for which
+the $K/T$ is almost 0.3. More recently,
+\citeasnoun{stock_forecasting_2003} 
+consider a range of output and inflation forecasts with this ratio
+between 0.01 and 0.08, and \citeasnoun{del_negro_fit_2007} study
+Bayesian DSGE models for which it is roughly 0.15.
+
+\begin{table}[!tb]
+    \label{tab_mc1stat}
+    \begin{center}
+    \caption{Simulated Size.  Nominal size is 10\%}
+    \begin{tabular}{rrr@{.}lr@{.}lr@{.}lr@{.}l}
+      & P = & \multicolumn{2}{r}{40} & \multicolumn{2}{c}{80}
+      & \multicolumn{2}{c}{120} & \multicolumn{2}{c}{160} \\ \hline
+      R = 80 && 15&4 & 18&5 & 19&0 & 21&0 \\
+      160 && 12&0 & 14&5 & 15&9 & 17&2 \\ {}
+    \end{tabular}
+    \end{center}
+    {\small
+      According to \possessivecite{west_asymptotic_1996} theory, the random variable
+      \eqref{eq_mc1stat} is asymptotically standard normal.  Each cell
+      lists the percentage of simulations for which that r.v. exceeds
+      $1.282$, the $90\%$-quantile of the standard normal
+      distribution.}
+\end{table}
+
+To see whether West's theory is accurate for these values of $K/T$, we
+ran a brief monte-carlo experiment to study forecasting with a
+bivariate VAR(4); $T$
+ranges from $120$ to $320$, so $K/T$ is between $0.025$ and $0.075$.
+\pp{The DGP is taken from \citeasnoun{clark_approximately_2007} and is designed to
+  represent macroeconomic forecasting.} Each entry in Table 1
+  is the simulated size of a test at the 10\%-level of
+  the null hypothesis that the expected PMSE of the bivariate VAR(4) is
+  less than or equal to its true value.  We ran 3000 simulations: for
+  each simulation we drew 320 observations from the stationary process
+  with independent innovations:
+\begin{align*}
+  y_t &= 2.237 + 0.261 y_{t-1} + \varepsilon_{1t} \\
+  z_t &= (0.804, - 0.221, 0.226, - 0.205) \cdot (z_{t-1},\dotsc, z_{t-4})
+  + \varepsilon_{2t} \\
+  \varepsilon &\sim N\left(\boldsymbol{0}, \begin{pmatrix}
+      10.505 & 1.036 \\ \cdot & 0.366
+      \end{pmatrix}\right).
+\end{align*}
+For each $R$ and $P$, we constructed sequences of forecasts, $\hat
+y_t$, $t = R+1,\dotsc, R+P$ from the bivariate VAR(4):
+\begin{equation*}
+  \hat y_t = \hat \alpha_0 + \sum_{j=1}^4 \hat \alpha_j y_{t-j} 
+  + \sum_{j=1}^4 \hat \beta_j z_{t-j}
+\end{equation*}
+with the coefficients estimated recursively by OLS. 
+
+Each cell in Table 1 is the percentage of simulations for
+which the random variable
+\begin{equation} \label{eq_mc1stat}
+P^{1/2} (\bar L - 10.505) / \hat \sigma
+\end{equation}
+is greater than $1.282$, with 
+\[
+\bar L \equiv P^{-1} \sum_{s=R+1}^{R+P} (y_s -\hat y_s)^2
+\] 
+and 
+\[
+\hat \sigma^2 \equiv (P-1)^{-1} \sum_{s=R+1}^{R+P} [(y_s -
+\hat y_s)^2 - \bar L]^2.
+\]
+\pp{Under \possessivecite{west_asymptotic_1996} limit theory, this random variable is
+  approximately standard normal, so each entry should be close to
+  $10\%$; but the true size is higher, ranging from $12\%$ to $21\%$.} 
+Since the parameter values of this simulation were chosen by Clark and West
+(2007) to represent quarterly macroeconomic data, the values $R = 80$
+and $P = 160$ roughly correspond to the common practice of estimating
+forecasting models with pre-$1970$ data and assessing its performance
+recursively from $1970$ on:\footnote{As in, for example, Stock and
+  Watson (2003)} the true size is roughly twice the nominal size when
+  testing this one-sided hypothesis with
+such a procedure.  In general, increasing $P$ while keeping $R$
+constant distorts the size more, suggesting that the variance of the
+out-of-sample average decreases, but that the average is not centered at
+$\E \ft{T+1}{}$.
+%%
+\section{The New Approximation} \label{sec_mr}
+%%
+Instead of using an expansion, we re-center each random sequence
+$\{\f{}{s}\}$ by subtracting a random vector $\mmr{}$ from each term.
+The new sequence is a mixingale, and $\mmr{}$ can be interpreted as a
+conditional expectation after a change-of-measure.
+  
+\begin{lem} \label{lem_mixingale}
+  Suppose that Assumptions \ref{asmp_array} to \ref{asmp_loss_bound}
+  hold and define 
+  \[
+  \mmT{i}{\theta} \equiv \E L(\yT{T+1} - \xT{i}{T+1}'\theta).
+  \]
+  Then, for any $T$, any positive $j$, and any $\tau$ between zero and $j$,
+  \begin{equation}
+    \label{eq_mixingale_def}
+    \| \E(\fT{i}{R_T+j} \mid \FT{R_T+j-\tau}) - \mmrT{i} \|_2 \leq 
+     2^{1 + 1/\rho} B_L \; \zeta_{\tau}
+  \end{equation}
+  with $\zeta_\tau = O(\tau^{-1/2-\delta})$ for some positive
+  $\delta$.  So the array 
+  \[
+  \{\fT{}{R_T+j} - \mmrT{}, \FT{R_T+j}\}
+  \]
+  is an $L_2$-mixingale array of size $-1/2$. 
+  \qed
+\end{lem}
+
+The proof relies on a coupling argument due to
+\citeasnoun{merlevede_coupling_2002} that builds on Berbee's Lemma
+\cite{berbee_random_1979}.  \possessivecite{merlevede_coupling_2002}
+statement of the Lemma is repeated here verbatim for reference.
+\begin{BL}
+  Let $X$ and $Y$ be random variables defined on $(\Omega, \mathcal T,
+  \mathbb P)$ with values in a Polish space S.  Let $\sigma(X)$ be a
+  $\sigma$-field generated by $X$ and $U$ be a random variable
+  uniformly distributed on $[0,1]$ independent of $(X,Y)$.  Then there
+  exists a random variable $Y^*$ measurable with respect to $\sigma(X)
+  \vee \sigma(Y) \vee \sigma(U)$, independent of $X$ and distributed
+  as $Y$, and such that
+  \[
+  \mathbb P(Y \neq Y^*) = \beta(X,Y).
+  \] \qed
+\end{BL}
+The coefficient $\beta$ is the coefficient of absolute regularity.
+
+\citeasnoun{merlevede_coupling_2002} use this result to bound the
+$L_p$-norm of the distance between $Y$ and $Y^*$. We prove Lemma
+\ref{lem_mixingale} by defining $(y^*, x^*)$ to satisfy:
+\begin{enumerate}
+\item $(y^*, x^*) \eqdist (\yT{R_T+j}, \xT{i}{R_T+j})$
+\item $(y^*, x^*)$ is independent of $\FT{R_T+j-\tau}$.
+\item $\p[(y^*, x^*) \neq (\yT{R_T+j}, \xT{i}{R_T+j})] = \beta_\tau$.
+\end{enumerate}
+Since $\mmrT{i} = \E(L(y^* - x^* \cdot \b{i}{R_T}) \mid
+\FT{R_T+j-\tau})$ almost surely, the left side of
+\eqref{eq_mixingale_def} is bounded by
+\[
+  \| \f{i}{R_T+j} - L(y^* - x^* \cdot \b{i}{R_T}) \|_2.
+\]
+We can directly use Merlevede and Peligrad's method of
+proof to bound this last distance.
+
+An immediate consequence of Lemma \ref{lem_mixingale} is that $\elT{i} -
+\mmrT{i}$ converges to zero almost surely as $P_T$ increases.  We can
+also show that $\sqrt{P_T} [\elT{} - \mmrT{}]$ is asymptotically
+normal under a slightly stronger condition that its asymptotic
+variance is positive definite.
+\begin{lem} \label{lem_mixingale_normality}
+  Suppose that the conditions of Lemma \ref{lem_mixingale} hold and that
+  \[
+  \lambda_{min}(\SrT)^{-1} = O_p(1),
+  \] 
+  with each element of $\ST{\cdot}$ defined by
+  \[\left[\ST{(\theta_1,\theta_2)}\right]_{ij} \equiv P^{-1} \sum_{s,t=R+1}^T 
+  \left[ \E L(\yT{s}-\xT{i}{s}'\theta_i) L(\yT{t}-\xT{j}{t}'\theta_j)
+  - \mmT{i}{\theta_i} \mmT{j}{\theta_j}\right].
+  \]
+  If $P_T \to \infty$ as $T \to \infty$, then
+  \begin{equation}
+    P_T^{1/2} \SrT^{-1/2} \big[\elT{}  - \mmrT{}\big] \xrightarrow{d}
+    N(0,I) \quad \text{as $T \to \infty$}. 
+\end{equation}
+\qed
+\end{lem}
+The proof is based on \possessivecite{de_jong_central_1997} Theorem 1,
+a mixingale Central Limit Theorem.
+
+This mixingale approximation allows us to work with sequences of
+estimators that do not converge.  As in
+\citeasnoun{giacomini_tests_2006}, such sequences can ensure that the
+asymptotic variance matrix remains positive definite, even for nested
+models. 
+
+It is useful to compare this approximation to
+\possessivecite{mccracken_robust_2000}. McCracken assumes that the
+estimators $\bT{}{R_T}$ are asymptotically normal and that the
+function $\mmT{}{\cdot}$ is smooth enough that
+\[
+\sqrt{R_T} [\mmrT{i} - \mmmT{i}]
+\]
+is asymptotically normal as a consequence of the delta-method.  As a
+result, he, like \citeasnoun{west_asymptotic_1996}, can apply a
+central limit theorem to $P_T^{1/2} [\elT{} - \mmmT{}]$
+and then adjust its covariance matrix to account for the difference
+between $\mmrT{i}$ and $\mmmT{i}$.
+
+Lemmas \ref{lem_mixingale} and \ref{lem_mixingale_normality} show that
+we can apply a Central Limit Theorem directly to $P_T^{1/2} [\elT{} -
+\mmrT{}]$.  This extra generality allows us to study how out-of-sample
+averages perform when their models are estimated imprecisely.
+However, we need to impose more restrictions before we can relate
+$\mmrT{}$ to objects that a researcher should be interested in, such
+as $\mmmT{}$.
+%%
+\section{Comparing Nested Models} \label{sec_nested}  
+In most applications, the benchmark model is very simple (a random walk,
+for example) so we can treat the smaller model as having fixed $K$.
+Only the alternative model is complex.
+In this case, we can construct a conservative one-sided test for the
+null hypothesis that smaller model is more accurate (in terms of MSE)
+in population. 
+
+\begin{thm}\label{thm_nesting1}
+  Suppose that the conditions of Lemmas \ref{lem_mixingale} and
+  \ref{lem_mixingale_normality} hold and that
+  \begin{enumerate}
+  \item[(i)] $K_{1T} = K_1$ and does not change with $T$; $K_{2T}/T \to
+    k_2 > 0$; and $P_T/R_T \to \pi < \infty$. 
+  \item[(ii)] $\hat \sigma_T$ is a consistent estimator of $(1,-1) \Sigma_T
+    (1,-1)'$.
+  \item[(iii)] Each of the smaller model's predictors is also used by
+  the larger model (model two).
+  \item[(iv)] $L(e) = e^2$.
+  \end{enumerate}
+  Then, under the null hypothesis
+  \[
+  H_0: \qquad \mT{1} = \mT{2} \qquad \text{for all $T$,}
+  \]
+  the one-sided t-test satisfies
+  \begin{equation*}
+    \lim_{T\to\infty} \p\Big[P_T^{1/2} (\elT{1} - \elT{2}) / \hat \sigma_T  \geq
+    z_\alpha \Big] \leq \alpha,
+  \end{equation*}
+  with $z_\alpha$ the $(1-\alpha)$-quantile of the standard normal
+  distribution.
+  \qed
+\end{thm}
+In short, one-sided tests for nested models that (erroneously) act as
+though the out-of-sample average were normal with mean $\m{}$ are
+asymptotically valid.
+
+This theorem relies on the inequality
+\begin{multline} \label{eq_nesting_inequality}
+  (\el{1} - \el{2}) - (\m{1} - \m{2}) \leq \\
+\big[\el{1} - \mmr{1}\big] - \big[\el{2} - \mmr{2}\big] + o_p(R^{-1/2}),
+\end{multline}
+which holds because $\m{1} = \mmr{1} + o_p(R^{-1/2})$ and $\m{2} \leq
+\mmr{2}$.
+
+We should discuss the variance estimator, $\hat \sigma_T$, further.
+Since the asymptotic variance, $\SrT$, is a random element that
+depends on $\bT{}{R_T}$, the usual proofs that HAC estimators are
+consistent do not apply.  Moreover, those proofs require NED
+sequences, not mixingales, so they would not apply anyway.  Because of
+the special structure of our mixingale process, though, it is
+straightforward to prove the consistency of HAC estimators using a
+coupling argument similar to the one used to prove Lemmas
+\ref{lem_mixingale} and \ref{lem_mixingale_normality}.  In fact, one
+can simply mimic the available NED proofs.  In this paper, we will
+simply assume
+the existence of a consistent estimator.  Lemma
+\ref{lem_cov_matrix_appendix} (in the Appendix) contains the basic
+argument for how to modify existing proofs,
+\citename{davidson_consistency_1998}
+(\citeyear*{davidson_consistency_1998},
+\citeyear*{davidson_consistency_2000}) in particular.
+
+In this case, there are more basic assumptions that guarantee that the
+covariance matrix $\SrT$ is uniformly positive definite.  Remember
+that the null hypothesis imposes that the coefficients on the
+additional predictors used by the larger model are zero.  Under
+Theorem \ref{thm_nesting1}'s assumptions, the models' prediction errors
+satisfy the relationship
+\begin{align*}
+  \e{1}{s} & = \ep{1}{s} + o_p(1) \\
+  \e{2}{s} & = \ep{1}{s} + z_{s}'\hat \alpha_{R_T} + o_p(1)
+\end{align*}
+with $z_s$ the additional predictors and $\hat \alpha_{R_T}$ their
+coefficient estimates.  As long as $z_s$ and $\hat \alpha_{R_T}$ are
+almost surely not zero, the two forecasts are almost surely
+different.
+
+This example is generalized slightly by the next lemma.  
+\begin{lem} \label{lem_pd_conditions}
+  Suppose that the conditions of Lemma \ref{lem_mixingale} and the
+  additional conditions of Theorem \ref{thm_nesting1} hold.
+  In addition, suppose that
+  \begin{itemize}
+  \item[(i)]  The maximum eigenvalues of
+    $R_T^{-1} \XT{i}{R_T}'\XT{i}{R_T}$ and
+    $R_T^{-1} \XT{i}{R_T}'\Ep{i}{R_T}\Ep{i}{R_T}'\XT{i}{R_T}$ are $O_p(1)$ and
+    their minimum eigenvalues are bounded away from zero in probability.
+  \item[(ii)] The first model's innovations, $\epT{1}{t}$, are
+    sequentially exogenous and independent of $\xT{1}{s}$ and
+    $\xT{2}{s}$ for $s = 1,\dotsc, t$.
+  \item[(iii)] The elements of $\xT{2}{t}$ and $\bT{2}{R_T}$ are
+    continuous random variables.
+  \end{itemize}
+  Then $[(1,-1) \SrT (1,-1)']^{-1} = O_p(1)$.
+  \qed
+\end{lem}
+These eigenvalue conditions are analogous to the usual restrictions
+made on asymptotic variance matrices.  The strong assumption of
+sequential exogeneity simplifies the proof but is not crucial.  The
+fact that the random variables are continuous rules out the
+possibility that, for example, the estimation error,
+$\xT{2}{T+1}'(\bT{2}{R_T} - \BT{2})$, is zero.
+
+To summarize this section: researchers can use fixed-window
+out-of-sample averages to compare the pseudo-true performance of an
+overfit model to a simple benchmark.  If the benchmark is also overfit
+(i.e., $K_{1T}/T$ remains positive), this approach does not work
+because inequality \eqref{eq_nesting_inequality} does not hold.  Also,
+if different loss functions are used to estimate and evaluate the
+model, this approach again does not work because inequality
+\eqref{eq_nesting_inequality} does not hold.  But Theorem
+\ref{thm_nesting1} and Lemma \ref{lem_pd_conditions} 
+justify using the naive out-of-sample one-sided t-test for most
+empirical research.
+%%
+\section{Comparing Finite-Sample Performance} \label{sec_perf} 
+%%
+This section gives conditions under which $\mmrT{}$ converges to
+$\mmtT{}$ and suggests that $\mmtT{}$ be used as a criterion for
+choosing between forecasting models.
+
+\pp{Ideally, a forecaster choosing between two models to use for period
+  $T+1$ would chose the one that minimizes the expected loss given the
+  information available in period $T$, $\ct{j}$.}  Even if the
+underlying random variables are independent, $\F{T}$ has valuable
+information about the models' performance --- the values of the
+coefficient estimates $\b{1}{T}$ and $\b{2}{T}$. But usually a model
+will use lagged variables as predictors, and their values are also
+included in $\F{T}$. Consequently, a
+forecaster choosing the model that minimizes the conditional
+expectation will make better forecasts than one who minimizes the
+unconditional expected loss, $\E \ff{j}{T+1}$.
+
+For i.i.d. series, $\mmtT{} = \ct{}$ almost surely.  With dependence,
+$\mmtT{}$ ignores the past information beyond the value of the
+coefficient estimate, and so is a biased proxy for the true
+conditional expectation.  However, the true conditional expectation
+can be difficult to estimate, and the fixed-window out-of-sample
+average can be used to estimate $\mmtT{}$.
+
+\begin{lem} \label{lem_muR}
+  Suppose that Assumptions \ref{asmp_array} to \ref{asmp_loss_bound}
+  hold and that 
+  \begin{itemize}
+  \item[(i)] For each sequence $\{s_T\}$ with $s_T$ between $R_T$ and $T$, the
+  maximum eigenvalues of $s_T^{-1} \XT{i}{s_T}'\XT{i}{s_T}$ and
+  $s_T^{-1} \XT{i}{s_T}'\Ep{i}{s_T}\Ep{i}{s_T}'\XT{i}{s_T}$ are
+  $O_p(1)$ and their minimum eigenvalues are bounded away from zero in
+  probability.
+  \item[(ii)] $P_T/R_T \to 0$, $K_{1T}/T \to k_1$, and $K_{2T}/T \to
+  k_2$.  Both $k_1$ and $k_2$ are less than one.
+  \item[(iii)] $L$ has finite left- and right-derivatives at every
+  point, denoted $D_L(\cdot)$ and $D_R(\cdot)$ respectively.
+  \end{itemize}
+  Then
+  \[
+  \mmrT{i} - \mmtT{i} = O_{L_1}(\sqrt{P_T/R_T}),
+  \]
+  and so $\elT{} - \mmtT{} \to 0$ in probability.
+  \qed
+\end{lem}
+
+Theorem \ref{thm_muR} is an immediate corollary.
+\begin{thm} \label{thm_muR}
+  Suppose the conditions of Lemmas \ref{lem_mixingale_normality}
+  and \ref{lem_muR} hold.  If $P_T^2/R_T \to 0$, then
+  \[
+  P_T^{1/2} \SrT^{-1/2} \left[\elT{} - \mmtT{}\right] \xrightarrow{d}
+  N(0, I) \quad \text{as $T \to \infty$.}
+  \]
+  \qed
+\end{thm}
+
+These results suggest two new ideas.  When the
+models are overfit, out-of-sample averages implicitly condition on the
+coefficient estimates.\footnote{\citeasnoun{efron_biased_1986} makes a
+similar point about cross-validation in finite samples.  Our result,
+though, is the first that we are aware of to study such conditioning
+asymptotically.}  In economic forecasting applications, such
+conditioning is desirable --- we will make predictions for the same
+series using those coefficients, so averaging the forecasts'
+performance over other hypothetical values for those coefficients is
+inappropriate.  However, unless $P/R$ is very small, the forecasts
+comparative performance can change when the models are re-estimated
+over the entire dataset.  Since, in practice, $P$ must also be large
+enough to justify a Law of Large Numbers or Central Limit Theorem,
+these out-of-sample statistics may have limited use in macroeconomics.
+%%
+\section{Simulations} \label{sec_mc}
+In progress.
+\section{Conclusion} 
+By studying the behavior of the fixed-window out-of-sample average
+under a new limit theory that increases the number of predictors with
+the number of observations, this paper shows that these out-of-sample
+tests can prevent overfit and are properly sized when in-sample tests
+are not.  Many of the previously known  results on these statistics do not
+carry over to this setting, though: the performance of the model's
+pseudo-true coefficients can not be estimated, but researchers can
+still construct some one-sided confidence intervals; nested
+comparisons are asymptotically normal; and the test sample must be
+extremely small if this out-of-sample exercise will estimate how
+well the models perform when they are re-estimated over the
+full dataset.
+
+Future research should study whether it is possible to improve the
+power of out-of-sample tests while preserving size under this
+asymptotic theory in the manner of
+\citetwo{clark_using_2006}{clark_approximately_2007}; whether
+resembling techniques can improve the restrictions on $P/R$; and how
+these results can be extended to M-estimators and nonlinear models.
+%%
+\appendix
+\section{Additional Technical Results and Proofs}
+%%
+\newcommand{\insum}{P_T^{-1/2}\sum_{s = R_T + (i-1)b_T + 1}^{R_T + i b_T}}
+\newcommand{\insump}{P_T^{-1/2}
+  \sum_{s = R_T + \lfloor P_T / b_T \rfloor b_T + 1}^T}
+\newcommand{\outsum}{\sum_{i=1}^{\lfloor P_T/b_T \rfloor}}
+\newcommand{\outsump}{\sum_{i=2}^{\lfloor P_T/b_T \rfloor + 1}}
+
+\renewcommand{\L}{\mathcal L}
+
+\begin{lem} \label{lem_coupling}
+ Suppose Assumptions \ref{asmp_array} to \ref{asmp_loss_bound} hold.
+ Then, for any $T$, $s$, $t$, and $u$, with $t \geq s > u \geq R_T$
+ there exists an array $\{\tilde L_{jv}; v = s, \dotsc, t;\, j =
+ 1,2\}$  such that
+ \begin{equation} \label{eq_coupling1}
+   \E\left(\phi(\tilde L_s, \dotsc, \tilde L_t) \mid \FT{u} \right) = 
+   \int \phi(\fT{}{s}, \dotsc, \fT{}{t}) \p(d\xT{}{s}, d\yT{s}, \dotsc,
+   d\xT{}{t}, d\yT{t})
+ \end{equation}
+ almost surely for all measurable functions $\phi$ such that the expectations
+ are finite.  Moreover, 
+\begin{equation} \label{eq_coupling2}
+  \p[\tilde L_{jv} \neq \fT{j}{v} \text{ for at least one $v$ and $j$}] =
+ \beta_{s-u}
+\end{equation}
+ and
+\begin{equation} \label{eq_coupling3}
+  \| \tilde L_v - \fT{}{v} \|_2 \leq 2^{1+1/\rho} B_L
+  \beta_{s-u}^{(\rho-2)/2\rho} \quad \text{for each $v$ and $j$.}
+\end{equation}
+\end{lem}
+
+\begin{proof}
+  \newcommand{\A}{\mathcal A}
+  Fix $T$, $t$, $s$, and $u$.  The array $\A \equiv
+  \{(\yT{\tau},\xT{}{\tau}, \dotsc, \yT{\tau + t-s}, \xT{}{\tau +
+  t-s}); \; \tau\}$ is also absolutely regular of size
+  $\rho/(\rho-2)$, so Berbee's Lemma allows
+  us to construct a new array $\A^* \equiv \{( y_\tau^*,x_\tau^*,
+  \dotsc, y_{\tau + t-s}^*, 
+  x_{\tau + t-s}^*)\}$ that is independent of $\FT{u}$, equal to
+  $\A$ in distribution, and satisfies $\p[\A^* \neq \A] =
+  \beta_{s-u}$.
+
+  Now it is easy to construct $\{\tilde L_{jv}\}$:
+  \begin{equation}
+    \tilde L_{jv} \equiv L(y_v^* - x_{jv}^* \cdot \bT{j}{R_T}), \quad j
+    = 1,2, \quad v = s, \dotsc, t.
+  \end{equation}
+  Equations \eqref{eq_coupling1} and \eqref{eq_coupling2} are
+  satisfied by construction, so it remains to prove
+  \eqref{eq_coupling3}.  But \eqref{eq_coupling3} follows immediately
+  from \possessivecite{merlevede_coupling_2002} Proposition 2.3 ---
+  this proposition only uses (\ref{eq_coupling2}) and moment
+  restrictions, not the equality of distributions.  As noted by
+  \citeasnoun{dedecker_new_2005}, \citename{merlevede_coupling_2002}'s
+  constant, $2^{p+2}$ can be reduced when $p=2$.
+\end{proof}
+
+\begin{lem} \label{lem_cov_matrix_appendix}
+  Suppose $\{b_T\}$ is a sequence of positive integers such that $b_T
+  \to \infty$ and $b_T/P_T \to 0$, and define 
+  \[
+  Z_{Ti} \equiv \insum [\fT{}{s} - \mmrT{}].
+  \]
+  If Assumptions \ref{asmp_array} to \ref{asmp_loss_bound} hold
+  then
+  \[
+  \outsum \big[Z_{Ti}^2 - \meR(Z_{Ti}^2 \mid \FT{R_T})\big]
+  \to 0 \quad \text{in $L_1$,}
+  \]
+  where $\meR$ is the integral with respect to a new probability
+  measure $\peR$ that imposes independence between $\FT{R_T}$ and the
+  sigma-field generated by the random variables 
+  \[
+  \{\yT{R_T+j}, \xT{1}{R_T+j}, \xT{2}{R_T+j};\; j>0\}
+  \]
+  but otherwise preserves the original probability measure.
+\end{lem}
+
+\begin{proof}
+Much of the proof mimics that of \possessivecite{de_jong_central_1997}
+Lemma 5.  For clarity, suppose that $Z_{Ti}$ is a scalar.  Define the
+function
+\[
+h_c(x) = \begin{cases}
+    \sgn(x) c \sqrt{b_T/P_T} & \text{if } |x| > c \sqrt{b_T/P_T} \\
+    x & \text{otherwise}
+\end{cases}
+\]
+for an arbitrary constant $c$.  \citeasnoun{mcleish_invariance_1975}
+shows that (in this paper's notation) $\{P_T Z_{Ti}^2/b_T\}$ is
+uniformly integrable,\footnote{Also see the remarks after
+  \possessivecite{davidson_central_1992} Lemma 3.2.} so it is
+sufficient to prove that  
+\[
+\outsum \big[h_c(Z_{Ti})^2 - \meR(h_c(Z_{Ti})^2 \mid \FT{R_T})\big]
+\to 0
+\]
+in $L_1$ for any choice of $c$.
+
+We prove this by showing that the array
+\begin{equation} \label{eq_ap_array}
+  \{h_c(Z_{Ti})^2 - \meR(h_c(Z_{Ti})^2 \mid \FT{R_T}), \FT{R_T +
+    i\,b_T}\}
+\end{equation}
+ is another $L_2$-mixingale of size $-1/2$ with constants $d_{Ti}$
+ that satisfy $\outsum d_{Ti}^2 \to 0$.  Fix $T$, $i$, and $\kappa$,
+ and define the array $\{\tilde L_{jv}; v = R_T + (i-1)b_T + 1, \dotsc,
+ R_T + i b_T; \, j = 1,2\}$ 
+ independent of $\FT{R_T + (i-\kappa)b_T}$ using Lemma
+ \ref{lem_coupling}.
+ Now let
+ \[
+ W_{Ti} = \insum [\tilde L - \mmrT{}],
+\]
+so 
+\begin{multline*}
+\big\| \E\big[h_c(Z_{Ti})^2 - \meR(h_c(Z_{Ti})^2 \mid \FT{R_T}) \mid \FT{R_T +
+  (i-\kappa)b_T}\big] \big\|_2 \\
+= \big\| \E\big[ h_c(Z_{Ti})^2 - h_c(W_{Ti})^2 \mid \FT{R_T +
+  (i-\kappa)b_T}\big] \big\|_2 \leq 
+\big\| h_c(Z_{Ti})^2 - h_c(W_{Ti})^2 \big\|_2
+\end{multline*}
+and it suffices to bound the last quantity.
+
+As in de Jong, we have the inequalities:
+\begin{align*}
+  \|h_c(Z_{Ti})^2 - h_c(W_{Ti})^2\|_2 
+  & \leq 2 c \sqrt{b_T/P_T} \| h_c(Z_{Ti}) - h_c(W_{Ti}) \|_2 \\
+  & \leq 2 c \sqrt{b_T/P_T} \; \Big\| 
+    \sum_{s=R_T + (i-1)b_T + 1}^{R_T + i b_T} (\fT{}{s} - \tilde
+  L_s)\Big\|_2 \\
+  & \leq \left[2 c b_T^{3/2} P_T^{-1} \beta_{b_T}^{(\rho -
+  2)/2\rho}\right] \beta_\kappa^{(\rho - 2)/2\rho}\\
+  &\equiv d_{Ti} \; \beta_\kappa^{(\rho - 2)/2\rho}.
+\end{align*}
+Since $\beta_\kappa^{(\rho - 2)/2\rho}$, the array (\ref{eq_ap_array})
+is an $L_2$-mixingale and has size $-1/2$, $\outsum 
+d_{Ti}^2 \to 0$.  Then \possessivecite{mcleish_maximal_1975} Theorem 1.6
+gives
+\[
+  \Big\| \outsum \big[h_c(Z_{Ti})^2 - \meR(h_c(Z_{Ti})^2
+  \mid\FT{R_T})\big] \Big\|_1 =
+  O\Big(\outsum d_{Ti}^2\Big),
+\]
+to complete the proof.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{lem_mixingale}]
+We'll prove that 
+\[
+  \| \E(\fT{i}{R_T+j} - \mmrT{j} \mid \FT{R_T+j-\tau}) \|_2 
+  \leq 2^{1+1/\rho} \; B_L \; \beta_\tau^{(\rho-2)/2\rho}
+\]
+Notice that $\beta_\tau^{(\rho-2)/2\rho} =
+O(\tau^{-1/2-\delta}$. Define 
+$\tilde L_s$ as in Lemma \ref{lem_coupling} to be independent of
+$\FT{s-\tau}$.  Then
+\begin{align*} \label{eq_mixingale_bound_1}
+  \| \E(\fT{i}{s} - \mmrT{i} \mid \FT{s-\tau}) \|_2 
+  & = \| \E(\fT{i}{s} - \tilde L_{is} \mid \FT{s-\tau}) \|_2 \\
+  & \leq \| \fT{}{s} - \tilde L_{is} \|_2 \\
+  & \leq 2^{1+1/\rho} B_L \beta_\tau^{(\rho-2)/2\rho}
+\end{align*}
+by Lemma \ref{lem_coupling}.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{lem_mixingale_normality}.]
+\renewcommand{\insum}{\sum_{s=R_T + (i-1)b_T + l_T + 1}^{R_T + i b_T}}
+Without loss of generality, assume that $\fT{}{s}$ is a scalar. 
+We will modify \possessivecite{de_jong_central_1997} Theorem 1 to
+establish normality. The only part of de Jong's proof that needs to be
+changed is the handling of the covariance matrix; here it is a random
+element and in de Jong's theorem it is a constant.
+
+Let $\{b_T\}$, $\{l_T\}$, and $\{m_T\}$ be sequences of positive
+integers that satisfy $P_T \geq b_T \geq l_T+1$, $b_T \to \infty$,
+$l_T \to \infty$, $\lfloor P_T/b_T \rfloor \to \infty$, and
+$l_T/b_T \to 0$. Then, De Jong proves that (in our notation)
+\[
+P_T^{-1/2} \big[\elT{} - \mmrT{}\big] = \outsum Z_{Ti} + o_p(1)
+\]
+with 
+\[
+Z_{Ti} \equiv \insum \big[\fT{}{s} - \E(\fT{}{s} \mid \FT{R_T + (i-1)b_T})\big].
+\]
+The array $\{Z_{Ti}, \FT{R_T + ib_T}, i = 1,\dotsc,m_T\}$ is a martingale 
+difference array by construction and it suffices to apply a Central
+Limit Theorem to $\sum_i Z_{Ti}$.
+
+We apply \possessivecite{hall_martingale_1980} Theorem 3.3 to complete
+the proof.\footnote{The covariance matrix, $\Sigma_T$, is measurable
+  in all of the sub-sigma-fields $\FT{s}$, so Hall and Heyde's nesting
+condition is unnecessary.  See the remarks surrounding their Theorem
+for more details.  This measurability also allows us to use a sequence
+of covariance matrices that does not necessarily converge.}  De Jong's
+condition (9) ensures that Hall and Heyde's (3.18) and (3.20) are
+satisfied, so it remains to prove that 
+\[
+  \outsum Z_{Ti}^2 = \Sigma_T + o_p(1).
+\]
+This last step is an immediate consequence of Lemma
+ \ref{lem_cov_matrix_appendix} and De Jong's Lemmas 3 and 4.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm_nesting1}]
+Under the null hypothesis,
+\begin{align*}
+  \elT{1} - \elT{2} &= [\elT{1} - \mmrT{1}] - [\elT{2} - \mmrT{2}]
+  \\ &\quad + [\mmrT{1} - \mmmT{1}] + [\mmmT{2} - \mmrT{2}] \\
+  & \leq [\elT{1} - \mmrT{1}] - [\elT{2} - \mmrT{2}] + o_p(R_T^{-1/2})
+\end{align*}
+since the derivative of $\mmT{1}{\cdot}$ at $\BT{1}$ is zero and
+$[\mmmT{2} - \mmrT{2}]$ is positive.  Lemma
+\ref{lem_mixingale_normality} ensures that this last quantity is
+asymptotically normal with asymptotic variance $\hat \sigma_T$.
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{lem_pd_conditions}]
+  Let $\{(v_T, z_{1T}, z_{2T})\}$ be a sequence of random vectors,
+  independent of $\bT{}{R_T}$ and equal in distribution to
+  $\{(\epT{1}{t},\xT{1}{t},\xT{2}{t})\}$.  The prediction errors satisfy
+  \begin{align*}
+    \eT{1}{t} &= \epT{1}{t} + \xT{1}{t}'(\bT{1}{R_T} - \BT{1}) 
+    \\ & = \epT{1}{t} + O_p(R_T^{-1/2}) \\
+    \eT{2}{t} &= \epT{1}{t} + \xT{2}{t}'(\bT{2}{R_T} - \BT{2}).
+  \end{align*}
+  Since $z_T'(\bT{2}{R_T}- \BT{2})$ is a continuous random variable,
+  the probability of it taking a value that guarantees constant loss
+  is zero.
+  To show that $[(1,-1) \SrT (1,-1)']^{-1} = O_p(1)$, then, it
+  suffices to prove that the conditional variance (given $\bT{}{R_T}$)
+  of the vector $(v_T^2,\, [v_T + z_T'(\bT{2}{R_T} -\BT{2})]^2)'$
+  satisfies the same relationship. Since $z_T$ has uniformly positive
+  variance, we only need to prove that $|\bT{2}{R_T} - \BT{2}|_2$ is
+  uniformly a.s. positive.  This follows from the inequality
+  \[
+  |\bT{2}{R_T} - \BT{2}|_2^2 \geq
+   \lambda_{max}(\XT{2}{R_T}'\XT{2}{R_T})^{-1}
+   \lambda_{min}(\XT{2}{R_T}'\Ep{2}{R_T} \Ep{2}{R_T}'\XT{2}{R_T}).
+  \]
+\end{proof}
+
+\begin{proof}[Proof of Lemma \ref{lem_muR}]
+  Observe that 
+  \begin{multline*}
+    \mmrT{j} - \mmtT{j} = \\ \E\left[L(\psi_T - z_T'\bT{j}{R_T}) -
+    L(\psi_T - z_T'\bT{j}{T}) \mid \bT{j}{R_T},\bT{j}{T}\right]
+  \end{multline*}
+  almost surely, with $(\psi_T, z_T) \eqdist (\yT{T+1},\xT{j}{T+1})$
+  and independent of $(\bT{j}{R_T}, \bT{j}{T})$.  As a result, it
+  suffices to show that
+  \[
+  \|L(\psi_T - z_T'\bT{j}{R_T}) - L(\psi_T - z_T'\bT{j}{T}) \|_1
+  = O(\sqrt{P/R}).
+  \]
+  Since $L$ has finite left- and right-derivatives and is convex, 
+  \[
+  L(\psi_T - z_T'\bT{j}{R_T}) - L(\psi_T - z_T'\bT{j}{T})
+  = O_p(1) z_T'(\bT{j}{R_T} - \bT{j}{T}),
+  \]
+  and, because this difference is uniformly integrable, we only need
+  to prove that 
+  \[
+  |\bT{j}{R_T} - \bT{j}{T}|_2 = O_p(\sqrt{P_T/R_T}).
+  \]
+
+  Now, we can express this last difference as
+  \begin{multline*}
+  \bT{j}{R_T} - \bT{j}{T} = \left[
+    (\XT{j}{T}'\XT{j}{T})^{-1} - (\XT{j}{R_T}'\XT{j}{R_T})^{-1}
+  \right] \XT{j}{T}'\Ep{j}{T} \\
+  + (\XT{j}{R_T}'\XT{j}{R_T})^{-1} \sum_{s=R_T+1}^T \xT{j}{s} \epT{j}{s}.
+  \end{multline*}
+  The square of each of these terms is $O_p(\sqrt{P_T/R_T})$.  First,
+  observe that
+  \begin{multline*}
+    \left\lvert \left[
+    (\XT{j}{T}'\XT{j}{T})^{-1} - (\XT{j}{R_T}'\XT{j}{R_T})^{-1}
+  \right] \XT{j}{T}'\Ep{j}{T} \right\rvert_2^2\\
+  = O_p(T) \sum_{i=1}^{K_{jT}} \lambda_i\left[(\XT{j}{T}'\XT{j}{T})^{-1}
+    - (\XT{j}{R_T}'\XT{j}{R_T})^{-1}\right]^2,
+  \end{multline*}
+  which is $O_p(P_T/R_T)$ since 
+  $(\XT{j}{T}'\XT{j}{T})^{-1} - (\XT{j}{R_T}'\XT{j}{R_T})^{-1}$ has
+  rank $P_T$ and its largest eigenvalue is $O_p(1/T)$.
+  A similar argument proves that the second term is
+  $O_p(\sqrt{P_T/R_T})$ as well, completing the proof.
+\end{proof}
+%%
+
+\bibliography{zoterolibrary}
+\bibliographystyle{econometrica}
+\end{document}

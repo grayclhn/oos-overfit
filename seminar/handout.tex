@@ -1,0 +1,31 @@
+\documentclass[12pt]{article}
+\usepackage{amssymb,amsmath,amsthm,harvard,graphicx, color, enumerate}
+\usepackage[T1]{fontenc} \setcounter{MaxMatrixCols}{10}
+
+% -- Margins for Editing --
+\setlength{\voffset}{-.25in} \setlength{\hoffset}{-.25in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{652pt}
+\setlength{\oddsidemargin}{0in} \setlength{\textwidth}{504pt}
+
+\input{../bib/definitions.tex}
+\input{../paper/def.tex}
+
+\begin{document}
+\begin{table}[htbp]
+  \begin{tabular}{ll}
+    Symbol & Definition \\\\
+    $P$ & size of test sample \\
+    $R$ & size of estimation window \\
+    $T$ & total number of observations \\
+    $\y{s}$ & dependent variable \\
+    $\x{j}{s}$ & vector of predictors for model $j$ \\
+    $\b{j}{R}$ & OLS estimator using observations $1,\dotsc,R$ \\
+    $\B{j}$ & pseudo-true value of $\b{j}{R}$
+    \hline
+    $M_{jT}(\theta)$ & $\E L(\yT{T+1} - \xT{j}{T+1}'\theta)$ \\
+    $\mu(R,j)$ & $M_{jT}(\bT{j}{R_T})$ \\
+    $\mu(T,j)$ & $M_{jT}(\bT{j}{T})$ \\
+  \end{tabular}
+\end{table}
+\end{document}
