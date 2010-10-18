@@ -60,7 +60,9 @@ oosT <- function(R, mod.formula, dframe, nonneg) {
   
   varest <- drop(NeweyWest(lm(loss1 - loss2 ~ 1), lag = floor(ntest^.25),
                            adjust = TRUE, prewhite = FALSE))
-  list(estimate = avgdiff,
+  list(avg1 = mean(loss1),
+       avg2 = mean(loss2),
+       estimate = avgdiff,
        conf.int = c(avgdiff - sqrt(varest / ntest), Inf),
        p.value = pt(sqrt(ntest / varest) * avgdiff,
          ntest - 1, lower.tail = FALSE))
@@ -78,10 +80,12 @@ fullmod <- lm(fullmodel, data = dframe)
 temp <- latex(coeftest(fullmod, vcov=NeweyWest(fullmod, prewhite=FALSE, lag=2)),
               file = "tables/coeftest.tex", digits = 2)
 temp <- latex(waldtest(fullmod, vcov=NeweyWest(fullmod, prewhite=FALSE, lag=2), test="F"),
-              file = "tables/waldtest.tex", digits = 2)
+              file = "tables/waldtest.tex", digits = 2, caption = "Wald test for the null hypothesis that all of the coefficients in Goyal and Welch's (2008) ``kitchen sink'' model are zero, except for the intercept.", label = "tab:gwinsample")
 
 oosStats <- function(tstats) 
-  ts(cbind(average  = sapply(tstats, function(x) x$estimate),
+  ts(cbind(PM = sapply(tstats, function(x) x$avg1),
+           KS = sapply(tstats, function(x) x$avg2),           
+           average  = sapply(tstats, function(x) x$estimate),
            interval = sapply(tstats, function(x) min(x$conf.int)),
            pvalue   = sapply(tstats, function(x) x$p.value)),
      start = RStart, frequency = 1)
@@ -89,89 +93,61 @@ oosStats <- function(tstats)
 oos    <- oosStats(tstats)
 oos.ct <- oosStats(tstats.ct)
 
+indplot <- function(name, series, file, height = 2, width = 5.5, xlabel = "",
+                    ticks = NULL, labels = TRUE,...) {
+  pdf(file = file, height = height, width = width)
+  par(mar = c(5.1, 4.2, 1.1, 0))
+  plot(cbind(series, 0), yaxt = "n", ylab = name,
+       plot.type = "single", bty = "n",
+       xlab = xlabel, lwd = 0.8,
+       col = c("white", "white"))
+  lines(start(series)[1]:end(series)[1], series)
+  axis(2, at = ticks, labels = labels, cex.axis = .8, las = 1)
+  dev.off()  
+}
+
+indplot(name = "KS", oos[,"KS"], file = "plots/oos-ind-ks.pdf")
+indplot(name = "PM", oos[,"PM"], file = "plots/oos-ind-pm.pdf", xlabel = "R",
+        ticks = c(0, .01, .02, .03, .04, 0.05),
+        labels = c("0", "", "", "", "", "0.05"))
+
 ## make plots of out-of-sample mse
 ## set parameters for pdf images
-oosplot <- function(series, file, main, height = 3, width = 6.5,...) {
+oosplot <- function(series, file, height = 2, width = 5.5, xlabel = "",
+                    ticks = NULL, labels = TRUE,...) {
   pdf(file = file, height = height, width = width)
   x1 <- sum(is.na(series[,1])) + start(series)[1]
   xn <- end(series)[1]
-  plot(series,
+  par(mar = c(5.1, 4.2, 1.1, 0))
+  plot(cbind(series, 0), yaxt = "n", 
        plot.type = "single", bty = "n",
-       xlab = "R", ylab = "MSE Difference",
-       main = main,
+       ylab = "MSE Diff.", xlab = xlabel,
        lwd = 0.8,
        col = c("white", "white"))
   polygon(x = c(x1, x1:xn, xn), y = c(0,series[,"interval"][!is.na(series[,"interval"])],0), col = "gray", lty = "blank")
+  lines(c(start(series)[1], end(series)[1]), c(0,0), col = "gray")
   lines(start(series)[1]:end(series)[1], series[,"average"])
-  ##  abline(h = 0, col = rgb(0,0,0,.3), lwd = 0.5)
+  axis(2, at = ticks, labels = labels, cex.axis = .8, las = 1)
   dev.off()
 }
 
-oosplot(oos[,c("interval", "average")],
-        file = "plots/oos-mse-1.pdf",
-        main = "Average OOS MSE Difference\nfor OLS Equity Premium Forecasts")
+##Average OOS MSE Difference\nfor OLS Equity Premium Forecasts
+oosplot(oos[,c("interval", "average")], file = "plots/oos-mse-1.pdf", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
 
 oos.subset <- oos
 window(oos.subset, end = 49) <- NA
-oosplot(oos.subset[,c("interval", "average")],
-        file = "plots/oos-mse-1b.pdf",
-        main = "Subset of Average OOS MSE Difference\nfor OLS Equity Premium Forecasts")        
+## Subset of Average OOS MSE Difference\nfor OLS Equity Premium Forecasts
+oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-1b.pdf",
+        xlabel = "R", ticks = c(0, -0.025, -.05, -0.075, -.1),
+        labels = c("0", "", "-0.5", "", "-.10"))
 
-oosplot(oos.ct[,c("interval", "average")],
-        file = "plots/oos-mse-2.pdf",
-        main = "Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts")
+## Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts
+oosplot(oos.ct[,c("interval", "average")], file = "plots/oos-mse-2.pdf", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
+     
 
 oos.subset <- oos.ct
 window(oos.subset, end = 49) <- NA
-oosplot(oos.subset[,c("interval", "average")],
-        file = "plots/oos-mse-2b.pdf",
-        main = "Subset of Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts")        
-
-
-## plots of predictions.  Need to add the target variable to the
-## graphs
-forecastsframe <- function(R, mod.formula, dframe, nonneg = FALSE,...) {
-  data.frame(estimated = startyear + R - 1,
-             forecast  = forecasts(lm(mod.formula, data = dframe[1:R,]),
-               dframe[-(1:R),], nonneg),
-             date = R + seq(from = startyear,
-               length = (nrow(dframe) - R)))
-}
-
-getforecasts <- function(RStart, REnd, nonneg = FALSE, ...) {
-  dforecasts1 <- do.call(rbind, lapply(RStart:REnd, function(R)
-                                       forecastsframe(R, equity.premium ~ 1,
-                                                      dframe, nonneg)))
-  dforecasts1$model <- "prevailing mean"
-  dforecasts2 <- do.call(rbind, lapply(RStart:REnd, function(R)
-                                       forecastsframe(R, fullmodel, dframe,
-                                                      nonneg)))
-  dforecasts2$model <- "kitchen sink"
-  rbind(dforecasts1, dforecasts2)
-}
-
-forecastplot <- function(data, file, main, height = 6, width = 5,...) {
-  pdf(file = file, height = height, width = width)
-  trellis.par.set(list(axis.line = list(lwd = 0.25)))
-  print(xyplot(forecast ~ date | model +
-               equal.count(estimated, number = 5, overlap = 0),
-               data = data,
-               main = main,
-               ylab = "Equity Premium",
-               type = "l", groups = estimated, strip = FALSE,
-               xlab = c("Kitchen Sink", "Prevailing Mean"),
-               panel = function(x, y, ...) {
-                 panel.xyplot(x, y, col = rgb(0,0,0,.5), lwd = .55, ...)
-                 panel.lines(window(d[,"equity.premium"], end = 2009),
-                             col = rgb(1,0,0,1), lwd = .55)
-               },...))
-       dev.off()
-}
-
-forecastplot(getforecasts(RStart, REnd, FALSE),
-             file = "plots/forecastplot1.pdf",
-             main = "OLS Forecasts of Equity Premium")
-
-forecastplot(getforecasts(RStart, REnd, TRUE),
-             file = "plots/forecastplot2.pdf",
-             main = "Restricted Forecasts of Equity Premium")
+# Subset of Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts
+oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-2b.pdf",
+        xlabel = "R", ticks = c(0, - 0.015/2, -.015, -(0.015 + 0.03)/2, -.03),
+        labels = c("0", "", "", "", "-.03"))

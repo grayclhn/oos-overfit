@@ -94,4 +94,5 @@ distclean: clean
 	$(RM) -f mc-setup.mk mc/db/*.created mc/db/*.db mc/*.tex
 burn: distclean
 	$(RM) -f mc/simulations.db mc/plots/* mc/*.pdf
+	$(RM) -f empirics/*.created mc/plots/* mc/*.pdf mc/tables/*
 	$(RM) -f *.pdf
