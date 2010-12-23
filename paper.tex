@@ -313,7 +313,7 @@ naive comparisons of in-sample loss overestimate models' accuracy by a
 factor proportional to $K/T$, $K$ being the number of regressors.  But
 modifications of the F-test are valid under this asymptotic theory, as
 shown by \citet{BoB:95}, \citet{AkA:00}, \citet{AkP:04}, and
-\citet{Cal:10}, among others.  Such results establish that hypotheses
+\citet{Cal:10b}, among others.  Such results establish that hypotheses
 about the parameters of the \dgp\ can be tested in-sample even if one
 or both models are overfit.  For that very reason, these tests can not
 reliably choose a model for forecasting and will reject the benchmark
@@ -325,7 +325,7 @@ F-test.  These tests are also designed to reject the benchmark when
 the alternative model is true, and so they may reject too often when
 the benchmark is false but more accurate.  Obviously, since the
 distribution of these statistics converges to the normal when $P/T \to
-\infty$ (with the number of regressors fixed), these statistics behave
+0$ (with the number of regressors fixed), these statistics behave
 like the \dmw\ test when $P$ is small, but should over-reject the
 benchmark when $P$ is large.  Section~\ref{sec:mc} presents
 simulations that support these claims.
@@ -535,10 +535,10 @@ The requirements that $P$ and $R$ grow with $T$ are common.  Parts of
 the assumption are new, in particular the requirement that $P^2/T \to
 0$.  See Lemma \ref{res-convergence} for a discussion of its
 implications.  In practical terms, this assumption requires that the
-test sample be large, that the forecaster plans to use the model for
-many periods in the future, and that there is enough data that
-including or excluding the test sample does not affect the estimates
-of $\theta_1$ or $\theta_2$ very much.
+forecaster plans to use the model for many periods in the future, that
+the test sample be large, and that the training sample be much larger,
+so that including or excluding the test sample does not affect the
+estimates of $\theta_1$ or $\theta_2$ very much.
 
 The next assumption restricts the class of variance estimators we will
 consider.  We use the same class of estimators studied by
