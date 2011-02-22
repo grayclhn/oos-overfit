@@ -49,6 +49,9 @@
 \expandafter\newcommand\expandafter{\csname #1\endcsname}{#2 \textsc{(\MakeLowercase{#3})}%
 \expandafter\renewcommand\expandafter{\csname #1\endcsname}{\textsc{\MakeLowercase{#3}}}}}
 
+\newcommand{\oosA}{\bar{D}_a}
+\newcommand{\oosB}{\bar{D}_b}
+
 \newcommand{\oost}{\ensuremath{\operatorname{oos-t}}}
 \newcommand{\oosSum}[2]{\ensuremath{\sum_{#1=R-\h+#2}^{T-\h}}}
 
@@ -61,11 +64,11 @@
 
 \newcommand{\CEOuterBlock}[2]{\ensuremath{\E_{\InnerBlockU{(#2-1)}} #1}}
 
-\newcommand{\CenteredAverage}{\frac{\bar{D}_1 - \E_T\bar{D}_2}{\hat\sigma / \sqrt{P}}}
+\newcommand{\CenteredAverage}{\frac{\oosA - \E_T\oosT}{\hat\sigma / \sqrt{P}}}
 \newcommand{\CenteredAverageI}{\ensuremath{\frac{1}{\hat\sigma
     \sqrt{P}}\oosSum{t}{1} (D_{tR} - \E_R D_{tR})}}
 \newcommand{\CenteredAverageII}{\ensuremath{\frac{\sqrt{P}}{\hat\sigma}
-    (\E_R\bar D_1 - \E_T\bar{D}_2)}}
+    (\E_R\oosA - \E_T\oosB)}}
 
 \newcommand{\MixingaleArray}[1]{\ensuremath{}}
 
@@ -108,10 +111,10 @@
 \newcommand{\vtIIIsummand}{\ensuremath{(Z_{1t}Z_{2t} - \E_RZ_{1t}Z_{2t})}}
 
 \newcommand{\varianceDiffA}{\ensuremath{\frac1{P} \oosSum{s,t}{1}
-    \lvert (D_{tR} - \E_R D_{tR})(\E_R D_{sR} - \bar D_1) \rvert
+    \lvert (D_{tR} - \E_R D_{tR})(\E_R D_{sR} - \oosA) \rvert
     \vWeight}}
 \newcommand{\varianceDiffAi}{\ensuremath{\frac1P \oosSum{s}{1}(\E_R
-    D_{sR} - \bar D_1 )^2}}
+    D_{sR} - \oosA )^2}}
 \newcommand{\varianceDiffAii}{\ensuremath{\frac1P \oosSum{s}{1}
     (D_{sR} - \E_R D_{sR})^2}}
 
@@ -213,8 +216,8 @@ example, \citet{DiM:95} and \citet{Wes:96} derive the limiting
 distributions of many popular \oos\ test statistics under conditions
 that would justify these full-sample tests.\footnote{In this paper, we
   will refer to their basic \oos\ $t$-test as the \dmw\ test.}  Much
-of the subsequent research by \citet{CCS:01}, \citet{ClM:01,ClM:05},
-\citet{CoS:02,CoS:04}, \citet{ClW:06,ClW:07}, \citet{Mcc:07},
+of the subsequent research by \citet{Mcc:00, Mcc:07}, \citet{CCS:01},
+\citet{ClM:01,ClM:05}, \citet{CoS:02,CoS:04}, \citet{ClW:06,ClW:07},
 \citet{Ana:07}, and others relaxes several of Diebold and Mariano's
 and West's assumptions, but maintains the stationarity and dependence
 conditions that permit in-sample comparisons.\footnote{Like us,
@@ -225,9 +228,9 @@ conditions that permit in-sample comparisons.\footnote{Like us,
 focusing on hypotheses that can be tested by in-sample comparisons,
 \citet{GiW:06} derive an \oos\ test for the null hypothesis that the
 difference between two models' \oos\ forecasting performance is
-unpredictable, a martingale difference sequence, \citet{GiR:09} test
+unpredictable, a martingale difference sequence; \citet{GiR:09} test
 whether the \oos\ forecasting performance of a model suffers from a
-breakdown relative to its in-sample performance, and \citet{GiR:10}
+breakdown relative to its in-sample performance; and \citet{GiR:10}
 test whether the forecasting performance is stable. However, those
 papers focus on a particular \oos\ estimation strategy and do not
 address why naive \oos\ comparisons might be generally useful.
@@ -313,7 +316,7 @@ naive comparisons of in-sample loss overestimate models' accuracy by a
 factor proportional to $K/T$, $K$ being the number of regressors.  But
 modifications of the F-test are valid under this asymptotic theory, as
 shown by \citet{BoB:95}, \citet{AkA:00}, \citet{AkP:04}, and
-\citet{Cal:10b}, among others.  Such results establish that hypotheses
+\citet{Cal:10}, among others.  Such results establish that hypotheses
 about the parameters of the \dgp\ can be tested in-sample even if one
 or both models are overfit.  For that very reason, these tests can not
 reliably choose a model for forecasting and will reject the benchmark
@@ -325,10 +328,10 @@ F-test.  These tests are also designed to reject the benchmark when
 the alternative model is true, and so they may reject too often when
 the benchmark is false but more accurate.  Obviously, since the
 distribution of these statistics converges to the normal when $P/T \to
-0$ (with the number of regressors fixed), these statistics behave
-like the \dmw\ test when $P$ is small, but should over-reject the
-benchmark when $P$ is large.  Section~\ref{sec:mc} presents
-simulations that support these claims.
+0$ (with the number of regressors fixed), these statistics behave like
+the \dmw\ test when $P$ is small, but should over-reject the benchmark
+when $P$ is large.  Section~\ref{sec:mc} presents simulations that
+support these claims.
 
 Finally, this paper also introduces a new method of proof for \oos\
 statistics.  We use a coupling argument (Berbee's Lemma, 1979) to show
@@ -388,41 +391,41 @@ with
 \bh{it} = (\sum_{s=1}^{t-\h} x_{is}x_{is}')^{-1} \sum_{s=1}^{t-\h} x_{is} y_{s+\h},
 \quad i=1,2.
 \]
-The \oos\ average is denoted $\bar D_1$:
+The \oos\ average is denoted $\oosA$:
 \[
-\bar D_1 \equiv P^{-1} \oosSum{t}{1} D_{tR}
+\oosA \equiv P^{-1} \oosSum{t}{1} D_{tR}
 \quad \text{with} \quad D_{tS} \equiv L(y_{t+\h} - x_{1t}'\bh{1S}) -
 L(y_{t+\h} - x_{2t}'\bh{2S}),
 \]
 $P = T - R$ and $L$ a known loss function.  The \oos\ statistic
 of interest is 
 \[
-\oost \equiv \frac{\sqrt{P} \bar D_1}{\hat\sigma},
+\oost \equiv \frac{\sqrt{P} \oosA}{\hat\sigma},
 \]
 for $\hat\sigma^2$ some (possibly Heteroskedasticity- and
 Autocorrelation-Consistent, or \hac) estimator of the asymptotic
-variance of $\bar D_1$.
+variance of $\oosA$.
 
 We'll show that \oost\ can be used to test whether the models will
 forecast equally accurately in the future.  Specifically, assume that
 whichever model is chosen will be used for an additional $Q$ periods
-in the future and let $\bar D_2$ denote the difference in average
+in the future and let $\oosB$ denote the difference in average
 performance over those periods:
 \[
-\bar D_2 \equiv Q^{-1} \sum_{t=T+1}^{T+Q} D_{tT}.
+\oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} D_{tT}.
 \]
-Note that $\bar D_1$ depends on the training sample estimators,
-$\hat\theta_{iR}$, and $\bar D_2$ depends on the full sample
+Note that $\oosA$ depends on the training sample estimators,
+$\hat\theta_{iR}$, and $\oosB$ depends on the full sample
 estimators, $\hat\theta_{iT}$.  A forecaster has access to the
 information set $\mathcal{F}_T$ when deciding between the two
-forecasting models, but $\mathcal{F}_T$ does not contain $\bar D_2$.
+forecasting models, but $\mathcal{F}_T$ does not contain $\oosB$.
 So a forecaster should decide between the models based on the
-conditional expectation, $\E_T \bar{D}_2$. If this quantity is
+conditional expectation, $\E_T \oosB$. If this quantity is
 positive, the first model is expected to perform worse in the future,
 and if it is negative the second is.
 
 When the underlying series is i.i.d., this random variable, $\E_T
-\bar{D}_2$, is equal to the difference in the models' generalization
+\oosB$, is equal to the difference in the models' generalization
 error.  The generalization error of model $i$ is defined as
 \begin{equation*}
   \E_{T} L(y_{T+\h}^{*} - x_{iT}^{*\prime}\hat{\theta}_{iT})
@@ -535,10 +538,10 @@ The requirements that $P$ and $R$ grow with $T$ are common.  Parts of
 the assumption are new, in particular the requirement that $P^2/T \to
 0$.  See Lemma \ref{res-convergence} for a discussion of its
 implications.  In practical terms, this assumption requires that the
-forecaster plans to use the model for many periods in the future, that
+forecaster plan to use the model for many periods in the future, that
 the test sample be large, and that the training sample be much larger,
-so that including or excluding the test sample does not affect the
-estimates of $\theta_1$ or $\theta_2$ very much.
+by enough that including or excluding the test sample does not affect
+the estimates of $\theta_1$ or $\theta_2$ very much.
 
 The next assumption restricts the class of variance estimators we will
 consider.  We use the same class of estimators studied by
@@ -559,10 +562,38 @@ and $W(\cdot)$ is continuous at 0 and all but a finite number of
 points.
 \end{asmp}
 
+Assumptions~\ref{asmp-1}--\ref{asmp-5} are broadly similar to
+\citepos{Wes:96} assumptions, except with regard to model complexity
+and the size of the test sample.  West assumes that $K_1$ and $K_2$
+are both finite, while we let them grow rapidly with $T$
+(Assumption~\ref{asmp-1}), and West lets $P/R$ converge to any value
+in $[0,\infty]$, while we require $P^2/R \to 0$
+(Assumption~\ref{asmp-4}).\footnote{\citet{Wes:96} does not have a
+  second \oos\ period, so there is no analogue in his paper to our
+  restriction on $Q$.}  Obviously, these differences are
+related---allowing for complex models requires tighter constraints on
+the size of the test sample.
+
+Our other assumptions are similar.  The loss function must be smooth
+almost everywhere, which is slightly less restrictive than
+\citet{Wes:96} requires but is not new; \citet{Mcc:00} extends West's
+results to cover a similar case.  West relaxes our assumption that the
+forecasts come from a linear regression model; we could relax our
+assumption to include other linear estimators, but there would be
+little new insight.  We assume full stationarity and absolute
+regularity of the underlying random array, while West assumes
+covariance stationarity and strong mixing of the transformed forecast
+errors; and the details our moment conditions are different, but seem
+that they would hold in similar environment to West's.  Finally, since
+West's is a more standard environment, he assumes the existence of a
+consistent estimator of the variance, while we construct it
+explicitly.  Only West's assumptions governing model complexity and
+the size of the test sample are substantially different than ours.
+
 \section{Theoretical Results}\label{sec:theory}
 The main result of the paper is Theorem
 \ref{res-confidence-intervals}, which shows that the \oos\ average is
-asymptotically normal and centered on $E_T \bar D_2$.  This result
+asymptotically normal and centered on $E_T \oosB$.  This result
 holds even for nested models and can be used to construct confidence
 intervals or test hypotheses.  After presenting Theorem
 \ref{res-confidence-intervals}, we explain and present two key Lemmas
@@ -570,7 +601,7 @@ used in its proof that add some insight into the nature of \oos\
 comparisons, and then show that standard \hac\ \oos\ estimators can be
 used to consistently estimate the asymptotic variance of the \oos\
 average.  We then show that the F-test does not let researchers test
-hypotheses about $E_{T} \bar D_2$ when the models are overfit.  In
+hypotheses about $E_{T} \oosB$ when the models are overfit.  In
 fact, in the limit it rejects a more-accurate but false benchmark
 model almost surely.
 
@@ -583,24 +614,24 @@ test sample.
   $\hat\sigma$ is an estimator satisfying
   \[
     \hat\sigma^2 = \sigma^2 + o_p(1), \quad \text{with}\quad 
-    \sigma^2 \equiv \var_R(\sqrt{P} \bar D_1),
+    \sigma^2 \equiv \var_R(\sqrt{P} \oosA),
   \]
   and that $\sigma^2$ is uniformly a.s. positive.  Then
   \[
-  \frac{\bar{D}_1 - \E_T\bar{D}_2}{\hat\sigma / \sqrt{P}}
+  \frac{\oosA - \E_T\oosB}{\hat\sigma / \sqrt{P}}
   \to^d N(0,1).
   \]
   Consequently, each of the usual Gaussian confidence intervals,
   \begin{eqnarray}
-  &&[\bar{D}_1 - z_{\alpha/2} \, \hat\sigma /
-      \sqrt{P}, \bar{D}_1 + z_{\alpha/2} \hat\sigma / \sqrt{P}],\label{interval-twosided} \\
-  &&[\bar{D}_1 - z_{\alpha} \, \hat\sigma / \sqrt{P}, +\infty), \label{interval-greater}
+  &&[\oosA - z_{\alpha/2} \, \hat\sigma /
+      \sqrt{P}, \oosA + z_{\alpha/2} \hat\sigma / \sqrt{P}],\label{interval-twosided} \\
+  &&[\oosA - z_{\alpha} \, \hat\sigma / \sqrt{P}, +\infty), \label{interval-greater}
   \end{eqnarray}
   and
-  \begin{equation} (-\infty, \bar{D}_1 + z_{\alpha}
+  \begin{equation} (-\infty, \oosA + z_{\alpha}
       \, \hat\sigma / \sqrt{P}],
   \end{equation}
-  contains $\E_T\bar{D}_2$ with probability $\alpha$ in the limit,
+  contains $\E_T\oosB$ with probability $\alpha$ in the limit,
   with $z_{\alpha}$ the $1-\alpha$ quantile of the standard normal
   distribution.
 \end{thm}
@@ -613,9 +644,9 @@ different asymptotics.
 
 This result allows forecasters to use the \dmw\ test to conduct
 inference about the models' accuracy.  Since the \oos\ average,
-$\bar D_1$, is asymptotically normal and centered on the expected
+$\oosA$, is asymptotically normal and centered on the expected
 future performance, $t$-tests constructed from the \oos\ errors
-necessarily test hypotheses about $\E_T \bar{D}_2$ and not the
+necessarily test hypotheses about $\E_T \oosB$ and not the
 performance of the pseudo-true models or the unconditional
 performance of the models.
 
@@ -624,8 +655,8 @@ The application to testing can be expressed as a corollary:
 Suppose that the conditions of Theorem \ref{res-confidence-intervals}
 hold.  Then
 \begin{equation}
-  \Pr[\sqrt{P}\bar D_{1}/\hat\sigma \geq z_{\alpha} \mid \E_{T}
-  \bar{D}_{2} \leq 0] \to^p \alpha.
+  \Pr[\sqrt{P}\oosA/\hat\sigma \geq z_{\alpha} \mid \E_{T}
+  \oosB \leq 0] \to^p \alpha.
 \end{equation}
 \end{cor}
 
@@ -633,19 +664,19 @@ Two intermediate Lemmas will help us understand Theorem
 \ref{res-confidence-intervals} better.  Its proof consists of two
 steps: we can write
 \begin{equation}
-  \sqrt{P} (\bar{D}_1 - \E_T \bar{D}_2) = \sqrt{P} (\bar{D}_1 - \E_R
-  \bar{D}_1) + \sqrt{P} (\E_R \bar{D}_1 - \E_T \bar{D}_2),
+  \sqrt{P} (\oosA - \E_T \oosB) = \sqrt{P} (\oosA - \E_R
+  \oosA) + \sqrt{P} (\E_R \oosA - \E_T \oosB),
 \end{equation}
 so Theorem~\ref{res-confidence-intervals} holds if
 \begin{equation}\label{normalpart}
-  \sqrt{P}\frac{\bar{D}_1 - \E_R \bar{D}_1}{\sigma} \to^d N(0,1)
+  \sqrt{P}\frac{\oosA - \E_R \oosA}{\sigma} \to^d N(0,1)
 \end{equation}
 and
 \begin{equation}\label{coefpart}
-  \E_R \bar{D}_1 = \E_T \bar{D}_2 + o_p(P^{-\frac12}).
+  \E_R \oosA = \E_T \oosB + o_p(P^{-\frac12}).
 \end{equation}
-The first Lemma first shows that the process $\{D_{tR} - \E_R \bar
-D_1\}$ is an $L_2$-mixingale of size $-1/2$ that satisfies a \clt,
+The first Lemma first shows that the process $\{D_{tR} - \E_R \oosA\}$
+is an $L_2$-mixingale of size $-1/2$ that satisfies a \clt,
 ensuring~\eqref{normalpart}.  The second shows that~\eqref{coefpart}
 holds under Assumption~\ref{asmp-4}.
 
@@ -672,7 +703,7 @@ and were introduced and studied extensively by
 \citet{Mcl:74,Mcl:75,Mcl:75b,Mcl:77}.  This lemma shows that the
 estimation uncertainty introduces dependence into the \oos\ forecast
 errors, but that additional dependence is contained in the term $\E_R
-\bar D_1$ and can be effectively removed by subtraction.  The second
+\oosA$ and can be effectively removed by subtraction.  The second
 part of the Lemma shows that the basic mixingale \clt\ established by
 \citet{Dej:97} applies in this setting.\footnote{De Jong proves two
   \clt s: one for mixingales and one for \ned\ functions of mixing
@@ -686,21 +717,21 @@ part of the Lemma shows that the basic mixingale \clt\ established by
 \begin{lem} \label{res-convergence} Suppose that Assumptions
   \ref{asmp-1}--\ref{asmp-4} hold.  Then
 \begin{equation*}
-  \E_T \bar{D}_2 - \E_R \bar D_1 =  O_p(\sqrt{P/T}) +
+  \E_T \oosB - \E_R \oosA =  O_p(\sqrt{P/T}) +
   o_p(P^{-\frac12}) + o_p(Q^{-\frac12}).
 \end{equation*}
 \end{lem}
 
 The justification for Lemma~\ref{res-convergence} is intuitive.  In
-the limit, the difference between $\E_T \bar{D}_2$ and $\E_R \bar D_1$
-comes from the coefficient estimators used: $\E_T\bar{D}_2$ is the
+the limit, the difference between $\E_T \oosB$ and $\E_R \oosA$
+comes from the coefficient estimators used: $\E_T\oosB$ is the
 expected performance using the full-sample estimate, $\hat{\theta}_T$,
-and $\E_R \bar D_1$ is the performance using the period-$R$ estimate,
+and $\E_R \oosA$ is the performance using the period-$R$ estimate,
 $\hat{\theta}_R$.  When $P$ and $Q$ are large, the dependence between
 the test and training samples vanishes, so the estimators of $\theta$
 are the only variables affected by the conditioning $\sigma$-fields,
 $\mathcal{F}_R$ and $\mathcal{F}_T$.  Since $L$ is smooth, the
-difference between $\E_R \bar D_1$ and $\E_T \bar D_2$ is of order
+difference between $\E_R \oosA$ and $\E_T \oosB$ is of order
 $\lvert \hat\theta_R - \hat\theta_T \rvert_2$, which itself is of
 order $\sqrt{\frac{P}{T}}$.
 
@@ -718,7 +749,7 @@ variance estimators are consistent.\footnote{As with
   \ref{asmp-2}, \ref{asmp-3}, and \ref{asmp-5} hold, that $\gamma, P$
   and $R \to \infty$ as $T \to \infty$, and that $\gamma = o(P)$.  Then
   \begin{equation*}
-    \frac1P \oosSum{s,t}{1} (D_{tR} - \bar D_1)(D_{sR} - \bar D_1)
+    \frac1P \oosSum{s,t}{1} (D_{tR} - \oosA)(D_{sR} - \oosA)
     \vWeight = \sigma^2 + o_p(1).
   \end{equation*}
 \end{lem}
@@ -747,12 +778,12 @@ $K_2/T = c_2 > 0$, and $K_2 \geq 2$, and let $F$ be the F-statistic
 for the test of the null hypothesis that $\psi = 0.$
 Then 
 \begin{equation}\label{eq:ftestreject1}
-  \Pr[F \geq q_{K_2 - K_1, T - K_2}(1-\alpha) \mid E_T \bar{D}_2 \leq 0
+  \Pr[F \geq q_{K_2 - K_1, T - K_2}(1-\alpha) \mid E_T \oosB \leq 0
   ] \to 1\mbox{ as $\phi_2 \to \infty$ ($T$ fixed)}
 \end{equation}
 and if $\phi_2 \geq \tau \sqrt{c_2 - c_1}$, then
 \begin{equation}\label{eq:ftestreject2}
-  \Pr[F \geq q_{K_2 - K_1, T - K_2}(1-\alpha) \mid E_T \bar{D}_2 \leq 0
+  \Pr[F \geq q_{K_2 - K_1, T - K_2}(1-\alpha) \mid E_T \oosB \leq 0
   ] \to 1 \text{ as $T \to \infty$},
 \end{equation}
 where $q_{K_2-K_1, T-K_2}(1-\alpha)$ is the
@@ -769,19 +800,19 @@ consequence of the power of the F-test increasing with $\phi_2$.
 The first result,~\eqref{eq:ftestreject1}, can be understood through the case $K_2 = 2$ and
 $K_1 = 0$, so
 \begin{equation*}
-  E_T \bar D_2 = \psi_1^2 + \psi_2^2 - (\hat{\psi}_1 - \psi_1)^2 - (\hat\psi_2 - \psi_2)^2,
+  E_T \oosB = \psi_1^2 + \psi_2^2 - (\hat{\psi}_1 - \psi_1)^2 - (\hat\psi_2 - \psi_2)^2,
 \end{equation*}
 where $\hat{\psi}$ is the \ols\ estimator.  Under these conditions,
-the F-test rejects if $\hat{\psi}'\hat{\psi}$ lies outside the circle
-centered at the origin with radius $\hat{\tau} (c_2 - c_1)^{0.5}
-q_{K_2-K_1, T-K_2}^{0.5}(1-\alpha)$, and $E_T \bar{D}_2 \leq 0$ holds
-for $\hat\psi$ on or outside a circle centered at $\psi$ passing
-through the origin; $\hat{\tau}^2$ is the usual estimator of $\tau^2$.
+the F-test rejects if $\hat{\psi}$ lies outside the circle centered at
+the origin with radius $\hat{\tau} (c_2 - c_1)^{0.5} q_{K_2-K_1,
+  T-K_2}^{0.5}(1-\alpha)$, and $E_T \oosB \leq 0$ holds for $\hat\psi$
+on or outside a circle centered at $\psi$ passing through the origin;
+$\hat{\tau}^2$ is the usual estimator of $\tau^2$.
 Figure~\ref{fig:rreject} depicts these regions.  Since the \ols\
 estimator $\hat\psi$ is normal with mean $\psi$, the probability that
-$\hat{\psi}$ falls in the acceptance region given $E_T \bar{D}_2 \leq
-0$ vanishes as $\phi_2 \to \infty$, even though the full model will
-give worse forecasts than the restricted model.
+$\hat{\psi}$ falls in the acceptance region given $E_T \oosB \leq 0$
+vanishes as $\phi_2 \to \infty$, even though the full model will give
+worse forecasts than the restricted model.
 
 \newcommand{\circlefigA}[4]{
   \begin{tikzpicture}
@@ -829,7 +860,7 @@ give worse forecasts than the restricted model.
     \ref{sec:insample}.  The smaller model has no estimated parameters
     and the larger has two coefficients.  The shaded regions in
     Figures (a) and (b) show the rejection region and the acceptance
-    region respectively of the F-test given $E_T \bar D_2 \leq 0$ when
+    region respectively of the F-test given $E_T \oosB \leq 0$ when
     the true elements of $\psi$ are moderately small.  Figures (c) and (d)
     show the same regions when the true $\psi$ is large.}
 \label{fig:rreject}
@@ -863,7 +894,7 @@ theory in small samples.\footnote{Simulations were conducted in R
   \citep{Rde:10} using the Lattice \citep{Sar:10} and RSQLite
   \citep{Jam:10} packages for graphics and data management
   respectively.}  The first looks at the asymptotic normality of the
-\dmw\ statistic centered on either $E_R \bar D_1$ or $E_T \bar D_2$.
+\dmw\ statistic centered on either $E_R \oosA$ or $E_T \oosB$.
 The previous section's results imply that centering on the first
 should give an approximately normal statistic and centering on the
 second should give a normal statistic when $P$ is small relative to
@@ -909,35 +940,35 @@ Section~\ref{sec:oostheory} works in practice.  For each draw of $X$
 and $Y$, we construct a one-sided and two-sided \oos\ interval of the
 form
 \begin{equation*}
-  [ \bar D_1 - 1.28 \hat{\sigma}, \infty) \quad\text{and}\quad
-  [ \bar D_1 - 1.64 \hat{\sigma}, \bar D_1 + 1.64\ \hat{\sigma}], \\
-  \hat\sigma^2 = \frac1P \sum_{t=R+1}^T (D_t - \bar D_{1})^{2}
+  [ \oosA - 1.28 \hat{\sigma}, \infty) \quad\text{and}\quad
+  [ \oosA - 1.64 \hat{\sigma}, \oosA + 1.64\ \hat{\sigma}], \\
+  \hat\sigma^2 = \frac1P \sum_{t=R+1}^T (D_t - \oosA)^{2}
 \end{equation*}
 for $P$ set to every 10th value between $T$ and $\frac{2T}{3}$.  We
-calculate the percentage of these intervals that contain $E_R \bar
-D_1$ and that contain $E_T \bar D_2$.  Since the data are i.i.d.,
-both of these quantities are easy to calculate:
+calculate the percentage of these intervals that contain $E_R \oosA$
+and that contain $E_T \oosB$.  Since the data are i.i.d., both of
+these quantities are easy to calculate:
 \begin{equation*}
-  E_R \bar D_1 = [\sum_{i=1}^{K_1} (\tilde{\theta}_{iR} - \theta_i)^2 +
+  E_R \oosA = [\sum_{i=1}^{K_1} (\tilde{\theta}_{iR} - \theta_i)^2 +
   \sum_{i=K_1+1}^{K_2}\theta_i^2] - \sum_{i=1}^{K_2} (\hat{\theta}_{iR} -
   \theta_i)^2
 \end{equation*}
 and
 \begin{equation*}
-  E_T \bar D_2 = [\sum_{i=1}^{K_1} (\tilde{\theta}_{iT} - \theta_i)^2 +
+  E_T \oosB = [\sum_{i=1}^{K_1} (\tilde{\theta}_{iT} - \theta_i)^2 +
   \sum_{i=K_1+1}^{K_2}\theta_i^2] - \sum_{i=1}^{K_2} (\hat{\theta}_{iT} -
   \theta_i)^2
 \end{equation*}
 where $\tilde{\theta}$ indicates that the coefficient is estimated
 using only the regressors in the benchmark model and $\hat{\theta}$
-the full model.  We draw 2000 samples for each choice of the design
-parameters.
+the full model.  We draw 2000 samples for each combination of the
+design parameters.
 
 The second simulation looks at the size and power of the test
 statistics when conducting inference about the models' generalization
 error.  The null hypothesis we test is 
 \begin{equation}\label{eq:9}
-  H_0:\quad E_T \bar D_2 \leq 0,
+  H_0:\quad E_T \oosB \leq 0,
 \end{equation}
 We look at four different statistics---the full-sample F-test, the
 \dmw\ $t$-test, the
@@ -959,16 +990,16 @@ not hold, until we have 2000 for each choice of the design parameters.
 The estimated size is the fraction of those samples in which the test
 statistic rejects.
 \subsection{Results}
-We'll discuss results for the confidence intervals first.
+We next discuss results for the confidence intervals first.
 Figures~\ref{fig:interval-R} and~\ref{fig:interval-T} show the
 coverage probability of these intervals as a function of $P$ for each
 combination of $T$, $K_1$ and $K_2$, and $c$.  The gray horizontal
 line shows the intervals' nominal coverage probability.  Each panel
 displays the coverage for a different choice of interval, centering
-term ($E_R \bar D_1$ or $E_T \bar D_2$) and combination of design
+term ($E_R \oosA$ or $E_T \oosB$) and combination of design
 parameters.
 
-Figure~\ref{fig:interval-R} gives the results for $E_R \bar D_1$.  For
+Figure~\ref{fig:interval-R} gives the results for $E_R \oosA$.  For
 both the one and two-sided intervals, the actual coverage is very
 close to the nominal coverage except when $P$ is small.  The poor
 behavior for small $P$ is unsurprising, as it simply means that the
@@ -976,7 +1007,7 @@ behavior for small $P$ is unsurprising, as it simply means that the
 intervals' good coverage holds even for the parsimonious models
 ($K_1=1$ and $K_2= 3$) which our theory does not necessarily apply to.
 
-Figure~\ref{fig:interval-T} gives the results for $E_T \bar D_2$.  In
+Figure~\ref{fig:interval-T} gives the results for $E_T \oosB$.  In
 rows 2, 4, 6, and 8, the overfit models, the coverage is near nominal
 coverage for moderately small values of $P$.  As $P$ increases to $2T/3$, the
 coverage either increases to 1 (for the one-sided interval) or fall to
@@ -988,14 +1019,13 @@ $c=0$.
 The behavior for $K_2 = T/10$ is exactly what our theory predicts.
 When $P^2/T$ is small, the coverage is near nominal levels.  The
 behavior as $P$ increases, combined with the results for $E_R
-\bar{D}_1$, indicate that $E_T \bar D_2 \geq E_R \bar D_1$ in general.
+\oosA$, indicate that $E_T \oosB \geq E_R \oosA$ in general.
 Since
-\[E_{T} \bar D_2 = E_{R} \bar D_1 + (E_{T} \bar D_2 - E_{R} \bar
-D_1), \] and the interval is approximately centered at $E_R \bar D_1$,
-the difference $E_{T} \bar D_2 - E_{R} \bar D_1$ adds a substantial
-positive quantity when $P^2/T$ is not near zero, increasing the
-coverage of the one-sided interval but taking $E_T \bar D_2$ outside
-the two-sided interval.
+\[E_{T} \oosB = E_{R} \oosA + (E_{T} \oosB - E_{R} \oosA), \] and the
+interval is approximately centered at $E_R \oosA$, the difference
+$E_{T} \oosB - E_{R} \oosA$ adds a substantial positive quantity when
+$P^2/T$ is not near zero, increasing the coverage of the one-sided
+interval but taking $E_T \oosB$ outside the two-sided interval.
 
 We next present the size simulations,
 Figures~\ref{fig:ftest}--\ref{fig:ttest-power}.  For the \oos\ tests,
@@ -1011,7 +1041,7 @@ each individual plot shows the empirical size for each choice of $c$.
 We see immediately that the actual and nominal size are essentially
 equal for $c = 0$, which is unsurprising.  For $c = 0$, the F-test is
 exact; moreover, the larger model will almost always be less accurate
-than the smaller one, so conditioning on $\E_T \bar{D}_2 \leq 0$ is
+than the smaller one, so conditioning on $\E_T \oosB \leq 0$ is
 almost unrestrictive.  When $c$ increases, though, the F-test
 over-rejects badly---rejecting at roughly 50\% when $c = 1$ for the
 parsimonious model and from 70\% to 100\% for the overfit model.  As
@@ -1066,8 +1096,8 @@ amount.
 Since the \dmw\ test tends to have low rejection probability, the
 test's power is a concern.  We'll present some power results,
 simulating from \eqref{eq:1} with $c = 1$ or 2 subject to the
-constraint that $E_T \bar D_2 > 0$.\footnote{Draws of $X$ and $Y$ with
-  $E_T \bar D_2 > 0$ are very rare when $c=0$, so we do not present
+constraint that $E_T \oosB > 0$.\footnote{Draws of $X$ and $Y$ with
+  $E_T \oosB > 0$ are very rare when $c=0$, so we do not present
   results for that value of $c$.}  Figure~\ref{fig:ttest-power} plots
 the power for the \dmw\ test; since the other test statistics greatly
 over-reject, we do not present their power.  For $c=1$, the power is
@@ -1082,16 +1112,16 @@ quite low but greater than nominal size for $c = 2$.
 
 Both sets of simulations support our theoretical results.  The first
 simulation confirms that the \dmw\ \oos\ $t$-test is centered at $E_R
-\bar D_1$ for all choices of $P$ and $R$ and is centered on $E_T \bar
-D_2$ only when $P$ is small.  The second simulation confirms that the
-\dmw\ test has correct size for the null hypothesis that $E_T \bar D_2
-\leq 0$ when $P$ is small and that tests designed to test whether the
+\oosA$ for all choices of $P$ and $R$ and is centered on $E_T \oosB$
+only when $P$ is small.  The second simulation confirms that the \dmw\
+test has correct size for the null hypothesis that $E_T \oosB \leq 0$
+when $P$ is small and that tests designed to test whether the
 benchmark is true, like the F-test and Clark and West's (2006, 2007)
 and McCracken's (2007) \oos\ tests can reject by much more than their
-nominal size when testing the null $E_T \bar D_2 \leq 0$.
-Moreover, these simulations demonstrate that the restriction $P^2/T
-\to 0$ is binding in practice, as the \dmw\ test under-rejects and has
-very low power when it is not satisfied.
+nominal size when testing the null $E_T \oosB \leq 0$.  Moreover,
+these simulations demonstrate that the restriction $P^2/T \to 0$ is
+binding in practice, as the \dmw\ test under-rejects and has very low
+power when it is not satisfied.
 \section{Empirical Exercise}\label{sec:empirics}
 This section presents an analysis of equity premium predictability
 similar to \citet{GoW:08}.\footnote{All of the calculations in this
@@ -1172,11 +1202,11 @@ does not imply that the model will forecast well, which we look at
 next.
 
 To study the effect of the training sample size on the \dmw\ statistic, we
-calculate the one-sided confidence interval for $E_T \bar D_2$ given
+calculate the one-sided confidence interval for $E_T \oosB$ given
 by \eqref{interval-greater} corresponding to the null and alternative
 hypotheses
-\[ H_0: \quad E_T \bar D_2 \leq 0 \qquad
-H_A: \quad E_T \bar D_2 > 0
+\[ H_0: \quad E_T \oosB \leq 0 \qquad
+H_A: \quad E_T \oosB > 0
 \]
 for each value of $R$ between 20 and $T-10$.  The standard deviation
 is estimated using a Newey-West estimator with $\lfloor
@@ -1187,12 +1217,12 @@ dataset.
 
 Figures~\ref{fig:empirics1} plots the \ols\ results and
 Figure~\ref{fig:empirics2} imposes \citepos{CaT:08} restriction.  The
-solid line in each figure shows the \oos\ average, $\bar D_1$, and the
+solid line in each figure shows the \oos\ average, $\oosA$, and the
 shaded region indicates the 95\% one-sided confidence interval implied
 by the \dmw\ test.  Negative numbers indicate that the kitchen sink
 model has higher out-of-sample loss.  We can see that the same
-patterns hold for both models: the performance difference decreases
-with $R$, but the kitchen sink model is never more accurate.  We also
+patterns hold for both models: the performance difference decreases as
+$R$ grows, but the kitchen sink model is never more accurate.  We also
 see that the performance difference decreases suddenly over the period
 $R=29$ to $R=34$ (corresponding to the years 1956--1961).
 Figure~\ref{fig:empirics3} plots the accuracy of the individual
@@ -1238,13 +1268,13 @@ too often when the benchmark model is more accurate.
 More work remains.  Our requirement that $\frac{P^2}{T}$ converge to
 zero is limiting, as it implies that in typical macroeconomic
 datasets, only a handful of observations should be used for testing.
-This restriction could be addressed by directly estimating $\E_R \bar
-D_1 - \E_T \bar{D}_2$ or by deriving its asymptotic distribution,
-which would allow larger values of $P$.  It could also be mitigated by
-extending our results to cross-validation or other resampling
-strategies.  It would also be useful to extend our results to other
-estimation windows and forecasting models, and to explore how
-stationarity could be relaxed.
+This restriction could be addressed by directly estimating $\E_R \oosA
+- \E_T \oosB$ or by deriving its asymptotic distribution, which would
+allow larger values of $P$.  It could also be mitigated by extending
+our results to cross-validation or other resampling strategies.  It
+would also be useful to extend our results to other estimation windows
+and forecasting models, and to explore how stationarity could be
+relaxed.
 
 \appendix
 \section{Supporting results}
@@ -1503,11 +1533,11 @@ x_2^{*\prime}\bh{2#1}) \mid \bh{#1})}}
     x_{#1}^{*\prime}\bh{#1R}) - L(y^{*} - x_{#1}^{*\prime}\bh{#1T})}}
 We'll first show that 
 \begin{equation}\label{EQ-oosaverage1}
-\E_R \bar D_1 = \resConvgRHS{R} + o_p(P^{-\frac12})
+\E_R \oosA = \resConvgRHS{R} + o_p(P^{-\frac12})
 \end{equation}
 and
 \begin{equation}\label{EQ-oosaverage2}
-\E_T \bar D_2 = \resConvgRHS{T} + o_p(Q^{-\frac12})
+\E_T \oosB = \resConvgRHS{T} + o_p(Q^{-\frac12})
 \end{equation}
 where $\hat\theta_R = (\hat\theta_{1R}, \hat\theta_{2R})$,
 $\hat\theta_T = (\hat\theta_{1T}, \hat\theta_{2T})$, and $y^{*}$,
@@ -1534,7 +1564,7 @@ and
 \]
 for all $t$.  Then 
 \[
-\lVert \E_R \bar D_1 - \wall \resConvgRHS{R} \rVert_2  \\
+\lVert \E_R \oosA - \wall \resConvgRHS{R} \rVert_2  \\
 \leq \frac1P \oosSum{t}{1} \lVert \E_R (D_{tR} - \tilde D_t) \rVert_2 \\
 \leq \frac{\couplingConstant}{P} \oosSum{s}{1} \couplingBeta{s} \\
 = o(P^{-\frac12}).
@@ -1680,7 +1710,7 @@ We'll start with (\ref{eq:4}). It follows from simple algebra that
 \[
 \lvert \hat\sigma^2 - \varianceTermI \rvert \leq \wall
 \varianceDiffA \\ +
-\frac1{P} \oosSum{s,t}{1} \lvert (D_{tR} - \bar D_1)(\E_R D_{sR} - \bar D_1) \rvert
+\frac1{P} \oosSum{s,t}{1} \lvert (D_{tR} - \oosA)(\E_R D_{sR} - \oosA) \rvert
 \vWeight,
 \]
 so we'll show that each summation is $o_p(1)$.  The two
@@ -1696,9 +1726,9 @@ $\frac1P \oosSum{s}{1}(D_{sR} - \E_R D_{sR})^2 = O_p(1)$, and it suffices to pro
 that \[\varianceDiffAi = o_p(1).\]  Observe that
 \[
 \varianceDiffAi \wall =  O_p(\frac1P \oosSum{s}{1}(\E_{R}D_{sR} -
-\E_R\bar D_1)^2) \\
-\quad + O_p(\bar D_1 - \E_R\bar D_1)^{2} \\
-= O_p(\frac1P \oosSum{s}{1} (\E_RD_{sR})^2 - (\E_R\bar D_1)^2) + o_p(1),    \return
+\E_R\oosA)^2) \\
+\quad + O_p(\oosA - \E_R\oosA)^{2} \\
+= O_p(\frac1P \oosSum{s}{1} (\E_RD_{sR})^2 - (\E_R\oosA)^2) + o_p(1),    \return
 \]
 with the second term vanishing by Lemma \ref{res-mixingale} and
 \citepos{Dav:93} mixingale \lln.
@@ -1715,9 +1745,9 @@ and so
 
 Consequently,
 \[
-\frac1P \oosSum{s}{1} (\E_R D_{sR})^2 - (\E_R\bar D_1)^2 \wall = 
+\frac1P \oosSum{s}{1} (\E_R D_{sR})^2 - (\E_R\oosA)^2 \wall = 
 \frac1P \oosSum{s}{1} [(\E_R D_{sR})^2 - (\E_R\tilde D_s)^2]\\
-\quad+ (\frac1P \oosSum{s}{1} \E_R \tilde D_s)^2 - (\E_R\bar D_1)^2 \quad \text{a.s}.\\
+\quad+ (\frac1P \oosSum{s}{1} \E_R \tilde D_s)^2 - (\E_R\oosA)^2 \quad \text{a.s}.\\
 = O_p(\frac1P \oosSum{s}{1} [(\E_R D_{sR})^2 - (\E_R \tilde D_s)^2]).
 \]
 Finally, 
@@ -1845,11 +1875,11 @@ as required.
   restricted model.  The difference between the two models'
   generalization error is
 \[
-E_T \bar D_2 = \sum_{j=K_1+1}^{K_2} [\psi_j^2 - (\hat{\psi}_j - \psi_j)^2]
+E_T \oosB = \sum_{j=K_1+1}^{K_2} [\psi_j^2 - (\hat{\psi}_j - \psi_j)^2]
 \]
-For any $\hat{\theta}$, $E_T \bar D_2$ equals zero when
+For any $\hat{\theta}$, $E_T \oosB$ equals zero when
 $\hat{\psi}$ lies on the surface of the hypersphere centered at
-$\psi$ with radius $|\psi|_2$, and $E_T \bar D_2$ and is greater
+$\psi$ with radius $|\psi|_2$, and $E_T \oosB$ and is greater
 than zero when $\hat{\psi}$ lies outside that sphere.
 Also, the rejection region in $\Re^{K_2}$ for is the set of values of $\hat{\psi}$
 on or beyond the sphere
@@ -1858,7 +1888,7 @@ on or beyond the sphere
 \]
 
 We can get a lower bound for the probability
-\[\Pr[F \geq q_\alpha \mid E_T \bar{D}_2 \leq 0]\]
+\[\Pr[F \geq q_\alpha \mid E_T \oosB \leq 0]\]
 by rewriting $\hat{\psi}$ in spherical coordinates re-centered at
 $\psi$: $(\hat{r}, \hat{\omega}_1, \dots,
 \hat{\omega}_{K_2-K_1-1})$, with 
@@ -1908,7 +1938,7 @@ for $\hat{\tau}^2$ given.\footnote{This setup assumes that
 
 As a result,
 \[
-\Pr[F \geq q_{\alpha}\wall \mid E_T \bar{D}_2 \leq 0] = 
+\Pr[F \geq q_{\alpha}\wall \mid E_T \oosB \leq 0] = 
 \Pr[\hat{\psi}'\hat{\psi} \geq \hat \tau^2 q_\alpha \frac{K_2 - K_1}{T}
 \mid |\hat{\psi}-\psi|_2 \geq |\psi|_2] \\
 \geq 1 - \E(\Pr\{ \hat{\omega}_i \in [\tilde{\omega}_i - \xi, \tilde{\omega}_i +
@@ -1976,53 +2006,53 @@ $(\frac{2\xi}{\pi})^{K_2-K_1-1}\to^p0$, proving~\eqref{eq:ftestreject2}.
 \clearpage
 \begin{figure}
 \centering
-\textbf{\large{Simulated Coverage of One-Sided DMW Interval for $E_R\bar D_1$}}
+\large{Simulated Coverage of One-Sided DMW Interval for $E_R\oosA$}
 \includegraphics{mc/plots/interval-testerror1}
-\textbf{\large{Simulated Coverage of Two-Sided DMW Interval for $E_R\bar D_1$}}
+\large{Simulated Coverage of Two-Sided DMW Interval for $E_R\oosA$}
 \includegraphics{mc/plots/interval-testerror2}
-\caption{Simulated coverage of $E_R \bar D_1$ at 90\% confidence using
-a one- and two-sided intervals based on the \protect\textsc{dmw} \protect\textsc{oos}
-test, plotted as a function of the fraction of observations used in
-the test sample, $P/T$.  The solid horizontal line denotes the
-intervals' nominal coverage.}
+\caption{Simulated coverage of $E_R \oosA$ at 90\% confidence using a
+  one- and two-sided intervals based on the \protect\textsc{dmw}
+  \protect\textsc{oos} test, plotted as a function of the fraction of
+  observations used in the test sample, $P/T$.  The solid horizontal
+  line denotes the intervals' nominal coverage.}
  \label{fig:interval-R}
 \end{figure}
 \clearpage
 \begin{figure}
 \centering
-\textbf{\large{Simulated Coverage of One-Sided DMW Interval for $E_T\bar D_2$}}
+\large{Simulated Coverage of One-Sided DMW Interval for $E_T\oosB$}
 \includegraphics{mc/plots/interval-generror1}
-\textbf{\large{Simulated Coverage of Two-Sided DMW Interval for $E_T\bar D_2$}}
+\large{Simulated Coverage of Two-Sided DMW Interval for $E_T\oosB$}
 \includegraphics{mc/plots/interval-generror2}
-\caption{Simulated coverage of $E_T \bar D_2$ at 90\% confidence using
-a one- and two-sided intervals based on the \protect\textsc{dmw} \protect\textsc{oos}
-test, plotted as a function of the fraction of observations used in
-the test sample, $P/T$.  The solid horizontal line denotes the
-intervals' nominal coverage.}
+\caption{Simulated coverage of $E_T \oosB$ at 90\% confidence using a
+  one- and two-sided intervals based on the \protect\textsc{dmw}
+  \protect\textsc{oos} test, plotted as a function of the fraction of
+  observations used in the test sample, $P/T$.  The solid horizontal
+  line denotes the intervals' nominal coverage.}
 \label{fig:interval-T}
 \end{figure}
 \clearpage
 
 \begin{figure}
   \centering
-  \textbf{\large{Simulated Rejection Probability of F-test Under $E_T
-      \bar{D}_2 \leq 0$}}
+\large{Simulated Rejection Probability of F-test Under $E_T
+      \oosB \leq 0$}
   \includegraphics{mc/plots/ftest-001}
   \caption{Simulated rejection probabilities for the F-test given
-    $\E_T \bar{D}_2 \leq 0$ with nominal size 10\%.  Values greater
-    than 10\% indicate that the test rejects the benchmark model too
-    often.  See Section~\ref{sec:simulation-design} for a discussion
-    of the simulation design.}
+    $\E_T \oosB \leq 0$ with nominal size 10\%.  Values greater than
+    10\% indicate that the test rejects the benchmark model too often.
+    See Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
   \label{fig:ftest}
 \end{figure}
 \clearpage
 \begin{figure}
   \centering
-  \textbf{\large{Simulated Rejection Probability of DMW Test Under $E_T
-      \bar{D}_2 \leq 0$}}
+  \large{Simulated Rejection Probability of DMW Test Under $E_T
+      \oosB \leq 0$}
   \includegraphics{mc/plots/size-dmwsize}  
   \caption{Simulated rejection probabilities for the \protect\textsc{dmw}
-    \protect\textsc{oos} $t$-test given $\E_T \bar{D}_2 \leq 0$ with nominal
+    \protect\textsc{oos} $t$-test given $\E_T \oosB \leq 0$ with nominal
     size 10\%.  Values greater than 10\% indicate that the test
     rejects the benchmark model too often.  The solid horizontal line
     indicates the nominal rejection probability.  See
@@ -2033,11 +2063,11 @@ intervals' nominal coverage.}
 
 \begin{figure}
   \centering
-  \textbf{\large{Simulated Rejection Probability of Clark and West
-      (2006, 2007) Test Under $E_T \bar{D}_2 \leq 0$}}
+  \large{Simulated Rejection Probability of Clark and West
+      (2006, 2007) Test Under $E_T \oosB \leq 0$}
   \includegraphics{mc/plots/size-clarkwest}
   \caption{Simulated rejection probabilities for Clark and West's
-    (2006, 2007) \protect\textsc{oos} test statistic given $\E_T \bar{D}_2
+    (2006, 2007) \protect\textsc{oos} test statistic given $\E_T \oosB
     \leq 0$ with nominal size 10\%.  Values greater than 10\% indicate
     that the test rejects the benchmark model too often.  The solid
     horizontal line indicates the nominal rejection probability.  See
@@ -2048,11 +2078,11 @@ intervals' nominal coverage.}
 
 \begin{figure}
   \centering
-  \textbf{\large{Simulated Rejection Probability of McCracken (2007)
-      Test \\ Under $E_T \bar{D}_2 \leq 0$}}
+  \large{Simulated Rejection Probability of McCracken (2007)
+      Test \\ Under $E_T \oosB \leq 0$}
   \includegraphics{mc/plots/size-mccracken}
   \caption{Simulated rejection probabilities for McCracken's (2007)
-    \protect \textsc{oos} test statistic given $\E_T \bar{D}_2 \leq 0$ with
+    \protect \textsc{oos} test statistic given $\E_T \oosB \leq 0$ with
     nominal size 10\%.  Values greater than 10\% indicate that the
     test rejects the benchmark model too often.  The solid horizontal
     line indicates the nominal rejection probability.  See
@@ -2063,11 +2093,11 @@ intervals' nominal coverage.}
 
 \begin{figure}
   \centering
-  \textbf{\large{Simulated Rejection Probability of DMW Test Under $E_T
-      \bar{D}_2 > 0$}}
+  \large{Simulated Rejection Probability of DMW Test Under $E_T
+      \oosB > 0$}
   \includegraphics{mc/plots/size-dmwpower}
   \caption{Simulated rejection probabilities for the \protect \textsc{dmw}
-    \protect\textsc{oos} $t$-test given $\E_T \bar{D}_2 > 0$ with nominal
+    \protect\textsc{oos} $t$-test given $\E_T \oosB > 0$ with nominal
     size 10\%.  Values greater than 10\% indicate that the test
     rejects the benchmark model too often.  The solid horizontal line
     indicates the nominal rejection probability.  See
@@ -2078,8 +2108,8 @@ intervals' nominal coverage.}
 
 \begin{figure}
 \centering
-\textbf{\large{Difference in OOS MSE of Prevailing Mean and\\ Kitchen
-    Sink Models of Equity Premium (OLS)}}
+\large{Difference in OOS MSE of Prevailing Mean and\\ Kitchen
+    Sink Models of Equity Premium (OLS)}
 \includegraphics{empirics/plots/oos-mse-1}
 \includegraphics{empirics/plots/oos-mse-1b}
 \caption{\protect \textsc{oos} difference in the \protect\textsc{mse}
@@ -2095,8 +2125,8 @@ intervals' nominal coverage.}
 
 \begin{figure}
 \centering
-\textbf{\large{Difference in OOS MSE of Prevailing Mean and\\ Kitchen
-    Sink Models of Equity Premium (CT)}}
+\large{Difference in OOS MSE of Prevailing Mean and\\ Kitchen
+    Sink Models of Equity Premium (CT)}
 \includegraphics{empirics/plots/oos-mse-2}
 \includegraphics{empirics/plots/oos-mse-2b}
 \caption{\protect \textsc{oos} difference in the \protect\textsc{mse}
@@ -2112,7 +2142,7 @@ intervals' nominal coverage.}
 
 \begin{figure}
 \centering
-\textbf{\large{OOS MSE of Individual Forecasts of Equity Premium}}
+\large{OOS MSE of Individual Forecasts of Equity Premium}
 \includegraphics{empirics/plots/oos-ind-ks}
 \includegraphics{empirics/plots/oos-ind-pm}
 \caption{\protect{\textsc{oos} \textsc{mse} of the Prevailing Mean (\textsc{pm}) and
