@@ -27,8 +27,8 @@ doxyplot <- function(dplot, ...) {
                data = dplot,
                ylab = "Coverage", xlab = "P/T",
                panel = function(x,y,...) {
-                 panel.xyplot(x,y,...,type = "l")
                  panel.lines(c(0,2/3),c(.9,.9), col = "gray")
+                 panel.xyplot(x,y,...,type = "l")
                },
                layout = c(4,4),
                par.strip.text = list(cex = .65),

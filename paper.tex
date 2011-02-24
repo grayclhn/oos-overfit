@@ -49,8 +49,8 @@
 \expandafter\newcommand\expandafter{\csname #1\endcsname}{#2 \textsc{(\MakeLowercase{#3})}%
 \expandafter\renewcommand\expandafter{\csname #1\endcsname}{\textsc{\MakeLowercase{#3}}}}}
 
-\newcommand{\oosA}{\bar{D}_a}
-\newcommand{\oosB}{\bar{D}_b}
+\newcommand{\oosA}{\bar{D}_{R}}
+\newcommand{\oosB}{\bar{D}_{T}}
 
 \newcommand{\oost}{\ensuremath{\operatorname{oos-t}}}
 \newcommand{\oosSum}[2]{\ensuremath{\sum_{#1=R-\h+#2}^{T-\h}}}
@@ -153,7 +153,8 @@
     would like to thank Julian Betts, Helle Bunzel, Marjorie Flavin,
     Nir Jaimovich, Lutz Kilian, Michael McCracken, Seth Pruitt, Ross
     Starr, Yixiao Sun, Allan Timmermann, participants at the 2010
-    Midwest Economics Association Annual Meetings, the 2010 Joint
+    Midwest Economics Association Annual Meetings, the 2010
+    International Symposium on Forecasting, the 2010 Joint
     Statistical Meetings, and in many seminars at \textsc{ucsd}, and
     espeically Graham Elliott for their valuable suggestions, feedback
     and advice in writing this paper.  I would also like to thank Amit
@@ -177,7 +178,7 @@
   relative to the total sample size.  Moreover, tests that are
   designed to reject if the larger model is true, such as the usual
   in-sample Wald and \textsc{lm} tests and also Clark and McCracken's
-  (2001, 2005a), \citepos{Mcc:07} and Clark and West's (2006, 2007)
+  (2001, 2005a), \citepos{Mcc:07}, and Clark and West's (2006, 2007)
   out-of-sample statistics, will choose the larger model too often
   when the smaller model is more accurate.
 
@@ -186,6 +187,7 @@
 \noindent Keywords: Generalization Error, Forecasting, Model
 Selection, t-test, Dimension Asymptotics
 \end{abstract}
+\newpage
 
 \section{Introduction}\label{sec:introduction}
 Consider two sequences of length $P$ of prediction errors, the result
@@ -1875,14 +1877,14 @@ as required.
   restricted model.  The difference between the two models'
   generalization error is
 \[
-E_T \oosB = \sum_{j=K_1+1}^{K_2} [\psi_j^2 - (\hat{\psi}_j - \psi_j)^2]
+E_T \oosB = \sum_{j=K_1+1}^{K_2} [\psi_j^2 - (\hat{\psi}_j - \psi_j)^2].
 \]
-For any $\hat{\theta}$, $E_T \oosB$ equals zero when
-$\hat{\psi}$ lies on the surface of the hypersphere centered at
-$\psi$ with radius $|\psi|_2$, and $E_T \oosB$ and is greater
-than zero when $\hat{\psi}$ lies outside that sphere.
-Also, the rejection region in $\Re^{K_2}$ for is the set of values of $\hat{\psi}$
-on or beyond the sphere
+For any $\hat{\theta}$, $E_T \oosB$ equals zero when $\hat{\psi}$ lies
+on the surface of the hypersphere centered at $\psi$ with radius
+$|\psi|_2$, and $E_T \oosB$ and is greater than zero when $\hat{\psi}$
+lies outside that sphere.  Also, the rejection region in $\Re^{K_2}$
+for the F-test is the set of values of $\hat{\psi}$ on or beyond the
+sphere
 \[
 \hat{\psi}'\hat{\psi} = \hat{\tau}^2 q_\alpha \frac{K_2-K_1}{T}.
 \]
@@ -1941,10 +1943,10 @@ As a result,
 \Pr[F \geq q_{\alpha}\wall \mid E_T \oosB \leq 0] = 
 \Pr[\hat{\psi}'\hat{\psi} \geq \hat \tau^2 q_\alpha \frac{K_2 - K_1}{T}
 \mid |\hat{\psi}-\psi|_2 \geq |\psi|_2] \\
-\geq 1 - \E(\Pr\{ \hat{\omega}_i \in [\tilde{\omega}_i - \xi, \tilde{\omega}_i +
-\xi] \ \forall i  \mid \hat{\tau}^2,
-|\hat{\psi}-\psi|_2 \geq |\psi|_2\} 
-\mid |\hat{\psi}-\psi|_2 \geq |\psi|_2)\quad a.s. \\ 
+\geq 1 - \E(\;\Pr[ \hat{\omega}_i \in [\tilde{\omega}_i - \xi, \tilde{\omega}_i +
+\xi] \ \forall i  \mid \wall \hat{\tau}^2,
+|\hat{\psi}-\psi|_2 \geq |\psi|_2] \\ 
+\mid |\hat{\psi}-\psi|_2 \geq |\psi|_2)\quad a.s. \return \\ 
 = 1 - \frac12 E ((2\xi / \pi)^{K_2-K_1-1}\mid
 |\hat{\psi}-\psi|_2 \geq |\psi|_2)\quad a.s. \\
 = 1 - \frac12 E (2\xi/\pi)^{K_2-K_1-1} \quad a.s..
@@ -1962,7 +1964,7 @@ $(\frac{2\xi}{\pi})^{K_2-K_1-1}\to^p0$, proving~\eqref{eq:ftestreject2}.
 \bibliographystyle{abbrvnat}
 \bibliography{AllRefs}
 
-\begin{table}[b]
+\begin{table}[h]
  \begin{multicols}{2}
   \begin{itemize}
   \item log Dividend Price Ratio
@@ -1986,7 +1988,7 @@ $(\frac{2\xi}{\pi})^{K_2-K_1-1}\to^p0$, proving~\eqref{eq:ftestreject2}.
  \label{tab:equity}
 \end{table}
 
-\begin{table}[!tbp]
+\begin{table}[b]
  \begin{center}
  \begin{tabular}{lrrrr}\hline\hline
 \multicolumn{1}{l}{waldtest}&\multicolumn{1}{c}{Res.Df}&\multicolumn{1}{c}{Df}&\multicolumn{1}{c}{F}&\multicolumn{1}{c}{Pr(\textgreaterF)}\tabularnewline
@@ -2064,7 +2066,7 @@ $(\frac{2\xi}{\pi})^{K_2-K_1-1}\to^p0$, proving~\eqref{eq:ftestreject2}.
 \begin{figure}
   \centering
   \large{Simulated Rejection Probability of Clark and West
-      (2006, 2007) Test Under $E_T \oosB \leq 0$}
+      (2006, 2007) Test \\ Under $E_T \oosB \leq 0$}
   \includegraphics{mc/plots/size-clarkwest}
   \caption{Simulated rejection probabilities for Clark and West's
     (2006, 2007) \protect\textsc{oos} test statistic given $\E_T \oosB
@@ -2176,4 +2178,6 @@ $(\frac{2\xi}{\pi})^{K_2-K_1-1}\to^p0$, proving~\eqref{eq:ftestreject2}.
 % LocalWords:  merlevede cltvar dR Scwarz davidson indices lrrrr waldtest Df jt
 % LocalWords:  dmw McCracken MSE OLS mse inoue huber elemstatlearning efron sw
 % LocalWords:  anova akritas jong normalpart coefpart Jong's rproject rsqlite
-% LocalWords:  unrestrictive datasets Heyde's ib oos
+% LocalWords:  unrestrictive datasets Heyde's ib oos Mcc MeR StW InK DiM CCS
+% LocalWords:  ClM CoS ClW GiW GiR GoW Cla HTF Efr BoB AkA AkP DeD Mcl Dej Rde
+% LocalWords:  Sar Zeh Zei Har CaT NeW MeP HaH AllRefs
