@@ -96,9 +96,9 @@ empirics/oos-analysis.done: empirics/oos-analysis.R empirics/AllData2009.csv
 	touch $@
 
 # Automatically create an archive file
-archfile = calhoun-2010-overfit.tar.gz
+archfile = calhoun-oos-overfit.tar.gz
 zip: $(archfile)
-$(archfile): $(filter-out .bzrignore goyal/% notes/% slide-plots/% slides.org, $(shell bzr ls -R -V --kind=file)) paper.pdf AllRefs.bib $(empiricplots) $(empirictables) mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(wildcard mc/plots/*.pdf)
+$(archfile): $(filter-out .gitignore goyal/% notes/% slide-plots/% slides.org journal-submission/%, $(shell git ls-tree master -r --name-only)) paper.pdf AllRefs.bib $(empiricplots) $(empirictables) mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(wildcard mc/plots/*.pdf)
 	tar chzf $@ $^
 
 Online: $(archfile)
