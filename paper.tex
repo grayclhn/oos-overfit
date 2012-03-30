@@ -147,16 +147,16 @@
 
 \frenchspacing \title{Out-of-Sample Comparisons of Overfit Models}
 \author{Gray Calhoun\thanks{email: \texttt{gcalhoun@iastate.edu}. I
-    would like to thank Julian Betts, Marjorie Flavin, Nir Jaimovich,
-    Lutz Kilian, Michael McCracken, Seth Pruitt, Ross Starr, Yixiao
-    Sun, Allan Timmermann, participants at the 2010 Midwest Economics
-    Association Annual Meetings, the 2010 Joint Statistical Meetings,
-    and in many seminars at \textsc{ucsd}, and espeically Graham
-    Elliott for their valuable suggestions, feedback and advice in
-    writing this paper.  I would also like to thank Amit Goyal for
-    providing computer code and data for his 2008 RFS paper with Ivo
-    Welch \citep{goyal-welch-2008-rfs}.} \\ Iowa State University,
-  Economics Department}
+    would like to thank Julian Betts, Helle Bunzel, Marjorie Flavin,
+    Nir Jaimovich, Lutz Kilian, Michael McCracken, Seth Pruitt, Ross
+    Starr, Yixiao Sun, Allan Timmermann, participants at the 2010
+    Midwest Economics Association Annual Meetings, the 2010 Joint
+    Statistical Meetings, and in many seminars at \textsc{ucsd}, and
+    espeically Graham Elliott for their valuable suggestions, feedback
+    and advice in writing this paper.  I would also like to thank Amit
+    Goyal for providing computer code and data for his 2008 RFS paper
+    with Ivo Welch \citep{goyal-welch-2008-rfs}.} \\ Iowa State
+  University, Economics Department}
 \date{October 24, 2011}
 
 \begin{document}
@@ -264,24 +264,26 @@ one of the models is overfit---when the number of its regressors
 increases with the number of observations so that their ratio remains
 positive.  We focus on linear regression models estimated with a fixed
 training window, but our basic conclusions should be true for other
-estimation strategies and models as well.  We show that the usual
-\oos\ average is asymptotically normal and can consistently estimate
-the difference between the models' expected loss in periods
-$T+1,T+2,\dots$ conditional on the on the data available in period
-$T$, a time-series analogue to the generalization error.\footnote{See,
-  for example, \citet{elemstatlearning}.}  Under these asymptotics,
-the generalization error does not converge to the expected performance
-of the pseudo-true models, so the in-sample and \oos\
-comparisons measure different quantities and should be expected to
-give different results for reasons beyond simple size and power
-comparisons.  Under our theory, the model that is closer to the true
-\dgp\ in population can forecast worse.  In such a situation, an
-in-sample comparison would correctly reject the null hypothesis that
-the benchmark is true, and an \oos\ comparison would correctly fail to
-reject the null that the benchmark is more accurate.\footnote{In a
-  pair of papers similar to ours,
-  \citet{RePEc:fip:fedkrw:rwp09-10,RePEc:fip:fedkrw:rwp09-11} study
-  in-sample and \oos\ tests that the larger model has nonzero
+estimation strategies and models as well.  Under this asymptotic
+theory, the \ols\ coefficient estimator is no longer consistent or
+asymptotically normal \citep{huber_robust_1973} with positive variance
+in the limit.  Even so, we show that the usual \oos\ average is
+asymptotically normal and can consistently estimate the difference
+between the models' expected loss in periods $T+1,T+2,\dots$
+conditional on the on the data available in period $T$, a time-series
+analogue to the generalization error.\footnote{See, for example,
+  \citet{elemstatlearning}.}  Under these asymptotics, the
+generalization error does not converge to the expected performance of
+the pseudo-true models, so the in-sample and \oos\ comparisons measure
+different quantities and should be expected to give different results
+for reasons beyond simple size and power comparisons.  Under our
+theory, the model that is closer to the true \dgp\ in population can
+forecast worse.  In such a situation, an in-sample comparison would
+correctly reject the null hypothesis that the benchmark is true, and
+an \oos\ comparison would correctly fail to reject the null that the
+benchmark is more accurate.\footnote{In a pair of papers similar to
+  ours, \citet{RePEc:fip:fedkrw:rwp09-10,RePEc:fip:fedkrw:rwp09-11}
+  study in-sample and \oos\ tests that the larger model has nonzero
   coefficients that are too close to zero to expect the model to
   forecast more accurately.  Like this paper, they argue that the
   larger model can be true but less accurate.  However, they focus on
@@ -302,12 +304,12 @@ We show that the \dmw\ test lets the forecaster control the
 probability of the first error, just as with conventional hypothesis
 testing.  
 
-However, since the models' coefficients are imprecisely
-estimated, the test sample must be small to ensure that the model
-estimated over the training sample is similar to the one that will be
-estimated over the full sample.  In particular, $P/T \to 0$ is
-required for consistent estimation, and $P^2/T \to 0$ is required for
-valid confidence intervals and inference.  For larger $P$, the \oos\
+Since the models' coefficients are imprecisely estimated in the limit,
+the test sample must be small to ensure that the model estimated over
+the training sample is similar to the one that will be estimated over
+the full sample.  In particular, $P/T \to 0$ is required for
+consistent estimation, and $P^2/T \to 0$ is required for valid
+confidence intervals and inference.  For larger $P$, the \oos\
 comparisons remain asymptotically normal, but are centered on the
 forecasting performance associated with the period-$R$ estimates.  In
 practice, researchers typically use large values of $P$, so these
@@ -315,25 +317,23 @@ studies may be too pessimistic about their models' future accuracy if
 they use the \dmw\ test.  Section~\ref{sec:oostheory} lays out the
 asymptotic behavior of the \dmw\ test under this limit theory.
 
-Under this asymptotic theory, the \ols\ coefficient estimator is no
-longer consistent or asymptotically normal \citep{huber_robust_1973},
-so this is a useful way to model overfit and imprecisely estimated
-models.  Moreover, \citet{efron_biased_1986,efron_estimation_2004}
-shows that in-sample comparisons overestimate models' accuracy by a
-factor proportional to this ratio.  Despite the non-normality of the
-coefficient estimators, modifications of the F-test are valid under
-this asymptotic theory, as shown by \citet{boos_anova_1995},
-\citet{akritas_asymptotics_2000},
+Since the \ols\ coefficient estimator is no longer consistent or
+asymptotically normal, the F-test and Wald tests are no longer
+asymptotically valid.  Moreover,
+\citet{efron_biased_1986,efron_estimation_2004} shows that naive
+comparisons of in-sample loss overestimate models' accuracy by a
+factor proportional to $K/T$, $K$ being the number of regressors.  But
+modifications of the F-test are valid under this asymptotic theory, as
+shown by \citet{boos_anova_1995}, \citet{akritas_asymptotics_2000},
 \citet{akritas_heteroscedastic_2004}, and
-\citet{calhoun_hypothesis_2009}, among others.  The F-test and Wald
-tests are no longer asymptotically valid themselves.  Such results
-establish that hypotheses about the parameters of the \dgp\ can be
-tested in-sample even if one or both models are overfit.  For that
-very reason, these tests can not reliably choose a model for
-forecasting and will reject the benchmark too often.  We show this
-analytically in Section~\ref{sec:insample}.  Moreover, under this
-asymptotic theory, many recent \oos\ test statistics, such as those
-derived by \cite{clark_tests_2001,clark_evaluating_2005},
+\citet{calhoun_hypothesis_2009}, among others.  Such results establish
+that hypotheses about the parameters of the \dgp\ can be tested
+in-sample even if one or both models are overfit.  For that very
+reason, these tests can not reliably choose a model for forecasting
+and will reject the benchmark too often.  We show this analytically in
+Section~\ref{sec:insample}.  Moreover, under this asymptotic theory,
+many recent \oos\ test statistics, such as those derived by
+\cite{clark_tests_2001,clark_evaluating_2005},
 \citet{mccracken_asymptotics_2007}, and
 \citet{clark_using_2006,clark_approximately_2007} should behave like
 the F-test.  These tests are also designed to reject the benchmark
@@ -488,7 +488,9 @@ underlying stochastic array.  We assume that the array is absolutely
 regular instead of strong mixing, which is more common in
 econometrics, because absolute regularity admits a particular coupling
 argument \citep{berbee_random_1979} that is unavailable for strong
-mixing sequences.
+mixing sequences.  Please see, for example,
+\citet{davidson_stochastic_1994} for a discussion of these mixing
+conditions.
 
 Assumption \ref{asmp-2} rules out uninteresting cases where the
 forecast error vanishes.
@@ -500,14 +502,14 @@ forecast error vanishes.
   $\theta_2$, satisfy $|\theta_1|_2 = O(1)$ and $|\theta_2|_2 = O(1)$.
   Moreover, there exist a $\delta > 0$ and finite $\Delta$ such that
   \begin{equation*}
-    \lVert \lambda_{\max}(X_{iS_{T}}'X_{iS_{T}}) \rVert_{4+\delta}
+    \lVert \lambda_{\max}(X_{iS_{T}}'X_{iS_{T}}) \rVert_{3+\delta}
     \leq S_{T}\, \Delta \\
     \lVert
     \lambda_{\max}(X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})
-    \rVert_{4+\delta} \leq S_{T}\, \Delta \\
-    \lVert \lambda_{\max}((X_{iS_{T}}'X_{iS_{T}})^{-1}) \rVert_{4+\delta} \leq \Delta/S_{T} \\
+    \rVert_{3+\delta} \leq S_{T}\, \Delta \\
+    \lVert \lambda_{\max}((X_{iS_{T}}'X_{iS_{T}})^{-1}) \rVert_{3+\delta} \leq \Delta/S_{T} \\
     \lVert
-    \lambda_{\max}((X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})^{-1})\rVert_{4+\delta}
+    \lambda_{\max}((X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})^{-1})\rVert_{3+\delta}
     \leq \Delta/S_{T}
   \end{equation*}
   for all $S_{T} \geq K_{2T}$ and large enough $T$, with $i =
