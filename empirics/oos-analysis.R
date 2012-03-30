@@ -3,7 +3,7 @@ library(sandwich)
 library(lmtest)
 library(Hmisc)
 
-dfull <- ts(read.csv("goyal-code/AllData2009.csv")[,-1],
+dfull <- ts(read.csv("AllData2009.csv")[,-1],
             start = 1871, frequency = 1)
 stock.returns <- (dfull[,"price"] + dfull[,"dividend"]) / lag(dfull[,"price"], -1) - 1
 startyear <- 1928

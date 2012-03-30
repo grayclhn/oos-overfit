@@ -36,21 +36,27 @@ doxyplot <- function(dplot, ...) {
 }
 @ 
 
+Check empirical coverage of $E_{R} \bar{D}_{1}$ for the one-sided
+naive out-of-sample t-test-based interval.
 <<testerror1, fig=TRUE, height = 3.5, width=6>>=
 d <- dbGetQuery(dbc, sprintf(dstring, 'test.error.1', 500))
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
 
-doxyplot(d) #Empirical coverage of one-sided interval
+doxyplot(d)
 @
 
+Check empirical coverage of $E_{R} \bar{D}_{1}$ for the two-sided
+naive out-of-sample t-test-based interval.
 <<testerror2, fig=TRUE, height = 3.5, width=6>>=
 d <- dbGetQuery(dbc, sprintf(dstring, 'test.error.2', 500))
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
-doxyplot(d) #Empirical coverage of two-sided interval
+doxyplot(d)
 @
 
+Check empirical coverage of $E_{T} \bar{D}_{2}$ for the one-sided
+naive out-of-sample t-test-based interval.
 <<generror1, fig=TRUE, height = 3.5, width=6>>=
 d <- dbGetQuery(dbc, sprintf(dstring, 'gen.error.1', 500))
 d$nlabel <- sprintf("T=%d", d$n)
@@ -58,6 +64,8 @@ d$normlabel <- sprintf("c=%d", d$norm)
 doxyplot(d) #Empirical coverage of one-sided interval
 @
 
+Check empirical coverage of $E_{T} \bar{D}_{2}$ for the two-sided
+naive out-of-sample t-test-based interval.
 <<generror2, fig=TRUE, height = 3.5, width=6>>=
 d <- dbGetQuery(dbc, sprintf(dstring, 'gen.error.2', 500))
 d$nlabel <- sprintf("T=%d", d$n)

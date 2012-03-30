@@ -1,6 +1,14 @@
 # I use makefiles to control the execution of monte-carlo and
 # empirical code, and to make sure that my LaTeX files are generated
-# correctly.
+# correctly.  You can run 
+#
+# make -n
+#
+# to generate a list the order of commands to run.  Running
+#
+# make
+#
+# should run the analysis and generate the final pdf file: paper.pdf
 
 SHELL := /bin/sh
 R := R
@@ -27,7 +35,7 @@ mcRnw   := $(wildcard mc/*.Rnw)
 empiricplots = $(call addboth,empirics/plots/,.pdf,oos-mse-1 oos-mse-1b oos-mse-2 oos-mse-2b forecastplot1 forecastplot2)
 empirictables = $(call addboth,empirics/tables/,.tex,waldtest coeftest)
 
-.PHONY: all mc clean dist burn
+.PHONY: all mc clean dist burn zip
 .DELETE_ON_ERROR: $(mcDB) 
 .IGNORE: paper.pdf
 
@@ -82,8 +90,18 @@ empirics: $(empiricplots) $(empirictables)
 $(empirictables) $(empiricplots): empirics/oos-analysis.done
 	touch $@
 
-empirics/oos-analysis.done: empirics/oos-analysis.R empirics/goyal-code/AllData2009.csv
+empirics/oos-analysis.done: empirics/oos-analysis.R empirics/AllData2009.csv
 	cd $(dir $<); Rscript $(RFLAGS) $(notdir $<); cd $(CURDIR)
+	touch $@
+
+# Automatically create an archive file
+archfile = calhoun-2010-overfit.tar.gz
+zip: $(archfile)
+$(archfile): $(filter-out .bzrignore goyal/% notes/% slide-plots/% slides.org, $(shell bzr ls -R -V --kind=file)) paper.pdf AllRefs.bib $(empiricplots) $(empirictables) mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(wildcard mc/plots/*.pdf)
+	tar chzf $@ $^
+
+Online: $(archfile)
+	scp $? gcalhoun@econ22.econ.iastate.edu:public_html/software
 	touch $@
 
 # There are a few other standard targets that remove unnecessary
