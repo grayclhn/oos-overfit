@@ -48,7 +48,7 @@ mc: $(mcDB) $(mcRnw:.Rnw=.pdf)# for convenience -- allows 'make mc'
 # I'm using the R version of texi2dvi so that it works directly with
 # Sweave files.  Basic texi2dvi is missing some macros.
 $(mcRnw:.Rnw=.tex): %.tex: %.Rnw mc/db/oosstats.created
-	cd $(dir $<); $(R) $(RFLAGS) CMD Sweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
+	cd $(dir $<); $(R) $(RFLAGS) CMD pgfsweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
 %.pdf: %.tex
 	cd $(dir $<); $(R) $(RFLAGS) CMD texi2dvi -b -p $(notdir $<); cd $(CURDIR)
 paper.pdf: paper.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(empiricplots) $(empirictables)

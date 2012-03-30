@@ -1,14 +1,14 @@
 set.seed(12)
 f <- function(x) x
-  R <- 70
-  P <- 30
-  Q <- 30
-  K <- 50
+R <- 70
+P <- 30
+Q <- 1000
+K <- 50
   
-  x <- runif(R + P + Q, max = 3)
-  y <- f(x) + rnorm(R+P+Q)
-  d <- data.frame(x, y)
-  rm(x,y)
+x <- runif(R + P + Q, max = 3)
+y <- f(x) + rnorm(R+P+Q)
+d <- data.frame(x, y)
+rm(x,y)
 
 dmock <- data.frame(x = seq(min(d$x), max(d$x), 0.01), y = NA)
 dopar <- function(...)
@@ -51,6 +51,26 @@ dev.off()
 dopdf("overview-2b.pdf")
 plotit((R+P) + (1:Q), linecolor = "blue", trainColor = "black")
 dev.off()
+
+## dopdf("overview-2c.pdf")
+## dopar()
+## plot(y ~ x, data = d, type = "n", main = "Model 1")
+## points(y ~ x, data = d, col = "black", lwd = 2)
+## lines(lwd = 3, predict(lm(y ~ x, d), dmock) ~ dmock$x, col = "blue")
+## plot(y ~ x, data = d, type = "n", main = "Model 2")
+## points(y ~ x, data = d, col = "black", lwd = 2)
+## lines(lwd = 3, predict(lm(y ~ poly(x, K, raw = T), d), dmock) ~ dmock$x, col = "blue")
+## dev.off()
+
+## dopdf("overview-2d.pdf")
+## dopar()
+## plot(y ~ x, data = d, type = "n", main = "Model 1")
+## points(y ~ x, data = d, col = "black", lwd = 2)
+## lines(lwd = 3, predict(lm(y ~ x, d), dmock) ~ dmock$x, col = "blue")
+## plot(y ~ x, data = d, type = "n", main = "Model 2")
+## points(y ~ x, data = d, col = "black", lwd = 2)
+## lines(lwd = 3, predict(lm(y ~ poly(x, 250, raw = T), d), dmock) ~ dmock$x, col = "blue")
+## dev.off()
 
 dopdf("overview-3.pdf")
 plotit(R + (1:P), trainColor = "black", testColor = "black")

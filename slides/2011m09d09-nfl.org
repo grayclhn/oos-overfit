@@ -1,0 +1,564 @@
+Limit Theory for Comparing Overfit Models Out-of-Sample
+#+LaTeX_CLASS: beamer
+#+AUTHOR: Gray Calhoun \newline Iowa State University
+#+DATE: Pizza Lunch Seminar \newline 9 September 2011
+#+LaTeX_CLASS_OPTIONS: [presentation,fleqn,t]
+#+STARTUP: beamer
+#+BEAMER_HEADER_EXTRA: \usecolortheme{dove} \usefonttheme[onlymath]{serif}
+#+BEAMER_HEADER_EXTRA: \setbeamertemplate{navigation symbols}{}
+#+LaTeX_HEADER: \frenchspacing
+#+LaTeX_HEADER: \usepackage{tikz}
+#+LaTeX_HEADER: \usetikzlibrary{calc}
+#+LaTeX_HEADER: \usetikzlibrary{fit}
+#+LaTeX_HEADER: \newlength{\wideitemsep}
+#+LaTeX_HEADER: \setlength{\wideitemsep}{\itemsep}
+#+LaTeX_HEADER: \addtolength{\wideitemsep}{2pt}
+#+LaTeX_HEADER: \let\olditem\item
+#+LaTeX_HEADER: \renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+#+LaTeX_HEADER: \DeclareMathOperator{\E}{E}
+#+LaTeX_HEADER: \DeclareMathOperator{\var}{var}
+#+LaTeX_HEADER: \DeclareMathOperator{\cov}{cov}
+#+LaTeX_HEADER: \DeclareMathOperator*{\plim}{plim}
+#+LaTeX_HEADER: \DeclareMathOperator*{\rank}{rank}
+#+LaTeX_HEADER: \DeclareMathOperator{\tr}{tr}
+#+LaTeX_HEADER: \DeclareMathOperator{\atan}{atan*}
+
+#+LaTeX_HEADER: \setbeamerfont{sec title}{parent=title}
+#+LaTeX_HEADER: \setbeamercolor{sec title}{parent=titlelike}
+#+LaTeX_HEADER: \defbeamertemplate*{sec page}{default}[1][]
+#+LaTeX_HEADER: {
+#+LaTeX_HEADER:   \centering
+#+LaTeX_HEADER:     \begin{beamercolorbox}[sep=8pt,center,#1]{sec title}
+#+LaTeX_HEADER:       \usebeamerfont{sec title}\insertsection\par
+#+LaTeX_HEADER:     \end{beamercolorbox}
+#+LaTeX_HEADER: }
+#+LaTeX_HEADER: \newcommand*{\secpage}{\usebeamertemplate*{sec page}}
+
+#+LaTeX_HEADER: \AtBeginSection{\begin{frame}[c] \secpage \end{frame}}
+
+#+LaTeX_HEADER: \newcommand{\circlefigA}[5]{
+#+LaTeX_HEADER:   \begin{tikzpicture}
+#+LaTeX_HEADER:     \fill[lightgray] (-#3,-#3) rectangle (#4,#4);
+#+LaTeX_HEADER:     % rejection region for F-test
+#+LaTeX_HEADER:     \filldraw[fill=white,draw=black] (0,0) circle (#1);
+#+LaTeX_HEADER:     % circle of equal generalization error
+#+LaTeX_HEADER:     \filldraw[fill=white,draw=black] (#5,#5) let \p1=(#5,#5) in circle({veclen(\x1,\y1)});
+#+LaTeX_HEADER:     \draw (#5,#5) let \p1=(#5,#5) in circle({veclen(\x1,\y1)});
+#+LaTeX_HEADER:     \fill [black] (#5,#5) circle (2pt) node[right] {$(\theta_1,\theta_2)$};
+#+LaTeX_HEADER:     \draw (0,0) circle (#1);
+#+LaTeX_HEADER:     \draw (#5,#5)--(0,0);
+#+LaTeX_HEADER:     % axes
+#+LaTeX_HEADER:     \draw[->] (0,0)--(#2,0) node[right] {$\hat\theta_{T,1}$};
+#+LaTeX_HEADER:     \draw[->] (0,0)--(0,#2) node[above] {$\hat\theta_{T,2}$};
+#+LaTeX_HEADER:   \end{tikzpicture}
+#+LaTeX_HEADER: }
+#+LaTeX_HEADER: \newcommand{\circlefigB}[5]{
+#+LaTeX_HEADER:   \begin{tikzpicture}
+#+LaTeX_HEADER:     \fill[white] (-#3,-#3) rectangle (#4,#4);
+#+LaTeX_HEADER:     % rejection region for F-test
+#+LaTeX_HEADER:     \fill[lightgray] (0,0) circle (#1);
+#+LaTeX_HEADER:     % circle of equal generalization error
+#+LaTeX_HEADER:     \fill[white] (#5,#5) let \p1=(#5,#5) in circle({veclen(\x1,\y1)});
+#+LaTeX_HEADER:     \draw (0,0) circle (#1);
+#+LaTeX_HEADER:     \draw (#5,#5) let \p1=(#5,#5) in circle({veclen(\x1,\y1)});
+#+LaTeX_HEADER:     \fill [black] (#5,#5) circle (2pt) node[right] {$(\theta_1,\theta_2)$};
+#+LaTeX_HEADER:     \draw (#5,#5)--(0,0);
+#+LaTeX_HEADER:     % axes
+#+LaTeX_HEADER:     \draw[->] (0,0)--(#2,0) node[right] {$\hat\theta_{T,1}$};
+#+LaTeX_HEADER:     \draw[->] (0,0)--(0,#2) node[above] {$\hat\theta_{T,2}$};
+#+LaTeX_HEADER:   \end{tikzpicture}
+#+LaTeX_HEADER: }
+
+#+BEAMER_FRAME_LEVEL: 2
+#+MACRO: h 2.4in
+#+MACRO: w 4in
+#+OPTIONS: toc:nil
+
+* Introduction
+** Introduction
+   - Out-of-sample (OOS) tests are popular but incompletely understood
+     - e.g. compare forecasting methods by a $t$-test on difference in
+       squared pseudo forecast errors
+   - Typically test hypotheses that can be tested over the full sample
+     - e.g. Diebold and Mariano (1995), West (1996), and Clark and
+       McCracken (2001) (many others)
+     - Giacomini and White (2006) is an exception
+   - OOS tests often find no evidence against a simple benchmark even
+     when full-sample tests do
+     - Meese and Rogoff (1983), Stock and Watson (2003), Goyal and
+       Welch (2008)
+** Introduction
+     - Reasons to favor the OOS results
+       - *Instability:* OOS tests look at the end of the sample;
+	 full-sample tests look at the entire dataset
+       - *Overfit:* complex models might fit spuriously well in-sample
+       - *Data-snooping:* Lots of models are estimated, but usually only
+	 the best models are reported.
+	 - Maybe full-sample tests are more affected
+       - These are informal reasons
+     - Reasons to favor the full-sample results
+       - OOS tests might have worse power
+       - Inoue and Kilian (2005, 2006)
+** Introduction
+   - This paper looks at the effect of "overfit" on OOS tests
+     - "Data-snooping" seems unlikely to resolve this issue
+       - Methods exist to account for forms of data-snooping:
+	 White (2000) BRC, Romano and Wolf (2005), and others
+       - These methods are built on pairwise comparisons, which
+	 themselves can be done OOS or in-sample
+     - "Instability" is left to future research
+   - OOS and in-sample statistics measure different quantities when the
+     models are overfit
+     - In-sample tests can test hypotheses about the pseudo-true
+       model parameters as usual
+     - OOS comparisons measure generalization error
+       - /Generalization error/ is the expected future performance of the
+	 *estimated* model
+       - Standard in-sample tests do not measure generalization error
+   - OOS tests should use smaller test samples than are common
+** Structure of talk
+   - In the talk:
+     - Environment and motivation
+     - In-sample vs. OOS in a simple example
+     - General theoretical results
+       - Assumptions
+       - OOS tests
+       - Full-sample tests
+       - Model selection implications
+     - Conclude
+   - Additional results in the paper
+     - Monte Carlo evidence
+     - Quick empirical example (excess return predictability)
+* Environment and motivation
+** Overfit, intuitively
+   #+ATTR_LaTeX: width={{{w}}},height={{{h}}}
+   [[./slide-plots/overview-1.pdf]]
+** Overfit, intuitively
+   #+ATTR_LaTeX: width={{{w}}},height={{{h}}}
+   [[./slide-plots/overview-2.pdf]]
+** Overfit, intuitively
+   #+ATTR_LaTeX: width={{{w}}},height={{{h}}}
+   [[./slide-plots/overview-2b.pdf]]
+** OOS test statistic
+   - $y_{t+h}$ is the variable we want to predict
+   - $x_{1t}$ and $x_{2t}$ are regressors for two different models.
+     1. $y_{t+h} = x_{1t}'\theta_1 + \varepsilon_{1t}$ (benchmark model)
+     2. $y_{t+h} = x_{2t}'\theta_2 + \varepsilon_{2t}$ (alternative model)
+   - $T$ total observations, $T = R + P$
+     - /Training sample/ is the first $R$ observations
+     - /Test sample/ is the last $P$ observations
+** OOS test statistic
+   - The test statistic is based on the difference in average
+     forecasting performance over the test sample (DMW test): \[ \bar D_R \equiv
+     P^{-1} \sum_{t=R+1}^{T-h} D_t\]
+     - $D_t = L(y_{t+h} - x_{1t}'\hat\theta_{1t}) - L(y_{t+h} -
+       x_{2t}'\hat\theta_{2t})$
+     - $L$ is a known loss function
+     - $\hat\theta_{it} \equiv (\sum_{s=1}^{t-h} x_{is}x_{is}')^{-1}
+       \sum_{s=1}^{t-h} x_{is} y_{i,s+h}$
+     - The paper also presents results for the fixed and rolling windows
+   - Researcher will use $\frac{P^{1/2} \bar D_R}{\hat\sigma_R}$ to choose
+     between the models
+     - $\hat\sigma^2_R$ is an OOS estimator of the asymptotic variance
+       of $\bar D_R$
+** Motivation for asymptotics
+   - Under conventional asymptotics, these curves converge to their
+     pseudo-true values
+   - Most theoretical approaches replace the estimated curves with
+     their limit and compare the performance of the pseudo true curves
+     - Then account for uncertainty in estimating the curves
+   - These limiting curves will be more accurate than the estimates
+   - Conclusions may be misleading
+** Motivation for asymptotics
+   - To prevent convergence, we let $K$ increase with $T$ so that
+     $\frac{K}{T}$ remains positive  
+   - If $\frac{K}{T}$ remains positive (Eicker, 1963; Huber, 1973)
+     - Distance between OLS coefficients and true values does not
+       vanish.
+     - OLS coefficient estimates are not asymptotically normal
+   - Full-sample tests can remain valid, but generally require a
+     correction for the degree of overfit (Akritas and Arnold, 2000;
+     Anatolyev, 2012; Calhoun, 2011)
+* A simple example
+** Setup
+   - Suppose that
+     - $h=1$
+     - $y_{t+1} \sim i.i.d.\ N(x_t'\theta, 1)$ given $x_t$
+     - $x_t$ is a $K$-vector s.t. $\frac{K}{T} \to \kappa > 0$ and $x_t \sim i.i.d.\ N(0, I)$
+     - Model 1 has no regressors (i.e. $\hat y_{1,t+1} = 0$)
+     - Model 2 uses $x_t$ as regressors
+       - No intercept (keeps the notation as simple as possible)
+     - $L(e) = e^2$
+     - $R > 2 K + 4$ (gives convenient moments of $(X'X)^{-1}$)
+   - Also, suppose that we use the fixed-window scheme
+     - $\bar D_R = P^{-1} \sum_{t=R+1}^{T-1} \underbrace{\big(y_{t+1}^2 - (y_{t+1} - x_t'\hat\theta_R)^2\big)}_{D_t}$
+     - $\hat\sigma_R^2 = P^{-1} \sum_{t=R+1}^{T-1} (D_t - \bar D_R)^2$
+** OOS statistic
+   Since $D_t = 2 y_{t+1} x_t'\hat\theta_{R} - \hat\theta_{R}'x_t x_t' \hat\theta_{R}$, we have
+   \begin{align*}
+   P^{1/2} \bar D_R &= P^{-1/2} \sum_{t=R+1}^{T-1} (D_t - \E_R D_t) + P^{1/2} \E_R \bar D_R \\
+                    &= 2 P^{-1/2} \sum\nolimits_{t} (y_{t+1} x_t - \E_R y_{t+1} x_t)'\hat\theta_{R} \\
+                    &\quad + P^{-1/2} \sum\nolimits_{t} \hat\theta_{R}'(\E_R x_t x_t' - x_t x_t') \hat\theta_{R} + P^{1/2} \E_R \bar D_R\\
+                    &= 2 P^{-1/2} \sum\nolimits_{t} (y_{t+1} x_t - \theta)'\hat\theta_{R} \\
+                    &\quad + P^{-1/2} \sum\nolimits_{t} \hat\theta_{R}'(I - x_t x_t') \hat\theta_{R} + P^{1/2} \E_R \bar D_R
+   \end{align*}
+   - $\E_R(\cdot) = \E(\cdot \mid \mathcal F_t)$ with $\mathcal{F}_t = \sigma(y_1, x_1, \dots, y_t, x_t, y_{t+1})$
+   - $\E_R D_t = \E_{t-1} D_t$ under independence using the fixed window
+** OOS statistic
+   - Both summations obey an MDS CLT:
+     - $\E_{t-1}(y_{t+1} x_t - \theta)'\hat\theta_R = 0$
+     - $\E_{t-1} \hat\theta_{R}'(I - x_t x_t') \hat\theta_{R} = 0$
+   - Conditional variance is almost surely positive (uniformly):
+   \begin{align*}
+   \var_R(P^{1/2} \bar D_R)&= P^{-1} \sum\nolimits_{t} \var_R D_t \\
+              &= 4 \hat\theta_R'\hat\theta_R + \E_R(\hat\theta_R'(I - x_t x_t')\hat\theta_R)^2 \\
+              &> 4 \hat\theta_R'\hat\theta_R \quad a.s. \\ 
+              &= \mathbf{\varepsilon}_R X_R(X_R'X_R)^{-2} X_R' \mathbf{\varepsilon}_R > 0\ a.s.
+   \end{align*}
+     - From formulas for mean, variance of quadratic forms along with moments of Inverse-Wishart
+     - $\E \sigma_R^2 > \frac{4 K}{R - K - 1}$
+** OOS statistic
+   - DMW test is asymptotically normal: \[\frac{P^{1/2} (\bar D_R - \E_R \bar D_R)}{\hat\sigma_R} \to^d N(0,1)\]
+     - Need $\hat\sigma_R^2 \to^p \sigma_R^2 \equiv \var_R P^{1/2} \bar D_R$
+   - Overfit ($\frac{K}{T} > 0$) prevents degeneracy (contrast to Clark and McCracken, 2001)
+     - Intuitively similar to Giacomini and White (2006), but much different mathematics
+     - Giacomini and White use finite $R$ to prevent convergence of $\hat\theta$
+     - Finite $R$ and $\frac{K}{T} > 0$ asymptotics are incompatible
+** OOS statistic
+   Naive OOS estimator variance estimator is consistent:
+   \begin{align*}
+   \hat{\sigma}_R^2 &= P^{-1} \sum_{t=R+1}^{T-1} (D_{t} - \bar D_R)^2 \\
+                    &= 4 \hat{\theta}_{R}^{\prime} \underbrace{\Big[P^{-1} \sum\nolimits_{t} \big(y_{t+1} x_{t} - \hat\Sigma_{yx}\big) \Big(y_{t+1} x_{t} - \hat\Sigma_{yx}\Big)'\Big]}_{\to^p I} \hat{\theta}_{R} \\
+                    & \quad - 4 \underbrace{\Big[P^{-1} \sum\nolimits_{t} \big(y_{t+1} x_{t} - \hat\Sigma_{yx}\big)' \hat{\theta}_{R} \hat{\theta}_{R}' \Big(x_{t} x_{t}' - \hat\Sigma_{xx} \big) \hat{\theta}_{R} \Big]}_{\to^p 0} \\
+                    & \quad + \underbrace{P^{-1} \sum\nolimits_{t} \big[\hat{\theta}_{R} \big(x_{t} x_{t}' - \hat\Sigma_{xx} \big) \hat{\theta}_{R}  \big]^{2}}_{\to^p \E_R(\hat\theta_R'(x_t x_t' - I)\hat\theta_R)^2} \\
+                    & \to^p 4 \hat\theta_R'\hat\theta_R + \E_R(\hat\theta_R'(x_t x_t' - I)\hat\theta_R)^2 = \sigma_R^2
+   \end{align*}
+   - $\hat\Sigma_{yx} =  P^{-1} \sum_{s=R+1}^{T-1} y_{s+1} x_{s}$ and $\hat\Sigma_{xx} =  P^{-1} \sum_{s=R+1}^{T-1} x_{s} x_{s}'$
+** OOS statistic
+   - Let's look at the end result again:
+     \[\frac{P^{1/2} (\bar D_R - \E_R \bar D_R)}{\hat\sigma_R} \to^d N(0,1)\]
+   - DMW test lets us conduct inference about $\E_R \bar D_R$
+     - If $\E_R \bar D_R \leq 0$, benchmark ($\hat y_{t+1} = 0$) is expected to forecast no worse than $x_t'\hat\theta_R$
+   - $\E_R \bar D_R$ may be irrelevant
+   - If we need to make forecasts for period $T+2$, then we want to know
+     \[\E_T D_{T+1}' \equiv \E_T\big(y_{T+2}^2 - (y_{T+2} - x_{T+1}'\hat\theta_T)^2\big) \]
+     - This conditional expectation is the difference in the models' /generalization error/
+** OOS statistic
+   When is inference about $\E_R \bar D_R$ informative for $\E_T D_{T+1}'$?
+   \begin{multline*}
+   \E_R \bar D_R - \E_T D_{T+1}'
+   = \hat\theta_{R}'\hat\theta_{R} - \hat\theta_{T}'\hat\theta_{T} \\
+   = \mathbf{\varepsilon}_T'(\tilde X_R (X_R'X_R)^{-2} \tilde X_R' - X_T (X_T'X_T)^{-2} X_T') \mathbf{\varepsilon}_T
+   \end{multline*}
+     - $\tilde X_R = \begin{pmatrix} X_R \\ 0 \end{pmatrix}$
+
+   So
+     - $\E(\E_R \bar D_R - \E_T D_{T+1}') = \frac{P}{T - K - 1}\frac{K}{R - K - 1} \sim \frac{P^1}{T}$
+     - $\var(\E_R \bar D_R - \E_T D_{T+1}') = O\big(\frac{P^2}{T^2}\big)$
+** OOS statistic
+   - Use a simple identity:
+     \begin{align*}
+     \frac{P^{1/2} (\bar D_R - \E_T  D_{T+1}')}{\hat\sigma_R} &= 
+     \frac{P^{1/2} (\bar D_R - \E_R \bar D_R)}{\hat\sigma_R} \\ &\quad+ 
+     \frac{P^{1/2} (\E_R \bar D_R - \E_T  D_{T+1}')}{\hat\sigma_R}
+     \end{align*}
+     - $P^{1/2} (\E_R \bar D_R - \E_T D_{T+1}') \to^p 0$ only if $\frac{P^{3/2}}{T} \to 0$
+   - Testing implication: if $\frac{P^{3/2}}{T} \to 0$
+     \[\lim \Pr \Bigg[\frac{P^{1/2} \bar D_R}{\hat\sigma_R} > z_\alpha \;\Bigg|\; \E_T D_{T+1}' \leq 0\Bigg] < \alpha\]
+** OOS statistic
+  - DMW test lets us conduct inference about $\E_T D_{T+1}'$ only if $\frac{P^{3/2}}{T} \to 0$
+  - $\E_R \bar D_R - \E_T D_{T+1}'$ is noise
+  - If $\lim \frac{P^{3/2}}{T}$ is positive and finite, this noise
+    is of the same order as the quantity of interest, and we could
+    adjust the mean and standard errors to get a valid test (as in
+    West, 1996)
+  - If $\frac{P^{3/2}}{T} \to \infty$, the noise dominates and
+    inference about $\E_T D_{T+1}'$ is impossible
+    - Valid confidence intervals diverge to $\pm \infty$
+** Full-sample tests
+   - Suppose we do a Wald test that $\theta = 0$
+   - The Wald test is based on the approximation
+     $T\hat\theta_T'\hat\Sigma^{-1} \hat\theta_T \sim^a \chi_K^2$
+     - $\hat\Sigma$ is an estimate of $\var T^{1/2} \hat \theta_T$
+   - When $K$ is large, $K^{-1/2} (\chi_K^2 - K) =^d Z + o_p(1)$
+     - $Z \sim N(0,1)$
+   - So $\hat\theta_T' \hat\Sigma^{-1} \hat\theta_T \sim^a \lim
+     \frac{K}{T} + Z \frac{K^{1/2}}{T} + o_p(T^{-1/2})$
+   - Wald test rejects if $\hat\theta_T$ is outside a neighborhood of
+     the ellipse defined by $\hat\theta_T' \hat\Sigma^{-1} \hat\theta_T =
+     \frac{K}{T}$,
+     - so the acceptance region is contained in
+       $\hat\theta_T'\hat\Sigma_T^{-1} \hat\theta_T < \lim \frac{K}{T} +
+       \delta$ for any $\delta > 0$
+** Full-sample tests
+   - $\E_T D_{T+h+1} = 0$ if and only if \[(\hat\theta_T - \theta)'(\hat\theta_T - \theta) = \theta'\theta\]
+   - We can plot the region defined by $\E_T D_{T+1} \leq 0$ and the acceptance region of the Wald test
+** Intuition behind the theorem
+#+BEGIN_LaTeX
+\begin{figure}
+  \centering
+  \begin{tabular}{cc}
+  \circlefigA{1}{2.5}{1.4}{3.2}{.9} &
+  \circlefigB{1}{2.5}{1.4}{3.2}{.9}
+  \end{tabular}
+\end{figure}
+#+END_LaTeX
+   - Left: the rejection region given $\E_T D_{T+h+1} \leq 0$
+   - Right: the acceptance region given $\E_T D_{T+h+1} \leq 0$
+** Intuition behind the theorem
+#+BEGIN_LaTeX
+\begin{figure}
+  \centering
+  \begin{tabular}{cc}
+  \circlefigA{.3}{2.5}{1.4}{3.2}{1.1}  &
+  \circlefigB{.3}{2.5}{1.4}{3.2}{1.1} 
+  \end{tabular}
+\end{figure}
+#+END_LaTeX
+   - As $\theta'\theta$ increases, the acceptance region shrinks
+     relative to the total area
+** Intuition behind the theorem
+   - As $\theta'\theta \to \infty$, the acceptance region fills
+     relatively less volume
+     - Probability that $\hat\theta_T$ is in the acceptance region
+       falls as well
+   - Same intuition applies as $T \to \infty$ with $\theta'\theta$
+     bounded
+     - As dimensionality increases, the relative volume of the
+       acceptance region falls
+     - Probability that $\hat\theta_T$ is in the acceptance region
+       falls to zero
+     - Drawing this is more difficult
+   - $\Pr[\text{Wald test rejects} \mid \E_T D_{T+1}' \leq 0] \to 1$
+     - i.e. the Wald test rejects the benchmark almost surely, even
+       when the benchmark is more accurate!
+     - The same argument applies to a large class of in-sample tests
+   - Note that the actual size of the test doesn't matter.
+** Model Selection
+   - The same basic arguments apply to model selection as well
+   - For model selection with overfit models, we want
+     - $\Pr[\text{benchmark selected} \mid \E_T D_{T+1}' \leq 0] \to 1$
+     - $\Pr[\text{alternative selected} \mid \E_T D_{T+1}' > 0] \to 1$
+   - If $\frac{P}{T} \to 0$ then $\bar D_R - \E_T D_{T+1}' \to^p 0$
+     and selection based on the OOS average is consistent
+   - Many full-sample statistics are inconsistent:
+     - $\Pr[\text{benchmark selected} \mid \E_T D_{T+1}' \leq 0] \to 1$ in the above setup for many model selection criteria
+     - Holds for adjusted $R$-square, AIC, BIC
+* General theory
+** Assumptions
+  *Assumption 1*: 
+  - The random array $\{y_t,x_t\}$ is stationary and absolutely
+    regular with coefficients $\beta_j$ of size $-\frac{\rho}{\rho-2}$;
+    - $\rho > 2$ and is discussed further in Assumption 3.
+  - $K_1$ and $K_2$ are less than $R$, and
+    $\frac{K_2}{T}$ and $\frac{K_2-K_0}{T}$ are uniformly positive;
+    - $K_0$ is the number of regressors shared by the two models
+    - $\frac{K_1}{T}$ can be uniformly positive, but is not required
+      to be.
+** Assumptions
+  *Assumption 2*:
+  - The variance of $y_{t+h}$ given $\mathcal{F}_t$ is uniformly
+    positive and finite
+  - All of the eigenvalues of the covariance
+    matrix of $x_t$ are uniformly positive and finite
+  - The Euclidean norms of the pseudo-true coefficients, $\theta_1$ and
+    $\theta_2$, satisfy $|\theta_1|_2 = O(1)$ and $|\theta_2|_2 =
+    O(1)$.
+
+   (continued...)
+** Assumptions
+  *Assumption 2 (continued)*:
+  - There exists a finite $\Delta$ such that $\| x_{it}'x_{it} \|_3
+    \leq K_i \Delta$, and, for all $S_{T} \geq K_{2T}$ and large enough
+    $T$, with $i = 1,2$, 
+    \begin{gather*} 
+    \lVert \lambda_{\max}X_{iS_{T}}'X_{iS_{T}} \rVert_{3} \leq \Delta S_T, \\
+    \lVert \lambda_{\max}(X_{iS_{T}}'\mathbf{\varepsilon}_{iS_{T}}\mathbf{\varepsilon}_{iS_{T}}'X_{iS_{T}}) \rVert_{3} \leq \Delta S_T, \\
+    \lVert \lambda_{\max}((X_{iS_{T}}'X_{iS_{T}})^{-1}) \rVert_{3} \leq \frac{\Delta}{S_T}, \\ 
+    \lVert \lambda_{\max}((X_{iS_{T}}'\mathbf{\varepsilon}_{iS_{T}}\mathbf{\varepsilon}_{iS_{T}}'X_{iS_{T}})^{-1})\rVert_{3} \leq \frac{\Delta}{S_T}, 
+    \end{gather*} 
+  - $X_{iT} \equiv [x_{i1} \quad \dots \quad x_{i,T-h}]'$
+  - $\mathbf{\varepsilon}_{iT} = (\varepsilon_{i,1+h}, \dots, \varepsilon_{i,T})'$
+** Assumptions
+   *Assumption 3*: The loss function $L$ is continuous and has finite
+   left and right derivatives almost everywhere.  Also, $L(0) = 0$,
+   and there is a constant $B_L$ such that, for all $j \geq 1$,
+     - $\|D_{R,R+j}\|_\rho \leq B_L$
+     - $\|D_{T,T+j}\|_\rho \leq B_L$
+     - $\| x_{it}' \hat{\theta}_{is}^R \|_2 \leq B_L$
+     - $\| x_{it}' \hat{\theta}_{is}^T \|_2 \leq B_L$
+     - $\| L'(y_{t+h} - x_{it}'\tilde{\theta}_{it}) \|_2 \leq B_L$ for
+       $\tilde{\theta}_{it}$ a weighted average of any two estimates
+       $\hat{\theta}_{is}$ and $\hat{\theta}_{is'}$ with $s, s' \leq
+       t$.
+** Assumptions
+   *Assumption 4*: $P\to\infty$, $R\to\infty$, and $P = o(T^{1/2}$) as
+    $T \to \infty$.
+** Assumptions
+   *Assumption 5*: $W$ is a kernel from $\mathbb{R}$ to $[-1,1]$ such
+   that $W(0) = 1$, $W(x) = W(-x)$ for all $x$, \[
+   \int_{-\infty}^{\infty} \lvert W(x) \rvert dx < \infty, \quad
+   \int_{-\infty}^{\infty} \lvert \psi(x) \rvert dx < \infty\]
+   with \[\psi(x) = \frac1{\sqrt{2\pi}} \int_{-\infty}^{\infty} W(z)
+   e^{ixz}dz,\] and $W(\cdot)$ is continuous at zero and all but a
+   finite number of points.
+** Main OOS result
+   *Theorem 3.1*: Suppose that
+     - Assumptions 1--4 hold,
+     - $\hat{\sigma}^2_R$ is an estimator satisfying $\hat\sigma_R^2 -
+       \sigma_R^2 \to^p 0$
+       - $\sigma_R^2 \equiv \var_R(\sqrt{P} \bar{D}_R) \equiv P \E_R(\bar{D}_R -
+        \E_R \bar{D}_R)^2$
+     - $\sigma_R^2$ is uniformly a.s. positive
+   
+   Then \[\frac{\sqrt{P}(\bar{D}_R - \E_T D_{T+h+1})}{\hat\sigma_R}
+   \to^d N(0,1).\]
+   - The assumption that $\sigma_R^2$ is uniformly positive is not very restrictive and mainly rules out pathalogical cases
+     - Can hold even with nested models
+** Implications for testing
+   *Corollary 3.2*: Suppose that the conditions of Theorem 3.1 hold.
+    Then \[\lim \Pr\Bigg[\frac{P^{1/2}\bar{D}_R}{\hat\sigma_R} \geq z_{\alpha} \;\Bigg|\;
+    \E_{T} D_{T+h+1} \leq 0\Bigg] \leq \alpha,\] where $z_\alpha$ is the
+    $1-\alpha$ quantile of the standard Normal distribution.
+** Outline of proof of Theorem 3.1
+   We can rewrite the numerator of the OOS statistic as 
+   \begin{multline*}\sqrt{P}(\bar{D}_R - \E_T D_{T+h+1}) = \\
+   \sqrt{P}(\bar{D}_R - \E_R \bar{D}_{R}) + \sqrt{P}(\E_R \bar{D}_R -
+   \E_T D_{T+h+1})
+   \end{multline*}
+   - Lemma 3.4 ensures that $\frac{\sqrt{P} (\bar{D}_R - \E_R \bar{D}_{R})}{\sigma_R} \to^d N(0,1)$
+   - Lemma 3.3 ensures that $\E_R \bar{D}_R - \E_T D_{T+h+1} =
+     O_p\Big(\sqrt{\frac{P}{T}}\Big) + o_p(P^{-1/2})$
+   - Lemma 3.5 ensures that OOS HAC estimators are consistent for $\sigma_R^2$
+** Failure of in-sample comparisons
+   *Theorem 3.6*: Suppose that
+   - Assumptions 1--3 hold and that the models are nested
+   - The distribution of $(x_t,\varepsilon_{t+h})$ is independent of
+     the pseudo-true value of $\hat{\theta}_{T}$, $\theta$
+   - $\Pr[\E_T D_{T+h+1} \leq 0 \mid \iota'\hat{\theta}_T = \iota'\theta] >
+     0$ for all $T$ and all $\iota$ such that $\iota'\iota = 1$.  
+   - $\Lambda$ is a test statistic with nominal size $\alpha$ that has
+     acceptance region contained in the set \[\{\hat{\theta}_T \mid
+     (\hat{\theta}_T - \theta_0)'V_T(\hat{\theta}_T - \theta_0) < c
+     \}\] for large enough $T$ and some $\theta_0$, $c$, and $V_T$
+
+     - $V_T$ is a possibly random matrix with all eigenvalues
+       uniformly bounded in probability and rank satisfying 
+       $\lim \rank(V_T)/T > 0$.
+
+** Failure of in-sample comparisons
+   *Theorem 3.6 (continued)*: Then the following conclusions hold.
+   1. $\Pr[\Lambda \text{ rejects} \mid \E_T D_{T+h+1} \leq 0] \to 1$ as
+      $\theta'V_T\theta \to \infty$ ($T$ fixed) for almost every
+      sequence $\theta$ (a.e. with respect to Lebesgue measure).
+   2. There exist $\theta$ satisfying $(\theta - \theta_0)'V_T(\theta - \theta_0) > c$ uniformly in $T$ such that
+      \begin{equation*}\tag{11}
+      \Pr[\Lambda \text{ rejects} \mid \E_T D_{T+h+1} \leq 0] \to 1
+      \text{ as } T \to \infty.
+      \end{equation*}
+   3. There exist distributions for $(x_t, \varepsilon_{t+h})$ such
+      that (11) holds for all $\theta$ satisfying 
+      $(\theta - \theta_0)'V_T(\theta - \theta_0) > c$ uniformly in $T$.
+** Implications for model selection
+   The same phenomenon applies to model selection statistics
+   
+   *Corollary 3.7*:
+     - Suppose the conditions of Theorem 3.6 hold
+       but that the statistic $\Lambda'$ is used for model selection;
+       - $\Lambda'$ selects the benchmark model for all $\hat{\theta}_T$ contained in a subset
+	 of the region
+	 \begin{equation*}
+           \{\hat{\theta}_T \mid \hat{\theta}_T'V_T \hat{\theta}_T < c\}
+	 \end{equation*}
+       - $\Lambda'$ selects the alternative for all $\hat{\theta}_T$
+	 outside that region.
+     - Then there exist $\theta$ such that 
+       \[\tag{15} 
+         \Pr[\text{model $1$ selected} \mid \E_T D_{T+h+1} \leq 0] \to 0
+       \]
+       as $T \to \infty$
+     - There exist distributions on $(x_t,\varepsilon_{t+h+1})$ such
+       that (15) holds for every $\theta$ such that $\theta'V_T\theta > c$ uniformly.
+** An example of an in-sample test
+   - The Wald, $F$, and LM tests satisfy the assumptions of Theorem 3.6
+     - Note that the actual size of the test doesn't matter.
+   - AIC, BIC, adjusted $R$-square satisfy the assumptions of Corollary 3.7
+     - All choose the benchmark if $\hat\theta_T$ lies in a
+       neighborhood of the cylinder defined by $\hat\theta_T'V_T\hat\theta_T = c$
+     - The neighborhood shrinks at different rates for different
+       criteria (faster for BIC than AIC)
+** COMMENT Summary (OOS)
+   - The OOS average is asymptotically normal with mean $\E_T D_{T+h+1}$ if $\frac{P^2}{T} \to 0$
+     - DMW statistic will test hypotheses about the models' future forecasting performance (generalization error)
+     - If $\lim \frac{P^2}{T}$, the DMW statistic will test the performance of the models estimated on a subset of the data
+   - $\frac{P^2}{T} \to 0$ is (essentially) a constraint imposed by the statistic
+     - For some loss functions and DGP, we can weaken $\frac{P^2}{T} \to 0$ slightly
+     - Adjusting the critical values to control size with $\frac{P}{T} > 0$ will destroy power
+       - The noise term $\E_R \bar D_R - \E_T D_{T+h+1}$ dominates
+   - For model selection, we only need $\frac{P}{T} \to 0$
+** COMMENT Summary (in-sample)
+   - The conditions of Theorem 3.6 and Corollary 3.7 cover a broad
+     class of in-sample tests and model selection statistics
+     - Wald, LM, $F$-test
+     - Adjusted $R$-squared, AIC, BIC
+   - None are reliable for determining which model will forecast
+     better in the future
+   - This is true whether or not the statistics are reliable for their
+     intended purpose
+     - Same results hold even if we know the exact finite sample
+       distribution
+     - Separate issue from Akritas and Arnold (2000), Calhoun (2011),
+       Anatolyev (2012)
+* Conclusions
+** Conclusion
+   - Paper addresses the question: why might a researcher use OOS
+     tests instead of in-sample tests?
+   - Answer: for overfit models, they measure different quantities
+     - OOS tests measure the future forecasting performance of the
+       *estimated* model
+     - In-sample tests can measure aspects of the population DGP, but
+       not forecasting performance
+   - The choice of using an in-sample or OOS test depends on the goal
+     of the analysis
+     - If you're interested in aspects of the DGP, an OOS comparison
+       is an unnecessarily high hurdle for the model
+** Conclusions
+   - Other points
+     - In most empirical research, $P$ is too large
+     - Existing full-sample tests need to be modified to work with
+       large models
+       - Existing statistics are by and large for linear regression
+       - The many-instruments literature typically assumes a finite
+         number of coefficients of interest
+       - Similar issues may apply for data-snooping with a large (asymptotically) number of models
+     - In-sample model selection criteria look pretty bad
+   - Issues may change for researchers concerned about instability and not overfit
+** Next steps
+   - Relaxing the constraint $\frac{P^2}{T} \to 0$ is important
+     - Monte Carlo (in paper) shows that this is a practical
+       requirement too
+     - Will likely require a new statistic
+       - This restriction is (nearly) a requirement of the statistic
+       - Note that this behavior is predicted by the theory
+     - Cross validation?  Another resampling strategy? New full-sample methods?
+   - How do OOS tests perform when there is instability and models are small?
+   - Lower priority next steps
+     - Relax need for stationarity
+       - $\frac{P^2}{T} \to 0$ should make this relatively easy
+     - Extend results to nonlinear and nonparametric models
+       - Overfit is more of a concern here.
+* COMMENT Variables and such
+ LocalWords:  beamer STARTUP usecolortheme usefonttheme onlymath usepackage toc
+ LocalWords:  setspace renewcommand mathindent frenchspacing OOS Diebold JBES
+ LocalWords:  Econometrica McCracken's Inoue Giacomini ATTR Eicker OLS iid sqrt
+ LocalWords:  varepsilon datapoints iR Reestimate Tibshirani operatorname leq
+ LocalWords:  neq frac infty nath oos mbox fleqn setbeamertemplate tikz calc yx
+# LocalWords:  usetikzlibrary newlength wideitemsep setlength itemsep olditem
+# LocalWords:  addtolength DeclareMathOperator cov plim atan setbeamerfont sep
+# LocalWords:  setbeamercolor titlelike defbeamertemplate beamercolorbox veclen
+# LocalWords:  usebeamerfont insertsection newcommand secpage usebeamertemplate
+# LocalWords:  AtBeginSection circlefigA tikzpicture lightgray filldraw Meese
+# LocalWords:  circlefigB McCracken Rogoff Goyal Welch BRC DMW Akritas sim X'X
+# LocalWords:  Anatolyev underbrace nolimits cdot mathcal MDS CLT mathbf R'X iS
+# LocalWords:  Wishart multline T'X pmatrix Bigg AIC geq lVert rVert iT mathbb
+# LocalWords:  lvert rvert dx ixz pathalogical HAC theta'V T'V DGP
