@@ -13,10 +13,12 @@
 *.prv/
 *.eps
 *.fdb_latexmk
-*.tar.gz
-*.Rcheck
 *.figlist
 *.makefile
+*.fdb_latexmk
+
+*.tar.gz
+*.Rcheck
 
 ltxpng/*
 ltxpng
@@ -104,3 +106,4 @@ slides/slide-plots/overview-5.pdf
 slides/slide-plots/trueOOS-1a.pdf
 slides/slide-plots/trueOOS-1b.pdf
 slides/slide-plots/trueOOS-2.pdf
+make.out

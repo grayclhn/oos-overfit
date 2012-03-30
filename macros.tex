@@ -1,0 +1,112 @@
+\usepackage{amsmath,setspace,amssymb,amsthm,subfig,url,multicol,microtype}
+
+\frenchspacing
+
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator*{\plim}{plim}
+\DeclareMathOperator*{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\atan}{atan*}
+\newcommand{\newacronym}[3]{%
+\expandafter\newcommand\expandafter{\csname #1\endcsname}{#2 \textsc{(\MakeLowercase{#3})}%
+\expandafter\renewcommand\expandafter{\csname #1\endcsname}{\textsc{\MakeLowercase{#3}}}}}
+
+\newcommand{\oosA}{\bar{D}_{R}}
+\newcommand{\oosB}{\bar{D}_{T}}
+
+\newcommand{\oost}{\ensuremath{\operatorname{oos-t}}}
+\newcommand{\oosSum}[2]{\ensuremath{\sum_{#1=R+#2}^{T-\h}}}
+
+\newcommand{\h}{h}
+\newcommand{\InnerBlockL}[1]{\ensuremath{R+(#1-1)b_T + 1}}
+\newcommand{\InnerBlockU}[1]{\ensuremath{R+#1 b_T}}
+\newcommand{\OuterBlockU}{\lfloor P/b_T \rfloor}
+\newcommand{\SumOuterBlock}[1]{\ensuremath{\sum_{#1=1}^{\OuterBlockU}}}
+\newcommand{\SumInnerBlock}[2]{\ensuremath{\sum_{#1=\InnerBlockL{#2}}^{\InnerBlockU{#2}}}}
+
+\newcommand{\CEOuterBlock}[2]{\ensuremath{\E_{\InnerBlockU{(#2-1)}} #1}}
+
+\newcommand{\ZSummand}{D_{Rs} - \E_R D_{Rs}}
+\newcommand{\ZDef}{P^{-1/2} \SumInnerBlock{s}{i} [\ZSummand]}
+\newcommand{\ZSqCE}{\ensuremath{\CEOuterBlock{Z_i^2}{i}}}
+\newcommand{\ZTrunc}{\ensuremath{C\sqrt{b_{T}/P}}}
+\newcommand{\PScaleTerm}{\ensuremath{\frac{C \sqrt{b_T}}{P}}}
+
+\newcommand{\vWeight}{W((t-s)/\gamma)}
+\newcommand{\vSummand}{\ensuremath{(D_{Rt} - \E_R D_{Rt})(D_{Rs} - \E_R D_{Rs}) \vWeight}}
+\newcommand{\kernelBDefn}[1]{\ensuremath{\delta^{-1}(2\pi)^{-1/2}}e^{-#1^2/2\delta^2}}
+\newcommand{\kernelB}[1]{\ensuremath{\eta_{\delta}(#1)}}
+
+\newcommand{\vtSum}{\ensuremath{\sum_{t=-P+1}^{2P}}}
+\newcommand{\vtSumr}{\ensuremath{\sum_{i=1}^r}}
+\newcommand{\vtSuma}{\ensuremath{\sum_{t=(2i-2)b_T-P+1}^{(2i-1)b_T-P}}}
+\newcommand{\vtSumb}{\ensuremath{\sum_{t=(2i-1)b_T-P+1}^{2ib_T-P}}}
+\newcommand{\vttLower}{\ensuremath{\max(1-t,-b_T)}}
+\newcommand{\vttUpper}{\ensuremath{\min(P-t,b_T)}}
+
+\newcommand{\varianceTermIDefn}{\ensuremath{P^{-1}\oosSum{s,t}{1}
+    \vSummand}}
+\newcommand{\varianceTermI}{\ensuremath{\sigma_{R,0\delta}^2}}
+\newcommand{\varianceTermII}{\ensuremath{\sigma_{R,1\delta}^2}}
+\newcommand{\varianceTermIIa}{\ensuremath{(P\gamma)^{-1/2}
+    \sum_{l=\max(1-t,-P)}^{\min(P-t,P)} (D_{t+l+R,R} - \E_R D_{t+l+R,R})
+    W(l/\gamma)}}
+\newcommand{\varianceTermIIb}{\ensuremath{(P\gamma)^{-1/2}
+    \sum_{j=1-t}^{P-t} (D_{t+j+R,R} - \E_R D_{t+j+R,R})
+    \kernelB{j/\gamma}}}
+\newcommand{\varianceTermIII}{\ensuremath{\sigma_{R,2\delta}^{2}}}
+\newcommand{\varianceTermIIIa}{\ensuremath{(P\gamma)^{-1/2}
+    \sum_{l=\vttLower}^{\vttUpper} (D_{t+l+R,R} - \E_R D_{t+l+R,R})
+    W(l/\gamma)}}
+\newcommand{\varianceTermIV}{\ensuremath{\sigma_{R,3\delta}^{2}}}
+\newcommand{\varianceTermIVb}{\ensuremath{(P\gamma)^{-1/2}
+    \sum_{j=\vttLower}^{\vttUpper} (D_{t+j+R,R} - \E_R D_{t+j+R,R})
+    \kernelB{j/\gamma}}}
+\newcommand{\vtIIIsummand}{\ensuremath{(Z_{1t}Z_{2t} - \E_RZ_{1t}Z_{2t})}}
+
+\newcommand{\varianceDiffA}{\ensuremath{P^{-1} \oosSum{s,t}{1}
+    \lvert (D_{Rs} - \E_R D_{Rs})(\E_R D_{Rt} - \oosA) \rvert
+    \vWeight}}
+\newcommand{\varianceDiffAi}{\ensuremath{P^{-1} \oosSum{s}{1}(\E_R
+    D_{Rs} - \oosA )^2}}
+\newcommand{\varianceDiffAii}{\ensuremath{P^{-1} \oosSum{s}{1}
+    (D_{Rs} - \E_R D_{Rs})^2}}
+
+\newcommand{\rhoExp}{\ensuremath{(\rho-2)/2\rho}}
+\newcommand{\absReg}{\ensuremath{\rho/(\rho-2)}}
+
+\newcommand{\couplingConstant}{\ensuremath{2^{(1+\rho)/\rho} B_L}}
+\newcommand{\couplingBeta}[1]{\ensuremath{\beta^{(\rho-2)/2\rho}_{#1}}}
+\newcommand{\couplingBetaSq}[1]{\ensuremath{\beta^{(\rho-2)/\rho}_{#1}}}
+\newcommand{\couplingBound}[1]{\couplingConstant \couplingBeta{#1}}
+
+\newcommand{\OCoef}{\ensuremath{O_p(\frac{\sqrt{P}}{T})}}
+
+\newcommand{\bh}[1]{\ensuremath{\hat\theta_{#1}}}
+\newcommand{\ep}[1]{\ensuremath{\boldsymbol{\varepsilon}_{#1}}}
+
+\newcommand{\olsMatrix}[2]{\ensuremath{(#1'#1)^{-1}#1'#2}}
+
+\newcommand{\aic}{\textsc{aic}}
+\newcommand{\bic}{\textsc{bic}}
+\newcommand{\dmw}{\textsc{dmw}}
+\newcommand{\ols}{\textsc{ols}}
+\newcommand{\mds}{\textsc{mds}}
+\newcommand{\clt}{\textsc{clt}}
+\newcommand{\lln}{\textsc{lln}}
+\newacronym{VAR}{Vector Autoregression}{VAR}
+\newacronym{oos}{out-of-sample}{OOS}
+\newcommand{\dgp}{\textsc{dgp}}
+\newcommand{\hac}{\textsc{hac}}
+\newacronym{ned}{Near Epoch Dependent}{NED}
+\newacronym{mse}{Mean Squared Error}{MSE}
+\newcommand{\sfield}{$\sigma$-field}
+\newcommand{\sfields}{\sfield s}
+\renewcommand{\Re}{\ensuremath{\mathbb{R}}}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

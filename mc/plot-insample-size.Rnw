@@ -1,12 +1,14 @@
 \documentclass{article}
 \SweaveOpts{prefix.string=plots/ftest}
 \usepackage[margin=1in]{geometry}
+\usepackage{tikz}
 
 \begin{document}
 Basic file that generates plots for size of the F-test
 
-<<fig=TRUE,width=5.5, height=4>>=
+<<fig=TRUE,width=5.5, height=4, eps=F, pdf=T>>=
 library(fwPackage)
+library(pgfSweave)
 library(lattice)
 ltheme <- canonical.theme(color = FALSE)     ## in-built B&W theme  
 ltheme$strip.background$col <- "transparent" ## change strip bg  
@@ -25,7 +27,7 @@ print(dotplot(norm ~ reject | interaction(altlabel,nlabel, sep = ", "),
                 panel.dotplot(x, y, ..., type = "n")
                 panel.text(x, as.numeric(y), labels = sprintf("%.2f", x))
               },
-              par.strip.text = list(cex = .65),
+              par.strip.text = list(cex = .55),
               layout = c(2,4),
               index.cond = list(c(3,4,7,8,5,6,1,2))))
 @ 

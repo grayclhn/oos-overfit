@@ -2,6 +2,7 @@ library(lattice)
 library(sandwich)
 library(lmtest)
 library(Hmisc)
+library(tikzDevice)
 
 dfull <- ts(read.csv("AllData2009.csv")[,-1],
             start = 1871, frequency = 1)
@@ -95,7 +96,7 @@ oos.ct <- oosStats(tstats.ct)
 
 indplot <- function(name, series, file, height = 2, width = 5.5, xlabel = "",
                     ticks = NULL, labels = TRUE,...) {
-  pdf(file = file, height = height, width = width)
+  tikz(file = file, height = height, width = width)
   par(mar = c(5.1, 4.2, 1.1, 0))
   plot(cbind(series, 0), yaxt = "n", ylab = name,
        plot.type = "single", bty = "n",
@@ -106,16 +107,16 @@ indplot <- function(name, series, file, height = 2, width = 5.5, xlabel = "",
   dev.off()  
 }
 
-indplot(name = "KS", oos[,"KS"], file = "plots/oos-ind-ks.pdf")
-indplot(name = "PM", oos[,"PM"], file = "plots/oos-ind-pm.pdf", xlabel = "R",
+indplot(name = "KS", oos[,"KS"], file = "plots/oos-ind-ks.tikz")
+indplot(name = "PM", oos[,"PM"], file = "plots/oos-ind-pm.tikz", xlabel = "$R$",
         ticks = c(0, .01, .02, .03, .04, 0.05),
         labels = c("0", "", "", "", "", "0.05"))
 
 ## make plots of out-of-sample mse
-## set parameters for pdf images
+## set parameters for  images
 oosplot <- function(series, file, height = 2, width = 5.5, xlabel = "",
                     ticks = NULL, labels = TRUE,...) {
-  pdf(file = file, height = height, width = width)
+  tikz(file = file, height = height, width = width)
   x1 <- sum(is.na(series[,1])) + start(series)[1]
   xn <- end(series)[1]
   par(mar = c(5.1, 4.2, 1.1, 0))
@@ -132,22 +133,22 @@ oosplot <- function(series, file, height = 2, width = 5.5, xlabel = "",
 }
 
 ##Average OOS MSE Difference\nfor OLS Equity Premium Forecasts
-oosplot(oos[,c("interval", "average")], file = "plots/oos-mse-1.pdf", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
+oosplot(oos[,c("interval", "average")], file = "plots/oos-mse-1.tikz", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
 
 oos.subset <- oos
 window(oos.subset, end = 49) <- NA
 ## Subset of Average OOS MSE Difference\nfor OLS Equity Premium Forecasts
-oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-1b.pdf",
-        xlabel = "R", ticks = c(0, -0.025, -.05, -0.075, -.1),
+oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-1b.tikz",
+        xlabel = "$R$", ticks = c(0, -0.025, -.05, -0.075, -.1),
         labels = c("0", "", "-0.5", "", "-.10"))
 
 ## Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts
-oosplot(oos.ct[,c("interval", "average")], file = "plots/oos-mse-2.pdf", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
+oosplot(oos.ct[,c("interval", "average")], file = "plots/oos-mse-2.tikz", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
      
 
 oos.subset <- oos.ct
 window(oos.subset, end = 49) <- NA
 # Subset of Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts
-oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-2b.pdf",
-        xlabel = "R", ticks = c(0, - 0.015/2, -.015, -(0.015 + 0.03)/2, -.03),
+oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-2b.tikz",
+        xlabel = "$R$", ticks = c(0, - 0.015/2, -.015, -(0.015 + 0.03)/2, -.03),
         labels = c("0", "", "", "", "-.03"))

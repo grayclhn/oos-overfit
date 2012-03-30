@@ -10,12 +10,13 @@
 #
 # should run the analysis and generate the final pdf file: paper.pdf
 
-SHELL := /bin/sh
-R := R
-RFLAGS := --vanilla
-sqlite := sqlite3
-sqliteFLAGS := $(empty)
-TEXFLAGS := -q
+SHELL        := /bin/bash
+R            := R
+RFLAGS       := --vanilla
+sqlite       := sqlite3
+sqliteFLAGS  := $(empty)
+LATEXMKFLAGS := -pdf -silent
+latexmk  := /usr/local/texlive/2011/bin/x86_64-linux/latexmk
 
 ## define some convenience functions
 object = $(notdir $(basename $(1)))
@@ -47,12 +48,12 @@ mc: $(mcDB) $(mcRnw:.Rnw=.pdf)# for convenience -- allows 'make mc'
 # The command to generate the final pdfs is pretty straightforward.
 # I'm using the R version of texi2dvi so that it works directly with
 # Sweave files.  Basic texi2dvi is missing some macros.
-$(mcRnw:.Rnw=.tex): %.tex: %.Rnw mc/db/oosstats.created
-	cd $(dir $<); $(R) $(RFLAGS) CMD pgfsweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
+$(mcRnw:.Rnw=.tex): %.tex: %.Rnw mc/db/oosstats.created macros.tex
+	cd $(dir $<) && $(R) $(RFLAGS) CMD pgfsweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
 %.pdf: %.tex
-	cd $(dir $<); $(R) $(RFLAGS) CMD texi2dvi -b -p $(notdir $<); cd $(CURDIR)
-paper.pdf: paper.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(empiricplots) $(empirictables)
-	texi2dvi $(TEXFLAGS) -p $<
+	cd $(dir $<) && $(R) CMD texi2dvi -p $(notdir $<)
+paper.pdf: paper.tex macros.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(empiricplots) $(empirictables)
+	$(latexmk) $(LATEXMKFLAGS) $(notdir $<)
 
 # These are the dependencies for the database.  Since all of the
 # tables are stored inside the same file, we can't use the filenames

@@ -1,7 +1,14 @@
-## The variables nsim and dbname are appended to the beginning of this
-## file before execution.
+## The variables nsim, njobs, jobnumber, and dbname are appended to
+## the beginning of this file before execution.  This code *should*
+## set up random number generation for the parallel processes
+## correctly.
+require(rlecuyer)
+.lec.SetPackageSeed(c(4586, 8197, 5954,   15, 2896, 1839))
+jobnames <- LETTERS[1:njobs]
+.lec.CreateStream(jobnames)
+.lec.CurrentStream(jobnames[jobnumber])
                
-library(fwPackage) ## look here for function definitions.
+require(fwPackage) ## look here for function definitions.
 
 dbmain <- dbConnect(dbDriver("SQLite"), "mc/simulations.db")
 
@@ -84,7 +91,7 @@ initTable <- function(db, tablename, tablefn, remove.table = TRUE) {
   retfn <- function() {
     dbWriteTable(db, tablename,
                  data.frame(do.call("tablefn", as.list(match.call())[-1L]),
-                            jobnumber = as.integer(.jobnumber)),
+                            jobnumber = as.integer(jobnumber)),
                  append = TRUE, row.names = FALSE)
   }
   formals(retfn) <- formals(tablefn)

@@ -4,9 +4,9 @@
 # makefile, so it might be easiest to just look at its output.
 
 nsims = 2000 # this is the number of simulations
-njobs = 4   # I set this to equal the number of processors on my 
-            # computer.  Changing its value will change the results
-            # of the simulations, since they'll be seeded differently.
+njobs = 7    # I set this to equal the number of processors on my 
+             # computer.  Changing its value will change the results
+             # of the simulations, since they'll be seeded differently.
 def maindb(sql):
     print("\t$(sqlite) $(sqliteFlags) mc/simulations.db \"" + sql + ";\"")
 
@@ -17,7 +17,6 @@ def maindb(sql):
 # corresponding file name.
 dbnames = ["oosstats" + str(i + 1) + "of" + str(njobs) for i in range(njobs)]
 dbfiles = ["mc/db/" + d + ".db" for d in dbnames]
-seeds = range(307, 307 + njobs)
 
 intervaltable = "interval"
 difftable     = "diff"
@@ -64,15 +63,17 @@ makeindex("intervalIndex", "interval (label, idgp)")
 makeview(intervaltable, "select ntest, isim, idgp, transform, label, avg(reject) as reject " +
          "from " + intervaltable + " group by ntest, isim, idgp, transform, label")
 makeview(difftable, "select * from " + difftable)
-makeview(ftesttable, "select isim, idgp, label, avg(reject) as reject from " + ftesttable + " group by isim, idgp, label")
+makeview(ftesttable, "select isim, idgp, label, avg(reject) as reject from " 
+         + ftesttable + " group by isim, idgp, label")
 print "\ttouch $@"
 
 # This is the set of make commands to create the temporary databases.
-for (db, s, n, j) in zip(dbnames, seeds, jsims, range(njobs)):
+for (db, n, j) in zip(dbnames, jsims, range(njobs)):
     print ("mc/db/" + db + ".db: mc/db/oosstats.R mc/db/nobs.created mc/db/coefficients.created\n"
-           + "\techo 'dbname <- \"$@\"; set.seed(" + str(s) + "); "
+           + "\techo 'dbname <- \"$@\"; "
            + "nsim <- " + str(n) + "; " 
-           + ".jobnumber <- " + str(j) + "; "
+           + "jobnumber <- " + str(j+1) + "; "
+           + "njobs <- " + str(njobs) + "; "
            + "intervaltable <- \"" + intervaltable + "\"; "
            + "ftesttable <- \"" + ftesttable + "\"; "
            + "difftable <- \"" + difftable + "\"; "
