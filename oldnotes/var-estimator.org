@@ -1,0 +1,16 @@
+Notes on the positive-definiteness of the pseudo out-of-sample average
+loss difference.
+* what am I trying to show?
+  That $var_R \bar{D} - vh$ converges to zero in probability
+* what do I know?
+** Definitions
+   + $\bar{D} = P^{-1} \sum_{t=R+1}^T D_t$
+   + $D_t = L(y_t - \hat{y}_{1t}) - L(y_t - \hat{y}_{2t})$
+   + $\hat{y}_{1t} = x_{1t}'\hat{\beta}_{1R}$
+   + $\hat{y}_{2t} = x_{2t}'\hat{\beta}_{2R}$
+** Assumptions
+   + Assumptions 1--3 of the paper hold
+* have I seen a similar result?
+  of course I have---de Jong and Davidson basically prove this for me.
+  The one thing that I need to account for is the covariance
+  introduced by using horizons greater than one. 

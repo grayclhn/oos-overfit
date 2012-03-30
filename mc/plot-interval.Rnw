@@ -1,0 +1,63 @@
+\documentclass{article}
+\SweaveOpts{prefix.string=plots/interval}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+Basic file that generates plots for the out-of-sample $t$-test
+centered at $E_{R}\bar D_{1}$
+
+<<>>=
+library(fwPackage)
+library(lattice)
+
+dbc <- dbConnect(dbDriver("SQLite"), dbname = "simulations.db")
+d <- dbGetQuery(dbc, "
+select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
+from interval 
+where label in ('test.error.1', 'test.error.2', 'gen.error.1', 'gen.error.2')
+and simIndex <= 500
+group by ntest, isim, idgp, transform, label) s 
+join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
+d$nlabel <- sprintf("n=%d", d$n)
+d$normlabel <- sprintf("c=%d", d$norm)
+
+doxyplot <- function(dframe, label, maintext, ...) {
+  dplot <- dframe[dframe$label==label,]
+  print(xyplot(I(1 - reject) ~ ntest | interaction(nlabel, altlabel, normlabel, sep = ", "),
+               data = dplot,
+               ylab = "coverage", main = maintext,
+##               ylim = c(-0.05,1.05),
+               panel = function(x,y,...) {
+                 panel.xyplot(x,y,...,type = "l")
+                 panel.lines(c(1,600),c(.9,.9), col = rgb(0,0,0,0.5))
+               },
+               par.strip.text = list(cex = .65),
+               index.cond = list(c(13,15,16,14,9,11,12,10,5,7,8,6,1,3,4,2)),
+               par.settings = standard.theme(color=FALSE),...))
+}
+@ 
+
+<<fig=TRUE>>=
+doxyplot(d, "test.error.1", "Empirical coverage of one-sided interval")
+@
+
+<<fig=TRUE>>=
+doxyplot(d, "test.error.2", "Empirical coverage of two-sided interval")
+@
+
+<<fig=TRUE>>=
+doxyplot(d, "gen.error.1", "Empirical coverage of one-sided interval")
+@
+
+<<fig=TRUE>>=
+doxyplot(d, "gen.error.2", "Empirical coverage of two-sided interval")
+@
+
+<<fig=TRUE>>=
+doxyplot(d, "gen.error.2", "Details of empirical coverage of two-sided interval", 
+         xlim = c(0,350), ylim = c(.75, .95))
+@ 
+<<>>=
+dbDisconnect(dbc)
+@
+\end{document}

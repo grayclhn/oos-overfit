@@ -1,0 +1,33 @@
+\documentclass{article}
+\SweaveOpts{prefix.string=plots/ftest}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+Basic file that generates plots for size of the F-test
+
+<<fig=TRUE>>=
+library(fwPackage)
+library(lattice)
+
+dbc <- dbConnect(dbDriver("SQLite"), dbname = "simulations.db")
+
+print(dotplot(norm ~ reject | interaction(altlabel,nlabel, sep = ", "),
+              dat = dbGetQuery(dbc, "select reject, 'n=' || n as nlabel, altlabel, norm from viewftest 
+                                     where label='size' and norm in (0,1)"),
+              xlab = "Rejection Probability",
+              xlim = c(-.1, 1.1),
+              panel = function(x, y, ...) {
+                panel.dotplot(x, y, ..., type = "n")
+                panel.text(x, as.numeric(y), labels = sprintf("%.2f", x))
+              },
+              par.settings = standard.theme(color=FALSE),
+              par.strip.text = list(cex = .65),
+              layout = c(2,4),
+              index.cond = list(c(3,4,7,8,5,6,1,2)),
+              main = "Rejection probability for F-test at 10% (size)\nbenchmark has smaller generalization error"))
+@ 
+
+<<>>=
+dbDisconnect(dbc)
+@
+\end{document}

@@ -1,0 +1,73 @@
+\documentclass{article}
+\SweaveOpts{prefix.string=plots/size}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+Basic file that generates plots for the out-of-sample $t$-test
+centered at $E_{R}\bar D_{1}$
+
+<<>>=
+library(fwPackage)
+library(lattice)
+
+dbc <- dbConnect(dbDriver("SQLite"), dbname = "simulations.db")
+
+d <- dbGetQuery(dbc, "
+select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
+from interval 
+where label='size' and idgp in (1,2) and transform in ('mccracken', 'clarkwest', 'difference')
+group by ntest, isim, idgp, transform, label) s 
+join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
+d$nlabel <- sprintf("n=%d", d$n)
+d$normlabel <- sprintf("c=%d", d$norm)
+
+dpower <- dbGetQuery(dbc, "
+select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
+from interval 
+where label='power' and idgp in (2,3) and transform='difference'
+group by ntest, isim, idgp, transform, label) s 
+join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
+dpower$nlabel <- sprintf("n=%d", dpower$n)
+dpower$normlabel <- sprintf("c=%d", dpower$norm)
+
+# dboth <- rbind(d, dpower)
+
+doxyplot <- function(dframe, maintext, ...) {
+  print(xyplot(reject ~ ntest | interaction(nlabel,altlabel,normlabel, sep = ", "),
+               data = dframe,
+               ylab = "size", main = maintext,
+               panel = function(x,y,...) {
+                 panel.xyplot(x,y,...,type = "l")
+                 panel.lines(c(1,600),c(.1,.1), col = rgb(0,0,0,0.5))
+               },
+               layout = c(4,4),
+               par.strip.text = list(cex = .65),
+               index.cond = list(c(13,15,16,14,9,11,12,10,5,7,8,6,1,3,4,2)),
+               par.settings = standard.theme(color=FALSE)))
+}
+@ 
+
+<<fig=TRUE>>=
+doxyplot(d[d$transform == "clarkwest",], 
+         "Empirical size of Clark and West test at 90% confidence")
+@
+
+<<fig=TRUE>>=
+doxyplot(d[d$altlabel=="K=3" & d$transform == "mccracken",], 
+         "K=3", "Empirical size of McCracken test at 90% confidence")
+@ 
+
+<<fig=TRUE>>=
+doxyplot(d[d$transform == "difference",], 
+         "K=3", "Empirical size of Naive OOS test at 90% confidence", auto.key = list(lines=TRUE, points=FALSE))
+@ 
+
+<<fig=TRUE>>=
+doxyplot(dpower[dpower$transform == "difference",], 
+         "Empirical power of Naive oos test at 90% confidence", auto.key = list(lines=TRUE, points=FALSE))
+@ 
+
+<<>>=
+dbDisconnect(dbc)
+@
+\end{document}
