@@ -1,0 +1,13 @@
+Package: fwPackage
+Type: Package
+Title: Out-of-Sample Forecast Comparisons
+Version: 1.0
+Date: 2010-04-26
+Author: Gray Calhoun
+Depends: methods, RSQLite, Matrix, MASS
+Suggests: 
+Maintainer: Gray Calhoun <gcalhoun@iastate.edu>
+Description: Code for the paper "Limit Theory for Comparing Overfit Models Out-of-Sample".  The simulations in the paper need these functions.
+License: GPL-2
+LazyLoad: yes
+Classification/JEL: C01, C12, C22, C52, C53
