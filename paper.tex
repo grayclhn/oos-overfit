@@ -8,6 +8,7 @@
 
 \input{macros}
 
+\pagestyle{myheadings}
 \newtheorem{thm}{Theorem}[section]
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{claim}[thm]{Claim}
@@ -20,6 +21,7 @@
 \newcommand{\Citepos}[1]{\Citeauthor{#1}'s \citeyearpar{#1}}
 \newcommand{\clws}{\citeauthor{ClW:06}'s \citeyearpar{ClW:06,ClW:07}}
 
+\input{VERSION.tex}
 \title{Out-of-Sample Comparisons of Overfit Models}
 \author{Gray Calhoun\thanks{email: \texttt{gcalhoun@iastate.edu}. I
     would like to thank Julian Betts, Helle Bunzel, Marjorie Flavin,
@@ -34,8 +36,6 @@
     in writing this paper.  I would also like to thank Amit Goyal for
     providing computer code and data for his 2008 \textsc{rfs} paper
     with Ivo Welch \citep{GoW:08}.} \\ Iowa State University}
-\date{October 24, 2011}
-
 
 \begin{document}
 \maketitle
