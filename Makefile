@@ -16,7 +16,7 @@ RFLAGS       := --vanilla
 sqlite       := sqlite3
 sqliteFLAGS  := $(empty)
 LATEXMKFLAGS := -pdf -silent
-latexmk  := /usr/local/texlive/2011/bin/x86_64-linux/latexmk
+latexmk  := /usr/local/bin/latexmk
 
 ## define some convenience functions
 object = $(notdir $(basename $(1)))
