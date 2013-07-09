@@ -9,10 +9,10 @@
 \input{macros}
 
 \pagestyle{myheadings}
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{lem}[thm]{Lemma}
-\newtheorem{claim}[thm]{Claim}
-\newtheorem{cor}[thm]{Corollary}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{claim}{Claim}
+\newtheorem{cor}{Corollary}
 \newtheorem{asmp}{Assumption}
 \newtheorem{example}{Example}
 \newtheorem{defn}{Definition}
@@ -1451,6 +1451,9 @@ extensions are less important than improving the available statistics.
 \appendix
 \section*{Appendix: Mathematical Details}
 \setcounter{section}{1}
+% Change lemma style to prepend 'A'
+\setcounter{lem}{0}
+\renewcommand{\thelem}{A\arabic{lem}}
 
 \subsection*{Supporting Results}
 The results in this paper rely heavily on a coupling argument for
