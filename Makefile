@@ -63,7 +63,7 @@ VERSION.tex:
 # Sweave files.  Basic texi2dvi is missing some macros.
 $(mcRnw:.Rnw=.tex): %.tex: %.Rnw mc/db/oosstats.created macros.tex
 	cd $(dir $<) && $(R) $(RFLAGS) CMD pgfsweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
-%.pdf: %.tex VERSION.tex
+%.pdf: %.tex VERSION.tex | ver
 	cd $(dir $<) && $(R) CMD texi2dvi -p $(notdir $<)
 paper.pdf: paper.tex macros.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(empiricplots) $(empirictables)
 	$(latexmk) $(LATEXMKFLAGS) $(notdir $<)
