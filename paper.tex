@@ -588,15 +588,15 @@ $\oosA$, is asymptotically normal and centered on the expected future
 performance, $t$-tests constructed from the \oos\ errors necessarily
 test hypotheses about $\E_T \oosB$ and not the performance of the
 pseudo-true models or the unconditional performance of the models.
-This application to testing can be expressed as a corollary:
-\begin{cor}\label{res:oostest}
+This application to testing can be expressed as its own theorem:
+\begin{thm}\label{res:oostest}
 Suppose that the conditions of Theorem \ref{res-confidence-intervals}
-hold.  Then
+hold and that $\lim \Pr[\E_T \oosB \leq 0] > 0$.  Then
 \begin{equation}
-  \lim \Pr[P^{1/2}\oosA/\hat\sigma_R \geq z_{\alpha} \mid \E_{T}
+  \lim \Pr[P^{1/2}\oosA/\hat\sigma_R > z_{\alpha} \mid \E_T
   \oosB \leq 0] \leq \alpha.
 \end{equation}
-\end{cor}
+\end{thm}
 
 Two intermediate Lemmas will help us understand Theorem
 \ref{res-confidence-intervals} better.  Its proof consists of two
@@ -1771,6 +1771,53 @@ attention to the fixed window statistic.  We can rewrite the centered
 Lemmas \ref{res-mixingale} and 
 \ref{res-convergence} ensure that the first term is asymptotically
 normal and the second term vanishes.\qed
+
+\subsection*{Proof of Theorem \ref{res:oostest}}
+By Lemma~\ref{res-convergence}, we know that
+\begin{equation*}
+  \Pr[\E_R \oosA \leq 0] - \Pr[\E_T \oosB \leq 0] \to 0
+\end{equation*}
+and
+\begin{equation*}
+  \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and } \E_R \oosA \leq 0]
+  - \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and } 
+  \E_T \oosB \leq 0] \to 0.
+\end{equation*}
+For large enough $T$, both $\Pr[\E_R \oosA \leq 0]$ and $\Pr[\E_T
+\oosB \leq 0]$ are positive, so
+\begin{equation*}
+  \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha
+  \mid \E_R \oosA \leq 0] = 
+  \frac{\Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and }
+    \E_R \oosA \leq 0]}{\Pr[\E_R \oosA \leq 0]}
+\end{equation*}
+and
+\begin{equation*}
+  \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha
+  \mid \E_T \oosB \leq 0] = 
+  \frac{\Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and }
+    \E_T \oosB \leq 0]}{\Pr[\E_T \oosB \leq 0]}
+\end{equation*}
+almost surely and consequently
+\begin{equation*}
+  \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha
+  \mid \E_T \oosB \leq 0]
+  - \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha
+  \mid \E_R \oosA \leq 0] \to^p 0.
+\end{equation*}
+Finally,
+\begin{align*}
+  \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \mid \E_R \oosA \leq 0]
+  &\leq \Pr[P^{1/2} (\oosA - \E_R \oosA) / \hat\sigma > z_\alpha 
+  \mid \E_R \oosA \leq 0] \\
+  &= \E( \Pr[P^{1/2} (\oosA - \E_R \oosA) / \hat\sigma > z_\alpha 
+  \mid \mathcal{F}_R] \mid \E_R \oosA \leq 0) \\
+  &= \E(\alpha \mid \E_R \oosA \leq 0) \\
+  &= \alpha
+\end{align*}
+where the second equality holds by Lemma~\ref{res-mixingale} and
+Theorem~\ref{res-variance-estimator}, completing the proof.
+\qed
 
 \subsection*{Proof of Lemma \ref{res-convergence}}
 \newcommand{\resConvgRHS}[1]{\ensuremath{\E(L(y^* - x_1^{*\prime}\bh{1#1}) - L(y^{*} -
