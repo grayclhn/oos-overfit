@@ -338,28 +338,25 @@ $T+h+Q$, evaluated by the known loss function $L$.  We allow $Q = 1$,
 so this setup generalizes the problem of choosing a model for a single
 prediction.
 
-Both models are estimated using \ols\ with a recursive, fixed, or
-rolling window:
+Both models are estimated using \ols\ with a fixed window:
 \[
-\hat y_{i,t+\h} = x_{it}'\hat{\theta}_{it}^{R}, \qquad i=1,2, \qquad t
+\hat y_{i,t+\h} = x_{it}'\hat{\theta}_{it}, \qquad i=1,2, \qquad t
 = R+1,\dots,T-h
 \]
 with
 \begin{equation*}
-  \bh{it}^{R} =  
-  \begin{cases}\big(\sum_{s=1}^{t-\h} x_{is}x_{is}'\big)^{-1}
-    \sum_{s=1}^{t-\h} x_{is} y_{s+\h} & \text{recursive window}\\
-    \big(\sum_{s=t - \h - R}^{t-\h} x_{is}x_{is}'\big)^{-1}
-    \sum_{s=t - \h - R}^{t-\h} x_{is} y_{s+\h} & \text{rolling window}\\
+  \bh{it} =
+  \begin{cases}
     \big(\sum_{s=1}^{R-\h} x_{is}x_{is}'\big)^{-1} \sum_{s=1}^{R-\h}
-    x_{is} y_{s+\h} & \text{fixed window}
+    x_{is} y_{s+\h} & t \leq T \\
+    \big(\sum_{s=1}^{T-\h} x_{is}x_{is}'\big)^{-1}
+    \sum_{s=1}^{T-\h} x_{is} y_{s+\h} & t > T.
   \end{cases}
 \end{equation*}
 The observed \oos\ average is denoted $\oosA$: \[\oosA \equiv P^{-1}
 \oosSum{t}{1} D_{Rt}\]  with
 \[
-D_{Rt} \equiv L(y_{t+\h} - x_{1t}'\bh{1t}^R) - L(y_{t+\h}
-  - x_{2t}'\bh{2t}^R).
+D_{Rt} \equiv L(y_{t+\h} - x_{1t}'\bh{1t}) - L(y_{t+\h} - x_{2t}'\bh{2t}).
 \]
 The \oos\ statistic of interest is $\oost \equiv \sqrt{P} \oosA /
 \hat\sigma_R$, for $\hat\sigma_R^2$ some (possibly Heteroskedasticity- and
@@ -371,19 +368,8 @@ lower average future loss; i.e. to determine whether $\oosB$ is
 positive or negative,with
 \[
 \oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} D_{Tt}, \quad 
-D_{Tt} \equiv L(y_{t+h} - x_{1t}' \bh{1t}^T) - L(y_{t+h} - x_{2t}' \bh{2t}^T)
+D_{Tt} \equiv L(y_{t+h} - x_{1t}' \bh{1t}) - L(y_{t+h} - x_{2t}' \bh{2t}).
 \]
-and 
-\begin{equation*}
-  \bh{it}^{T} = 
-  \begin{cases} \big(\sum_{s=1}^{t-\h} x_{is}x_{is}'\big)^{-1}
-    \sum_{s=1}^{t-\h} x_{is} y_{s+\h} & \text{recursive window} \\
-    \big(\sum_{s=t - \h - T}^{t-\h} x_{is}x_{is}'\big)^{-1}
-    \sum_{s=t - \h - T}^{t-\h} x_{is} y_{s+\h} & \text{rolling window} \\
-    \big(\sum_{s=1}^{T-\h} x_{is}x_{is}'\big)^{-1} 
-    \sum_{s=1}^{T-\h} x_{is} y_{s+\h} & \text{fixed window}.
-  \end{cases}
-\end{equation*}
 Note that the coefficients are reestimated with the full dataset.
 Since the forecaster's information set, $\mathcal{F}_T$, does not
 contain $\oosB$, he or she should decide between the models based on
@@ -410,7 +396,7 @@ the $L_v$-norm for $L_v$-integrable random variables is $\lVert \cdot
 argument and return its $i$th eigenvalue (with $\eigen_{i}(A) \leq
 \eigen_{i+1}(A)$ for any matrix $A$).  All limits are taken as $T \to
 \infty$ unless stated otherwise.
- 
+
 \subsection{Assumptions}
 
 We assume the next conditions hold throughout the paper.  The first
@@ -496,9 +482,8 @@ condition is weak and allows the loss function itself to be
 non-differentiable or even discontinuous; for example, absolute error
 and many asymmetric loss functions satisfy this assumption.
 
-\begin{asmp} \label{asmp-4} $P\to\infty$, $R\to\infty$, and  $P =
-  o(T^{1/2}$) as $T \to \infty$.  For the rolling and recursive
-  windows, $Q = o(T^{1/2})$ as well.
+\begin{asmp} \label{asmp-4} $P, R, Q \to\infty$ and $P^2/T \to 0$ as
+  $T \to \infty$.
 \end{asmp}
 
 The requirements that $P$ and $R$ grow with $T$ are common.  Parts of
@@ -518,11 +503,12 @@ their paper for further discussion.
   \label{asmp-5} $W$ is a kernel from 
 $\Re$ to $[-1,1]$ such that $W(0) = 1$, $W(x) = W(-x)$ for all $x$,
 \begin{equation*}
-    \int_{-\infty}^{\infty} \lvert W(x) \rvert dx < \infty, \quad
-    \int_{-\infty}^{\infty} \lvert \psi(x) \rvert dx < \infty
+  \int_{-\infty}^{\infty} \lvert W(x) \rvert dx < \infty, \quad
+  \int_{-\infty}^{\infty} \lvert \psi(x) \rvert dx < \infty
 \end{equation*}
 with
-\begin{equation*} \psi(x) = \frac1{\sqrt{2\pi}} \int_{-\infty}^{\infty} W(z) e^{ixz}dz,
+\begin{equation*} 
+  \psi(x) = \frac1{\sqrt{2\pi}} \int_{-\infty}^{\infty} W(z) e^{ixz}dz,
 \end{equation*}
 and $W(\cdot)$ is continuous at zero and all but a finite number of
 points.
@@ -540,10 +526,12 @@ in $[0,\infty]$, while we require $P^2/R \to 0$
 related---allowing for complex models requires tighter constraints on
 the size of the test sample.  West allows more general estimation
 methods, while we restrict attention to \ols; the advantage of using
-\ols\ is that we can derive the inequality, $$\| x_{it}'
-\theta_{it}^{R} - x_{it}' \theta_{iR}^R \|_2 \leq O(P/T)^{1/2}.$$  Our
-main results will hold for other models as long as a similar
-inequality exists, but proving such inequalities for other models is
+\ols\ is that we can derive the inequality, 
+\begin{equation*}
+  \| x_{it}'\theta_{i,T+1} - x_{it}'\theta_{iR} \|_2 \leq O(P/T)^{1/2}.
+\end{equation*}
+Our main results will hold for other models and estimation windows as
+long as a similar inequality exists, but proving such inequalities is
 left for future research.
 
 Our other assumptions are similar.  The loss function must be smooth
@@ -650,26 +638,14 @@ and
 \begin{equation}\label{normalpart}
   \sqrt{P}\frac{\oosA - \E_R \oosA}{\sigma_R} \to^d N(0,1)
 \end{equation}
-The first Lemma shows that the rolling and recursive window statistics
-can be approximated by the fixed window statistic and that
-that~\eqref{coefpart} holds for the fixed window.  The second Lemma
-shows that the process $\{D_{Rt} - \E_R \oosA\}$ is an $L_2$-mixingale
-of size $-1/2$ that satisfies a \clt\ for the fixed window statistic,
-ensuring~\eqref{normalpart}.
+The first Lemma establishes~\eqref{coefpart} and the second shows that
+the process $\{D_{Rt} - \E_R \oosA\}$ is an $L_2$-mixingale of size
+$-1/2$ that satisfies a \clt, ensuring~\eqref{normalpart}.
 
-\begin{lem} \label{res-convergence} Suppose that Assumptions
-  \ref{asmp-1}--\ref{asmp-4} hold, let $D_{Rt}'$ and $D_{Tt}'$ denote
-  the loss differences associated with the rolling or recursive
-  window, and let $D_{Rt}$ and $D_{Tt}$ those of the fixed window.  Then
-  \begin{equation}
-    \label{eq:8}
-    P^{1/2} (\oosA' - \oosA) \to^p 0, \qquad P^{1/2} (\oosB' - \oosB)
-    \to^p 0,
-  \end{equation}
-  and
+\begin{lem} \label{res-convergence}
+  Under Assumptions \ref{asmp-1}--\ref{asmp-4},
   \begin{equation}\label{eq:7}
-    \E_T \oosB - \E_R \oosA =  O_p(\sqrt{P/T}) +
-    o_p(P^{-1/2}).
+    \E_T \oosB - \E_R \oosA = O_p(\sqrt{P/T}) + o_p(P^{-1/2} + Q^{-1/2}).
   \end{equation}
 \end{lem}
 
@@ -690,7 +666,7 @@ the possibility of adjusting the asymptotic distribution of the test
 statistic to account for this noise term as in \citet{Wes:96}, but we
 leave that to future research.  If $P^2/T \to \infty$, which is
 closest to common practice in applied research, the noise term
-dominates the asymptotic distribution of the \oos\ $t$-test, so the
+dominates the asymptotic distribution of the \oos\ $t$-test and the
 test has only trivial power in the limit if it has correct size.
 
 \begin{lem}\label{res-mixingale}
@@ -706,9 +682,9 @@ test has only trivial power in the limit if it has correct size.
   consequence, $\{D_{Rt} - \E_R D_{Rt}, \mathcal F_t\}$ is an
   $L_2$-mixingale of size $-1/2$.  
 
-  \noindent Part 2: Moreover,~\eqref{normalpart} holds under the
-  conditions of Part 1 if $P \to \infty$ as $T \to \infty$ and
-  $\sigma_R^2$ is a.s. uniformly positive.
+  \noindent Part 2: Moreover,~\eqref{normalpart} holds under
+  Assumptions~\ref{asmp-1}--\ref{asmp-4} if $\sigma_R^2$ is
+  a.s. uniformly positive.
 \end{lem}
 
 Mixingales satisfy a weak-dependence condition similar to \mds es and
@@ -738,10 +714,9 @@ variance estimators are consistent.\footnote{As with
       applied to our \oos\ mixingale.}
 
 \begin{lem}
-  \label{res-variance-estimator} Suppose Assumptions \ref{asmp-1},
-  \ref{asmp-2}, \ref{asmp-3}, and \ref{asmp-5} hold, that $\gamma$,
-  $P$, and $R \to \infty$ as $T \to \infty$, and that $\gamma = o(P)$
-  and define
+  \label{res-variance-estimator} Suppose Assumptions
+  \ref{asmp-1}--\ref{asmp-5} hold and that $\gamma \to \infty$ and 
+  $\gamma/P \to 0$ as $T \to \infty$, and define
   \begin{equation*}
     \hat{\sigma}_R^2 \equiv P^{-1} \oosSum{s,t}{1} (D_{Rt} - \oosA)(D_{Rs} - \oosA)
     \vWeight.
@@ -754,23 +729,25 @@ results.
 
 \subsection{An Example}\label{sec:example}
 
-Consider the fixed-window estimation scheme, let $L(e) = e^2$, let $h
+Let $L(e) = e^2$, let $h
 = 1$, let the benchmark model have no regressors (i.e. $y_{t+1} \sim$
 white noise), suppose that $(y_{t}, x_{2t}) \sim i.i.d.\ N(0,I)$, and
 assume that $R > 2K_2 + 4$.\footnote{The restriction $R > 2 K_2 + 4$
   allows us to use a convenient formula for moments of the
   Inverse-Wishart distribution.}  Under these conditions,
-\begin{align*}
-  D_{Rt} &= 2 y_{t+1} x_{2t}'\hat{\theta}_{2R}^R -
-  \hat{\theta}_{2R}^{R\prime} (x_{2t} x_{2t}') \hat{\theta}_{2R}^R \\
-  D_{Tt} &= 2 y_{t+1} x_{2t}'\hat{\theta}_{2T}^T -
-  \hat{\theta}_{2T}^{T\prime} (x_{2t} x_{2t}') \hat{\theta}_{2T}^T.
-\end{align*}
+\begin{equation*}
+  D_t =
+  \begin{cases}
+    2 y_{t+1} x_{2t}'\hat{\theta}_{2R} -
+    \hat{\theta}_{2R}' x_{2t} x_{2t}' \hat{\theta}_{2R} & t \leq T \\
+    2 y_{t+1} x_{2t}'\hat{\theta}_{2T} -
+    \hat{\theta}_{2T}' x_{2t} x_{2t}' \hat{\theta}_{2T} & t > T.
+  \end{cases}
+\end{equation*}
 
-The first two moments of $D_{Rt}$ for $t > R$ (conditional
-on $\mathcal{F}_R$) are straightforward to derive:
-$\E_R D_{Rt} = - \hat{\theta}_{2R}^{R\prime} \hat{\theta}_{2R}^R$
-and
+The first two conditional moments of $D_t$ for $t > R$ (given
+$\mathcal{F}_R$) are straightforward to derive: $\E_R D_{Rt} = -
+\hat{\theta}_{2R}' \hat{\theta}_{2R}$ and
 \begin{equation*}
   \sigma_R^2 \equiv \E_R(D_{Rt} - \E_R D_{Rt})^2 = 4
   \hat{\theta}_{2R}^{R\prime} \hat{\theta}_{2R}^{R} +
@@ -778,7 +755,7 @@ and
   \hat{\theta}_{2R}^{R})^2   \geq 4 \hat{\theta}_{2R}^{R\prime}
   \hat{\theta}_{2R}^R \quad a.s.
 \end{equation*}
-Now, $\hat{\theta}_{2R}^{R\prime} \hat{\theta}_{2R}^R$ is
+Now, $\hat{\theta}_{2R}' \hat{\theta}_{2R}$ is
 a.s. positive and uniformly integrable with mean $4 K_2 / (R - K_2 -
 1)$ (since $(X_{2R}'X_{2R})^{-1}$ is Inverse-Wishart$(I_{K_2}, R)$),
 making $\sigma_R^2$ uniformly a.s. positive and ensuring that the
@@ -789,14 +766,14 @@ natural \oos\ variance estimator is consistent for $\sigma_R^2$:
   &= 4 \hat{\theta}_{2R}^{R\prime} \Big[P^{-1} \sum_{t=R+1}^{T-1}
   \Big(y_{t+1} x_{2t} - P^{-1} \sum_{s=R+1}^{T-1} y_s x_{2s}\Big)
   \Big(y_{t+1} x_{2t} - P^{-1} \sum_{s=R+1}^{T-1} y_s
-  x_{2s}\Big)'\Big] \hat{\theta}_{2R}^{R\prime} \\ & \quad - 4
+  x_{2s}\Big)'\Big] \hat{\theta}_{2R}' \\ & \quad - 4
   \Big[P^{-1} \sum_{t=R+1}^{T-1} \Big(y_{t+1} x_{2t} - P^{-1}
-  \sum_{s=R+1}^{T-1} y_s x_{2s}\Big)' \hat{\theta}_{2R}^{R}
-  \hat{\theta}_{2R}^{R\prime} \Big(x_{2t} x_{2t}' - P^{-1}
-  \sum_{s=R+1}^{T-1} x_{2s} x_{2s}' \Big) \hat{\theta}_{2R}^{R} \Big]
+  \sum_{s=R+1}^{T-1} y_s x_{2s}\Big)' \hat{\theta}_{2R}
+  \hat{\theta}_{2R}' \Big(x_{2t} x_{2t}' - P^{-1}
+  \sum_{s=R+1}^{T-1} x_{2s} x_{2s}' \Big) \hat{\theta}_{2R} \Big]
   \\ &\quad + P^{-1} \sum_{t=R+1}^{T-1}
-  \Big[\hat{\theta}_{2R}^{R\prime} \Big(x_{2t} x_{2t}' - P^{-1}
-  \sum_{s=R+1}^{T-1} x_{2s} x_{2s}' \Big) \hat{\theta}_{2R}^{R}  \Big]^{2}.
+  \Big[\hat{\theta}_{2R}' \Big(x_{2t} x_{2t}' - P^{-1}
+  \sum_{s=R+1}^{T-1} x_{2s} x_{2s}' \Big) \hat{\theta}_{2R}'  \Big]^{2}.
 \end{align*}
 As $P \to \infty$, the first term converges in probability to
 $\hat{\theta}_{2R}^{R\prime} \hat{\theta}_{2R}^R$, the second to zero,
@@ -828,9 +805,8 @@ more generally.
 Finally, we can look at the difference $\E_R \bar{D}_R - \E_T
 \bar{D}_T$.  We can write this as
 \begin{align*}
-  \E_R \oosA - \E_T \oosB &= \hat{\theta}_{2R}^{R\prime}
-  \hat{\theta}_{2R}^R - \hat{\theta}_{2T}^{T\prime}
-  \hat{\theta}_{2T}^T \\ &=
+  \E_R \oosA - \E_T \oosB &= \hat{\theta}_{2R}'
+  \hat{\theta}_{2R} - \hat{\theta}_{2T}' \hat{\theta}_{2T} \\ &=
   \eb_T'[\tilde{X}_{2R}(X_{2R}'X_{2R})^{-2}
   \tilde{X}_{2R} - X_{2T}(X_{2T}'X_{2T})^{-2} X_{2T} ] \eb_T
 \end{align*}
@@ -1547,16 +1523,16 @@ The proof is virtually identical to the proof of Proposition 2.3 in
 
 \begin{lem}\label{lem-basic-coupling}
   Suppose Assumptions \ref{asmp-1}--\ref{asmp-3} hold.  Then, for any
-  T, $s$, $t$, $u$, and $w$, with $t \geq s > u \geq w$, there exist random
-  variables $\tilde D_s,\dots,\tilde D_t$ such that
+  T, $s$, and $t$ with $t \geq s$, there exist random variables
+  $\tilde D_s,\dots,\tilde D_t$ such that
   \begin{equation}\label{eq:coupling1}
-    P[(\tilde D_s,\dots,\tilde D_t) \neq (D_{sw},\dots,D_{tw})] \leq \beta_{s-u}
+    P[(\tilde D_s,\dots,\tilde D_t) \neq (D_s,\dots,D_t)] \leq \beta_{s-u}
   \end{equation}
   and
   \begin{equation}\label{eq:coupling2}
     \E(\phi(\tilde D_s,\dots, \tilde D_t) \mid \mathcal{F}_u ) = 
     \int
-    \phi(D_{sw},\dots,D_{tw}) f(\mathbf{x}, \mathbf{y})\ d\mathbf{x}\ d\mathbf{y}
+    \phi(D_s,\dots,D_t) f(\mathbf{x}, \mathbf{y})\ d\mathbf{x}\ d\mathbf{y}
   \end{equation}
   almost surely for all measurable functions $\phi$ such that the
   expectations are finite, where 
@@ -1564,7 +1540,7 @@ The proof is virtually identical to the proof of Proposition 2.3 in
   \mathbf{y} = (y_{s+\h},\dots,y_{t+\h})',\] and $f$ is the
   joint density of $(\mathbf{x}, \mathbf{y})$.  Moreover,
  \begin{equation}\label{eq:coupling3}
-   \| \tilde D_v - D_{vw} \|_2 \leq 2^{1+1/\rho} B_L
+   \| \tilde D_v - D_v \|_2 \leq 2^{1+1/\rho} B_L
    \beta_{s-u}^{\rhoExp}, \qquad v = s,\dots,t.
  \end{equation}
 \end{lem}
@@ -1580,10 +1556,15 @@ The proof is virtually identical to the proof of Proposition 2.3 in
   \[\Pr[V^* \neq V_s] = \beta_{s-u}.\]
 
   Now define
-  \[ \tilde D_v \equiv L(y_{v+\h}^* - x_{1v}^{*\prime} \hat{\theta}_w)
-  - L(y_{v+\h}^* - x_{2v}^{*\prime} \hat{\theta}_w), \quad v =
-  s,\dotsc, t,
-  \]
+  \begin{equation*}
+    \tilde D_v =
+    \begin{cases}
+      L(y_{v+\h}^* - x_{1v}^{*\prime} \hat{\theta}_{1R}) - L(y_{v+\h}^* -
+      x_{2v}^{*\prime} \hat{\theta}_{2R}) & v \leq T \\
+      L(y_{v+\h}^* - x_{1v}^{*\prime} \hat{\theta}_{1T}) - L(y_{v+\h}^* -
+      x_{2v}^{*\prime} \hat{\theta}_{2T}) & v > T
+    \end{cases}
+  \end{equation*}
   with $y_{v+\h}^*$ and $x_{iv}^*$ denoting the elements of $V^*$
   corresponding to $y_{v+\h}$ and $x_{iv}$ in $V_s$.  Equations
   (\ref{eq:coupling1}) and (\ref{eq:coupling2}) are satisfied by
@@ -1592,9 +1573,8 @@ The proof is virtually identical to the proof of Proposition 2.3 in
 \end{proof}
 
 \begin{lem}\label{lem:a2}
-  Suppose Assumptions~\ref{asmp-1}--\ref{asmp-3} and that the fixed
-  window scheme is used.  Let $b_T$ be a sequence such that $b_T \to
-  \infty$ and $b_T = o(P)$ and define
+  Suppose Assumptions~\ref{asmp-1}--\ref{asmp-3} hold.  Let $b_T$ be a
+  sequence such that $b_T \to \infty$ and $b_T = o(P)$ and define
   \begin{equation*}
     Z_i = \ZDef.
   \end{equation*}
@@ -1711,28 +1691,12 @@ E\Big(\vtSumr (U_i - \E_R U_i)\Big)^2 = o\Big(\vtSumr b_T^2/P\gamma\Big) =
 as required.
 \end{proof}
 
-\begin{lem}\label{lem:a3}
-  Suppose that $D_{Rt}'$ denotes loss differences using a rolling or
-  recursive window, and $D_{Rt}$ those using the fixed window and
-  define $\oosA' = P^{-1} \sum_{t=R+1}^{T-h} D_{Rt}'$.  
-  \begin{enumerate}
-  \item Under the assumptions of Theorem~\ref{sec:oostheory},
-    $\var_R(P^{1/2} \oosA') - \var_R(P^{1/2} \oosA) \to^p 0$.
-  \item Under the assumptions of Lemma~\ref{res-variance-estimator},
-    \begin{multline*}
-      P^{-1} \sum_{s,t=R+1}^{T-h} (D_{Rt}' - \oosA') (D_{Rs}' -
-      \oosA') W((t-s)/\gamma) - \\ P^{-1} \sum_{s,t=R+1}^{T-h}
-      (D_{Rt} - \oosA) (D_{Rs} - \oosA) W((t-s)/\gamma) \to^p 0.
-    \end{multline*}
-  \end{enumerate}
-\end{lem}
-\begin{proof}
-  Both follow from Equation~\eqref{eq:8} of Lemma~\ref{res-convergence}.
-\end{proof}
+%\newcommand{\DD}[2][{}]{(D_{#2}^{#1} - \E_R D_{#2}^{#1})}
+%\newcommand{\ovg}[1]{\tfrac{1}{P} \sum_{#1=R+1}^{T-h}}
 
 \begin{lem}\label{lem:a6}
-  Suppose the conditions of Lemma~\ref{res-variance-estimator} hold
-  and that $D_{Rt}$ uses the fixed window.  Then
+  Suppose the conditions of Lemma~\ref{res-variance-estimator} hold.
+  Then
   \begin{equation*}
     \hat{\sigma}_R^2 - P^{-1} \sum_{s,t=R+1}^{T-h} (D_{Rs} - \E_R
     D_{Rs}) (D_{Rt} - \E_R D_{Rt}) W((t-s)/\gamma) \to^{L_1} 0.
@@ -1779,27 +1743,25 @@ P^{-1} \oosSum{s}{1} (\E_R \tilde D_s)^2 = \Big(P^{-1} \oosSum{s}{1} \E_R
 
 Consequently,
 \begin{align*}
-P^{-1} \oosSum{s}{1} (\E_R D_{Rs})^2 - (\E_R\oosA)^2 & = 
-P^{-1} \oosSum{s}{1} [(\E_R D_{Rs})^2 - (\E_R\tilde D_s)^2]\\
+P^{-1} \oosSum{s}{1} (\E_R D_s)^2 - (\E_R\oosA)^2 & = 
+P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R\tilde D_s)^2]\\
 &\quad+ \Big(P^{-1} \oosSum{s}{1} \E_R \tilde D_s\Big)^2 - (\E_R\oosA)^2 \quad \text{a.s}.\\
-&= O_p\Big(P^{-1} \oosSum{s}{1} [(\E_R D_{Rs})^2 - (\E_R \tilde D_s)^2]\Big).
+&= O_p\Big(P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R \tilde D_s)^2]\Big).
 \end{align*}
 Finally, 
 \begin{align*}
-\Big\lVert P^{-1} \oosSum{s}{1} [(\E_RD_{Rs})^2 - (\E_R \tilde D_s)^2] \Big\rVert_1
-&\leq P^{-1} \oosSum{s}{1} \lVert \E_RD_{Rs} - \E_R \tilde D_s \rVert_2 \lVert
-\E_RD_{Rs} + \E_R \tilde D_s \rVert_2
-\\ &\leq (4 B_L/P) \oosSum{s}{1} \lVert \E_RD_{Rs} - \E_R \tilde D_s \rVert_2,
+\Big\lVert P^{-1} \oosSum{s}{1} [(\E_RD_s)^2 - (\E_R \tilde D_s)^2] \Big\rVert_1
+&\leq P^{-1} \oosSum{s}{1} \lVert \E_RD_s - \E_R \tilde D_s \rVert_2 \lVert
+\E_RD_s + \E_R \tilde D_s \rVert_2
+\\ &\leq (4 B_L/P) \oosSum{s}{1} \lVert \E_RD_s - \E_R \tilde D_s \rVert_2,
 \end{align*}
 and this last term vanishes as in the proof of Lemma~\ref{lem:a2}.
 \end{proof}
 
 \subsection*{Proof of Theorem \ref{res-confidence-intervals}}
 
-It suffices to prove asymptotic normality.  Lemma~\ref{lem:a3} and
-Equation~\eqref{eq:8} of Lemma~\ref{res-convergence} let us restrict
-attention to the fixed window statistic.  We can rewrite the centered
-\oos\ average as
+It suffices to prove asymptotic normality.  We can rewrite the
+centered \oos\ average as
 \[
 \frac{\bar{D}_{R} - \E_T \bar{D}_T}{\hat\sigma_R / \sqrt{P}} =
 \frac{1}{\hat\sigma_R \sqrt{P}}\oosSum{t}{1} (D_{Rt} - \E_R D_{Rt}) +
@@ -1864,89 +1826,80 @@ x_2^{*\prime}\bh{2#1}) \mid \bh{#1})}}
 \E(L(y^{*} - x_{#1}^{*\prime}\bh{#1T}) \mid \bh{T})}}
 \newcommand{\resConvgEstDiffRV}[1]{\ensuremath{L(y^{*} -
     x_{#1}^{*\prime}\bh{#1R}) - L(y^{*} - x_{#1}^{*\prime}\bh{#1T})}}
-We'll first prove that $P^{1/2} \bar{D}_R' = P^{1/2} \bar{D}_R + o_p$.
-Use Lemma~\ref{lem-berbee} to define $(y_{t+h}^{*}, x_{t}^{*})$ for
-each $t$ so be independent of $\mathcal{F}_R$ and that
-$\Pr[(y_{t+h}^{*}, x_{t}^{*}) \neq (y_{t+h}, x_t)] = \beta_{t-R}$.
-Then
-\begin{multline*}
-  \Big\| P^{-1/2} \sum_{t=R+1}^{T-h} (D_{Rt}' - D_{Rt}) \Big\|_1 = \\
-  \sum_{i=1,2} \Big\| P^{-1/2} \sum_{t=R+1}^{T-h} L(y_{t+h}^{*} -
-  x_{it}^{*\prime} \hat{\theta}_{it}^R) - L(y_{t+h}^{*} -
-  x_{it}^{*\prime} \hat{\theta}_{iR}^R) \Big\|_1  + O\Big(P^{-1/2}
-  \sum_{t=R+1}^{T-h} \beta_{t-R}^{(\rho-2)/2\rho}\Big).
-\end{multline*}
 
-By assumption, $P^{-1/2} \sum_{t=R+1}^{T-h}
-\beta_{t-R}^{(\rho-2)/2\rho} \to 0$.  Smoothness of $L$ and the
-formula for the \ols\ estimator ensures that
-\begin{align*}
-  \Big\|P^{-1/2} \sum_{t=R+1}^{T-h} L(y_{t+h}^{*} - x_{it}^{*\prime}
-  \hat{\theta}_{it}^R) - & L(y_{t+h}^{*} - x_{it}^{*\prime}
-  \hat{\theta}_{iR}^R)\Big\|_1 \\ &\leq B_{L} P^{-1/2}
-  \sum_{t=R+1}^{T-h} \| x_{it}^{*\prime} (\hat{\theta}_{it}^R -
-  \hat{\theta}_{iR}^R) \|_2 \\ &\leq B_{L} P^{-1/2} \sum_{t=R+1}^{T-h}
-  \Big(\big\| x_{it}^{*\prime} [(X_{it}'X_{it})^{-1} -
-  (X_{iR}'X_{iR})^{-1}] X_{it}' \eb_{it} \big\|_2 \\
-  &\quad + \big\| x_{it}^{*\prime}
-  (X_{iR}'X_{iR})^{-1}[X_{it}'\eb_{it} - X_{iR}
-  \eb_{iR} ] \big\|_2 \Big).
-\end{align*}
-  Moreover,
-\begin{align*}
-  \big\| x_{it}^{*\prime} [(X_{it}'X_{it})^{-1} &-
-  (X_{iR}'X_{iR})^{-1}] X_{it}' \eb_{it} \big\|_2 \\
-  &\leq \E \Big| \eigen_{K_i}(X_{it}' \eb_{it}
-  \eb_{it}' X_{it})\sum_{t=R+1}^{T-h}
-  \sum_{j=1}^{K_i} \eigen_j^2((X_{iR}'X_{iR})^{-1} -
-  (X_{it}'X_{it})^{-1}) \eigen_{\pi_j}(x_{it}^{*} x_{it}^{*\prime})
-  \Big| \\ &\leq \Delta T \Big\| \sum_{t=R+1}^{T-h} \sum_{j=1}^{t-R}
-  \eigen_j^{-2}(X_{iR}'X_{iR}) \eigen_{\pi_j}(x_{it}^{*}
-  x_{it}^{*\prime}) \Big\|_{3/2} \\ &\leq \Delta^3 P^2/R
-\end{align*}
-where $\pi_i,\dots,\pi_{K_i}$ is a permutation of $1,\dots,K_i$.  The
-first equality holds because $\eigen_{\max}(X_{it}'
-\eb_{it} \eb_{it} X_{it}) =
-O_{L_{3}}(T)$ by assumption and $(X_{iR}'X_{iR})^{-1} -
-(X_{it}'X_{it})^{-1}$ has rank $t-R$ with eigenvalues bounded by those
-of $(X_{iR}'X_{iR})^{-1}$.  The second holds by independence of
-$x_{it}^{*}$ and $X_{iR}$.  A similar argument proves that
-\begin{equation*}
-  \big\| x_{it}^{*\prime}
-  (X_{iR}'X_{iR})^{-1}[X_{it}'\eb_{it} - X_{iR}
-  \eb_{iR} ] \big\|_2 \leq \Delta^3 P^2/R
-\end{equation*}
-as well, so 
-\begin{equation*}
-  \Big\|P^{-1/2} \sum_{t=R+1}^{T-h} L(y_{t+h}^{*} - x_{it}^{*\prime}
-  \hat{\theta}_{it}^R) -  L(y_{t+h}^{*} - x_{it}^{*\prime}
-  \hat{\theta}_{iR}^R)\Big\|_1 \leq B_L \Delta^{3/2} P / R^{1/2},
-\end{equation*}
-completing the proof. The proof that $P^{1/2} (\bar{D}_T' - \bar{D}_T)
-\to^p 0$ is similar.\footnote{In this proof, $(y_{t+h}^{*}, x_t^{*})$
-  should be defined to be independent of $\mathcal{F}_R$ even for $t >
-  T$.}
-
-Now,~\eqref{eq:7} follows from showing
-\begin{gather*}
-\E_R \oosA = \resConvgRHS{R} + o_p(P^{-1/2}),\\
-\E_T \oosB = \resConvgRHS{T} + o_p(P^{-1/2}),\\
-\resConvgEstDiff{i} = O_p(P^{1/2}/T^{1/2}),
+Equation~\eqref{eq:7} holds if we show
+\begin{gather}
+\E_R \oosA = \resConvgRHS{R} + o_p(P^{-1/2}),\label{eq:18}\\
+\E_T \oosB = \resConvgRHS{T} + o_p(Q^{-1/2}),\label{eq:19}
 \intertext{and}
-\resConvgEstDiff{i} = O_p(P^{1/2}/T^{1/2}),
-\end{gather*}
+\resConvgEstDiff{i} = O_p(\sqrt{P/T}),\label{eq:20}
+\end{gather}
 where $\hat\theta_R = (\hat\theta_{1R}, \hat\theta_{2R})$,
 $\hat\theta_T = (\hat\theta_{1T}, \hat\theta_{2T})$, and $y^{*}$,
 $x_1^{*}$ and $x_2^{*}$ are random variables drawn from the joint
 distribution of $(y_{t+\h},x_{1t},x_{2t})$ independently of
-$\mathcal{F}_T$.  The arguments are the same as in the preceding
-proof.\qed
+$\mathcal{F}_T$.
+
+For~\eqref{eq:18}, define $D_t^*$ for each $t=R+1,R+2,\dots,T-h$ so
+that
+\begin{equation*}
+  \| D_t^* - D_{Rt} \|_2 \leq 2^{(1+\rho)/\rho} B_L \beta_{t-R}^{(\rho-2)/2\rho}
+\end{equation*}
+and
+\begin{equation*}
+  \E_R D_t^* = \E(L(y^* - x_1^{*\prime}\hat\theta_{1R}) -
+  L(y^* - x_2^{*\prime}\hat\theta_{2R}) \mid \hat\theta_R) \qquad a.s.
+\end{equation*}
+Lemma~\ref{lem-basic-coupling} ensures that these $D_t^*$ exist.
+Now,
+\begin{align*}
+  \Big\lVert \E_R \oosA - \E\Big(P^{-1} \sum_{t=R+1}^{T-h} D_t^* \mid
+  \hat\theta_R\Big) \Big\rVert_2
+  &= \Big\lVert \E_R\Big( \oosA - P^{-1} \sum_{t=R+1}^{T-h} D_t^*
+  \Big) \Big\rVert_2 \\
+  &= P^{-1} \sum_{t=R+1}^{T-h} \lVert D_{Rt} - D_t^* \rVert_2\\
+  &= O(P^{-1}) \sum_{t=R+1}^{T-h} \beta_{t-R}^{(\rho-2)/2\rho}
+\end{align*}
+and this last term is $o(P^{-1/2})$ by assumption.  Essentially the
+same argument proves~\eqref{eq:19} as well.
+
+For~\eqref{eq:20}, observe that
+\begin{align*}
+  \|L(y^{*} -  x_i^{*\prime} \hat{\theta}_{iR}) -
+  L(y^{*} - x_i^{*\prime} \hat{\theta}_{iT}) \|_1
+  &\leq B_{L} P^{-1/2} \| x_i^{*\prime} (\hat{\theta}_{iR} - \hat{\theta}_{iT}) \|_2 \\
+  &\leq B_{L} P^{-1/2}\big(\| x_i^{*\prime} [(X_{iT}'X_{iT})^{-1} -
+  (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2 \\
+  &\quad+ \| x_i^{*\prime}
+  (X_{iR}'X_{iR})^{-1}[X_{iT}'\eb_{iT} - X_{iR}
+  \eb_{iR} ] \|_2 \big).
+\end{align*}
+The first term in the upper bound satisfies
+\begin{align*}
+  \| x_i^{*\prime} &[(X_{iT}'X_{iT})^{-1} -
+  (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2^2 =\\
+  &= \E \tr\big( x_i^* x_i^{*\prime} X_{iT}'\eb_{iT} \eb_{iT}X_{iT}
+   [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}]^2 \big) \\
+  &\leq \eigen_{K_i}(\E x_i x_i') \E \Big|  \eigen_{K_i}(X_{iT}' \eb_{iT}
+  \eb_{iT}' X_{iT}) \sum_{j=1}^{K_i} \eigen_j^2((X_{iR}'X_{iR})^{-1} -
+  (X_{iT}'X_{iT})^{-1}) \Big| \\
+  &= O(T) \, \Big\| \sum_{j=1}^{t-R} \eigen_j^{-2}(X_{iR}'X_{iR}) \Big\|_{3/2} \\
+  &= O(P^2/R)
+\end{align*}
+The second equality holds because $\eigen_{K_i}(X_{iT}' \eb_{iT}
+\eb_{iT} X_{iT}) = O_{L_{3}}(T)$ by assumption and
+$(X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}$ has rank $t-R$ with
+eigenvalues bounded by those of $(X_{iR}'X_{iR})^{-1}$.
+
+A similar argument proves that
+\begin{equation*}
+  \big\| x_i^{*\prime} (X_{iR}'X_{iR})^{-1}
+  [X_{iT}'\eb_{iT} - X_{iR} \eb_{iR} ] \big\|_2 \leq \Delta^3 P^2/R
+\end{equation*}
+as well, completing the proof.
+\qed
 
 \subsection*{Proof of Lemma \ref{res-mixingale}}
-We'll only present proofs for the fixed-window; the arguments for the
-rolling and recursive windows are essentially the same.
-
-
 \noindent \textit{Part 1.} Fix $R$, $j$ and $l$ and use Lemma
 \ref{lem-basic-coupling} to define $\tilde{D}_{R+j}$ so that
 \[\E_R\tilde D_{R+j} = \E_{R+j-l} \tilde D_{R+j} \quad a.s. \]
@@ -1999,8 +1952,7 @@ of his Theorem 2); (\ref{eq:cltvar1}) is ensured by
 Lemma~\ref{lem:a2}. \qed
 
 \subsection*{Proof of Lemma \ref{res-variance-estimator}}
-Lemma~\ref{lem:a3} lets us prove the results for the fixed window
-only.  The proof follows \citepos{JoD:00} Theorem 2.1 closely.  We
+The proof follows \citepos{JoD:00} Theorem 2.1 closely.  We
 start by defining similar quantities to theirs, borrowing their
 notation when possible to make the similarities apparent.  For
 positive $\delta$, define $b_T \equiv \lfloor \gamma/\delta \rfloor$,
@@ -2052,7 +2004,7 @@ and
 \lim \lVert \E_R \varianceTermI - \sigma_R^2 \rVert_1 = 0.
 \end{equation}
 Their proofs of \eqref{dd1}--\eqref{dd4} use the fact that \ned\
-functions of mixing processes are also mixingale processes, and do not
+functions of mixing processes are also mixingale processes and do not
 use any other properties specific to \ned\ processes, so they hold
 here as well.  We do need to modify their proofs that
 \begin{equation}
@@ -2301,3 +2253,4 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
 % LocalWords:  overrejection overreject fpe JoD iR PeT Giacomini WN Wishart T'V
 % LocalWords:  premultiply const overrejects overrejecting BWB Gia Schwarz HHK
 % LocalWords:  Haf Anatolyev's nonstochastic T'X Sweave tikzDevice pgfSweave
+
