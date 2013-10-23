@@ -8,6 +8,10 @@
 
 \input{macros}
 
+\newcommand{\e}{\varepsilon}
+\newcommand{\eb}{\mathbf{\e}}
+\DeclareMathOperator{\eigen}{\lambda}
+
 \pagestyle{myheadings}
 \newtheorem{thm}{Theorem}
 \newtheorem{lem}{Lemma}
@@ -305,8 +309,8 @@ We assume the following forecasting environment. There are two
 competing linear models that give forecasts for the target,
 $y_{t+\h}$:
 \[
-y_{t+\h} = x_{1t}'\theta_1 + \varepsilon_{1,t+h}, \quad\text{and}\quad
-y_{t+\h} = x_{2t}'\theta_2 + \varepsilon_{2,t+h};
+y_{t+\h} = x_{1t}'\theta_1 + \e_{1,t+h}, \quad\text{and}\quad
+y_{t+\h} = x_{2t}'\theta_2 + \e_{2,t+h};
 \]
 $t = 1,\dots,T-h$, $\h$ is the forecast horizon, and the
 variables $y_t$, $x_{1t}$, and $x_{2t}$ are all known in period $t$.
@@ -402,9 +406,9 @@ error with hopefully no risk of confusion.
 Finally, define the following notation.  The $l_v$-norm for vectors in
 $\Re^p$ (with $p$ arbitrary) is denoted $\lvert \cdot \rvert_v$, and
 the $L_v$-norm for $L_v$-integrable random variables is $\lVert \cdot
-\rVert_v$.  The functions $\lambda_i(\cdot)$ take a square-matrix
-argument and return its $i$th eigenvalue (with $\lambda_{i}(A) \leq
-\lambda_{i+1}(A)$ for any matrix $A$).  All limits are taken as $T \to
+\rVert_v$.  The functions $\eigen_i(\cdot)$ take a square-matrix
+argument and return its $i$th eigenvalue (with $\eigen_{i}(A) \leq
+\eigen_{i+1}(A)$ for any matrix $A$).  All limits are taken as $T \to
 \infty$ unless stated otherwise.
  
 \subsection{Assumptions}
@@ -448,20 +452,20 @@ forecast error vanishes.
   Moreover, there exists a finite $\Delta$ such that $\| x_{it}'x_{it}
   \|_3 \leq K_i \Delta$,
   \begin{align*}
-    \lVert \lambda_{\max}(X_{iS_{T}}'X_{iS_{T}}) \rVert_{3} &\leq
+    \lVert \eigen_{\max}(X_{iS_{T}}'X_{iS_{T}}) \rVert_{3} &\leq
     S_{T}\, \Delta, & \lVert
-    \lambda_{\max}(X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})
+    \eigen_{\max}(X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})
     \rVert_{3} &\leq S_{T}\, \Delta, \\
-    \lVert \lambda_{\max}((X_{iS_{T}}'X_{iS_{T}})^{-1})
+    \lVert \eigen_{\max}((X_{iS_{T}}'X_{iS_{T}})^{-1})
     \rVert_{3} &\leq \Delta/S_{T}, & \lVert
-    \lambda_{\max}((X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})^{-1})\rVert_{3}
+    \eigen_{\max}((X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})^{-1})\rVert_{3}
     &\leq \Delta/S_{T},
   \end{align*}
   for all $S_{T} \geq K_{2T}$ and large enough $T$, with $i =
   1,2$,
   \[ X_{iT} \equiv [x_{i1} \quad \dots \quad x_{i,T-\h}]' \qquad
   \text{and} \qquad
-  \ep{iT} = (\varepsilon_{i,1+\h}, \dots, \varepsilon_{i,T})'.\]
+  \ep{iT} = (\e_{i,1+\h}, \dots, \e_{i,T})'.\]
 \end{asmp}
 
 The assumption that $y_{t+\h}$ and $x_t$ have positive and finite
@@ -827,8 +831,8 @@ Finally, we can look at the difference $\E_R \bar{D}_R - \E_T
   \E_R \oosA - \E_T \oosB &= \hat{\theta}_{2R}^{R\prime}
   \hat{\theta}_{2R}^R - \hat{\theta}_{2T}^{T\prime}
   \hat{\theta}_{2T}^T \\ &=
-  \mathbf{\varepsilon}_T'[\tilde{X}_{2R}(X_{2R}'X_{2R})^{-2}
-  \tilde{X}_{2R} - X_{2T}(X_{2T}'X_{2T})^{-2} X_{2T} ] \mathbf{\varepsilon}_T
+  \eb_T'[\tilde{X}_{2R}(X_{2R}'X_{2R})^{-2}
+  \tilde{X}_{2R} - X_{2T}(X_{2T}'X_{2T})^{-2} X_{2T} ] \eb_T
 \end{align*}
 with $\tilde{X}_{2R}$ the $T \times K_2$ matrix $[X_{2R}'\ 0]'$.
 Standard results for the moments of quadratic forms and of the
@@ -886,7 +890,7 @@ tests.
   $T$ and some $\theta_0$, $c$, and $V_T$, with $V_T$ a possibly
   random matrix with all eigenvalues uniformly bounded in probability
   and rank satisfying $\lim \rank(V_T)/T > 0$.  Then there exist
-  distributions for $(x_t, \varepsilon_{t+h})$ such that
+  distributions for $(x_t, \e_{t+h})$ such that
   \begin{equation}
     \label{eq:11}
     \Pr[\Lambda \text{ rejects} \mid \E_T \oosB \leq 0] \to^p 1
@@ -904,7 +908,7 @@ tests.
   for any $\delta > 0$.
 \end{thm}
 Note that, if $V_T$ is nonstochastic or converges in probability,
-there are distributions on $(x_t, \varepsilon_{t+h})$ that are
+there are distributions on $(x_t, \e_{t+h})$ that are
 compatible with~\eqref{eq:15} such that
 \[\Pr[c + \delta < (\theta - \theta_0)'V_T (\theta - \theta_0) \mid
 E_T \bar{D}_T \leq 0] \to^p 1
@@ -1054,7 +1058,7 @@ contains the details.
     \{\hat{\theta}_T \mid \hat{\theta}_T'V_T \hat{\theta}_T < c\}
   \end{equation*}
   and selects the alternative for all $\hat{\theta}_T$ outside that
-  region.  Then there exist distributions on $x_t,\varepsilon_t$ such
+  region.  Then there exist distributions on $x_t,\e_t$ such
   that
   \begin{equation}
     \label{eq:17}
@@ -1112,14 +1116,14 @@ not include some features that are common in forecasting
 environments---serial dependence, heteroskedasticity, and complicated
 \dgp s.  We simulate data for both studies from the equation
 \begin{equation}\label{eq:6}
-  y_t = x_t'\theta + \varepsilon_t,\quad \varepsilon_t \sim N(0,1),
+  y_t = x_t'\theta + \e_t,\quad \e_t \sim N(0,1),
   \quad t=1,\dots,T.
 \end{equation}
 The first element of $x_t$ is 1 and the remaining $K_2-1$ elements are
 independent Standard Normal.  The benchmark model is
 \begin{equation}
   \label{eq:1}
-  y_{1t} = \sum_{j=1}^{K_1} x_{jt}\theta_j + \varepsilon_t
+  y_{1t} = \sum_{j=1}^{K_1} x_{jt}\theta_j + \e_t
 \end{equation}
 and the alternative model is the \dgp\ \eqref{eq:6}.  We let
 $(K_1,K_2)$ equal either $(2,3)$ or $(T/20,T/10)$ to study our theory
@@ -1357,7 +1361,7 @@ Table~\ref{tab:equity}.\footnote{Table~\ref{tab:equity} only lists the
 \citet{GoW:08} estimate the \oos\ forecasting
 performance of bivariate models of the form
 \[
-r_{t+1} = \beta_0 + \beta_1 x_t + \varepsilon_{t+1}
+r_{t+1} = \beta_0 + \beta_1 x_t + \e_{t+1}
 \]
 using \ols\ with a recursive window, where $r_{t+1}$ is the equity
 premium and $x_t$ is a generic predictor, as well as some larger
@@ -1375,9 +1379,9 @@ the variables, except for a few dropped because of data availability or
 (perfect) multicollinearity.  Formally, the benchmark and alternative models are
 \begin{eqnarray}
   \label{eq:3}
-  r_{t+1} &=& \mu + \varepsilon_{1,t+1} \\
+  r_{t+1} &=& \mu + \e_{1,t+1} \\
   \label{eq:2}
-r_{t+1} &=& \beta_0 + \sum_{i=1}^K \beta_{i} x_{it} + \varepsilon_{2,t+1}  
+r_{t+1} &=& \beta_0 + \sum_{i=1}^K \beta_{i} x_{it} + \e_{2,t+1}  
 \end{eqnarray}
 respectively and are estimated by \ols\ using the fixed-window scheme.
 The predictors are listed in Table~\ref{tab:equity}; for a detailed
@@ -1883,34 +1887,34 @@ formula for the \ols\ estimator ensures that
   \sum_{t=R+1}^{T-h} \| x_{it}^{*\prime} (\hat{\theta}_{it}^R -
   \hat{\theta}_{iR}^R) \|_2 \\ &\leq B_{L} P^{-1/2} \sum_{t=R+1}^{T-h}
   \Big(\big\| x_{it}^{*\prime} [(X_{it}'X_{it})^{-1} -
-  (X_{iR}'X_{iR})^{-1}] X_{it}' \mathbf{\varepsilon}_{it} \big\|_2 \\
+  (X_{iR}'X_{iR})^{-1}] X_{it}' \eb_{it} \big\|_2 \\
   &\quad + \big\| x_{it}^{*\prime}
-  (X_{iR}'X_{iR})^{-1}[X_{it}'\mathbf{\varepsilon}_{it} - X_{iR}
-  \mathbf{\varepsilon}_{iR} ] \big\|_2 \Big).
+  (X_{iR}'X_{iR})^{-1}[X_{it}'\eb_{it} - X_{iR}
+  \eb_{iR} ] \big\|_2 \Big).
 \end{align*}
   Moreover,
 \begin{align*}
   \big\| x_{it}^{*\prime} [(X_{it}'X_{it})^{-1} &-
-  (X_{iR}'X_{iR})^{-1}] X_{it}' \mathbf{\varepsilon}_{it} \big\|_2 \\
-  &\leq \E \Big| \lambda_{K_i}(X_{it}' \mathbf{\varepsilon}_{it}
-  \mathbf{\varepsilon}_{it}' X_{it})\sum_{t=R+1}^{T-h}
-  \sum_{j=1}^{K_i} \lambda_j^2((X_{iR}'X_{iR})^{-1} -
-  (X_{it}'X_{it})^{-1}) \lambda_{\pi_j}(x_{it}^{*} x_{it}^{*\prime})
+  (X_{iR}'X_{iR})^{-1}] X_{it}' \eb_{it} \big\|_2 \\
+  &\leq \E \Big| \eigen_{K_i}(X_{it}' \eb_{it}
+  \eb_{it}' X_{it})\sum_{t=R+1}^{T-h}
+  \sum_{j=1}^{K_i} \eigen_j^2((X_{iR}'X_{iR})^{-1} -
+  (X_{it}'X_{it})^{-1}) \eigen_{\pi_j}(x_{it}^{*} x_{it}^{*\prime})
   \Big| \\ &\leq \Delta T \Big\| \sum_{t=R+1}^{T-h} \sum_{j=1}^{t-R}
-  \lambda_j^{-2}(X_{iR}'X_{iR}) \lambda_{\pi_j}(x_{it}^{*}
+  \eigen_j^{-2}(X_{iR}'X_{iR}) \eigen_{\pi_j}(x_{it}^{*}
   x_{it}^{*\prime}) \Big\|_{3/2} \\ &\leq \Delta^3 P^2/R
 \end{align*}
 where $\pi_i,\dots,\pi_{K_i}$ is a permutation of $1,\dots,K_i$.  The
-first equality holds because $\lambda_{\max}(X_{it}'
-\mathbf{\varepsilon}_{it} \mathbf{\varepsilon}_{it} X_{it}) =
+first equality holds because $\eigen_{\max}(X_{it}'
+\eb_{it} \eb_{it} X_{it}) =
 O_{L_{3}}(T)$ by assumption and $(X_{iR}'X_{iR})^{-1} -
 (X_{it}'X_{it})^{-1}$ has rank $t-R$ with eigenvalues bounded by those
 of $(X_{iR}'X_{iR})^{-1}$.  The second holds by independence of
 $x_{it}^{*}$ and $X_{iR}$.  A similar argument proves that
 \begin{equation*}
   \big\| x_{it}^{*\prime}
-  (X_{iR}'X_{iR})^{-1}[X_{it}'\mathbf{\varepsilon}_{it} - X_{iR}
-  \mathbf{\varepsilon}_{iR} ] \big\|_2 \leq \Delta^3 P^2/R
+  (X_{iR}'X_{iR})^{-1}[X_{it}'\eb_{it} - X_{iR}
+  \eb_{iR} ] \big\|_2 \leq \Delta^3 P^2/R
 \end{equation*}
 as well, so 
 \begin{equation*}
@@ -2073,14 +2077,14 @@ $Z_{1t}$ and $Z_{2t}$ are defined in Lemma~\ref{lem:a2}.
 $(\hat{\theta}_T - \theta_0)'V_T (\hat{\theta}_T - \theta_0) < c$
 as $\theta'V_T\theta \to \infty$ is for all of the mass of
 $\hat{\theta}_T$ to concentrate on the line joining $\theta$ and
-$\theta_0$.  For any distribution of $(\varepsilon_{t+h}, x_t')$ such
+$\theta_0$.  For any distribution of $(\e_{t+h}, x_t')$ such
 that $\hat{\theta}_T$ depends on $\theta$ only through its mean, the
 Lebesgue measure of parameter sequences satisfying this condition is
 zero. \qed
 
 \vspace{\baselineskip}
 \noindent\textit{Equation~\eqref{eq:15}}:  Suppose that
-$(\varepsilon_{t+h}, x_t) \sim i.i.d. N(0,I)$ and condition on $X_T$.
+$(\e_{t+h}, x_t) \sim i.i.d. N(0,I)$ and condition on $X_T$.
 Then the distribution of $\hat{\theta}_{T}$ concentrates uniformly on
 the ellipsoid
 \begin{equation*}
