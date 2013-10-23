@@ -430,26 +430,22 @@ forecast error vanishes.
 \begin{asmp}\label{asmp-2}
   The variance of $y_{t+\h}$ given $\mathcal{F}_t$ is uniformly
   positive and finite, and all of the eigenvalues of the covariance
-  matrix of $x_t$ are uniformly positive and finite as well.  The
-  Euclidean norms of the pseudo-true coefficients, $\theta_1$ and
-  $\theta_2$, satisfy $|\theta_1|_2 = O(1)$ and $|\theta_2|_2 = O(1)$.
-  Moreover, there exists a finite $\Delta$ such that $\| x_{it}'x_{it}
-  \|_3 \leq K_i \Delta$,
+  matrix of $x_t$ are uniformly positive and finite as well.
+  Moreover,
   \begin{align*}
-    \lVert \eigen_{\max}(X_{iS_{T}}'X_{iS_{T}}) \rVert_{3} &\leq
-    S_{T}\, \Delta, & \lVert
-    \eigen_{\max}(X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})
-    \rVert_{3} &\leq S_{T}\, \Delta, \\
-    \lVert \eigen_{\max}((X_{iS_{T}}'X_{iS_{T}})^{-1})
-    \rVert_{3} &\leq \Delta/S_{T}, & \lVert
-    \eigen_{\max}((X_{iS_{T}}'\ep{iS_{T}}\ep{iS_{T}}'X_{iS_{T}})^{-1})\rVert_{3}
-    &\leq \Delta/S_{T},
+    &\eigen_{\max}(X_{iS}'X_{iS}) = O_{L_3}(S),&
+    &\eigen_{\max}(\E(X_{iT}'\ep{iT}\ep{iT}'X_{iT}
+    \mid X_{iR}'X_{iR}, X_{iT}'X_{iT})) = O_{L_3}(S),\\
+    &\eigen_{\max}((X_{iS}'X_{iS})^{-1}) = O_{L_3}(1/S),&
+    &\eigen_{\max}\Big(\E\Big( \sum_{s,t=R+1}^{T-h} \e_{is} \e_{it} x_{is}x_{it}'
+    \,\Big|\, X_{iR}'X_{iR} \Big)\Big) = O_{L_3}(P),
   \end{align*}
-  for all $S_{T} \geq K_{2T}$ and large enough $T$, with $i =
-  1,2$,
+  for large enough $T$, where $S = R,T$, $i = 1,2$,
   \[ X_{iT} \equiv [x_{i1} \quad \dots \quad x_{i,T-\h}]' \qquad
-  \text{and} \qquad
-  \ep{iT} = (\e_{i,1+\h}, \dots, \e_{i,T})'.\]
+  \text{and} \qquad \ep{iT} = (\e_{i,1+\h}, \dots, \e_{i,T})'.\]
+  Additionally, the Euclidean norms of the pseudo-true coefficients,
+  $\theta_1$ and $\theta_2$, satisfy $|\theta_1|_2 = O(1)$ and
+  $|\theta_2|_2 = O(1)$.
 \end{asmp}
 
 The assumption that $y_{t+\h}$ and $x_t$ have positive and finite
@@ -458,6 +454,41 @@ technical and control the behavior of the \ols\ estimator as the
 number of regressors gets large.  The restrictions on the pseudo-true
 coefficients ensure that the regression model doesn't dominate the
 variance of $y_{t+\h}$ in the limit.
+
+We can see that these conditions are trivially satisfied when the
+underlying series are i.i.d.\ Normal and the regression includes a
+constant.
+\begin{example}
+  If $(x_{t}, y_t)$ are i.i.d. $N(0, \Sigma)$ where $\Sigma$ is
+  uniformly positive definite, then
+  \begin{equation*}
+    \theta = \cov(y_t, x_t) \var(x_t)^{-1}
+  \end{equation*}
+  and the regression constant is
+  \begin{equation*}
+    \theta_0 = \E y_t - \cov(y_t, x_t) \var(x_t)^{-1} \E x_t
+  \end{equation*}
+  where both of these terms follow directly from the normality
+  assumption.  Then $|\theta|_2 = O(1)$ as a consequence of uniform
+  positive definiteness of $\Sigma$ and $\varepsilon_t \sim i.i.d.\
+  N(0, v^2)$ (independent of $x_t$) with
+  \begin{equation*}
+    v^2 = \var(y_t) - \cov(y_t, x_t) \var(x_t)^{-1} \cov(y_t, x_t)'.
+  \end{equation*}
+  Then we have
+  \begin{equation*}
+    \E(X_{T}'\ep{T}\ep{T}'X_T \mid X_{R}'X_{R}, X_{T}'X_{T})
+    = v^2 X_{T}'X_{T}
+  \end{equation*}
+  and
+  \begin{equation*}
+    \E\Big( \sum_{s,t=R+1}^{T-h} \e_s \e_t x_s x_t'
+    \,\Big|\, X_{R}'X_{R} \Big)\Big) = P v^2 \E x_t x_t'.
+  \end{equation*}
+
+  So the conditions amount to restrictions on the eigenvalues of
+  $X_T'X_T$, which are familiar from general \ols.
+\end{example}
 
 \begin{asmp}\label{asmp-3}
   The loss function $L$ is continuous and has finite left and right
@@ -1873,25 +1904,43 @@ The first term in the upper bound satisfies
 \begin{align*}
   \| x_i^{*\prime} &[(X_{iT}'X_{iT})^{-1} -
   (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2^2 =\\
-  &= \E \tr\big( x_i^* x_i^{*\prime} X_{iT}'\eb_{iT} \eb_{iT}X_{iT}
-   [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}]^2 \big) \\
-  &\leq \eigen_{K_i}(\E x_i x_i') \E \Big|  \eigen_{K_i}(X_{iT}' \eb_{iT}
-  \eb_{iT}' X_{iT}) \sum_{j=1}^{K_i} \eigen_j^2((X_{iR}'X_{iR})^{-1} -
-  (X_{iT}'X_{iT})^{-1}) \Big| \\
-  &= O(T) \, \Big\| \sum_{j=1}^{t-R} \eigen_j^{-2}(X_{iR}'X_{iR}) \Big\|_{3/2} \\
-  &= O(P^2/R)
+  &= \E \tr\big( x_i^* x_i^{*\prime}
+   [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}] X_{iT}'\eb_{iT} \eb_{iT}X_{iT}
+   [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}] \big) \\
+  &\leq \eigen_{K_i}(\E x_i x_i')
+  \, \| \eigen_{K_i}(\E(X_{iT}' \eb_{iT} \eb_{iT}' X_{iT} \mid
+  X_{iR}'X_{iR}, X_{iT}'X_{iT})) \|_3 \\
+  & \quad \times \Big\|\sum_{j=1}^{K_i}
+  \eigen_j^2((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}) \Big\|_{3/2}
 \end{align*}
-The second equality holds because $\eigen_{K_i}(X_{iT}' \eb_{iT}
-\eb_{iT} X_{iT}) = O_{L_{3}}(T)$ by assumption and
-$(X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}$ has rank $t-R$ with
-eigenvalues bounded by those of $(X_{iR}'X_{iR})^{-1}$.
+
+By Assumption~\ref{asmp-2},
+\begin{equation*}
+  \eigen_{K_i}(\E(X_{iT}' \eb_{iT} \eb_{iT}' X_{iT} \mid
+  X_{iR}'X_{iR}, X_{iT}'X_{iT})) = O_{L_3}(T).
+\end{equation*}
+Also, $(X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}$ has rank $P$ and
+its eigenvalues are bounded by those of $(X_{iR}'X_{iR})^{-1}$, which
+are $O_{L_2}(1/R)$ by Assumption~\ref{asmp-2} as well, so
+\begin{align*}
+  \Big\|\sum_{j=1}^{K_i}
+  \eigen_j^2\big((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}\big)\Big\|_{3/2}
+  &\leq \Big\|\sum_{j=K_i - P+1}^{K_i}
+  \eigen_j^2\big((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}\big) \Big\|_{3/2} \\
+  &= O(P/R^2)
+\end{align*}
+proving that
+\begin{equation*}
+  \| x_i^{*\prime} [(X_{iT}'X_{iT})^{-1} -
+  (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2 = O(\sqrt{P/R}).
+\end{equation*}
 
 A similar argument proves that
 \begin{equation*}
   \big\| x_i^{*\prime} (X_{iR}'X_{iR})^{-1}
-  [X_{iT}'\eb_{iT} - X_{iR} \eb_{iR} ] \big\|_2 \leq \Delta^3 P^2/R
+  [X_{iT}'\eb_{iT} - X_{iR} \eb_{iR} ] \big\|_2 =  O(\sqrt{P/R}),
 \end{equation*}
-as well, completing the proof.
+completing the proof.
 \qed
 
 \subsection*{Proof of Lemma \ref{res-mixingale}}
