@@ -13,6 +13,7 @@
 \expandafter\newcommand\expandafter{\csname #1\endcsname}{#2 \textsc{(\MakeLowercase{#3})}%
 \expandafter\renewcommand\expandafter{\csname #1\endcsname}{\textsc{\MakeLowercase{#3}}}}}
 
+\newcommand{\sh}{\hat{\sigma}}
 \newcommand{\oosA}{\bar{D}_{R}}
 \newcommand{\oosB}{\bar{D}_{T}}
 
@@ -28,14 +29,14 @@
 
 \newcommand{\CEOuterBlock}[2]{\ensuremath{\E_{\InnerBlockU{(#2-1)}} #1}}
 
-\newcommand{\ZSummand}{D_{Rs} - \E_R D_{Rs}}
+\newcommand{\ZSummand}{D_s - \E_R D_s}
 \newcommand{\ZDef}{P^{-1/2} \SumInnerBlock{s}{i} [\ZSummand]}
 \newcommand{\ZSqCE}{\ensuremath{\CEOuterBlock{Z_i^2}{i}}}
 \newcommand{\ZTrunc}{\ensuremath{C\sqrt{b_{T}/P}}}
 \newcommand{\PScaleTerm}{\ensuremath{\frac{C \sqrt{b_T}}{P}}}
 
 \newcommand{\vWeight}{W((t-s)/\gamma)}
-\newcommand{\vSummand}{\ensuremath{(D_{Rt} - \E_R D_{Rt})(D_{Rs} - \E_R D_{Rs}) \vWeight}}
+\newcommand{\vSummand}{\ensuremath{(D_t - \E_R D_t)(D_s - \E_R D_s) \vWeight}}
 \newcommand{\kernelBDefn}[1]{\ensuremath{\delta^{-1}(2\pi)^{-1/2}}e^{-#1^2/2\delta^2}}
 \newcommand{\kernelB}[1]{\ensuremath{\eta_{\delta}(#1)}}
 
@@ -48,31 +49,31 @@
 
 \newcommand{\varianceTermIDefn}{\ensuremath{P^{-1}\oosSum{s,t}{1}
     \vSummand}}
-\newcommand{\varianceTermI}{\ensuremath{\sigma_{R,0\delta}^2}}
-\newcommand{\varianceTermII}{\ensuremath{\sigma_{R,1\delta}^2}}
+\newcommand{\varianceTermI}{\ensuremath{\sigma_{0,\delta}^2}}
+\newcommand{\varianceTermII}{\ensuremath{\sigma_{1,\delta}^2}}
 \newcommand{\varianceTermIIa}{\ensuremath{(P\gamma)^{-1/2}
-    \sum_{l=\max(1-t,-P)}^{\min(P-t,P)} (D_{t+l+R,R} - \E_R D_{t+l+R,R})
+    \sum_{l=\max(1-t,-P)}^{\min(P-t,P)} (D_{t+l+R} - \E_R D_{t+l+R})
     W(l/\gamma)}}
 \newcommand{\varianceTermIIb}{\ensuremath{(P\gamma)^{-1/2}
-    \sum_{j=1-t}^{P-t} (D_{t+j+R,R} - \E_R D_{t+j+R,R})
+    \sum_{j=1-t}^{P-t} (D_{t+j+R} - \E_R D_{t+j+R})
     \kernelB{j/\gamma}}}
-\newcommand{\varianceTermIII}{\ensuremath{\sigma_{R,2\delta}^{2}}}
+\newcommand{\varianceTermIII}{\ensuremath{\sigma_{2,\delta}^{2}}}
 \newcommand{\varianceTermIIIa}{\ensuremath{(P\gamma)^{-1/2}
-    \sum_{l=\vttLower}^{\vttUpper} (D_{t+l+R,R} - \E_R D_{t+l+R,R})
+    \sum_{l=\vttLower}^{\vttUpper} (D_{t+l+R} - \E_R D_{t+l+R})
     W(l/\gamma)}}
-\newcommand{\varianceTermIV}{\ensuremath{\sigma_{R,3\delta}^{2}}}
+\newcommand{\varianceTermIV}{\ensuremath{\sigma_{3,\delta}^{2}}}
 \newcommand{\varianceTermIVb}{\ensuremath{(P\gamma)^{-1/2}
-    \sum_{j=\vttLower}^{\vttUpper} (D_{t+j+R,R} - \E_R D_{t+j+R,R})
+    \sum_{j=\vttLower}^{\vttUpper} (D_{t+j+R} - \E_R D_{t+j+R})
     \kernelB{j/\gamma}}}
 \newcommand{\vtIIIsummand}{\ensuremath{(Z_{1t}Z_{2t} - \E_RZ_{1t}Z_{2t})}}
 
 \newcommand{\varianceDiffA}{\ensuremath{P^{-1} \oosSum{s,t}{1}
-    \lvert (D_{Rs} - \E_R D_{Rs})(\E_R D_{Rt} - \oosA) \rvert
+    \lvert (D_s - \E_R D_s)(\E_R D_t - \oosA) \rvert
     \vWeight}}
 \newcommand{\varianceDiffAi}{\ensuremath{P^{-1} \oosSum{s}{1}(\E_R
-    D_{Rs} - \oosA )^2}}
+    D_s - \oosA )^2}}
 \newcommand{\varianceDiffAii}{\ensuremath{P^{-1} \oosSum{s}{1}
-    (D_{Rs} - \E_R D_{Rs})^2}}
+    (D_s - \E_R D_s)^2}}
 
 \newcommand{\rhoExp}{\ensuremath{(\rho-2)/2\rho}}
 \newcommand{\absReg}{\ensuremath{\rho/(\rho-2)}}
@@ -108,5 +109,5 @@
 
 %%% Local Variables: 
 %%% mode: latex
-%%% TeX-master: t
+%%% TeX-master: paper.tex
 %%% End: 
