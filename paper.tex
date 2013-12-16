@@ -5,7 +5,6 @@
 \usepackage[round]{natbib}
 \usepackage[margin=1in]{geometry}
 \onehalfspacing
-
 \input{macros}
 
 \newcommand{\e}{\varepsilon}
@@ -302,7 +301,7 @@ are listed in the Appendix.
 
 \section{Setup and Assumptions}\label{sec:assumptions}
 We will set up our models and notation first, then list the assumptions
-required for our results.  
+required for our results.
 
 \subsection{Notation and Forecasting Environment}
 We assume the following forecasting environment. There are two
@@ -367,7 +366,7 @@ As discussed above, the forecaster's goal is to choose the model with
 lower average future loss; i.e. to determine whether $\oosB$ is
 positive or negative,with
 \[
-\oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} D_{Tt}, \quad 
+\oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} D_{Tt}, \quad
 D_{Tt} \equiv L(y_{t+h} - x_{1t}' \bh{1t}) - L(y_{t+h} - x_{2t}' \bh{2t}).
 \]
 Note that the coefficients are reestimated with the full dataset.
@@ -409,7 +408,7 @@ the behavior of the estimation and test windows.  And the last
 assumption describes the kernel used to estimate the \oos\ average's
 asymptotic variance.
 
-\begin{asmp}\label{asmp-1} 
+\begin{asmp}\label{asmp-1}
   The random array $\{y_t,x_t\}$ is stationary and absolutely regular
   with coefficients $\beta_j$ of size $-\rho/(\rho-2)$; $\rho$ is
   greater than two and discussed further in Assumption \ref{asmp-3}.
@@ -459,9 +458,9 @@ variance is straightforward.  The conditions on the eigenvalues are
 technical and control the behavior of the \ols\ estimator as the
 number of regressors gets large.  The restrictions on the pseudo-true
 coefficients ensure that the regression model doesn't dominate the
-variance of $y_{t+\h}$ in the limit.  
+variance of $y_{t+\h}$ in the limit.
 
-\begin{asmp}\label{asmp-3} 
+\begin{asmp}\label{asmp-3}
   The loss function $L$ is continuous and has finite left and right
   derivatives almost everywhere.  Also, $L(0) = 0$, and there is a
   constant $B_L$ such that $\|D_{R,R+j}\|_\rho \leq B_L$ and
@@ -500,14 +499,14 @@ consider.  We use the same class of estimators studied by
 their paper for further discussion.
 
 \begin{asmp}
-  \label{asmp-5} $W$ is a kernel from 
+  \label{asmp-5} $W$ is a kernel from
 $\Re$ to $[-1,1]$ such that $W(0) = 1$, $W(x) = W(-x)$ for all $x$,
 \begin{equation*}
   \int_{-\infty}^{\infty} \lvert W(x) \rvert dx < \infty, \quad
   \int_{-\infty}^{\infty} \lvert \psi(x) \rvert dx < \infty
 \end{equation*}
 with
-\begin{equation*} 
+\begin{equation*}
   \psi(x) = \frac1{\sqrt{2\pi}} \int_{-\infty}^{\infty} W(z) e^{ixz}dz,
 \end{equation*}
 and $W(\cdot)$ is continuous at zero and all but a finite number of
@@ -526,7 +525,7 @@ in $[0,\infty]$, while we require $P^2/R \to 0$
 related---allowing for complex models requires tighter constraints on
 the size of the test sample.  West allows more general estimation
 methods, while we restrict attention to \ols; the advantage of using
-\ols\ is that we can derive the inequality, 
+\ols\ is that we can derive the inequality,
 \begin{equation*}
   \| x_{it}'\theta_{i,T+1} - x_{it}'\theta_{iR} \|_2 \leq O(P/T)^{1/2}.
 \end{equation*}
@@ -575,7 +574,7 @@ test sample.
   Suppose that Assumptions \ref{asmp-1}--\ref{asmp-4} hold, that
   $\hat\sigma_R^2$ is an estimator satisfying
   \[
-    \hat\sigma_R^2 - \sigma_R^2 \to^p 0 \quad \text{with}\quad 
+    \hat\sigma_R^2 - \sigma_R^2 \to^p 0 \quad \text{with}\quad
     \sigma_R^2 \equiv \var_R(\sqrt{P} \oosA) \equiv P \E_R(\bar{D}_R -
     \E_R \bar{D}_R)^2,
   \]
@@ -680,7 +679,7 @@ test has only trivial power in the limit if it has correct size.
   with $\zeta_l = O(l^{-1/2 - \delta})$ holds for some positive
   $\delta$, any positive $j$, and any $l$ between 0 and $j$.  As a
   consequence, $\{D_{Rt} - \E_R D_{Rt}, \mathcal F_t\}$ is an
-  $L_2$-mixingale of size $-1/2$.  
+  $L_2$-mixingale of size $-1/2$.
 
   \noindent Part 2: Moreover,~\eqref{normalpart} holds under
   Assumptions~\ref{asmp-1}--\ref{asmp-4} if $\sigma_R^2$ is
@@ -715,7 +714,7 @@ variance estimators are consistent.\footnote{As with
 
 \begin{lem}
   \label{res-variance-estimator} Suppose Assumptions
-  \ref{asmp-1}--\ref{asmp-5} hold and that $\gamma \to \infty$ and 
+  \ref{asmp-1}--\ref{asmp-5} hold and that $\gamma \to \infty$ and
   $\gamma/P \to 0$ as $T \to \infty$, and define
   \begin{equation*}
     \hat{\sigma}_R^2 \equiv P^{-1} \oosSum{s,t}{1} (D_{Rt} - \oosA)(D_{Rs} - \oosA)
@@ -874,7 +873,7 @@ tests.
     \theta'V_T\theta \to^p \infty \quad \text{($T$ is fixed)}
   \end{equation}
   for almost every sequence $\theta$ (a.e. with respect to Lebesgue
-  measure) and 
+  measure) and
   \begin{equation}
     \label{eq:15}
     \plim_{T \to \infty} \Pr[\Lambda \text{ rejects} \mid
@@ -985,7 +984,7 @@ model will give worse forecasts than the restricted model.
   \subfloat[]{\circlefigA{1}{2.5}{1.4}{3.2}\label{fig:circleA}} &
   \subfloat[]{\circlefigB{1}{2.5}{1.4}{3.2}\label{fig:circleB}}  \\
   \subfloat[]{\circlefigA{.3}{2.5}{1.4}{3.2}\label{fig:circleC}}  &
-  \subfloat[]{\circlefigB{.3}{2.5}{1.4}{3.2}\label{fig:circleD}} 
+  \subfloat[]{\circlefigB{.3}{2.5}{1.4}{3.2}\label{fig:circleD}}
   \end{tabular}
   \caption{Graphs indicating the rejection region and region of equal
     generalization error for the models discussed in Section
@@ -1042,7 +1041,7 @@ contains the details.
     \leq \plim \Pr[\theta_0'V_T \theta_0 < c \mid \E_T \bar{D}_T].
   \end{equation}
 \end{cor}
-As before, we often have 
+As before, we often have
 \begin{equation*}
   \Pr[\theta_0'V_T \theta_0 < c \mid \E_T \bar{D}_T] \to^p 0.
 \end{equation*}
@@ -1104,13 +1103,13 @@ independent Standard Normal.  The benchmark model is
 and the alternative model is the \dgp\ \eqref{eq:6}.  We let
 $(K_1,K_2)$ equal either $(2,3)$ or $(T/20,T/10)$ to study our theory
 in its intended application as well as for more parsimonious models.
-We let $T$ equal 100, 250, 500, or 1000.  We also vary $\theta$, and do 
+We let $T$ equal 100, 250, 500, or 1000.  We also vary $\theta$, and do
 so giving the benchmark and the alternative model comparable weight in
 predicting $y_t$.  Specifically, we set
 \begin{equation*}
-  \theta_j = 
+  \theta_j =
 \begin{cases} \frac{c}{\sqrt{K_1}} & j = 1,\dots,K_1 \\
-\frac{c}{\sqrt{K_2 - K_1}} & j = K_1 + 1,\dots,K_2 \end{cases}  
+\frac{c}{\sqrt{K_2 - K_1}} & j = K_1 + 1,\dots,K_2 \end{cases}
 \end{equation*}
 with $c$ equal to zero or one.  When $c$ is one, we're more likely to
 draw values of $X$ and $Y$ that make the estimated larger model more
@@ -1148,7 +1147,7 @@ design parameters.
 
 The second simulation looks at the size and power of the test
 statistics when conducting inference about the models' generalization
-error.  The null hypothesis we test is 
+error.  The null hypothesis we test is
 \begin{equation}\label{eq:9}
   H_0:\quad E_T \oosB \leq 0,
 \end{equation}
@@ -1357,7 +1356,7 @@ the variables, except for a few dropped because of data availability or
   \label{eq:3}
   r_{t+1} &=& \mu + \e_{1,t+1} \\
   \label{eq:2}
-r_{t+1} &=& \beta_0 + \sum_{i=1}^K \beta_{i} x_{it} + \e_{2,t+1}  
+r_{t+1} &=& \beta_0 + \sum_{i=1}^K \beta_{i} x_{it} + \e_{2,t+1}
 \end{eqnarray}
 respectively and are estimated by \ols\ using the fixed-window scheme.
 The predictors are listed in Table~\ref{tab:equity}; for a detailed
@@ -1530,12 +1529,12 @@ The proof is virtually identical to the proof of Proposition 2.3 in
   \end{equation}
   and
   \begin{equation}\label{eq:coupling2}
-    \E(\phi(\tilde D_s,\dots, \tilde D_t) \mid \mathcal{F}_u ) = 
+    \E(\phi(\tilde D_s,\dots, \tilde D_t) \mid \mathcal{F}_u ) =
     \int
     \phi(D_s,\dots,D_t) f(\mathbf{x}, \mathbf{y})\ d\mathbf{x}\ d\mathbf{y}
   \end{equation}
   almost surely for all measurable functions $\phi$ such that the
-  expectations are finite, where 
+  expectations are finite, where
   \[ \mathbf{x} = (x_{s}', \dots, x_{t}')', \qquad
   \mathbf{y} = (y_{s+\h},\dots,y_{t+\h})',\] and $f$ is the
   joint density of $(\mathbf{x}, \mathbf{y})$.  Moreover,
@@ -1608,7 +1607,7 @@ assume that there is a constant $C$ such that $Z_{1t}$ and $Z_{2t}$
 are bounded in absolute value by $C\sqrt{b_T/P\gamma}$; uniform
 integrability ensures that the difference between the unbounded random
 variables and these truncated versions is negligible for large enough
-values of $C$.  
+values of $C$.
 
 Let $r = \lfloor 3P/2b_T \rfloor$ and rewrite the summation as
 \begin{align*}
@@ -1624,7 +1623,7 @@ $L_2$-mixingales of size $-1/2$ and using the bound $\E(\vtSumr (U_i -
 \E_R U_i))^2 = O(\vtSumr c_i^2)$ where the $c_i$ are the mixingale
 magnitude indices \citep{Mcl:75}.
 
-For non-negative $m$, we have 
+For non-negative $m$, we have
 \begin{equation*}
 U_i - \E_R U_i \in \UFiltration{2i+2m-1},
 \end{equation*}
@@ -1669,7 +1668,7 @@ Now, we have the inequalities
   &\leq 2 \vtSuma (\lVert Z_{1t} - \tilde{Z}_{1t} \rVert_2 \lVert
   Z_{2t} \rVert_{\infty}
   + \lVert Z_{2t} - \tilde{Z}_{2t} \rVert_2 \lVert \tilde{Z}_{1t} \rVert_{\infty}) \\
-  &\leq \frac{2 C b_T^{1/2}}{(P\gamma)^{1/2}} \vtSuma (\lVert Z_{1t} - \tilde{Z}_{1t} \rVert_2 
+  &\leq \frac{2 C b_T^{1/2}}{(P\gamma)^{1/2}} \vtSuma (\lVert Z_{1t} - \tilde{Z}_{1t} \rVert_2
   + \lVert Z_{2t} - \tilde{Z}_{2t} \rVert_2).
 \end{align*}
 
@@ -1743,12 +1742,12 @@ P^{-1} \oosSum{s}{1} (\E_R \tilde D_s)^2 = \Big(P^{-1} \oosSum{s}{1} \E_R
 
 Consequently,
 \begin{align*}
-P^{-1} \oosSum{s}{1} (\E_R D_s)^2 - (\E_R\oosA)^2 & = 
+P^{-1} \oosSum{s}{1} (\E_R D_s)^2 - (\E_R\oosA)^2 & =
 P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R\tilde D_s)^2]\\
 &\quad+ \Big(P^{-1} \oosSum{s}{1} \E_R \tilde D_s\Big)^2 - (\E_R\oosA)^2 \quad \text{a.s}.\\
 &= O_p\Big(P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R \tilde D_s)^2]\Big).
 \end{align*}
-Finally, 
+Finally,
 \begin{align*}
 \Big\lVert P^{-1} \oosSum{s}{1} [(\E_RD_s)^2 - (\E_R \tilde D_s)^2] \Big\rVert_1
 &\leq P^{-1} \oosSum{s}{1} \lVert \E_RD_s - \E_R \tilde D_s \rVert_2 \lVert
@@ -1767,7 +1766,7 @@ centered \oos\ average as
 \frac{1}{\hat\sigma_R \sqrt{P}}\oosSum{t}{1} (D_{Rt} - \E_R D_{Rt}) +
 \frac{\sqrt{P}}{\hat\sigma_R} (\E_R\oosA - \E_T\oosB).
 \]
-Lemmas \ref{res-mixingale} and 
+Lemmas \ref{res-mixingale} and
 \ref{res-convergence} ensure that the first term is asymptotically
 normal and the second term vanishes.\qed
 
@@ -1779,21 +1778,21 @@ By Lemma~\ref{res-convergence}, we know that
 and
 \begin{equation*}
   \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and } \E_R \oosA \leq 0]
-  - \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and } 
+  - \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and }
   \E_T \oosB \leq 0] \to 0.
 \end{equation*}
 For large enough $T$, both $\Pr[\E_R \oosA \leq 0]$ and $\Pr[\E_T
 \oosB \leq 0]$ are positive, so
 \begin{equation*}
   \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha
-  \mid \E_R \oosA \leq 0] = 
+  \mid \E_R \oosA \leq 0] =
   \frac{\Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and }
     \E_R \oosA \leq 0]}{\Pr[\E_R \oosA \leq 0]}
 \end{equation*}
 and
 \begin{equation*}
   \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha
-  \mid \E_T \oosB \leq 0] = 
+  \mid \E_T \oosB \leq 0] =
   \frac{\Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \text{ and }
     \E_T \oosB \leq 0]}{\Pr[\E_T \oosB \leq 0]}
 \end{equation*}
@@ -1807,9 +1806,9 @@ almost surely and consequently
 Finally,
 \begin{align*}
   \Pr[P^{1/2} \oosA / \hat\sigma > z_\alpha \mid \E_R \oosA \leq 0]
-  &\leq \Pr[P^{1/2} (\oosA - \E_R \oosA) / \hat\sigma > z_\alpha 
+  &\leq \Pr[P^{1/2} (\oosA - \E_R \oosA) / \hat\sigma > z_\alpha
   \mid \E_R \oosA \leq 0] \\
-  &= \E( \Pr[P^{1/2} (\oosA - \E_R \oosA) / \hat\sigma > z_\alpha 
+  &= \E( \Pr[P^{1/2} (\oosA - \E_R \oosA) / \hat\sigma > z_\alpha
   \mid \mathcal{F}_R] \mid \E_R \oosA \leq 0) \\
   &= \E(\alpha \mid \E_R \oosA \leq 0) \\
   &= \alpha
@@ -1822,7 +1821,7 @@ Theorem~\ref{res-variance-estimator}, completing the proof.
 \newcommand{\resConvgRHS}[1]{\ensuremath{\E(L(y^* - x_1^{*\prime}\bh{1#1}) - L(y^{*} -
 x_2^{*\prime}\bh{2#1}) \mid \bh{#1})}}
 \newcommand{\resConvgEstDiff}[1]{\ensuremath{\E(L(y^{*} -
-    x_{#1}^{*\prime}\bh{#1R}) \mid \bh{R}) - 
+    x_{#1}^{*\prime}\bh{#1R}) \mid \bh{R}) -
 \E(L(y^{*} - x_{#1}^{*\prime}\bh{#1T}) \mid \bh{T})}}
 \newcommand{\resConvgEstDiffRV}[1]{\ensuremath{L(y^{*} -
     x_{#1}^{*\prime}\bh{#1R}) - L(y^{*} - x_{#1}^{*\prime}\bh{#1T})}}
@@ -1907,7 +1906,7 @@ and
 \[\lVert D_{R+j,R} - \tilde D_{R+j} \rVert_2 \leq \couplingBound{l}.\]
 Then
 \begin{align*}
-\lVert \E_{R+j-l} D_{R+j,R} - \E_R D_{R+j,R} \rVert_2 & \leq 
+\lVert \E_{R+j-l} D_{R+j,R} - \E_R D_{R+j,R} \rVert_2 & \leq
 \lVert \E_{R+j-l} D_{R+j,R} - \E_{R+j-l} \tilde{D}_{R+j} \rVert_2 \\
 &\quad + \lVert
 \E_{R+j-l} \tilde{D}_{R+j} - \E_R D_{R+j,R} \rVert_2 \\
@@ -1945,7 +1944,7 @@ and
 \begin{equation}\label{eq:cltvar1}
   \SumOuterBlock{i} \E_R Z_i^2 - \SumOuterBlock{i} \ZSqCE \to^p 0.\footnote{Note that $\sigma_R^2 \in \mathcal{F}_t$ for
     all $t \geq R$, so Hall and Heyde's condition (3.21) is
-    unnecessary---see the remarks after their result.} 
+    unnecessary---see the remarks after their result.}
 \end{equation}
 Equation (\ref{eq:cltvar2}) holds as in \citet{Jon:97} (see the proof
 of his Theorem 2); (\ref{eq:cltvar1}) is ensured by
@@ -1969,21 +1968,21 @@ $\kernelB{x} \equiv \kernelBDefn{x}$, and
 giving us the inequalities
 \begin{align*}
   \lVert \hat\sigma_R^2 - \sigma_R^2 \rVert_1 &
-  \leq \lVert \hat\sigma_R^2 - \varianceTermI \rVert_1 
-  + \lVert \varianceTermI - \varianceTermII \rVert_1 
-  + \lVert \varianceTermII - \varianceTermIII \rVert_1 
+  \leq \lVert \hat\sigma_R^2 - \varianceTermI \rVert_1
+  + \lVert \varianceTermI - \varianceTermII \rVert_1
+  + \lVert \varianceTermII - \varianceTermIII \rVert_1
   + \lVert \varianceTermIII - \varianceTermIV \rVert_1\\ & \quad
-  + \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1 
+  + \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1
   + \lVert \E_R\varianceTermIII - \E_R\varianceTermIV \rVert_1
-  + \lVert \E_R\varianceTermII - \E_R\varianceTermIII \rVert_1\\ & \quad 
-  + \lVert \E_R\varianceTermI - \E_R\varianceTermII \rVert_1 
+  + \lVert \E_R\varianceTermII - \E_R\varianceTermIII \rVert_1\\ & \quad
+  + \lVert \E_R\varianceTermI - \E_R\varianceTermII \rVert_1
   + \lVert \E_R \varianceTermI - \sigma_R^2 \rVert_1
   \\ &
-  \leq  \lVert \hat\sigma_R^2 - \varianceTermI \rVert_1 
-  + 2(\lVert \varianceTermI - \varianceTermII \rVert_1 
-      + \lVert \varianceTermII - \varianceTermIII \rVert_1 
-      + \lVert \varianceTermIII - \varianceTermIV \rVert_1) \\ 
-  & \quad + \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1 
+  \leq  \lVert \hat\sigma_R^2 - \varianceTermI \rVert_1
+  + 2(\lVert \varianceTermI - \varianceTermII \rVert_1
+      + \lVert \varianceTermII - \varianceTermIII \rVert_1
+      + \lVert \varianceTermIII - \varianceTermIV \rVert_1) \\
+  & \quad + \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1
   + \lVert \E_R \varianceTermI - \sigma_R^2 \rVert_1.
 \end{align*}
 De Jong and Davidson (2000) prove that
@@ -1997,7 +1996,7 @@ De Jong and Davidson (2000) prove that
 \end{equation}
 \begin{equation} \label{dd3}
 \lim_{\delta\to0} \limsup_{T\to\infty} \lVert \varianceTermIII - \varianceTermIV
-\rVert_1 = 0,  
+\rVert_1 = 0,
 \end{equation}
 and
 \begin{equation} \label{dd4}
@@ -2042,7 +2041,7 @@ the ellipsoid
 \begin{equation*}
   (\hat{\theta}_T - \theta)'(\hat{\theta}_T - \theta) = \theta'\theta.
 \end{equation*}
-Now, for $\theta$ and $V_T$ such that 
+Now, for $\theta$ and $V_T$ such that
 \begin{equation*}
   (\theta-\theta_0)' V_T (\theta-\theta_0) > c + \delta,
 \end{equation*}
@@ -2233,10 +2232,10 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
 
 \end{document}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "paper"
-%%% End: 
+%%% End:
 
 % LocalWords:  McCracken's kilian anatolyev rossi REStud JAppliedEconometrics
 % LocalWords:  goyal welch rfs reputational calhoun Berbee's mixingales Rt tS
