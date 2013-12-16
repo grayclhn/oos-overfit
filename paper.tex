@@ -1866,6 +1866,7 @@ $x_1^{*}$ and $x_2^{*}$ are random variables drawn from the joint
 distribution of $(y_{t+\h},x_{1t},x_{2t})$ independently of
 $\mathcal{F}_T$.
 
+\begin{proof}[Proof of~\eqref{eq:18} and~\eqref{eq:19}]
 For~\eqref{eq:18}, define $D_t^*$ for each $t=R+1,R+2,\dots,T-h$ so
 that
 \begin{equation*}
@@ -1883,51 +1884,57 @@ Now,
   \hat\theta_R\Big) \Big\rVert_2
   &= \Big\lVert \E_R\Big( \oosA - P^{-1} \sum_{t=R+1}^{T-h} D_t^*
   \Big) \Big\rVert_2 \\
-  &= P^{-1} \sum_{t=R+1}^{T-h} \lVert D_t - D_t^* \rVert_2\\
+  &\leq P^{-1} \sum_{t=R+1}^{T-h} \lVert D_t - D_t^* \rVert_2\\
   &= O(P^{-1}) \sum_{t=R+1}^{T-h} \beta_{t-R}^{(\rho-2)/2\rho}
 \end{align*}
-and this last term is $o(P^{-1/2})$ by assumption.  Essentially the
-same argument proves~\eqref{eq:19} as well.
+and this last term is $o(P^{-1/2})$ by assumption.
 
-For~\eqref{eq:20}, observe that
+Essentially the same argument proves~\eqref{eq:19} as well.
+\end{proof}
+
+\begin{proof}[Proof of~\eqref{eq:20}]
+Observe that
 \begin{align*}
   \|L(y^{*} -  x_i^{*\prime} \hat{\theta}_{iR}) -
   L(y^{*} - x_i^{*\prime} \hat{\theta}_{iT}) \|_1
   &\leq B_{L} \| x_i^{*\prime} (\hat{\theta}_{iR} - \hat{\theta}_{iT}) \|_2 \\
-  &\leq B_{L} \big(\| x_i^{*\prime} [(X_{iT}'X_{iT})^{-1} -
+  &\leq B_{L} \, \| x_i^{*\prime} [(X_{iT}'X_{iT})^{-1} -
   (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2 \\
-  &\quad+ \| x_i^{*\prime}
+  &\quad+ B_L \, \| x_i^{*\prime}
   (X_{iR}'X_{iR})^{-1}[X_{iT}'\eb_{iT} - X_{iR}
-  \eb_{iR} ] \|_2 \big).
+  \eb_{iR} ] \|_2 .
 \end{align*}
-The first term in the upper bound satisfies
+The first term in the upper bound\,---\,$\| x_i^{*\prime}
+[(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2$\,---\,satisfies
 \begin{align*}
   \| x_i^{*\prime} &[(X_{iT}'X_{iT})^{-1} -
   (X_{iR}'X_{iR})^{-1}] X_{iT}' \eb_{iT} \|_2^2 =\\
   &= \E \tr\big( x_i^* x_i^{*\prime}
    [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}] X_{iT}'\eb_{iT} \eb_{iT}X_{iT}
-   [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}] \big) \\
-  &\leq \eigen_{K_i}(\E x_i x_i')
-  \, \| \eigen_{K_i}(\E(X_{iT}' \eb_{iT} \eb_{iT}' X_{iT} \mid
-  X_{iR}'X_{iR}, X_{iT}'X_{iT})) \|_3 \\
-  & \quad \times \Big\|\sum_{j=1}^{K_i}
-  \eigen_j^2((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}) \Big\|_{3/2}
+   [(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}] \big) \\ \label{eq:8}
+  \begin{split}&\leq
+    \eigen_{K_i}(\E x_i x_i')
+    \, \| \eigen_{K_i}(\E(X_{iT}' \eb_{iT} \eb_{iT}' X_{iT} \mid
+    X_{iR}'X_{iR}, X_{iT}'X_{iT})) \|_3 \\
+    & \quad \times \Big\|\sum_{j=1}^{K_i}
+    \eigen_j^2((X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}) \Big\|_{3/2}
+  \end{split} \\
+  &= O(T) \Big\|\sum_{j=1}^{K_i}
+    \eigen_j^2((X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}) \Big\|_{3/2}
 \end{align*}
+with the second to last inequality a consequence of Holder's
+inequality and the last bound holding by Assumption~\ref{asmp-2}.
 
-By Assumption~\ref{asmp-2},
-\begin{equation*}
-  \eigen_{K_i}(\E(X_{iT}' \eb_{iT} \eb_{iT}' X_{iT} \mid
-  X_{iR}'X_{iR}, X_{iT}'X_{iT})) = O_{L_3}(T).
-\end{equation*}
-Also, $(X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}$ has rank $P$ and
-its eigenvalues are bounded by those of $(X_{iR}'X_{iR})^{-1}$, which
-are $O_{L_2}(1/R)$ by Assumption~\ref{asmp-2} as well, so
+Now, $(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}$ has rank $P$ and
+each of its nonzero eigenvalues are bounded in absolute value by the
+eivenvalues of $(X_{iR}'X_{iR})^{-1}$. The eivenvalues of
+$(X_{iR}'X_{iR})^{-1}$ are $O_{L_3}(1/R)$ by Assumption~\ref{asmp-2}, so
 \begin{align*}
   \Big\|\sum_{j=1}^{K_i}
   \eigen_j^2\big((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}\big)\Big\|_{3/2}
   &\leq \Big\|\sum_{j=K_i - P+1}^{K_i}
   \eigen_j^2\big((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}\big) \Big\|_{3/2} \\
-  &= O(P/R^2)
+  &= O(P/R^2),
 \end{align*}
 proving that
 \begin{equation*}
@@ -1941,7 +1948,7 @@ A similar argument proves that
   [X_{iT}'\eb_{iT} - X_{iR} \eb_{iR} ] \big\|_2 =  O(\sqrt{P/R}),
 \end{equation*}
 completing the proof.
-\qed
+\end{proof}
 
 \subsection*{Proof of Lemma \ref{res-mixingale}}
 \noindent \textit{Part 1.} Fix $R$, $j$ and $l$ and use Lemma
