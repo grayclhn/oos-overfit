@@ -491,16 +491,24 @@ constant.
 \end{example}
 
 \begin{asmp}\label{asmp-3}
-  The loss function $L$ is continuous and has finite left and right
-  derivatives almost everywhere.  Also, $L(0) = 0$, and there is a
-  constant $B_L$ such that $\|D_t\|_\rho \leq B_L$ for all $t$ ($\rho$ is defined
-  in Assumption~\ref{asmp-1}); $\| x_{it}' \hat{\theta}_{it} \|_2 \leq
-  B_L$ and $\| x_{it}' \hat{\theta}_{it} \|_2 \leq B_L$; and
+  The loss function $L$ is continuous, has finite left and right
+  derivatives almost everywhere, and $L(0) = 0$.  There is a constant
+  $B_L$ and a function $L'$ that bounds the left and right derivative
+  of $L$ such that $\|D_t\|_\rho \leq B_L$; $\|D_t^*\|_\rho \leq B_L$
+  for all $t$, where
   \begin{equation*}
-    \| L'(y_{t+h} - x_{it}'\tilde{\theta}_{it}) \|_2 \leq B_L
+    D_t^* = L(y^* - x_1^{*\prime}\hat\theta_{1t})
+    - L(y^* - x_2^{*\prime}\hat\theta_{2t})
   \end{equation*}
-  for $\tilde{\theta}_{it}$ a weighted average of any two estimates
-  $\hat{\theta}_{it}$ and $\hat{\theta}_{it'}$.
+  and $(y^*, x_1^*, x_2^*)$ equals $(y_t, x_{1t}, x_{2t})$ in
+  distribution but is independent of $\mathcal{F}_T$ ($\rho$ is defined
+  in Assumption~\ref{asmp-1}); and
+  \begin{equation*}
+    \| L'(y^* - x_{i}^{*\prime}
+    (\alpha \hat{\theta}_{iR} + (1-\alpha) \hat{\theta}_{iT})) \|_2
+    \leq B_L
+  \end{equation*}
+  for any $\alpha \in [0,1]$.
 \end{asmp}
 
 This third assumption establishes basic moment and smoothness
