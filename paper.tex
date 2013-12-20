@@ -169,18 +169,19 @@ whether those procedures should themselves use in-sample or \oos\
 comparisons.  Understanding the difference between in-sample and \oos\
 comparisons in the context of a simple comparison between two models
 is necessary before resolving any new issues that arise with multiple
-comparisons.\footnote{Moreover, the empirical research that motivates
-  this paper uses \textit{pseudo} \oos\ comparisons and not
-  \textit{true} \oos\ comparisons.  Even if a true \oos\ comparison
-  could account for some forms of data-snooping better than
-  \citepos{Whi:00} \textsc{brc} or its extensions, in-sample and
-  pseudo \oos\ comparisons would both be affected by the data-snooping.
-  This point is also made by \citet{InK:04}.}
+comparisons. Moreover, the empirical research that motivates
+this paper uses \textit{pseudo} \oos\ comparisons and not
+\textit{true} \oos\ comparisons.  Even if a true \oos\ comparison
+could account for some forms of data-snooping better than
+\citepos{Whi:00} \textsc{brc} or its extensions, in-sample and pseudo
+\oos\ comparisons would both be affected by the data-snooping, a
+point also made by \citet{InK:04}.
 
-We focus on linear regression models for simplicity, but our basic
+We focus on linear regression models estimated with a fixed window
+for simplicity, but our basic
 conclusions should be true for other models as well.  Under this
 asymptotic theory, where the number of regressors $k$ increases with $T$
-so that $\lim k/T$ is positive,
+so that $\lim k/T$ is positive and less than one,
 the \ols\ coefficient estimator is no longer
 consistent or asymptotically normal \citep{Hub:73} and has positive
 variance in the limit.  We show that, even so, the usual \oos\ average
@@ -208,8 +209,8 @@ benchmark is more accurate.\footnote{In a pair of papers similar to
   asymptotic theories are different and their papers do not provide
   reasons to do \oos\ comparisons.}
 Also note that, in this situation, a model that performs well
-in-sample can perform badly out-of-sample \emph{even if there are no
-structural breaks or other forms of instability.}  Researchers
+in-sample can perform badly out-of-sample even if there are no
+structural breaks or other forms of instability.  Researchers
 have argued that a breakdown of in-sample forecasting ability
 indicates a structural break (see \citealp{BoH:99} and
 \citealp{StW:03} among others), but this breakdown can be caused by overfit as
@@ -282,7 +283,8 @@ statistics.  We use a coupling argument (Berbee's Lemma, 1979) to show
 that sequences of \oos\ loss behave like mixingales when the
 underlying series are absolutely regular, even if the forecasts depend
 on non-convergent estimators.  Moreover, transformations of these
-processes also behave like mixingales when recentered, so asymptotic
+processes also behave like mixingales when recentered, so 
+the arguments used to prove asymptotic
 results for \ned\ functions of mixing processes can be used for these
 \oos\ processes with only slight modification.
 
