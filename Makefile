@@ -45,25 +45,12 @@ empirictables = $(call addboth,empirics/tables/,.tex,waldtest coeftest)
 all: paper.pdf
 mc: $(mcDB) $(mcRnw:.Rnw=.pdf)# for convenience -- allows 'make mc'
 
-dateinfo := $(shell git show -s --date=short --format='%cd' HEAD)
-versinfo := $(shell git symbolic-ref --short HEAD), \
-$(shell git show -s --date=short --format='commit %h' HEAD)
-
-verstext := "\\date{$(dateinfo) ($(versinfo))} \\markright{$(dateinfo) ($(versinfo))}"
-ver:	
-	echo $(verstext) > VER.tmp
-	if diff --brief VERSION.tex VER.tmp; then rm VER.tmp; \
-	  else mv -f VER.tmp VERSION.tex; fi
-VERSION.tex:
-	echo $(verstext) > $@
-
-
 # The command to generate the final pdfs is pretty straightforward.
 # I'm using the R version of texi2dvi so that it works directly with
 # Sweave files.  Basic texi2dvi is missing some macros.
 $(mcRnw:.Rnw=.tex): %.tex: %.Rnw mc/db/oosstats.created macros.tex
 	cd $(dir $<) && $(R) $(RFLAGS) CMD pgfsweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
-%.pdf: %.tex VERSION.tex | ver
+%.pdf: %.tex
 	cd $(dir $<) && $(R) CMD texi2dvi -p $(notdir $<)
 paper.pdf: paper.tex macros.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(empiricplots) $(empirictables)
 	$(latexmk) $(LATEXMKFLAGS) $(notdir $<)
