@@ -1566,37 +1566,37 @@ The proof is virtually identical to the proof of Proposition 2.3 in
 
 \begin{lem}\label{lem-basic-coupling}
   Suppose Assumptions \ref{asmp-1}--\ref{asmp-3} hold.  Then, for any
-  T, $s$, and $t$ with $t \geq s$, there exist random variables
-  $D_s^*,\dots,D_t^*$ such that
+  T, $s$, $t$, and $u$ with $s < t \leq u$, there exist random
+  variables $D_t^*,\dots,D_u^*$ such that
   \begin{equation}\label{eq:coupling1}
-    P[(D_s^*,\dots,D_t^*) \neq (D_s,\dots,D_t)] \leq \beta_{s-u}
+    P[(D_{t}^*,\dots,D_u^*) \neq (D_{t},\dots,D_u)] \leq \beta_{t-s}
   \end{equation}
   and
   \begin{equation}\label{eq:coupling2}
-    \E(\phi(D_s^*,\dots, D_t^*) \mid \mathcal{F}_u ) =
+    \E(\phi(D_{t}^*,\dots, D_u^*) \mid \mathcal{F}_s ) =
     \int
-    \phi(D_s,\dots,D_t) f(\mathbf{x}, \mathbf{y})\ d\mathbf{x}\ d\mathbf{y}
+    \phi(D_{t},\dots,D_u) f(\mathbf{x}, \mathbf{y})\ d\mathbf{x}\ d\mathbf{y}
   \end{equation}
   almost surely for all measurable functions $\phi$ such that the
   expectations are finite, where
-  \[ \mathbf{x} = (x_{s}', \dots, x_{t}')', \qquad
-  \mathbf{y} = (y_{s+\h},\dots,y_{t+\h})',\] and $f$ is the
+  \[ \mathbf{x} = (x_{t}', \dots, x_{u}')', \qquad
+  \mathbf{y} = (y_{t+\h},\dots,y_{u+\h})',\] and $f$ is the
   joint density of $(\mathbf{x}, \mathbf{y})$.  Moreover,
  \begin{equation}\label{eq:coupling3}
    \| D_v^* - D_v \|_2 \leq 2^{1+1/\rho} B_L
-   \beta_{s-u}^{\rhoExp}, \qquad v = s,\dots,t.
+   \beta_{t-s}^{\rhoExp}, \qquad v = t,\dots,u.
  \end{equation}
 \end{lem}
 
 \begin{proof}
   The proof follows as a consequence of Lemmas \ref{lem-berbee} and
-  \ref{lem-extend-mp}.  Let $l = t-s$.  For any fixed values of $l$
+  \ref{lem-extend-mp}.  Let $l = u-t$.  For any fixed values of $l$
   and $T$, the sequence of vectors
-  \[ V_s = (y_{s+\h}, x_{s}', \dots, y_{s+l+\h}, x_{s+l}') \] is
+  \[ V_{t} = (y_{t+\h}, x_{t}', \dots, y_{t+l+\h}, x_{t+l}') \] is
   absolutely regular of size $\rho/(\rho-2)$.  Berbee's Lemma implies
   that there is a random vector $V^*$ that is independent of
-  $\mathcal{F}_u$, equal to $V_s$ in distribution, and satisfies
-  \[\Pr[V^* \neq V_s] = \beta_{s-u}.\]
+  $\mathcal{F}_s$, equal to $V_{t}$ in distribution, and satisfies
+  \[\Pr[V^* \neq V_{t}] = \beta_{t-s}.\]
 
   Now define
   \begin{equation*}
@@ -1609,7 +1609,7 @@ The proof is virtually identical to the proof of Proposition 2.3 in
     \end{cases}
   \end{equation*}
   with $y_{v+\h}^*$ and $x_{iv}^*$ denoting the elements of $V^*$
-  corresponding to $y_{v+\h}$ and $x_{iv}$ in $V_s$.  Equations
+  corresponding to $y_{v+\h}$ and $x_{iv}$ in $V_{t}$.  Equations
   (\ref{eq:coupling1}) and (\ref{eq:coupling2}) are satisfied by
   construction, and (\ref{eq:coupling3}) follows from Lemma
   \ref{lem-extend-mp}.
