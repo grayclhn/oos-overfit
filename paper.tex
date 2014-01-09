@@ -1632,7 +1632,8 @@ The proof is virtually identical to the proof of Proposition 2.3 in
     Z_{1t} = \varianceTermIIIa, \intertext{and} Z_{2t} =
     \varianceTermIVb,
   \end{gather*}
-  then
+  with $\delta > 0$, $\eta_\delta$ defined in the proof of
+  Lemma~\ref{res-variance-estimator}, and $\gamma_T = b_T/\delta$, then
   \begin{equation}
     \label{eq:12}
     \vtSum (Z_{1t} Z_{2t} - \E_R Z_{1t} Z_{2t}) \to^p 0.
@@ -1645,10 +1646,10 @@ of \citet{Jon:97} and~\eqref{eq:12} to Lemma~A.4 of \citet{JoD:00}.
 Since these arguments are similar and our modification is the same for
 both, we'll just present the more complicated version,~\eqref{eq:12}.
 
-Note that $\{Z_{1t}^2 P\gamma/b_T\}$ and $\{Z_{2t}^2 P\gamma/b_T\}$
+Note that $\{Z_{1t}^2 P\gamma_T/b_T\}$ and $\{Z_{2t}^2 P\gamma_T/b_T\}$
 are uniformly integrable.  As in~\citet[Lemma A.4]{JoD:00}, we can
 assume that there is a constant $C$ such that $Z_{1t}$ and $Z_{2t}$
-are bounded in absolute value by $C\sqrt{b_T/P\gamma}$; uniform
+are bounded in absolute value by $C\sqrt{b_T/P\gamma_T}$; uniform
 integrability ensures that the difference between the unbounded random
 variables and these truncated versions is negligible for large enough
 values of $C$.
@@ -1684,13 +1685,13 @@ and
 \end{equation*}
 Also define
 \begin{equation*}
-  Z_{1t}^* = (P\gamma)^{-1/2} \sum_{l=\vttLower}^{\vttUpper}
-  (D_{t,t+l}^* - \E_R D_{t,t+l}^*)\ W(l/\gamma), \\
+  Z_{1t}^* = (P\gamma_T)^{-1/2} \sum_{l=\vttLower}^{\vttUpper}
+  (D_{t,t+l}^* - \E_R D_{t,t+l}^*)\ W(l/\gamma_T), \\
 \end{equation*}
 and
 \begin{equation*}
-Z_{2t}^* = (P\gamma)^{-1/2} \sum_{j=\vttLower}^{\vttUpper}
-    (D_{t,t+l}^* - \E_R D_{t,t+l}^*)\ \kernelB{j/\gamma}.
+Z_{2t}^* = (P\gamma_T)^{-1/2} \sum_{j=\vttLower}^{\vttUpper}
+    (D_{t,t+l}^* - \E_R D_{t,t+l}^*)\ \kernelB{j/\gamma_T}.
 \end{equation*}
 
 Now, we have the inequalities
@@ -1712,24 +1713,24 @@ Now, we have the inequalities
   &\leq 2 \vtSuma (\lVert Z_{1t} - Z_{1t}^* \rVert_2 \lVert
   Z_{2t} \rVert_{\infty}
   + \lVert Z_{2t} - Z_{2t}^* \rVert_2 \lVert Z_{1t}^* \rVert_{\infty}) \\
-  &\leq \frac{2 C b_T^{1/2}}{(P\gamma)^{1/2}} \vtSuma (\lVert Z_{1t} - Z_{1t}^* \rVert_2
+  &\leq \frac{2 C b_T^{1/2}}{(P\gamma_T)^{1/2}} \vtSuma (\lVert Z_{1t} - Z_{1t}^* \rVert_2
   + \lVert Z_{2t} - Z_{2t}^* \rVert_2).
 \end{align*}
 
 And we can finish the proof with the following inequalities:
 \begin{align*}
-  \frac{2 C b_T^{1/2}}{(P \gamma)^{1/2}} &\vtSuma \lVert Z_{1t} - Z_{1t}^* \rVert_2 \\& \leq
-  \frac{4C b_T^{1/2}}{P\gamma} \vtSuma \sum_{l=\vttLower}^{\vttUpper} \lVert
-  D_{t+l} - D_{t,t+l}^* \rVert_2 W(l/\gamma) \\&
-  \leq O\Bigg(\frac{b_T^{1/2}}{P\gamma}\Bigg) \vtSuma
+  \frac{2 C b_T^{1/2}}{(P \gamma_T)^{1/2}} &\vtSuma \lVert Z_{1t} - Z_{1t}^* \rVert_2 \\& \leq
+  \frac{4C b_T^{1/2}}{P\gamma_T} \vtSuma \sum_{l=\vttLower}^{\vttUpper} \lVert
+  D_{t+l} - D_{t,t+l}^* \rVert_2 W(l/\gamma_T) \\&
+  \leq O\Bigg(\frac{b_T^{1/2}}{P\gamma_T}\Bigg) \vtSuma
   \sum_{l=\vttLower}^{\vttUpper} \couplingBeta{t+l-(2i-2m-1)b_T+P}\\&
-  = O\Bigg(\frac{b_T^{1/2}}{P\gamma}\Bigg) O(b_T^{3/2-u}\, m^{-1/2-u})
+  = O\Bigg(\frac{b_T^{1/2}}{P\gamma_T}\Bigg) O(b_T^{3/2-u}\, m^{-1/2-u})
 \end{align*}
 for some positive $u$.  The same argument holds for $Z_{2t}$.
 As a result,
 \[
-E\Big(\vtSumr (U_i - \E_R U_i)\Big)^2 = o\Big(\vtSumr b_T^2/P\gamma\Big) =
- o(b_T/\gamma) \to 0,
+E\Big(\vtSumr (U_i - \E_R U_i)\Big)^2 = o\Big(\vtSumr b_T^2/P\gamma_T\Big) =
+ o(b_T/\gamma_T) \to 0,
 \]
 as required.
 \end{proof}
