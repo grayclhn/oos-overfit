@@ -1617,7 +1617,7 @@ The proof is virtually identical to the proof of Proposition 2.3 in
 
 \begin{lem}\label{lem:a2}
   Suppose Assumptions~\ref{asmp-1}--\ref{asmp-3} hold.  Let $b_T$ be a
-  sequence such that $b_T \to \infty$ and $b_T = o(P)$ and define
+  sequence of integers such that $b_T \to \infty$ and $b_T = o(P)$ and define
   \begin{equation*}
     Z_i = \ZDef.
   \end{equation*}
@@ -1635,7 +1635,7 @@ The proof is virtually identical to the proof of Proposition 2.3 in
   then
   \begin{equation}
     \label{eq:12}
-    \sum_{t=-P+1}^{2P} (Z_{1t} Z_{2t} - \E_R Z_{1t} Z_{2t}) \to^p 0.
+    \vtSum (Z_{1t} Z_{2t} - \E_R Z_{1t} Z_{2t}) \to^p 0.
   \end{equation}
 \end{lem}
 \begin{proof}
@@ -1657,7 +1657,7 @@ Let $r = \lfloor 3P/2b_T \rfloor$ and rewrite the summation as
 \begin{align*}
   \vtSum \vtIIIsummand &= \vtSumr \vtSuma \vtIIIsummand \\
   &\quad+ \vtSumr \vtSumb \vtIIIsummand \\
-  &\quad+ \sum_{t=r b - P + 1}^{2P} \vtIIIsummand \\
+  &\quad+ \sum_{t=r b_T - P + R + 1}^{2P+R} \vtIIIsummand \\
   &\equiv \vtSumr (U_i - \E_R U_i) + \vtSumr (U_i' - \E_R U_i') + o_{L_1}(1).
 \end{align*}
 The proof then holds if we can show that both $U_i$ and $U_i'$ obey
@@ -1673,24 +1673,24 @@ U_i - \E_R U_i \in \UFiltration{2i+2m-1},
 \end{equation*}
 establishing half of the mixingale result trivially.  Now fix $i$ and $m >
 0$ and use Lemma \ref{lem-basic-coupling} to define $D_{ts}^*$
-for each $t =(2i-2)b_T-P+1,\dots,(2i-1)b_T-P$ and $s =
-\max(t+R-b_T,R-\h+1),\dots,\min(t+R+b_T,T)$ such that
+for each $t =(2i-2)b_T-P+R+1,\dots,(2i-1)b_T-P+R$ and $s =
+\max(t-b_T,R+1),\dots,\min(t+b_T,T-\h)$ such that
 \begin{equation*}
  \E_R D_{ts}^* = \E_{(2i-2m-1)b_T+R-P} D_{ts}^* \quad a.s.
 \end{equation*}
 and
 \begin{equation*}
-  \lVert D_{ts}^* - D_s \rVert_2 \leq \couplingBound{s - (2i-2m-1)b_T-R+P}.
+  \lVert D_{ts}^* - D_s \rVert_2 \leq \couplingBound{s - (2i-2m-1)b_T+P}.
 \end{equation*}
 Also define
 \begin{equation*}
-  Z_{1t}^* = 1/\sqrt{P\gamma} \sum_{l=\vttLower}^{\vttUpper}
-  (D_{t,t+l+R}^* - \E_R D_{t,t+l+R}^*)\ W(l/\gamma), \\
+  Z_{1t}^* = (P\gamma)^{-1/2} \sum_{l=\vttLower}^{\vttUpper}
+  (D_{t,t+l}^* - \E_R D_{t,t+l}^*)\ W(l/\gamma), \\
 \end{equation*}
 and
 \begin{equation*}
-Z_{2t}^* = 1/\sqrt{P\gamma} \sum_{j=\vttLower}^{\vttUpper}
-    (D_{t,t+l+R}^* - \E_R D_{t,t+l+R}^*)\ \kernelB{j/\gamma}.
+Z_{2t}^* = (P\gamma)^{-1/2} \sum_{j=\vttLower}^{\vttUpper}
+    (D_{t,t+l}^* - \E_R D_{t,t+l}^*)\ \kernelB{j/\gamma}.
 \end{equation*}
 
 Now, we have the inequalities
@@ -1720,7 +1720,7 @@ And we can finish the proof with the following inequalities:
 \begin{align*}
   \frac{2 C b_T^{1/2}}{(P \gamma)^{1/2}} &\vtSuma \lVert Z_{1t} - Z_{1t}^* \rVert_2 \\& \leq
   \frac{4C b_T^{1/2}}{P\gamma} \vtSuma \sum_{l=\vttLower}^{\vttUpper} \lVert
-  D_{t+l+R} - D_{t,t+l+R}^* \rVert_2 W(l/\gamma) \\&
+  D_{t+l} - D_{t,t+l}^* \rVert_2 W(l/\gamma) \\&
   \leq O\Bigg(\frac{b_T^{1/2}}{P\gamma}\Bigg) \vtSuma
   \sum_{l=\vttLower}^{\vttUpper} \couplingBeta{t+l-(2i-2m-1)b_T+P}\\&
   = O\Bigg(\frac{b_T^{1/2}}{P\gamma}\Bigg) O(b_T^{3/2-u}\, m^{-1/2-u})

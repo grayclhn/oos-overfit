@@ -40,12 +40,12 @@
 \newcommand{\kernelBDefn}[1]{\ensuremath{\delta^{-1}(2\pi)^{-1/2}}e^{-#1^2/2\delta^2}}
 \newcommand{\kernelB}[1]{\ensuremath{\eta_{\delta}(#1)}}
 
-\newcommand{\vtSum}{\ensuremath{\sum_{t=-P+1}^{2P}}}
+\newcommand{\vtSum}{\ensuremath{\sum_{t=-P+R+1}^{2P+R}}}
 \newcommand{\vtSumr}{\ensuremath{\sum_{i=1}^r}}
-\newcommand{\vtSuma}{\ensuremath{\sum_{t=(2i-2)b_T-P+1}^{(2i-1)b_T-P}}}
-\newcommand{\vtSumb}{\ensuremath{\sum_{t=(2i-1)b_T-P+1}^{2ib_T-P}}}
-\newcommand{\vttLower}{\ensuremath{\max(1-t,-b_T)}}
-\newcommand{\vttUpper}{\ensuremath{\min(P-t,b_T)}}
+\newcommand{\vtSuma}{\ensuremath{\sum_{t=(2i-2)b_T-P+R+1}^{(2i-1)b_T-P+R}}}
+\newcommand{\vtSumb}{\ensuremath{\sum_{t=(2i-1)b_T-P+R+1}^{2ib_T-P+R}}}
+\newcommand{\vttLower}{\ensuremath{\max(R+1-t,-b_T)}}
+\newcommand{\vttUpper}{\ensuremath{\min(R+P-t,b_T)}}
 
 \newcommand{\varianceTermIDefn}{\ensuremath{P^{-1}\oosSum{s,t}{1}
     \vSummand}}
@@ -59,11 +59,10 @@
     \kernelB{j/\gamma}}}
 \newcommand{\varianceTermIII}{\ensuremath{\sigma_{2,\delta}^{2}}}
 \newcommand{\varianceTermIIIa}{\ensuremath{(P\gamma)^{-1/2}
-    \sum_{l=\vttLower}^{\vttUpper} (D_{t+l+R} - \E_R D_{t+l+R})
-    W(l/\gamma)}}
+    \sum_{l=\vttLower}^{\vttUpper} (D_{t+l} - \E_R D_{t+l}) W(l/\gamma)}}
 \newcommand{\varianceTermIV}{\ensuremath{\sigma_{3,\delta}^{2}}}
 \newcommand{\varianceTermIVb}{\ensuremath{(P\gamma)^{-1/2}
-    \sum_{j=\vttLower}^{\vttUpper} (D_{t+j+R} - \E_R D_{t+j+R})
+    \sum_{j=\vttLower}^{\vttUpper} (D_{t+j} - \E_R D_{t+j})
     \kernelB{j/\gamma}}}
 \newcommand{\vtIIIsummand}{\ensuremath{(Z_{1t}Z_{2t} - \E_RZ_{1t}Z_{2t})}}
 
