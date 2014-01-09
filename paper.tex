@@ -1782,24 +1782,25 @@ surely.  Note that we also have the equality $\E_R D_s^* = \E_R
 D_{R+1}^*$ almost surely for all $s\geq R+1$, and so
 \[
 P^{-1} \oosSum{s}{1} (\E_R D_s^*)^2 = \Big(P^{-1} \oosSum{s}{1} \E_R
-D_s^*\Big)^2 \quad \text{a.s..}
+D_s^*\Big)^2 \quad \text{a.s.}
 \]
-
 Consequently,
 \begin{align*}
-P^{-1} \oosSum{s}{1} (\E_R D_s)^2 - (\E_R\oosA)^2 & =
-P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R D_s^*)^2]\\
-&\quad+ \Big(P^{-1} \oosSum{s}{1} \E_R D_s^*\Big)^2 - (\E_R\oosA)^2 \quad \text{a.s}.\\
-&= O_p\Big(P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R D_s^*)^2]\Big).
+P^{-1} \oosSum{s}{1}& (\E_R D_s)^2 - (\E_R\oosA)^2 \\
+&= P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R D_s^*)^2]
+ + \Big(P^{-1} \oosSum{s}{1} \E_R D_s^*\Big)^2 - (\E_R\oosA)^2 \quad \text{a.s}.\\
+&= O_p\Big(P^{-1} \oosSum{s}{1} [(\E_R D_s)^2 - (\E_R D_s^*)^2]\Big)
+ + O_p\Big(P^{-1} \oosSum{s}{1} \E_R (D_s - D_s^*)\Big).
 \end{align*}
 Finally,
 \begin{align*}
 \Big\lVert P^{-1} \oosSum{s}{1} [(\E_RD_s)^2 - (\E_R D_s^*)^2] \Big\rVert_1
-&\leq P^{-1} \oosSum{s}{1} \lVert \E_RD_s - \E_R D_s^* \rVert_2 \lVert
-\E_RD_s + \E_R D_s^* \rVert_2
-\\ &\leq (4 B_L/P) \oosSum{s}{1} \lVert \E_RD_s - \E_R D_s^* \rVert_2,
+&\leq P^{-1} \oosSum{s}{1} \lVert \E_R (D_s - D_s^*) \rVert_2 \lVert
+\E_R (D_s + D_s^*) \rVert_2
+\\ &\leq (4 B_L/P) \oosSum{s}{1} \lVert \E_R (D_s - D_s^*) \rVert_2,
 \end{align*}
-and this last term vanishes as in the proof of Lemma~\ref{lem:a2}.
+and this last term vanishes as in the proof of Lemma~\ref{lem:a2},
+completing the proof.
 \end{proof}
 
 \subsection*{Proof of Theorem \ref{res-confidence-intervals}}
