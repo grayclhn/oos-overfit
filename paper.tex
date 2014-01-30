@@ -661,7 +661,11 @@ inference about the models' accuracy.  Since the \oos\ average,
 $\oosA$, is asymptotically normal and centered on the expected future
 performance, $t$-tests constructed from the \oos\ errors necessarily
 test hypotheses about $\E_T \oosB$ and not the performance of the
-pseudo-true models or the unconditional performance of the models.
+pseudo-true models or the unconditional performance of the
+models.\footnote{i.e. $\E L(\e_{1,t+\h}) - \E  L(\e_{2,t+\h})$ or $\E \oosB$.
+Note that the expectation of $\E_T \oosB$ equals $\E \oosB$ but that
+$\sqrt{P} (\E_T \oosB - \E \oosB)$ may not be asymptotically normal,
+which would be necessary for testing.}
 This application to testing can be expressed as its own theorem:
 \begin{thm}\label{res:oostest}
 Suppose that the conditions of Theorem \ref{res-confidence-intervals}
