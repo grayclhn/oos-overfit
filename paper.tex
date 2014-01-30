@@ -322,7 +322,12 @@ y_{t+\h} = x_{2t}'\theta_2 + \e_{2,t+h};
 \]
 $t = 1,\dots,T-h$, $\h$ is the forecast horizon, and the
 variables $y_t$, $x_{1t}$, and $x_{2t}$ are all known in period $t$.
-Let
+The coefficients $\theta_1$ and $\theta_2$ minimize the population
+Mean Square Error, so
+\begin{equation*}
+  \theta_i = \argmin_\theta \sum_{t=1}^{T-\h} \E (y_{t+\h} - x_{it}'\theta)^2,
+\end{equation*}
+making $\e_{i,t+\h}$ uncorrelated with $x_{i,t}$. Let
 \begin{equation*}
   \mathcal{F}_t = \sigma(y_1, x_1, \dots, y_t, x_t)
 \end{equation*}
