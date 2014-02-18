@@ -340,69 +340,114 @@ with $x_t$ the vector of all stochastic elements of $x_{1t}$ and $x_{2t}$ after
 removing duplicates, and let $\E_t$ and $\var_t$ denote the
 conditional mean and variance given $\mathcal{F}_t$.  The first model
 uses $K_1$ regressors, and the second uses $K_2$.  Without loss of
-generality, assume that $K_1 \leq K_2$.  We will allow $K_1$ and $K_2$
-to vary with $T$, so a stochastic array underlies all of our
-asymptotic theory, but we suppress that notation to simplify the
-presentation.
+generality, assume that $K_1 \leq K_2$. At least one of the models is
+overfit, which we represent asymptotically by letting $K_2$ grow with
+$T$ quickly enough that $\lim K_2/T$ is positive; $K_1$ may grow with
+$T$ as well. Since the number of regressors changes with $T$, a
+stochastic array underlies all of our asymptotic theory, but we
+suppress that notation to simplify the presentation.
 
-The forecaster observes the data $(y_t,x_t)$ for periods 1 through $T$
-and divides them into an estimation sample of the first $R$
-observations and a test sample of the remaining $P$ observations.
-After choosing one of the models, the forecaster will use that model
-to make predictions for periods $T + h + 1$ through $T + h + Q$, where
-$Q$ is a known positive integer.  The forecaster's goal is to choose
-the model that will have lower average loss over periods $T+h+1$ through
-$T+h+Q$, evaluated by the known loss function $L$.
+In the settings we are interested in, a forecaster observes the data
+$(y_t,x_t)$ for periods 1 through $T$ and divides the observations
+into an estimation sample of the first $R$ observations and a test
+sample of the remaining $P$ observations. The forecaster then compares
+the models' performance over the test sample, which entails
+constructing two sequences of forecasts, (using a fixed-window
+estimation strategy)
+\begin{equation}
+\hat y_{i,t+\h} = x_{it}'\hat{\theta}_{it}, \qquad \text{for } i=1,2;
+\ t = R+1,\dots,T-h,
+\end{equation}
+where
+\begin{equation}
+  \bh{it} = \Big(\sum_{s=1}^{R-\h} x_{is}x_{is}'\Big)^{-1} \sum_{s=1}^{R-\h}
+  x_{is} y_{s+\h}, \qquad \text{for } i=1,2;\ t = R+1,\dots, T - \h.\footnote{It
+    may not be clear why we are using a $t$ index in $\bh{it}$,
+    since $\bh{it} = \bh{iR}$ almost surely for all $t \leq T-h$.
+    We need this index because $\bh{it}$ will be defined for $t > T-\h$
+    soon, and will not equal $\bh{iR}$ for those values of $t$.}
+\end{equation}
 
-Both models are estimated using \ols\ with a fixed window:
-\[
-\hat y_{i,t+\h} = x_{it}'\hat{\theta}_{it}, \qquad i=1,2, \qquad t
-= R+1,\dots,T-h
-\]
-with
-\begin{equation*}
-  \bh{it} =
-  \begin{cases}
-    \big(\sum_{s=1}^{R-\h} x_{is}x_{is}'\big)^{-1} \sum_{s=1}^{R-\h}
-    x_{is} y_{s+\h} & t \leq T \\
-    \big(\sum_{s=1}^{T-\h} x_{is}x_{is}'\big)^{-1}
-    \sum_{s=1}^{T-\h} x_{is} y_{s+\h} & t > T.
-  \end{cases}
-\end{equation*}
-The observed \oos\ average is denoted $\oosA$: \[\oosA \equiv P^{-1}
-\oosSum{t}{1} D_t\]  with
-\[
-D_t \equiv L(y_{t+\h} - x_{1t}'\bh{1t}) - L(y_{t+\h} - x_{2t}'\bh{2t}).
-\]
-The \oos\ statistic of interest is $\oost \equiv \sqrt{P} \oosA /
-\sh$, for $\sh^2$ some (possibly Heteroskedasticity- and
-Autocorrelation-Consistent, or \hac) estimator of the asymptotic
-variance of $\oosA$.
+The models are then compared by their forecast errors over the test
+sample.  There are many statistics that could be used to make this
+comparison, but we focus on perhaps the most natural, the \dmw\ \oost\
+test \citep{DiM:95,Wes:96}.\footnote{The core insights of our paper
+  apply to other \oos\ statistics as well.} This statistic is based on
+the difference in the models' loss over the test sample, $\oosA$,
+defined as
+\begin{equation}
+  \oosA \equiv P^{-1} \oosSum{t}{1} D_t
+\end{equation}
+where
+\begin{equation}\label{eq:16}
+  D_t = L(y_{t+\h} - x_{1t}'\bh{1t}) - L(y_{t+\h} - x_{2t}'\bh{2t}),
+\end{equation}
+and $L$ is a known loss function. Now the \oost\ test is defined as
+$\sqrt{P} \oosA / \sh$, where $\sh^2$ is an estimator of the
+asymptotic variance of $\oosA$. (Possibly a Heteroskedasticity- and
+Autocorrelation-Consistent, or \hac, estimator.)
 
-As discussed above, the forecaster's goal is to choose the model with
-lower average future loss; i.e. to determine whether $\oosB$ is
-positive or negative,with
-\[
-\oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} D_t.
-\]
-Note that the coefficients are reestimated with the full dataset.
-Since the forecaster's information set, $\mathcal{F}_T$, does not
-contain $\oosB$, he or she should decide between the models based on
-the conditional expectation, $\E_T \oosB$. If this quantity is
-positive, the first model is expected to perform the worst in the
-future, and if it is negative the second is.
+There are several hypotheses that the \oost\ test has been used
+for. Most theoretical work, such as \citet{DiM:95}, \citet{Wes:96},
+and \cite{Mcc:07}, has focused on using these statistics to test
+hypotheses about the pseudo-true values $\theta_1$ and $\theta_2$.  In
+particular, that research focuses on testing the null hypothesis that
+\begin{equation}
+  \E L(y_{t+\h} - x_{1t}'\theta_{1}) = \E L(y_{t+\h} - x_{2t}'\theta_{2}).
+\end{equation}
+Another possibility is that the forecaster will use one of the models
+to make a number of predictions in the future---call the number of
+predictions $Q$---in which case the quantity of interest is
+\begin{equation}
+  \E_T \oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} \E_T D_t,
+\end{equation}
+where $D_t$ is defined in Equation~\eqref{eq:16} but here uses the
+full-sample estimates of the models' parameters,
+\begin{equation}
+  \bh{it} = \Big(\sum_{s=1}^{T-\h} x_{is}x_{is}'\Big)^{-1} \sum_{s=1}^{T-\h}
+  x_{is} y_{s+\h}, \qquad \text{for } i=1,2;\ t = T+1,\dots, T + Q.
+\end{equation}
+If $\E_T \oosB$ is positive, the second model is expected to forecast
+better than the first over the next $Q$ periods, and if $\E_T \oosB$
+is negative then the first model is better. We use a conditional
+expectation because the coefficient estimates in $\oosB$ are
+stochastic but known in period $T$, and their values will determine
+the performance of the two models.
 
-This conditional expectation is related to several well known measures
-of model performance.  In the limit, $\E_{T} \bar{D}_{T}$ converges to
-the difference in the models' generalization error and the two are
-equal in finite samples for i.i.d. data.  Moreover, if the data are
-i.i.d., the expectation of $\E_T \oosB$ equals \citepos{Aka:69} Final
-Prediction Error (\textsc{fpe}).  Both generalization error and
-\textsc{fpe} are defined by the model's performance on a new,
-independent, data set; here the new data are not independent in finite
-samples, but are asymptotically independent.  For the rest of the
-paper, we will call $\E_T \oosB$ the difference in generalization
-error with hopefully no risk of confusion.
+Under conventional fixed-$K$ asymptotic theory, $\E_T \oosB$ would
+converge in probability to the difference in the expected loss
+associated with the pseudo-true models,\footnote{Under appropriate
+  stationarity, moment, and weak-dependence conditions, obviously.}
+\begin{equation}\label{eq:22}
+  \E L(y_{t+\h} - x_{1t}'\theta_{1}) - \E L(y_{t+\h} - x_{2t}'\theta_{2}).
+\end{equation}
+But if $K_2$ increases with $T$ these quantities can have different
+limits. For a simple example, assume squared-error loss, let $x_{1,t}
+= 1$ for all $t$, and let $(y_{t+\h},x_{2,t})$ be i.i.d. $N(0,
+\Sigma)$.  Then
+\begin{align*}
+  \E_T \oosB - & \big(\E L(y_{t+\h} - x_{1t}'\theta_{1}) - \E L(y_{t+\h} - x_{2t}'\theta_{2})\big) \\
+  &= \big(\E_T (y_{T+\h+1} - \bh{1,T})^2 - \E_T (y_{T+\h+1} - x_{T+1}'\bh{2,T})^2\big) -
+  \big(\E y_{T+\h+1}^2 - \E (y_{T+\h+1} - x_{T+1}'\theta_2)^2 \big)\\
+  &= (\bh{2,t} - \theta_2)' \Sigma_x (\bh{2,t} - \theta_2) + o_p(1).
+\end{align*}
+This last term has expectation $\var(y_T) \frac{K_2}{T - K_2 - 1}$ and
+would converge to zero if $K_2$ were fixed, but does not when $\lim
+K_2 / T > 0$. In Section~\ref{sec:oostheory} we show that the \oost\
+statistic can estimate $\E_T \oosB$ under our increasing $K$
+asymptotics and does not estimate the expected loss in~\eqref{eq:22}.
+
+Our conditional expectation has been studied heavily in
+cross-sectional settings with independent observations. In such a
+setting, $\E_T \oosB$ is equal to the difference in the models'
+\emph{generalization error}, which has been used widely in the machine
+learning literature \citep[see][for further discussion]{HTF:08}.
+Moreover, with i.i.d. observations, the expectation of $\E_T \oosB$
+equals \citepos{Aka:69} Final Prediction Error (\textsc{fpe}). Both
+generalization error and \textsc{fpe} are defined by a model's
+performance on a new, independent, data set, but, for lack of a better
+term, we will call $\E_T \oosB$ the difference in generalization error
+for the rest of the paper with hopefully no risk of confusion.
 
 Finally, define the following notation.  The $l_v$-norm for vectors in
 $\Re^p$ (with $p$ arbitrary) is denoted $\lvert \cdot \rvert_v$, and
