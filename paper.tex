@@ -313,8 +313,9 @@ Section~\ref{sec:conclusion} concludes.  Proofs and supporting results
 are listed in the Appendix.
 
 \section{Setup and Assumptions}\label{sec:assumptions}
-We will set up our models and notation first, then list the assumptions
-required for our results.
+The first part of this section will describe the environment in detail
+and set up our models and notation. The second part will list the
+assumptions underlying our theoretical results.
 
 \subsection{Notation and Forecasting Environment}
 We assume the following forecasting environment. There are two
@@ -324,18 +325,18 @@ $y_{t+\h}$:
 y_{t+\h} = x_{1t}'\theta_1 + \e_{1,t+h}, \quad\text{and}\quad
 y_{t+\h} = x_{2t}'\theta_2 + \e_{2,t+h};
 \]
-$t = 1,\dots,T-h$, $\h$ is the forecast horizon, and the
+$t = 1,\dots,T-h$, $\h$ is the forecast horizon and the
 variables $y_t$, $x_{1t}$, and $x_{2t}$ are all known in period $t$.
 The coefficients $\theta_1$ and $\theta_2$ minimize the population
 Mean Square Error, so
 \begin{equation*}
   \theta_i = \argmin_\theta \sum_{t=1}^{T-\h} \E (y_{t+\h} - x_{it}'\theta)^2,
 \end{equation*}
-making $\e_{i,t+\h}$ uncorrelated with $x_{i,t}$. Let
-\begin{equation*}
-  \mathcal{F}_t = \sigma(y_1, x_1, \dots, y_t, x_t)
-\end{equation*}
-with $x_t$ the vector of all elements of $x_{1t}$ and $x_{2t}$ after
+making $\e_{i,t+\h}$ uncorrelated with $x_{i,t}$; $\e_{i,t+\h}$ may exhibit
+serial correlation so both of the linear models may be misspecified.
+Let $\mathcal{F}_t = \sigma(y_1, x_1, \dots, y_t, x_t)$ be the information
+set available to the forecaster in period $t$,
+with $x_t$ the vector of all stochastic elements of $x_{1t}$ and $x_{2t}$ after
 removing duplicates, and let $\E_t$ and $\var_t$ denote the
 conditional mean and variance given $\mathcal{F}_t$.  The first model
 uses $K_1$ regressors, and the second uses $K_2$.  Without loss of
