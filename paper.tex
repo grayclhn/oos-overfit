@@ -107,7 +107,7 @@ than this.  Our simulations indicate that using large values of $P$
 with the \dmw\ test gives undersized tests with low power, so this
 practice may favor simple benchmark models too much.  Existing
 corrections, proposed by \citet{ClM:01,ClM:05}, \citet{Mcc:07} and
-\citet{ClW:06,ClW:07}, seem to correct too much, though, and reject
+\citet{ClW:06,ClW:07}, seem to overcorrect for this problem, though, and reject
 too often when the benchmark model is more accurate.
 
 
@@ -133,8 +133,8 @@ and West's assumptions, but maintains the stationarity and dependence
 conditions that permit in-sample comparisons \citep[see][for a
 review of this literature]{Wes:06}.\footnote{Like us, \citet{Ana:07}
   allows the number of regressors to increase with $T$.  But in that
-  paper, they increase slowly enough that the \ols\ coefficients are
-  consistent and asymptotically normal.}  \citet{GiW:06} and
+  paper, the number of regressors increases slowly enough that the \ols\
+  coefficients are consistent and asymptotically normal.} \citet{GiW:06} and
 \citet{GiR:09, GiR:10} are exceptions.  Instead of focusing on
 hypotheses that can be tested by in-sample comparisons, \citet{GiW:06}
 derive an \oos\ test for the null hypothesis that the difference
@@ -148,8 +148,8 @@ comparisons might be useful as a general strategy.
 
 Since in-sample and \oos\ statistics require similar assumptions and
 test similar hypotheses, one might expect that they would give similar
-results.  They do not.  Generally in-sample analysis supports more
-complicated theoretical models and \oos\ analysis supports simple
+results.  They do not.  In-sample analyses tend to support more
+complicated theoretical models and \oos\ analyses support simple
 benchmarks, as seen in \citet{MeR:83}, \citet{StW:03}, and
 \citet{GoW:08}.  Since these different approaches strongly influence
 the outcome of research, it is important to know when each is
@@ -233,6 +233,8 @@ switch to a more accurate alternative.  We show that the \dmw\ test
 lets the forecaster control the probability of the first error, just
 as with conventional hypothesis testing.
 
+But we also identify new practical limitations for applying the \dmw\
+test to overfit models.
 Since the models' coefficients are imprecisely estimated in the limit,
 the test sample must be small enough that the model estimated over the
 training sample is similar to the one that will be estimated over the
@@ -247,28 +249,29 @@ pessimistic about their models' future accuracy if they use the \dmw\
 test.  Section~\ref{sec:oostheory} lays out the asymptotic behavior of
 the \dmw\ test under this limit theory.
 
-Since the \ols\ coefficient estimator is no longer consistent or
-asymptotically normal, the $F$-test and Wald tests are no longer
-asymptotically valid.  Moreover, \citet{Efr:86,Efr:04} shows that
-naive comparisons of in-sample loss overestimate models' accuracy by a
-factor proportional to $K/T$; $K$ is the number of regressors.  But
-modifications of the $F$-test are valid under this asymptotic theory,
-as shown by \citet{BoB:95}, \citet{AkA:00}, \citet{AkP:04},
-\citet{Cal:11c}, and \citet{Ana:12}, among others.  These results
-establish that hypotheses about the parameters of the \dgp\ can be
-tested in-sample even if one or both models are overfit.  For that
-very reason, these tests can not reliably choose a model for
-forecasting and will reject the benchmark too often.  We show this
-analytically in Section~\ref{sec:insample} and present analogous
-results for model selection.  Moreover, under this asymptotic theory,
-many recent \oos\ test statistics, such as those derived by
-\cite{ClM:01,ClM:05}, \citet{Mcc:07}, and \citet{ClW:06,ClW:07} should
-have the same problems as in-sample tests.\footnote{Our theoretical
-  results apply directly to \citepos{Mcc:07} \oos\ $t$-test, since it
-  simply proposes more liberal critical values for the same test
-  statistic that we study.  Since \citet{ClW:06,ClW:07} use a finite
-  length estimation window, our asymptotics are incompatible with
-  theirs and prevent us from studying their test directly, as well as
+Popular in-sample tests and model selection criteria, like the Wald
+test, AIC, and BIC, do not help forecasters in this setting. We show
+that these statistics can no pick out the more accurate model. For
+many \dgp s they will choose a larger alternative model over a small
+benchmark model with probability approaching one, regardless of which
+model is more accurate.\footnote{Our result holds for a broad class of
+  full-sample statistics, but there may be other potential statistics
+  that mimic the \oos\ test and remain valid. Exploring such
+  statistics is left for future research.}
+This result holds even though modifications of the $F$-test are valid
+under this asymptotic theory, as shown by \citet{BoB:95},
+\citet{AkA:00}, \citet{AkP:04}, \citet{Cal:11c}, and \citet{Ana:12},
+among others.\footnote{Also see \citet{Efr:86,Efr:04} for a discussion
+  of naive in-sample loss comparisons.}
+Moreover, under this asymptotic theory, many recent \oos\ test
+statistics, such as those derived by \cite{ClM:01,ClM:05},
+\citet{Mcc:07}, and \citet{ClW:06,ClW:07} should have the same
+problems as in-sample tests.\footnote{Our theoretical results apply
+  directly to \citepos{Mcc:07} \oos\ $t$-test, since it simply
+  proposes more liberal critical values for the same test statistic
+  that we study.  Since \citet{ClW:06,ClW:07} use a finite length
+  estimation window, our asymptotics are incompatible with theirs and
+  prevent us from studying their test directly, as well as
   \citepos{GiW:06} and other tests based on \citepos{GiW:06}
   asymptotics.  But \clws\ test can be viewed as a stochastic
   adjustment to the critical values of the usual \oos\ $t$ test, so
@@ -282,8 +285,9 @@ benchmark is false but more accurate.  Obviously, since the
 distribution of these statistics converges to the normal when $P/T \to
 0$ (with the number of regressors fixed), these statistics behave like
 the \dmw\ test when $P$ is small, but should overreject the benchmark
-when $P$ is large.  Section~\ref{sec:mc} presents simulations that
-support these claims.
+when $P$ is large. Section~\ref{sec:insample} presents our theoretical
+results for full-sample statistics and Section~\ref{sec:mc} presents
+Monte Carlo evidence to support these claims.
 
 Finally, this paper also introduces a new method of proof for \oos\
 statistics.  We use a coupling argument (Berbee's Lemma, 1979) to show
