@@ -467,10 +467,10 @@ argument and return its $i$th eigenvalue (with $\eigen_{i}(A) \leq
 
 \subsection{Assumptions}
 
-We assume the next conditions hold throughout the paper.  The first
+The next conditions are assumed to hold throughout the paper.  The first
 assumption controls the dependence of the underlying random array.
-The second prevents the sequence of experiments from becoming
-degenerate as $T$ increases.  The third assumption controls the
+The second layes out the details of our asymptotic approximation.
+The third assumption controls the
 smoothness of the loss function and bounds the moments of the
 difference in the models' performance; the fourth assumption describes
 the behavior of the estimation and test windows.  And the last
@@ -481,23 +481,35 @@ asymptotic variance.
   The random array $\{y_t,x_t\}$ is stationary and absolutely regular
   with coefficients $\beta_j$ of size $-\rho/(\rho-2)$; $\rho$ is
   greater than two and discussed further in Assumption \ref{asmp-3}.
-  Also, $K_1$ and $K_2$ are less than $R$, and $K_2/T$ and
-  $(K_2-K_0)/T$ are uniformly positive; $K_0$ is the number of
-  regressors shared by the two models ($K_1/T$ can be uniformly
-  positive as well, but is not required to be).
 \end{asmp}
 
-The first assumption is a standard condition on the dependence of the
-underlying stochastic array.  We assume that the array is absolutely
-regular instead of strong mixing, which is more common in
-econometrics, because absolute regularity admits a particular coupling
-argument \citep[reproduced in this paper as Lemma A.1]{Ber:79} that is
-unavailable for strong mixing sequences.  Please see, for example,
-\citet{Dav:94} for a discussion of these mixing conditions.
+This assumption is a standard condition on the dependence of the
+underlying stochastic array. The only novelty is that we use
+absolute regularity instead of strong or uniform mixing as our
+weak dependence condition; absolute regularity admits a paricular
+coupling argument, ``Berbee's Lemma'' \citep[reproduced in this
+paper as Lemma A.1 for reference]{Ber:79} that is
+unavailable for strong mixing sequences; absolute regularity
+implies uniform mixing, so this assumption is not unduly strong.
+For a detailed discussion of these weak dependence conditions,
+please see, for example, \citet{Dav:94}.
 
-Assumption \ref{asmp-2} rules out uninteresting cases where the
-forecast error vanishes.
+Our strict stationarity assumption is also somewhat stronger than is
+typically used; \citet{Wes:96} and \citet{Mcc:07}, for example,
+present results assuming covariance stationarity of the loss
+associated with the pseudo-true models. We need to make a stronger
+assumption because we will need to prove asymptotic results where the
+$\bh{it}$ remain random---so we would need covariance stationarity to
+hold for almost all estimates of $\theta_i$, and not just for the
+pseudo-true value.
+
+The next assumption describes our asymptotic experiment.
 \begin{asmp}\label{asmp-2}
+  The number of regressors for each model, $K_1$ and $K_2$, are less
+  than $R$, and $K_2/T$ and $(K_2-K_0)/T$ are uniformly positive;
+  $K_0$ is the number of regressors shared by the two models ($K_1/T$
+  can be uniformly positive as well, but is not required to be).
+
   The variance of $y_{t+\h}$ given $\mathcal{F}_t$ is uniformly
   positive and finite, and all of the eigenvalues of the covariance
   matrix of $x_t$ are uniformly positive and finite as well.
@@ -513,6 +525,7 @@ forecast error vanishes.
   for large enough $T$, where $S = R,T$, $i = 1,2$,
   \[ X_{iT} \equiv [x_{i1} \quad \dots \quad x_{i,T-\h}]' \qquad
   \text{and} \qquad \ep{iT} = (\e_{i,1+\h}, \dots, \e_{i,T})'.\]
+
   Additionally, the Euclidean norms of the pseudo-true coefficients,
   $\theta_1$ and $\theta_2$, satisfy $|\theta_1|_2 = O(1)$ and
   $|\theta_2|_2 = O(1)$.
@@ -553,7 +566,7 @@ constant.
   and
   \begin{equation*}
     \E\Big( \sum_{s,t=R+1}^{T-h} \e_s \e_t x_s x_t'
-    \,\Big|\, X_{R}'X_{R} \Big)\Big) = P v^2 \E x_t x_t'.
+    \,\Big|\, X_{R}'X_{R} \Big) = P v^2 \E x_t x_t'.
   \end{equation*}
 
   So the conditions amount to restrictions on the eigenvalues of
