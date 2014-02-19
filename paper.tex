@@ -321,21 +321,21 @@ assumptions underlying our theoretical results.
 We assume the following forecasting environment. There are two
 competing linear models that give forecasts for the target,
 $y_{t+\h}$:
-\[
+\begin{equation}
 y_{t+\h} = x_{1t}'\theta_1 + \e_{1,t+h}, \quad\text{and}\quad
 y_{t+\h} = x_{2t}'\theta_2 + \e_{2,t+h};
-\]
+\end{equation}
 $t = 1,\dots,T-h$, $\h$ is the forecast horizon and the
 variables $y_t$, $x_{1t}$, and $x_{2t}$ are all known in period $t$.
 The coefficients $\theta_1$ and $\theta_2$ minimize the population
 Mean Square Error, so
-\begin{equation*}
+\begin{equation}
   \theta_i = \argmin_\theta \sum_{t=1}^{T-\h} \E (y_{t+\h} - x_{it}'\theta)^2,
-\end{equation*}
-making $\e_{i,t+\h}$ uncorrelated with $x_{i,t}$; $\e_{i,t+\h}$ may exhibit
+\end{equation}
+making $\e_{i,t+\h}$ uncorrelated with $x_{i,t}$; $\e_{i,t+\h}$ can exhibit
 serial correlation so both of the linear models may be misspecified.
 Let $\mathcal{F}_t = \sigma(y_1, x_1, \dots, y_t, x_t)$ be the information
-set available to the forecaster in period $t$,
+set available in period $t$,
 with $x_t$ the vector of all stochastic elements of $x_{1t}$ and $x_{2t}$ after
 removing duplicates, and let $\E_t$ and $\var_t$ denote the
 conditional mean and variance given $\mathcal{F}_t$.  The first model
@@ -343,7 +343,7 @@ uses $K_1$ regressors, and the second uses $K_2$.  Without loss of
 generality, assume that $K_1 \leq K_2$. At least one of the models is
 overfit, which we represent asymptotically by letting $K_2$ grow with
 $T$ quickly enough that $\lim K_2/T$ is positive; $K_1$ may grow with
-$T$ as well. Since the number of regressors changes with $T$, a
+$T$ as well. Since the models change with $T$, a
 stochastic array underlies all of our asymptotic theory, but we
 suppress that notation to simplify the presentation.
 
@@ -364,13 +364,13 @@ where
   x_{is} y_{s+\h}, \qquad \text{for } i=1,2;\ t = R+1,\dots, T - \h.\footnote{It
     may not be clear why we are using a $t$ index in $\bh{it}$,
     since $\bh{it} = \bh{iR}$ almost surely for all $t \leq T-h$.
-    We need this index because $\bh{it}$ will be defined for $t > T-\h$
-    soon, and will not equal $\bh{iR}$ for those values of $t$.}
+    But $\bh{it}$ will be defined for $t > T-\h$
+    soon and will not equal $\bh{iR}$ for those values of $t$.}
 \end{equation}
 
 The models are then compared by their forecast errors over the test
-sample.  There are many statistics that could be used to make this
-comparison, but we focus on perhaps the most natural, the \dmw\ \oost\
+sample.  There are many statistics that have been considered in the
+literature, but we focus on perhaps the most natural, the \dmw\ \oost\
 test \citep{DiM:95,Wes:96}.\footnote{The core insights of our paper
   apply to other \oos\ statistics as well.} This statistic is based on
 the difference in the models' loss over the test sample, $\oosA$,
@@ -382,22 +382,26 @@ where
 \begin{equation}\label{eq:16}
   D_t = L(y_{t+\h} - x_{1t}'\bh{1t}) - L(y_{t+\h} - x_{2t}'\bh{2t}),
 \end{equation}
-and $L$ is a known loss function. Now the \oost\ test is defined as
+and $L$ is a known loss function. The \oost\ test is defined as
 $\sqrt{P} \oosA / \sh$, where $\sh^2$ is an estimator of the
 asymptotic variance of $\oosA$. (Possibly a Heteroskedasticity- and
 Autocorrelation-Consistent, or \hac, estimator.)
 
-There are several hypotheses that the \oost\ test has been used
-for. Most theoretical work, such as \citet{DiM:95}, \citet{Wes:96},
-and \cite{Mcc:07}, has focused on using these statistics to test
+Most theoretical research, such as \citet{DiM:95}, \citet{Wes:96},
+and \cite{Mcc:07}, has focused on using the \oost\ statistic to test
 hypotheses about the pseudo-true values $\theta_1$ and $\theta_2$.  In
 particular, that research focuses on testing the null hypothesis that
-\begin{equation}
-  \E L(y_{t+\h} - x_{1t}'\theta_{1}) = \E L(y_{t+\h} - x_{2t}'\theta_{2}).
+\begin{equation}\label{eq:21}
+  \E L(y_{t+\h} - x_{1t}'\theta_{1}) - \E L(y_{t+\h} - x_{2t}'\theta_{2}) = 0.
 \end{equation}
-Another possibility is that the forecaster will use one of the models
-to make a number of predictions in the future---call the number of
-predictions $Q$---in which case the quantity of interest is
+But the population quantities in \eqref{eq:21} do not determine which
+model is more accurate in finite samples and, under our asymptotics,
+in the limit when models are allowed to be overfit. The models'
+accuracy will also depend on the specific estimates of $\theta_1$ and
+$\theta_2$ used to produce the forecasts. In this setting, where the
+forecaster will use one of the models to make a number of predictions
+in the future---call the number of predictions $Q$---the quantity of
+interest becomes
 \begin{equation}
   \E_T \oosB \equiv Q^{-1} \sum_{t=T+1}^{T+Q} \E_T D_t,
 \end{equation}
@@ -416,8 +420,10 @@ the performance of the two models.
 
 Under conventional fixed-$K$ asymptotic theory, $\E_T \oosB$ would
 converge in probability to the difference in the expected loss
-associated with the pseudo-true models,\footnote{Under appropriate
-  stationarity, moment, and weak-dependence conditions, obviously.}
+associated with the pseudo-true models,\footnote{Under standard
+  stationarity, moment, and weak-dependence conditions.}
+
+i.e. the LHS of~\eqref{eq:21}.
 \begin{equation}\label{eq:22}
   \E L(y_{t+\h} - x_{1t}'\theta_{1}) - \E L(y_{t+\h} - x_{2t}'\theta_{2}).
 \end{equation}
@@ -435,12 +441,14 @@ This last term has expectation $\var(y_T) \frac{K_2}{T - K_2 - 1}$ and
 would converge to zero if $K_2$ were fixed, but does not when $\lim
 K_2 / T > 0$. In Section~\ref{sec:oostheory} we show that the \oost\
 statistic can estimate $\E_T \oosB$ under our increasing $K$
-asymptotics and does not estimate the expected loss in~\eqref{eq:22}.
+asymptotics and does not estimate the expected loss associated with
+the pseudo-true coefficients.
 
-Our conditional expectation has been studied heavily in
+The conditional expectation $\E_T \oosB$ has been studied heavily in
 cross-sectional settings with independent observations. In such a
 setting, $\E_T \oosB$ is equal to the difference in the models'
-\emph{generalization error}, which has been used widely in the machine
+\emph{generalization error}, which has been used widely as a measure
+of model accuracy in the machine
 learning literature \citep[see][for further discussion]{HTF:08}.
 Moreover, with i.i.d. observations, the expectation of $\E_T \oosB$
 equals \citepos{Aka:69} Final Prediction Error (\textsc{fpe}). Both
