@@ -573,12 +573,17 @@ constant.
   $X_T'X_T$, which are familiar from general \ols.
 \end{example}
 
+The next assumption establishes moment conditions for the \oos\ loss
+process and smoothness conditions for the loss function itself. The
+moment conditions are standard and apply to $D_t$, and the smoothness
+conditions are relatively weak.
+
 \begin{asmp}\label{asmp-3}
   The loss function $L$ is continuous, has finite left and right
-  derivatives almost everywhere, and $L(0) = 0$.  There is a constant
-  $B_L$ and a function $L'$ that bounds the left and right derivative
-  of $L$ such that $\|D_t\|_\rho \leq B_L$; $\|D_t^*\|_\rho \leq B_L$
-  for all $t$, where
+  derivatives, and $L(0) = 0$.  There is a constant $B_L$ and a
+  function $L'$ that bounds the left and right derivative of $L$ at
+  every point such that $\|D_t\|_\rho \leq B_L$; $\|D_t^*\|_\rho \leq
+  B_L$ for all $t$, where
   \begin{equation*}
     D_t^* = L(y^* - x_1^{*\prime}\hat\theta_{1t})
     - L(y^* - x_2^{*\prime}\hat\theta_{2t})
@@ -594,19 +599,20 @@ constant.
   for any $\alpha \in [0,1]$.
 \end{asmp}
 
-This third assumption establishes basic moment and smoothness
-conditions for the \oos\ loss and forecasts.  The differentiability
-condition is weak and allows the loss function itself to be
-non-differentiable or even discontinuous; for example, absolute error
-and many asymmetric loss functions satisfy this assumption.
+The differentiability condition in Assumption~\ref{asmp-3} is weak and
+allows the loss function itself to be non-differentiable; for example,
+absolute error and many asymmetric loss functions satisfy this
+assumption.
 
+Assumption~\ref{asmp-4} controls the growth of the test and training
+samples.
 \begin{asmp} \label{asmp-4} $P, R, Q \to\infty$ and $P^2/T \to 0$ as
   $T \to \infty$.
 \end{asmp}
 
-The requirements that $P$ and $R$ grow with $T$ are common.  Parts of
+The requirements that $P$ and $R$ grow with $T$ are common. Parts of
 the assumption are new, in particular the requirement that $P^2/T \to
-0$.  See Lemma \ref{res-convergence} for a discussion of its
+0$.  See Lemma~\ref{res-convergence} for a discussion of its
 implications.  In practical terms, this assumption requires that the
 test sample be large and that the training sample be much larger, by
 enough that including or excluding the test sample does not affect the
