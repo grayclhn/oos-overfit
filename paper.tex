@@ -41,11 +41,11 @@
     Hal White, several anonymous referees, participants at the 2010
     Midwest Economics Association Annual Meetings, the 2010
     International Symposium on Forecasting, the 2010 Joint Statistical
-    Meetings, the 2011 \textsc{nber}/\textsc{nsf} Time-Series
-    Conference, and in many seminars at \textsc{ucsd}, and espeically
+    Meetings, the 2011 NBER-NSF Time-Series
+    Conference, and in many seminars at UCSD, and espeically
     Graham Elliott for their valuable suggestions, feedback and advice
     in writing this paper.  I would also like to thank Amit Goyal for
-    providing computer code and data for his 2008 \textsc{rfs} paper
+    providing computer code and data for his 2008 RFS paper
     with Ivo Welch \citep{GoW:08}.} \\ Iowa State University}
 
 \begin{document}
@@ -57,22 +57,22 @@
   number of predictors used by the larger model increase with the
   number of observations so that their ratio remains uniformly
   positive.  Our analysis gives a theoretical motivation for using
-  \oos\ comparisons: the \dmw\ \oos\ test allows a forecaster to
+  out-of-sample (OOS) comparisons: the DMW OOS test allows a forecaster to
   conduct inference about the expected future accuracy of his or her
   models when one or both is overfit.  We show analytically and
   through Monte Carlo that standard full-sample test statistics can
   not test hypotheses about this performance.  Our paper also shows
   that popular test and training sample sizes may give misleading
   results if researchers are concerned about overfit.  We show that
-  $P^2/T$ must converge to zero for the \dmw\ test to give valid
+  $P^2/T$ must converge to zero for the DMW test to give valid
   inference about the expected forecast accuracy, otherwise the test
   measures the accuracy of the estimates constructed using only the
   training sample.  In empirical research, $P$ is typically much
   larger than this.  Our simulations indicate that using large values
-  of $P$ with the \dmw\ test gives undersized tests with low power, so
+  of $P$ with the DMW test gives undersized tests with low power, so
   this practice may favor simple benchmark models too much.
 
-\noindent \textsc{jel} Classification: C12, C22, C52, C53
+\noindent JEL Classification: C12, C22, C52, C53
 
 \noindent Keywords: Generalization Error, Forecasting, Model
 Selection, $t$-test, Dimension Asymptotics
@@ -89,10 +89,10 @@ observations in all, and $R+P=T$.  This paper introduces a new limit
 theory for statistics constructed from these prediction errors
 designed to approximate the behavior of the statistics when one of the
 models is overfit.  In doing so, we provide a theoretical
-justification for forecasters to use \oos\ instead of in-sample
-comparisons: the \dmw\ \oos\ test\footnote{In this paper, we will
-  refer to the basic \oos\ $t$-test studied by \citet{DiM:95} and
-  \citet{Wes:96} as the \dmw\ test.} allows a forecaster to conduct
+justification for forecasters to use OOS instead of in-sample
+comparisons: the DMW OOS test\footnote{In this paper, we will
+  refer to the basic OOS $t$-test studied by \citet{DiM:95} and
+  \citet{Wes:96} as the DMW test.} allows a forecaster to conduct
 inference about the expected future accuracy of his or her models when
 one or both is overfit.  We show analytically and through Monte Carlo
 that standard full-sample test statistics can not test hypotheses
@@ -100,23 +100,23 @@ about this performance.
 
 Our paper also shows that popular test and training sample sizes may
 give misleading results if researchers are concerned about overfit.
-We show that $P^2/T$ must converge to zero for the \dmw\ test to give
+We show that $P^2/T$ must converge to zero for the DMW test to give
 valid inference about the expected forecast accuracy, otherwise the
 test measures the accuracy of the estimates constructed using only the
 training sample.  In empirical research, $P$ is typically much larger
 than this.  Our simulations indicate that using large values of $P$
-with the \dmw\ test gives undersized tests with low power, so this
+with the DMW test gives undersized tests with low power, so this
 practice may favor simple benchmark models too much.  Existing
 corrections, proposed by \citet{ClM:01,ClM:05}, \citet{Mcc:07} and
 \citet{ClW:06,ClW:07}, seem to overcorrect for this problem, though, and reject
 too often when the benchmark model is more accurate.
 
 
-Although \oos\ comparisons have been popular in Macroeconomics and
+Although OOS comparisons have been popular in Macroeconomics and
 Finance since \citepos{MeR:83} seminal study of exchange rate models,
 it has been unclear from a theoretical perspective whether or not the
 statistics are useful.  Empirical researchers often cite ``overfit''
-or ``instability'' as reasons for using \oos\ comparisons, as in
+or ``instability'' as reasons for using OOS comparisons, as in
 \citet{StW:03}, but neither term is precisely defined or formalized.
 Compounding this problem, the asymptotic distributions of these
 statistics are derived under conditions that rule out either
@@ -125,7 +125,7 @@ in-sample comparison---a variation of the $F$-test, for example.  As
 \citet{InK:04} argue, the statistics themselves are designed to test
 hypotheses that can be tested by these in-sample statistics.  For
 example, \citet{DiM:95} and \citet{Wes:96} derive the limiting
-distributions of many popular \oos\ test statistics under conditions
+distributions of many popular OOS test statistics under conditions
 that would justify these full-sample tests.  Much
 of the subsequent research by \citet{Mcc:00, Mcc:07}, \citet{CCS:01},
 \citet{ClM:01,ClM:05}, \citet{CoS:02,CoS:04}, \citet{ClW:06,ClW:07},
@@ -134,37 +134,37 @@ and West's assumptions, but maintains the stationarity and dependence
 conditions that permit in-sample comparisons \citep[see][for a
 review of this literature]{Wes:06}.\footnote{Like us, \citet{Ana:07}
   allows the number of regressors to increase with $T$.  But in that
-  paper, the number of regressors increases slowly enough that the \ols\
+  paper, the number of regressors increases slowly enough that the OLS
   coefficients are consistent and asymptotically normal.} \citet{GiW:06} and
 \citet{GiR:09, GiR:10} are exceptions.  Instead of focusing on
 hypotheses that can be tested by in-sample comparisons, \citet{GiW:06}
-derive an \oos\ test for the null hypothesis that the difference
-between two models' \oos\ forecasting performance is unpredictable, a
-martingale difference sequence; \citet{GiR:09} test whether the \oos\
+derive an OOS test for the null hypothesis that the difference
+between two models' OOS forecasting performance is unpredictable, a
+martingale difference sequence; \citet{GiR:09} test whether the OOS
 forecasting performance of a model suffers from a breakdown relative
 to its in-sample performance; and \citet{GiR:10} test whether the
 forecasting performance is stable. However, those papers focus on a
-particular \oos\ estimation strategy and do not address why \oos\
+particular OOS estimation strategy and do not address why OOS
 comparisons might be useful as a general strategy.
 
-Since in-sample and \oos\ statistics require similar assumptions and
+Since in-sample and OOS statistics require similar assumptions and
 test similar hypotheses, one might expect that they would give similar
 results.  They do not.  In-sample analyses tend to support more
-complicated theoretical models and \oos\ analyses support simple
+complicated theoretical models and OOS analyses support simple
 benchmarks, as seen in \citet{MeR:83}, \citet{StW:03}, and
 \citet{GoW:08}.  Since these different approaches strongly influence
 the outcome of research, it is important to know when each is
-appropriate.  The explanations in favor of \oos\ comparisons claim
+appropriate.  The explanations in favor of OOS comparisons claim
 that they should be more robust to unmodeled instability
 \citep{ClM:05,GiW:06,GiR:09,GiR:10} or to overfit
 \citep{Mcc:98,Cla:04}.  Both explanations presume that the in-sample
-comparison is invalid and the \oos\ comparisons are more reliable.  Of
-course, as \citet{InK:04,InK:06} point out, both in-sample and \oos\
-methods could be valid, but the \oos\ methods could have lower power.
+comparison is invalid and the OOS comparisons are more reliable.  Of
+course, as \citet{InK:04,InK:06} point out, both in-sample and OOS
+methods could be valid, but the OOS methods could have lower power.
 
 In this paper, we study the ``overfit'' possibility and leave
 ``instability'' to future research. This paper uses dimension
-asymptotics to study the behavior of \oos\ comparisons when at least
+asymptotics to study the behavior of OOS comparisons when at least
 one of the models is overfit---the number of its regressors
 increases with the number of observations so that their ratio remains
 positive.  Although overfit is sometimes used to describe the
@@ -173,16 +173,16 @@ i.e. \textit{data-mining} or \textit{data-snooping}, we view these as
 separate issues.  Procedures that account for the presence of many
 models have been, and are continuing to be, developed \citep[see, for
 example,][]{Whi:00,Han:05,RoW:05,HHK:10,ClM:12b}, but it is unclear
-whether those procedures should themselves use in-sample or \oos\
-comparisons.  Understanding the difference between in-sample and \oos\
+whether those procedures should themselves use in-sample or OOS
+comparisons.  Understanding the difference between in-sample and OOS
 comparisons in the context of a simple comparison between two models
 is necessary before resolving any new issues that arise with multiple
 comparisons. Moreover, the empirical research that motivates
-this paper uses \textit{pseudo} \oos\ comparisons and not
-\textit{true} \oos\ comparisons.  Even if a true \oos\ comparison
+this paper uses \textit{pseudo} OOS comparisons and not
+\textit{true} OOS comparisons.  Even if a true OOS comparison
 could account for some forms of data-snooping better than
-\citepos{Whi:00} \textsc{brc} or its extensions, in-sample and pseudo
-\oos\ comparisons would both be affected by the data-snooping, a
+\citepos{Whi:00} BRC or its extensions, in-sample and pseudo
+OOS comparisons would both be affected by the data-snooping, a
 point also made by \citet{InK:04}.
 
 We focus on linear regression models estimated with a fixed window
@@ -190,32 +190,32 @@ for simplicity, but our basic
 conclusions should be true for other models as well.  Under this
 asymptotic theory, where the number of regressors $k$ increases with $T$
 so that $\lim k/T$ is positive and less than one,
-the \ols\ coefficient estimator is no longer
+the OLS coefficient estimator is no longer
 consistent or asymptotically normal \citep{Hub:73} and has positive
-variance in the limit.  We show that, even so, the usual \oos\ average
+variance in the limit.  We show that, even so, the usual OOS average
 is asymptotically normal and can consistently estimate the difference
 between the models' generalization error, the expected loss in the
 future conditional on the on the data available in period
 $T$.\footnote{See, for example, \citet{HTF:08} for a discussion of
   generalization error.}  Under these asymptotics, the generalization
 error does not converge to the expected performance of the pseudo-true
-models, so existing in-sample and \oos\ comparisons measure different
+models, so existing in-sample and OOS comparisons measure different
 quantities and should be expected to give different results for
 reasons beyond simple size and power comparisons.  Under our limit theory,
-the model that is closer to the true \dgp\ in population can forecast
+the model that is closer to the true DGP in population can forecast
 worse.  In such a situation, a standard in-sample comparison would
 correctly reject the null hypothesis that the benchmark is true, and
-an \oos\ comparison would correctly fail to reject the null that the
+an OOS comparison would correctly fail to reject the null that the
 benchmark is more accurate.\footnote{In a pair of papers similar to
-  ours, \citet{ClM:12,ClM:12b} study in-sample and \oos\ tests that
+  ours, \citet{ClM:12,ClM:12b} study in-sample and OOS tests that
   the larger model has nonzero coefficients that are too close to zero
   to expect the model to forecast more accurately.  Like this paper,
   they argue that the larger model can be true but less accurate.
-  However, they focus on an aspect of the \dgp\ that makes this
+  However, they focus on an aspect of the DGP that makes this
   phenomenon likely, while we focus on the coefficient estimates that
   produce less accurate forecasts.  Moreover, the implications of our
   asymptotic theories are different and their papers do not provide
-  reasons to do \oos\ comparisons.}
+  reasons to do OOS comparisons.}
 Also note that, in this situation, a model that performs well
 in-sample can perform badly out-of-sample even if there are no
 structural breaks or other forms of instability.  Researchers
@@ -224,17 +224,17 @@ indicates a structural break (see \citealp{BoH:99} and
 \citealp{StW:03} among others), but this breakdown can be caused by overfit as
 well.
 
-Our results can justify \oos\ comparisons when researchers want to
+Our results can justify OOS comparisons when researchers want to
 choose a model for forecasting.  Although there has been little
 emphasis on hypothesis testing in this setting, testing is usually
 appropriate: there is usually a familiar benchmark model in place, and
 the cost of incorrectly abandoning the benchmark for a less accurate
 alternative model is higher than the cost of incorrectly failing to
-switch to a more accurate alternative.  We show that the \dmw\ test
+switch to a more accurate alternative.  We show that the DMW test
 lets the forecaster control the probability of the first error, just
 as with conventional hypothesis testing.
 
-But we also identify new practical limitations for applying the \dmw\
+But we also identify new practical limitations for applying the DMW
 test to overfit models.
 Since the models' coefficients are imprecisely estimated in the limit,
 the test sample must be small enough that the model estimated over the
@@ -242,42 +242,42 @@ training sample is similar to the one that will be estimated over the
 full sample.  In particular, $P/T \to 0$ is required for consistent
 estimation of the difference in the two models' performance,
 and $P^2/T \to 0$ is required for valid confidence
-intervals and inference.  For larger $P$, the \oos\ comparisons remain
+intervals and inference.  For larger $P$, the OOS comparisons remain
 asymptotically normal, but are centered on the forecasting performance
 associated with the period-$R$ estimates.  In practice, researchers
 typically use large values of $P$, so these studies may be too
-pessimistic about their models' future accuracy if they use the \dmw\
+pessimistic about their models' future accuracy if they use the DMW
 test.  Section~\ref{sec:oostheory} lays out the asymptotic behavior of
-the \dmw\ test under this limit theory.
+the DMW test under this limit theory.
 
 Popular in-sample tests and model selection criteria, like the Wald
 test, AIC, and BIC, do not help forecasters in this setting. We show
 that these statistics can no pick out the more accurate model. For
-many \dgp s they will choose a larger alternative model over a small
+many DGPs they will choose a larger alternative model over a small
 benchmark model with probability approaching one, regardless of which
 model is more accurate.\footnote{Our result holds for a broad class of
   full-sample statistics, but there may be other potential statistics
-  that mimic the \oos\ test and remain valid. Exploring such
+  that mimic the OOS test and remain valid. Exploring such
   statistics is left for future research.}
 This result holds even though modifications of the $F$-test are valid
 under this asymptotic theory, as shown by \citet{BoB:95},
 \citet{AkA:00}, \citet{AkP:04}, \citet{Cal:11c}, and \citet{Ana:12},
 among others.\footnote{Also see \citet{Efr:86,Efr:04} for a discussion
   of naive in-sample loss comparisons.}
-Moreover, under this asymptotic theory, many recent \oos\ test
+Moreover, under this asymptotic theory, many recent OOS test
 statistics, such as those derived by \cite{ClM:01,ClM:05},
 \citet{Mcc:07}, and \citet{ClW:06,ClW:07} should have the same
 problems as in-sample tests.\footnote{Our theoretical results apply
-  directly to \citepos{Mcc:07} \oos\ $t$-test, since it simply
+  directly to \citepos{Mcc:07} OOS $t$-test, since it simply
   proposes more liberal critical values for the same test statistic
   that we study.  Since \citet{ClW:06,ClW:07} use a finite length
   estimation window, our asymptotics are incompatible with theirs and
   prevent us from studying their test directly, as well as
   \citepos{GiW:06} and other tests based on \citepos{GiW:06}
   asymptotics.  But \clws\ test can be viewed as a stochastic
-  adjustment to the critical values of the usual \oos\ $t$ test, so
+  adjustment to the critical values of the usual OOS $t$ test, so
   our conclusions should apply informally as well.  Specifically, we
-  show that the \dmw\ test rejects with probability equal to nominal
+  show that the DMW test rejects with probability equal to nominal
   size when the estimated benchmark model is expected to be more
   accurate, so more liberal critical values result in overrejection.}
 These tests are also designed to reject the benchmark when the
@@ -285,30 +285,30 @@ alternative model is true, and so they may reject too often when the
 benchmark is false but more accurate.  Obviously, since the
 distribution of these statistics converges to the normal when $P/T \to
 0$ (with the number of regressors fixed), these statistics behave like
-the \dmw\ test when $P$ is small, but should overreject the benchmark
+the DMW test when $P$ is small, but should overreject the benchmark
 when $P$ is large. Section~\ref{sec:insample} presents our theoretical
 results for full-sample statistics and Section~\ref{sec:mc} presents
 Monte Carlo evidence to support these claims.
 
-Finally, this paper also introduces a new method of proof for \oos\
+Finally, this paper also introduces a new method of proof for OOS
 statistics.  We use a coupling argument (Berbee's Lemma, 1979) to show
-that sequences of \oos\ loss behave like mixingales when the
+that sequences of OOS loss behave like mixingales when the
 underlying series are absolutely regular, even if the forecasts depend
 on non-convergent estimators.  Moreover, transformations of these
 processes also behave like mixingales when recentered, so 
 the arguments used to prove asymptotic
-results for \ned\ functions of mixing processes can be used for these
-\oos\ processes with only slight modification.
+results for Near Epoch Dependent (NED) functions of mixing processes
+can be used for these OOS processes with only slight modification.
 
 The rest of the paper proceeds as follows.
 Section~\ref{sec:assumptions} introduces our notation and assumptions.
 Section~\ref{sec:theory} gives the main theoretical results for the
-\dmw\ \oos\ test, shows that standard in-sample tests reject the
+DMW OOS test, shows that standard in-sample tests reject the
 benchmark model too often when it is false but more accurate than the
 alternative, and shows that standard model selection methods choose the
 larger model too often under similar conditions. Section~\ref{sec:mc}
 presents a Monte Carlo study supporting our theoretical results.
-Section~\ref{sec:empirics} applies the \oos\ statistic to
+Section~\ref{sec:empirics} applies the OOS statistic to
 \citepos{GoW:08} dataset for equity premium prediction, and
 Section~\ref{sec:conclusion} concludes.  Proofs and supporting results
 are listed in the Appendix.
@@ -371,9 +371,9 @@ where
 
 The models are then compared by their forecast errors over the test
 sample.  There are many statistics that have been considered in the
-literature, but we focus on perhaps the most natural, the \dmw\ \oost\
+literature, but we focus on perhaps the most natural, the DMW \oost\
 test \citep{DiM:95,Wes:96}.\footnote{The core insights of our paper
-  apply to other \oos\ statistics as well.} This statistic is based on
+  apply to other OOS statistics as well.} This statistic is based on
 the difference in the models' loss over the test sample, $\oosA$,
 defined as
 \begin{equation}
@@ -386,7 +386,7 @@ where
 and $L$ is a known loss function. The \oost\ test is defined as
 $\sqrt{P} \oosA / \sh$, where $\sh^2$ is an estimator of the
 asymptotic variance of $\oosA$. (Possibly a Heteroskedasticity- and
-Autocorrelation-Consistent, or \hac, estimator.)
+Autocorrelation-Consistent, or HAC, estimator.)
 
 Most theoretical research, such as \citet{DiM:95}, \citet{Wes:96},
 and \cite{Mcc:07}, has focused on using the \oost\ statistic to test
@@ -452,8 +452,8 @@ setting, $\E_T \oosB$ is equal to the difference in the models'
 of model accuracy in the machine
 learning literature \citep[see][for further discussion]{HTF:08}.
 Moreover, with i.i.d. observations, the expectation of $\E_T \oosB$
-equals \citepos{Aka:69} Final Prediction Error (\textsc{fpe}). Both
-generalization error and \textsc{fpe} are defined by a model's
+equals \citepos{Aka:69} Final Prediction Error (FPE). Both
+generalization error and FPE are defined by a model's
 performance on a new, independent, data set, but, for lack of a better
 term, we will call $\E_T \oosB$ the difference in generalization error
 for the rest of the paper with hopefully no risk of confusion.
@@ -470,12 +470,12 @@ argument and return its $i$th eigenvalue (with $\eigen_{i}(A) \leq
 
 The next conditions are assumed to hold throughout the paper.  The first
 assumption controls the dependence of the underlying random array.
-The second layes out the details of our asymptotic approximation.
+The second lays out the details of our asymptotic approximation.
 The third assumption controls the
 smoothness of the loss function and bounds the moments of the
 difference in the models' performance; the fourth assumption describes
 the behavior of the estimation and test windows.  And the last
-assumption describes the kernel used to estimate the \oos\ average's
+assumption describes the kernel used to estimate the OOS average's
 asymptotic variance.
 
 \begin{asmp}\label{asmp-1}
@@ -487,7 +487,7 @@ asymptotic variance.
 This assumption is a standard condition on the dependence of the
 underlying stochastic array. The only novelty is that we use
 absolute regularity instead of strong or uniform mixing as our
-weak dependence condition; absolute regularity admits a paricular
+weak dependence condition; absolute regularity admits a particular
 coupling argument, ``Berbee's Lemma'' \citep[reproduced in this
 paper as Lemma A.1 for reference]{Ber:79} that is
 unavailable for strong mixing sequences; absolute regularity
@@ -534,7 +534,7 @@ The next assumption describes our asymptotic experiment.
 
 The assumption that $y_{t+\h}$ and $x_t$ have positive and finite
 variance is straightforward.  The conditions on the eigenvalues are
-technical and control the behavior of the \ols\ estimator as the
+technical and control the behavior of the OLS estimator as the
 number of regressors gets large.  The restrictions on the pseudo-true
 coefficients ensure that the regression model doesn't dominate the
 variance of $y_{t+\h}$ in the limit.
@@ -571,10 +571,10 @@ constant.
   \end{equation*}
 
   So the conditions amount to restrictions on the eigenvalues of
-  $X_T'X_T$, which are familiar from general \ols.
+  $X_T'X_T$, which are familiar from general OLS.
 \end{example}
 
-The next assumption establishes moment conditions for the \oos\ loss
+The next assumption establishes moment conditions for the OOS loss
 process and smoothness conditions for the loss function itself. The
 moment conditions are standard and apply to $D_t$, and the smoothness
 conditions are relatively weak.
@@ -603,10 +603,8 @@ conditions are relatively weak.
 The differentiability condition in Assumption~\ref{asmp-3} is weak and
 allows the loss function itself to be non-differentiable; for example,
 absolute error and many asymmetric loss functions satisfy this
-assumption.
-
-Assumption~\ref{asmp-4} controls the growth of the test and training
-samples.
+assumption.  The next assumption controls the growth of the test and
+training samples.
 \begin{asmp} \label{asmp-4} $P, R, Q \to\infty$ and $P^2/T \to 0$ as
   $T \to \infty$.
 \end{asmp}
@@ -619,7 +617,7 @@ test sample be large and that the training sample be much larger, by
 enough that including or excluding the test sample does not affect the
 estimates of $\theta_1$ or $\theta_2$ very much.
 
-The next assumption restricts the class of variance estimators we will
+A final assumption restricts the class of variance estimators we will
 consider.  We use the same class of estimators studied by
 \citet{JoD:00} (their class $\mathcal{K}$); see
 their paper for further discussion.
@@ -646,14 +644,14 @@ are both finite, while we let them grow rapidly with $T$
 (Assumption~\ref{asmp-1}), and West lets $P/R$ converge to any value
 in $[0,\infty]$, while we require $P^2/R \to 0$
 (Assumption~\ref{asmp-4}).\footnote{\citet{Wes:96} does not have a
-  second \oos\ period, so there is no analogue in his paper to our
+  second OOS period, so there is no analogue in his paper to our
   restriction on $Q$.}  Obviously, these differences are
 related---allowing for complex models requires tighter constraints on
 the size of the test sample.  West allows more general estimation
-methods, while we restrict attention to \ols; the advantage of using
-\ols\ is that we can derive the inequality,
+methods, while we restrict attention to OLS; the advantage of using
+OLS is that we can derive the inequality,
 \begin{equation*}
-  \| x_{it}'\theta_{i,T+1} - x_{it}'\theta_{iR} \|_2 \leq O(P/T)^{1/2}.
+  \| x_{it}'\bh{i,T+1} - x_{it}'\bh{iR} \|_2 \leq O(P/T)^{1/2}.
 \end{equation*}
 Our main results will hold for other models and estimation windows as
 long as a similar inequality exists, but proving such inequalities is
@@ -678,14 +676,14 @@ the size of the test sample are substantially different than ours.
 
 \section{Theoretical Results}\label{sec:theory}
 The main result of the paper is Theorem
-\ref{res-confidence-intervals}, which shows that the \oos\ average is
+\ref{res-confidence-intervals}, which shows that the OOS average is
 asymptotically normal and centered on $\E_T \oosB$.  This result holds
 even for nested models and can be used to construct confidence
 intervals or test hypotheses.  After presenting Theorem
 \ref{res-confidence-intervals}, we explain and present two key Lemmas
-used in its proof that add some insight into the nature of \oos\
-comparisons, and then show that standard \hac\ \oos\ estimators can be
-used to consistently estimate the asymptotic variance of the \oos\
+used in its proof that add some insight into the nature of OOS
+comparisons, and then show that standard HAC OOS estimators can be
+used to consistently estimate the asymptotic variance of the OOS
 average.  We next present an example that illustrates some of these
 concepts, and then show that typical full-sample tests do not let
 researchers test hypotheses about $\E_{T} \oosB$ when the models are
@@ -693,7 +691,7 @@ overfit.  In fact, in the limit they can reject a more accurate but
 false benchmark model almost surely.
 
 \subsection{Behavior of the DMW Test with Overfit}\label{sec:oostheory}
-Our first theorem justifies using the \dmw\ $t$-test with a a short
+Our first theorem justifies using the DMW $t$-test with a a short
 test sample.
 
 \begin{thm}\label{res-confidence-intervals}
@@ -725,17 +723,17 @@ test sample.
 The requirement that $\sigma^2$ be uniformly a.s. positive is not
 restrictive under our asymptotic theory.  Since the models'
 coefficients are estimated with uncertainty in the limit, the two
-models give different forecasts even if they both nest the \dgp.  This
+models give different forecasts even if they both nest the DGP.  This
 is intuitively similar to \citepos{GiW:06} rolling-window result, but
 comes from different asymptotic theory; Giacomini and White keep the
-variance of the \oos\ average positive by letting $P \to \infty$ with
+variance of the OOS average positive by letting $P \to \infty$ with
 $R$ fixed; in this paper, $R \to \infty$ but the variance remains
 positive since $K \to \infty$ (quickly) as well.
 
-This result allows forecasters to use the \dmw\ test to conduct
-inference about the models' accuracy.  Since the \oos\ average,
+This result allows forecasters to use the DMW test to conduct
+inference about the models' accuracy.  Since the OOS average,
 $\oosA$, is asymptotically normal and centered on the expected future
-performance, $t$-tests constructed from the \oos\ errors necessarily
+performance, $t$-tests constructed from the OOS errors necessarily
 test hypotheses about $\E_T \oosB$ and not the performance of the
 pseudo-true models or the unconditional performance of the
 models.\footnote{i.e. $\E L(\e_{1,t+\h}) - \E  L(\e_{2,t+\h})$ or $\E \oosB$.
@@ -769,7 +767,7 @@ and
 \end{equation}
 The first Lemma establishes~\eqref{coefpart} and the second shows that
 the process $\{D_t - \E_R \oosA\}$ is an $L_2$-mixingale of size
-$-1/2$ that satisfies a \clt, ensuring~\eqref{normalpart}.
+$-1/2$ that satisfies a CLT, ensuring~\eqref{normalpart}.
 
 \begin{lem} \label{res-convergence}
   Under Assumptions \ref{asmp-1}--\ref{asmp-4},
@@ -795,7 +793,7 @@ the possibility of adjusting the asymptotic distribution of the test
 statistic to account for this noise term as in \citet{Wes:96}, but we
 leave that to future research.  If $P^2/T \to \infty$, which is
 closest to common practice in applied research, the noise term
-dominates the asymptotic distribution of the \oos\ $t$-test and the
+dominates the asymptotic distribution of the OOS $t$-test and the
 test has only trivial power in the limit if it has correct size.
 
 \begin{lem}\label{res-mixingale}
@@ -815,31 +813,31 @@ test has only trivial power in the limit if it has correct size.
   a.s. uniformly positive.
 \end{lem}
 
-Mixingales satisfy a weak-dependence condition similar to \mds es and
+Mixingales satisfy a weak-dependence condition similar to MDSes and
 were introduced and studied extensively by
 \citet{Mcl:74,Mcl:75,Mcl:75b,Mcl:77}.  This lemma shows that the
-estimation uncertainty introduces dependence into the \oos\ forecast
+estimation uncertainty introduces dependence into the OOS forecast
 errors, but the additional dependence is contained in the term $\E_R
 \oosA$ and can be effectively removed by subtraction.  The second part
-of the Lemma shows that the basic mixingale \clt\ established by
+of the Lemma shows that the basic mixingale CLT established by
 \citet{Jon:97} applies in this setting.\footnote{De Jong proves two
-  \clt s: one for mixingales and one for \ned\ functions of mixing
+  CLTs: one for mixingales and one for NED functions of mixing
   processes.  His mixingale result makes assumptions about the
   behavior of the sample second moment that arise as consequences of
-  \ned.  The proof of Lemma~\ref{res-mixingale} shows that the
-  arguments used for de Jong's \ned\ \clt\ continue to hold for our
-  \oos\ process---in effect, that the \oos\ process has slightly more
+  NED.  The proof of Lemma~\ref{res-mixingale} shows that the
+  arguments used for de Jong's NED CLT continue to hold for our
+  OOS process---in effect, that the OOS process has slightly more
   structure than required for it to be a mixingale.}  Note that
 Lemma~\ref{res-mixingale} does not require $P^2/T \to 0$.
 
 Finally, for Theorem \ref{res-confidence-intervals} to be useful, we
 need a consistent estimator of $\sigma^2$. Lemma
-\ref{res-variance-estimator} establishes that the usual \oos\ \hac\
+\ref{res-variance-estimator} establishes that the usual OOS HAC
 variance estimators are consistent.\footnote{As with
       Lemma~\ref{res-mixingale}, the proof of this lemma takes
       \citepos{JoD:00} existing consistency results
-      for \ned\ processes and shows that the same arguments can be
-      applied to our \oos\ mixingale.}
+      for NED processes and shows that the same arguments can be
+      applied to our OOS mixingale.}
 
 \begin{lem}
   \label{res-variance-estimator} Suppose Assumptions
@@ -887,8 +885,8 @@ Now, $\hat{\theta}_{2R}' \hat{\theta}_{2R}$ is
 a.s. positive and uniformly integrable with mean $4 K_2 / (R - K_2 -
 1)$ (since $(X_{2R}'X_{2R})^{-1}$ is Inverse-Wishart$(I_{K_2}, R)$),
 making $\sigma^2$ uniformly a.s. positive and ensuring that the
-distribution of the \oos\ average is not $P^{1/2}$-degenerate.  The
-natural \oos\ variance estimator is consistent for $\sigma^2$:
+distribution of the OOS average is not $P^{1/2}$-degenerate.  The
+natural OOS variance estimator is consistent for $\sigma^2$:
 \begin{align*}
   \sh^2 &= P^{-1} \sum_{t=R+1}^{T-1} (D_t - \oosA)^2 \\
   &= 4 \hat{\theta}_{2R}' \Big[P^{-1} \sum_{t=R+1}^{T-1}
@@ -911,8 +909,8 @@ $\hat{\theta}_{2R}$ from converging i.p. to zero (its expected
 value), $\sh^2$ does not converge to the unconditional
 variance.
 
-We can see that the \oos\ average obeys a \clt\ when centered at $\E_R
-\bar{D}_R$.  The centered and scaled \oos\ differences satisfy
+We can see that the OOS average obeys a CLT when centered at $\E_R
+\bar{D}_R$.  The centered and scaled OOS differences satisfy
 \begin{equation*}
   \frac{D_t - \E_R D_t}{\sigma} =
   \frac{2 y_{t} x_{2t}' \hat{\theta}_{2R} +
@@ -924,10 +922,10 @@ This sequence is not i.i.d. and we can not replace $\hat{\theta}_{2R}$
 with a sequence of constants $\theta_{2R}$ since $\hat{\theta}_{2R}$
 does not converge to a deterministic limit.  But $\sigma^{-1}
 \E_t(\oosA - \E_R\oosA) = 0$, making this sequence an
-\mds,\footnote{The sequence is actually exchangeable, but \mds\ is
-  enough to establish the \clt.} so it obeys a \clt\ as long as
+MDS,\footnote{The sequence is actually exchangeable, but MDS is
+  enough to establish the CLT.} so it obeys a CLT as long as
 $\sigma^2$ is uniformly a.s. positive, which we have already
-established.  Lemma~\ref{res-mixingale} ensures that the \clt\ holds
+established.  Lemma~\ref{res-mixingale} ensures that the CLT holds
 more generally.
 
 Finally, we can look at the difference $\E_R \bar{D}_R - \E_T
@@ -954,8 +952,8 @@ and
 \end{align*}
 So, in this example, $P^{1/2}(\E_R \oosA - \E_T \oosB) \to^p 0$
 if $P^3/T^2 \to 0$, which is slightly weaker than the general
-requirement that $P^2/T \to 0$.  If $\lim P^3/T^2 > 0$ the \oos\ average
-still obeys the \mds\ \clt, but it is not centered correctly at $\E_T
+requirement that $P^2/T \to 0$.  If $\lim P^3/T^2 > 0$ the OOS average
+still obeys the MDS CLT, but it is not centered correctly at $\E_T
 \oosB$.
 
 \subsection{Failure of In-Sample Tests}\label{sec:insample}
@@ -1068,7 +1066,7 @@ Under these conditions, the test rejects if $\hat{\theta}_{T}$ lies
 outside the circle centered at the origin with radius $c^{1/2}$ and
 $\E_T \oosB \leq 0$ holds for $\hat\theta_{T}$ on or outside a circle
 centered at $\theta$ passing through the origin.
-Figure~\ref{fig:rreject} depicts these regions.  Since the \ols\
+Figure~\ref{fig:rreject} depicts these regions.  Since the OLS
 estimator is normal with mean $\theta$, the probability that
 $\hat{\theta}_{T}$ falls in the acceptance region given $\E_T \oosB
 \leq 0$ vanishes as $\theta'\theta \to \infty$, even though the full
@@ -1150,7 +1148,7 @@ Note that the conditioning event in~\eqref{eq:14} is different than in
 the testing results presented earlier, but otherwise they are similar.
 Theorem~\ref{res:ftest} implies that~\eqref{eq:13} will typically fail
 for overfit models for many common model selection methods, including
-adjusted $R^2$, the \aic, and the \bic.  Corollary~\ref{res:ic}
+adjusted $R^2$, the AIC, and the BIC.  Corollary~\ref{res:ic}
 contains the details.
 
 \begin{cor}\label{res:ic}
@@ -1174,13 +1172,13 @@ As before, we often have
 \begin{equation*}
   \Pr[\theta_0'V_T \theta_0 < c \mid \E_T \bar{D}_T] \to^p 0.
 \end{equation*}
-Just as we saw with the $F$-test, adjusted $R$-squared, the \aic\ and
-the \bic\ will only choose the benchmark model if $\hat{\theta}_T$
+Just as we saw with the $F$-test, adjusted $R$-squared, the AIC and
+the BIC will only choose the benchmark model if $\hat{\theta}_T$
 lies in the neighborhood of the cylinder defined by $\hat{\theta}_T
 V_{T} \hat{\theta}_T = c$, regardless of which model is expected to
 forecast better.  These statistics differ in how they determine the
 size of the neighborhood, with the neighborhood shrinking slower for
-the \bic\ than the \aic.
+the BIC than the AIC.
 
 It is important to remember that the tests considered do not need to
 have correct size for the null $\theta = \theta_0$, but are allowed to
@@ -1203,7 +1201,7 @@ theory in small samples.\footnote{Simulations were conducted in R
   \citep{Rde:10} using Sweave \citep{Lei:02} and the Lattice
   \citep{Sar:10}, RSQLite \citep{Jam:10}, tikzDevice
   \citep{ShB:11:0.6.1}, and pgfSweave \citep{BrS:11:1.2.1} packages.}
-The first looks at the asymptotic normality of the \dmw\ statistic
+The first looks at the asymptotic normality of the DMW statistic
 centered on either $\E_R \oosA$ or $\E_T \oosB$.  The previous
 section's results imply that centering on the first should give an
 approximately normal statistic and centering on the second should give
@@ -1211,14 +1209,14 @@ a normal statistic when $P$ is small relative to $T$.  The second
 simulation looks at the size and power of several statistics when
 conducting inference about the difference in the models'
 generalization error.  For all of the simulations, we look at
-fixed-window \oos\ tests to speed up computation time.
+fixed-window OOS tests to speed up computation time.
 
 \subsection{Setup}\label{sec:simulation-design}
 The Monte Carlo experiment is intentionally very simple so that we can
 isolate the influence of the models' complexity.  In particular, we do
 not include some features that are common in forecasting
 environments---serial dependence, heteroskedasticity, and complicated
-\dgp s.  We simulate data for both studies from the equation
+DGPs.  We simulate data for both studies from the equation
 \begin{equation}\label{eq:6}
   y_t = x_t'\theta + \e_t,\quad \e_t \sim N(0,1),
   \quad t=1,\dots,T.
@@ -1229,7 +1227,7 @@ independent Standard Normal.  The benchmark model is
   \label{eq:1}
   y_{1t} = \sum_{j=1}^{K_1} x_{jt}\theta_j + \e_t
 \end{equation}
-and the alternative model is the \dgp\ \eqref{eq:6}.  We let
+and the alternative model is the DGP \eqref{eq:6}.  We let
 $(K_1,K_2)$ equal either $(2,3)$ or $(T/20,T/10)$ to study our theory
 in its intended application as well as for more parsimonious models.
 We let $T$ equal 100, 250, 500, or 1000.  We also vary $\theta$, and do
@@ -1248,7 +1246,7 @@ x^2$.
 
 The first set of simulations study how well the theory in
 Section~\ref{sec:oostheory} works in practice.  For each draw of $X$
-and $Y$, we construct a one-sided \oos\ interval of the
+and $Y$, we construct a one-sided OOS interval of the
 form
 \begin{equation*}
   [ \oosA - 1.28 \hat{\sigma}, \infty) \quad\text{with}\quad
@@ -1281,8 +1279,8 @@ error.  The null hypothesis we test is
   H_0:\quad E_T \oosB \leq 0,
 \end{equation}
 We look at four different statistics---the full-sample $F$-test, the
-\dmw\ $t$-test, the
-\oos\ $t$-test using McCracken's (2007)
+DMW $t$-test, the
+OOS $t$-test using McCracken's (2007)
 critical values,\footnote{These critical values are not published for
   $K_2-K_1>10$, so we do not report them for $K_2 = T/10$.}
 and Clark and West's (2006, 2007) Gaussian out-of-sample
@@ -1295,7 +1293,7 @@ one-sided test of out-of-sample performance for every 10th value of
 $P$ as before.
 
 To estimate each test's size for the hypothesis \eqref{eq:9}, we draw
-samples from the \dgp\ and discard those for which \eqref{eq:9} does
+samples from the DGP and discard those for which \eqref{eq:9} does
 not hold, until we have 2000 for each choice of the design parameters.
 The estimated size is the fraction of those samples in which the test
 statistic rejects.
@@ -1312,7 +1310,7 @@ parameters.
 Figure~\ref{fig:interval-R} gives the results for $\E_R \oosA$.  The
 actual coverage is very close to the nominal coverage except when $P$
 is very small.  The poor behavior for small $P$ is unsurprising, as it
-simply means that the \clt\ is a poor approximation when the test
+simply means that the CLT is a poor approximation when the test
 sample is small.  The intervals' good coverage holds even for the
 parsimonious models ($K_1=1$ and $K_2= 3$) which our theory does not
 necessarily apply to.
@@ -1336,7 +1334,7 @@ $P^2/T$ is not near zero, increasing the coverage of the one-sided
 interval.
 
 We next present the size simulations,
-Figures~\ref{fig:ftest}--\ref{fig:ttest-power}.  For the \oos\ tests,
+Figures~\ref{fig:ftest}--\ref{fig:ttest-power}.  For the OOS tests,
 the conditional rejection probability is plotted for each combination
 of $T$, $K_1$, $K_2$, and $c$ as a function of $P$.  The $F$-test does
 not depend on $P$, so a single value is presented for each
@@ -1357,7 +1355,7 @@ our discussion in Section~\ref{sec:insample} predicts, the rejection
 probability increases with $T$ for the overfit model but does not
 depend on $T$ for the small model.
 
-Figure~\ref{fig:ttest-size} presents the size estimates for the \dmw\
+Figure~\ref{fig:ttest-size} presents the size estimates for the DMW
 $t$-test.  Again, different panels display results for different
 combinations of the design parameters.  Each graph plots the rejection
 probability against $P/T$.  For $K/T=10$, the rejection probability
@@ -1372,7 +1370,7 @@ all simulations (the farthest is $K=T/10$, $c=0$, where the rejection
 probability is about 5\%; the other simulations are much closer).
 
 We observe the following patterns.  The
-\dmw\ test has close to nominal size when $P$ is small for every
+DMW test has close to nominal size when $P$ is small for every
 combination of design parameters.  In most cases, the rejection
 probability decreases as $P/T$ increases---the exception is for $K_2 =
 3$ and $c=1$.  For the large-$K$ simulations, the rejection
@@ -1401,13 +1399,13 @@ use the parsimonious model.  McCracken's statistic overrejects here
 by slightly less than Clark and West's, but still by a substantial
 amount.
 
-Since the \dmw\ test tends to have low rejection probability, the
+Since the DMW test tends to have low rejection probability, the
 test's power is a concern.  We'll present some power results,
 simulating from \eqref{eq:1} with $c = 1$ or 2 subject to the
 constraint that $\E_T \oosB > 0$.\footnote{Draws of $X$ and $Y$ with
   $\E_T \oosB > 0$ are very rare when $c=0$, so we do not present
   results for that value of $c$.}  Figure~\ref{fig:ttest-power} plots
-the power for the \dmw\ test; since the other test statistics greatly
+the power for the DMW test; since the other test statistics greatly
 overreject, we do not present their power.  For $c=1$, the power is
 never greater than nominal size and decreases to zero as $P/T$
 increases for the overfit model.  For $c=2$ the power is better,
@@ -1419,16 +1417,16 @@ simulations).  The power with the parsimonious model is typically
 quite low but greater than nominal size for $c = 2$.
 
 Both sets of simulations support our theoretical results.  The first
-simulation confirms that the \dmw\ \oos\ $t$-test is centered at $\E_R
+simulation confirms that the DMW OOS $t$-test is centered at $\E_R
 \oosA$ for all choices of $P$ and $R$ and is centered on $\E_T \oosB$
-only when $P$ is small.  The second simulation confirms that the \dmw\
+only when $P$ is small.  The second simulation confirms that the DMW
 test has correct size for the null hypothesis that $\E_T \oosB \leq 0$
 when $P$ is small and that tests designed to test whether the
 benchmark is true, like the $F$-test and Clark and West's (2006, 2007)
-and McCracken's (2007) \oos\ tests can reject by much more than their
+and McCracken's (2007) OOS tests can reject by much more than their
 nominal size when testing the null $\E_T \oosB \leq 0$.  Moreover,
 these simulations demonstrate that the restriction $P^2/T \to 0$ is
-binding in practice, as the \dmw\ test under-rejects and has very low
+binding in practice, as the DMW test under-rejects and has very low
 power when it is not satisfied.
 \section{Empirical Exercise}\label{sec:empirics}
 This section presents an analysis of equity premium predictability
@@ -1441,8 +1439,8 @@ regressors, using 81 observations (annual data from 1928 to 2009).  We
 construct confidence intervals for the difference in performance
 between this model and a prevailing mean benchmark, and do so for
 different values of $R$ and $P$ to examine the effect of the training
-and test sample choice on this \oos\ statistic.  We find that the
-estimate of the larger model's \mse\ decreases relative to the
+and test sample choice on this OOS statistic.  We find that the
+estimate of the larger model's Mean Squared Error (MSE) decreases relative to the
 benchmark as $R$ increases, but it is never smaller than the
 benchmark's.  This result, combined with the larger model's in-sample
 significance, suggests that there may be a real relationship between
@@ -1453,7 +1451,7 @@ hold even when imposing \citepos{CaT:08} restriction that the equity
 premium forecast be non-negative.
 
 We'll start with a very brief review.  \citet{GoW:08}
-study the \oos\ forecasting performance of different variables thought
+study the OOS forecasting performance of different variables thought
 to predict the equity premium (calculated as the difference between
 the return on the S\&P 500 index and the T-bill rate).  Some of these
 variables are listed in
@@ -1462,12 +1460,12 @@ Table~\ref{tab:equity}.\footnote{Table~\ref{tab:equity} only lists the
   model.  Some of the variables that they use in bivariate models are
   excluded from this model either because the series are too short or
   because the variables are linear combinations of other variables.}
-\citet{GoW:08} estimate the \oos\ forecasting
+\citet{GoW:08} estimate the OOS forecasting
 performance of bivariate models of the form
 \[
 r_{t+1} = \beta_0 + \beta_1 x_t + \e_{t+1}
 \]
-using \ols\ with a recursive window, where $r_{t+1}$ is the equity
+using OLS with a recursive window, where $r_{t+1}$ is the equity
 premium and $x_t$ is a generic predictor, as well as some larger
 models.  They find that these models forecast no better than the
 prevailing mean of the equity premium.
@@ -1487,7 +1485,7 @@ the variables, except for a few dropped because of data availability or
   \label{eq:2}
 r_{t+1} &=& \beta_0 + \sum_{i=1}^K \beta_{i} x_{it} + \e_{2,t+1}
 \end{eqnarray}
-respectively and are estimated by \ols\ using the fixed-window scheme.
+respectively and are estimated by OLS using the fixed-window scheme.
 The predictors are listed in Table~\ref{tab:equity}; for a detailed
 description of each predictor, please see Goyal and Welch's original
 paper.  In this model, there are 13 regressors (including the constant
@@ -1496,7 +1494,7 @@ term) and we estimate the coefficients using annual data from 1928 to
 present results for one of \citepos{CaT:08}
 restricted forecasting models.  For this model, we estimate
 \eqref{eq:3} and \eqref{eq:2}, but impose that $\hat r_{t+1}$ be
-non-negative for each forecast.  We then calculate the \oos\ test just
+non-negative for each forecast.  We then calculate the OOS test just
 as for the unconstrained model.
 
 Table~\ref{tab:gwinsample} gives the results of the full sample
@@ -1509,7 +1507,7 @@ correlated with the equity premium.  As we argue earlier, this result
 does not imply that the model will forecast well, which we look at
 next.
 
-To study the effect of the training sample size on the \dmw\ statistic, we
+To study the effect of the training sample size on the DMW statistic, we
 calculate the one-sided confidence interval for $\E_T \oosB$ given
 by \eqref{interval-greater} corresponding to the null and alternative
 hypotheses
@@ -1519,15 +1517,15 @@ H_A: \quad E_T \oosB > 0
 using the fixed-window scheme for each value of $R$ between 20 and
 $T-10$.  The standard deviation is estimated using a Newey-West
 estimator with $\lfloor P^{1/4}\rfloor$ lags.  For small values of
-$R$, the \oos\ average is expected to underestimate the performance of
+$R$, the OOS average is expected to underestimate the performance of
 the larger model relative to the smaller, but this may not hold in
 this particular dataset.
 
-Figures~\ref{fig:empirics1} plots the \ols\ results and
+Figures~\ref{fig:empirics1} plots the OLS results and
 Figure~\ref{fig:empirics2} imposes \citepos{CaT:08} restriction.  The
-solid line in each figure shows the \oos\ average, $\oosA$, and the
+solid line in each figure shows the OOS average, $\oosA$, and the
 shaded region indicates the 95\% one-sided confidence interval implied
-by the \dmw\ test.  Negative numbers indicate that the kitchen sink
+by the DMW test.  Negative numbers indicate that the kitchen sink
 model has higher out-of-sample loss.  We can see that the same
 patterns hold for both models: the performance difference decreases as
 $R$ grows, but the kitchen sink model is never more accurate.  We also
@@ -1556,8 +1554,8 @@ extend to moderate instability, and the fact that we do not rely on
 the asymptotic distribution of the coefficient estimates should
 mitigate the effect of persistence as well.
 \section{Conclusion}\label{sec:conclusion}
-This paper gives a theoretical motivation for using \oos\ comparisons:
-the \dmw\ \oos\ test allows a forecaster to conduct inference about
+This paper gives a theoretical motivation for using OOS comparisons:
+the DMW OOS test allows a forecaster to conduct inference about
 the expected future accuracy of his or her models when one or both is
 overfit.  We show analytically and through Monte Carlo that standard
 full-sample test statistics can not test hypotheses about this
@@ -1565,12 +1563,12 @@ performance.
 
 Our paper also shows that popular test and training sample sizes may
 give misleading results if researchers are concerned about overfit.
-We show that $P^2/T$ must converge to zero for the \dmw\ test to give
+We show that $P^2/T$ must converge to zero for the DMW test to give
 valid inference about the expected forecast accuracy, otherwise the
 test measures the accuracy of the estimates constructed using only the
 training sample.  In empirical research, $P$ is typically much larger
 than this.  Our simulations indicate that using large values of $P$
-with the \dmw\ test gives undersized tests with low power, so this
+with the DMW test gives undersized tests with low power, so this
 practice may favor simple benchmark models too much.  Existing
 corrections, proposed by \citet{ClM:01,ClM:05}, \citet{Mcc:07} and
 \citet{ClW:06,ClW:07}, seem to correct too much, though, and reject
@@ -1580,8 +1578,8 @@ More work remains.  The requirement that $P^2/T$ converge to zero is
 limiting, as it implies that in typical macroeconomic datasets, only a
 handful of observations should be used for testing.  This requirement
 can be relaxed only slightly; $P = O(T^{1/2})$ is required for the
-\oos\ test to have nontrivial power in general, but there are loss
-functions and \dgp s for which some relaxation is possible.  This
+OOS test to have nontrivial power in general, but there are loss
+functions and DGPs for which some relaxation is possible.  This
 constraint could be mitigated by extending our results to
 cross-validation or other resampling strategies, or by constructing
 full-sample statistics that allow inference about $\E_T \bar{D}_T$.
@@ -1601,9 +1599,9 @@ The results in this paper rely heavily on a coupling argument for
 absolutely regular sequences, Berbee's Lemma \citep{Ber:79}.  Many of
 the results of this paper (Lemmas \ref{res-mixingale} and
 \ref{res-variance-estimator}) are modifications of existing results
-for \ned\ functions of mixing processes by \citet{Jon:97} and
+for NED functions of mixing processes by \citet{Jon:97} and
 \citet{JoD:00}; this coupling argument is used to explicitly derive
-inequalities that arise naturally for \ned\ processes.  Lemma
+inequalities that arise naturally for NED processes.  Lemma
 \ref{lem-basic-coupling} establishes these inequalities, which are
 based on a proposition of \citet{MeP:02}.
 
@@ -1747,7 +1745,7 @@ Let $r = \lfloor 3P/2b_T \rfloor$ and rewrite the summation as
   &\equiv \vtSumr (U_i - \E_R U_i) + \vtSumr (U_i' - \E_R U_i') + o_{L_1}(1).
 \end{align*}
 The proof then holds if we can show that both $U_i$ and $U_i'$ obey
-\lln s.  We'll do so by proving that $\{U_i -\E_R U_i,
+LLNs.  We'll do so by proving that $\{U_i -\E_R U_i,
 \UFiltration{2i-1}\}$ and $\{U_i' - \E_R U_i', \UFiltration{2i}\}$ are
 $L_2$-mixingales of size $-1/2$ and using the bound $\E(\vtSumr (U_i -
 \E_R U_i))^2 = O(\vtSumr c_i^2)$ where the $c_i$ are the mixingale
@@ -1859,7 +1857,7 @@ that \[\varianceDiffAi = o_p(1).\]  Observe that
   o_p(1),
 \end{align*}
 with the second term vanishing by Lemma \ref{res-mixingale} and
-\citepos{Dav:93} mixingale \lln.
+\citepos{Dav:93} mixingale LLN.
 
 Now define $D_s^*$, $s = R+1,\dots,T-\h$, as in Lemma
 \ref{lem-basic-coupling} so that $\E_{s-1} D_s^* = \E_R D_s^*$ almost
@@ -1891,7 +1889,7 @@ completing the proof.
 \subsection*{Proof of Theorem \ref{res-confidence-intervals}}
 
 It suffices to prove asymptotic normality.  We can rewrite the
-centered \oos\ average as
+centered OOS average as
 \[
 \frac{\bar{D}_{R} - \E_T \bar{D}_T}{\sh / \sqrt{P}} =
 \frac{1}{\sh \sqrt{P}}\oosSum{t}{1} (D_t - \E_R D_t) +
@@ -2031,7 +2029,7 @@ inequality and the last bound holding by Assumption~\ref{asmp-2}.
 
 Now, $(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}$ has rank $P$ and
 each of its nonzero eigenvalues are bounded in absolute value by the
-eivenvalues of $(X_{iR}'X_{iR})^{-1}$. The eivenvalues of
+eigenvalues of $(X_{iR}'X_{iR})^{-1}$. The eivenvalues of
 $(X_{iR}'X_{iR})^{-1}$ are $O_{L_3}(1/R)$ by Assumption~\ref{asmp-2}, so
 \begin{align*}
   \Big\|\sum_{j=1}^{K_i}
@@ -2073,8 +2071,8 @@ Now $\couplingBeta{l} = O(l^{-1/2 - \delta})$ for some
 positive $\delta$, completing the proof.\qed
 
 \vspace{\baselineskip}
-\noindent\textit{Part 2.}  A modification of \citepos{Jon:97} \clt s for
-mixingale and \ned\ arrays will complete the proof.  Define
+\noindent\textit{Part 2.}  A modification of \citepos{Jon:97} CLTs for
+mixingale and NED arrays will complete the proof.  Define
 \[\label{eq:z1}
   Z_i = \ZDef
 \]
@@ -2090,7 +2088,7 @@ and
   Z_i) + o_p(1).
 \end{equation*}
 Note that $\{Z_i - E_{R + (i-1)b_T} Z_i,\mathcal{F}_{R + i b_T}\}_i$ is an
-\mds\ by construction, so \citepos{HaH:80} Theorem 3.2 and Corollary
+MDS by construction, so \citepos{HaH:80} Theorem 3.2 and Corollary
 3.1 ensure that $\sigma^{-1} \SumOuterBlock{i} Z_i \to^d N(0,1) $ as
 long as
 \begin{equation}\label{eq:cltvar2}
@@ -2158,9 +2156,9 @@ and
 \begin{equation} \label{dd4}
 \lim \lVert \E_R \varianceTermI - \sigma^2 \rVert_1 = 0.
 \end{equation}
-Their proofs of \eqref{dd1}--\eqref{dd4} use the fact that \ned\
+Their proofs of \eqref{dd1}--\eqref{dd4} use the fact that NED
 functions of mixing processes are also mixingale processes and do not
-use any other properties specific to \ned\ processes, so they hold
+use any other properties specific to NED processes, so they hold
 here as well.  We do need to modify their proofs that
 \begin{equation}
   \label{eq:4} \lVert \sh^2 - \varianceTermI \rVert_1 \to 0
@@ -2170,7 +2168,7 @@ and
   \label{eq:5} \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1
   \to 0 \quad \text{for all positive $\delta$},
 \end{equation}
-though, since their proofs exploit \ned\ properties.  The proofs
+though, since their proofs exploit NED properties.  The proofs
 follow from Lemmas~\ref{lem:a2} and~\ref{lem:a6}, since
 \begin{equation*}
   \varianceTermIV - \E_R \varianceTermIV = \vtSum (Z_{1t}Z_{2t} - \E_R Z_{1t}Z_{2t});
@@ -2255,8 +2253,8 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
   \centering {\large Simulated Coverage of One-Sided DMW Interval for
     $\E_R\oosA$} \input{mc/plots/interval-testerror1.tikz}
 \caption{Simulated coverage of $\E_R \oosA$ at 90\% confidence using a
-  one-sided interval based on the \protect\textsc{dmw}
-  \protect\textsc{oos} test, plotted as a function of the fraction of
+  one-sided interval based on the DMW
+  OOS test, plotted as a function of the fraction of
   observations used in the test sample, $P/T$.  The solid horizontal
   line denotes the intervals' nominal coverage.}
  \label{fig:interval-R}
@@ -2266,8 +2264,8 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
   \centering {\large Simulated Coverage of One-Sided DMW Interval for
     $\E_T\oosB$} \input{mc/plots/interval-generror1.tikz}
 \caption{Simulated coverage of $\E_T \oosB$ at 90\% confidence using a
-  one-sided interval based on the \protect\textsc{dmw}
-  \protect\textsc{oos} test, plotted as a function of the fraction of
+  one-sided interval based on the DMW
+  OOS, plotted as a function of the fraction of
   observations used in the test sample, $P/T$.  The solid horizontal
   line denotes the intervals' nominal coverage.}
 \label{fig:interval-T}
@@ -2289,8 +2287,8 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
 \begin{figure}
   \centering {\large Simulated Rejection Probability of DMW Test Under
     $\E_T \oosB \leq 0$} \input{mc/plots/size-dmwsize.tikz}
-  \caption{Simulated rejection probabilities for the \protect\textsc{dmw}
-    \protect\textsc{oos} $t$-test given $\E_T \oosB \leq 0$ with nominal
+  \caption{Simulated rejection probabilities for the DMW
+    OOS $t$-test given $\E_T \oosB \leq 0$ with nominal
     size 10\%.  Values greater than 10\% indicate that the test
     rejects the benchmark model too often.  The solid horizontal line
     indicates the nominal rejection probability.  See
@@ -2304,7 +2302,7 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
     (2006, 2007) \\ Test Under $\E_T \oosB \leq 0$}
   \input{mc/plots/size-clarkwest.tikz}
   \caption{Simulated rejection probabilities for Clark and West's
-    (2006, 2007) \protect\textsc{oos} test statistic given $\E_T \oosB
+    (2006, 2007) OOS test statistic given $\E_T \oosB
     \leq 0$ with nominal size 10\%.  Values greater than 10\% indicate
     that the test rejects the benchmark model too often.  The solid
     horizontal line indicates the nominal rejection probability.  See
@@ -2318,7 +2316,7 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
     (2007) Test \\ Under $\E_T \oosB \leq 0$}
   \input{mc/plots/size-mccracken.tikz}
   \caption{Simulated rejection probabilities for McCracken's (2007)
-    \protect \textsc{oos} test statistic given $\E_T \oosB \leq 0$ with
+    OOS test statistic given $\E_T \oosB \leq 0$ with
     nominal size 10\%.  Values greater than 10\% indicate that the
     test rejects the benchmark model too often.  The solid horizontal
     line indicates the nominal rejection probability.  See
@@ -2330,8 +2328,8 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
 \begin{figure}
   \centering {\large Simulated Rejection Probability of DMW Test Under
     $\E_T \oosB > 0$} \input{mc/plots/size-dmwpower.tikz}
-  \caption{Simulated rejection probabilities for the \protect \textsc{dmw}
-    \protect\textsc{oos} $t$-test given $\E_T \oosB > 0$ with nominal
+  \caption{Simulated rejection probabilities for the DMW
+    OOS $t$-test given $\E_T \oosB > 0$ with nominal
     size 10\%.  Values greater than 10\% indicate that the test
     rejects the benchmark model too often.  The solid horizontal line
     indicates the nominal rejection probability.  See
@@ -2346,13 +2344,13 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
     Sink Models of Equity Premium (OLS)}
 \input{empirics/plots/oos-mse-1.tikz}
 \input{empirics/plots/oos-mse-1b.tikz}
-\caption{\protect \textsc{oos} difference in the \protect\textsc{mse}
+\caption{OOS difference in the MSE
   of the prevailing mean benchmark and the kitchen sink model as a
   function of the test sample size, $R$.  Both models forecast the
   equity premium using annual data from 1928--2008.  The solid line
-  gives the \protect \textsc{oos} average, and the shaded region indicates the
-  one-sided 95\% confidence interval implied by the \protect
-  \textsc{dmw} test.  The bottom panel is a detailed view of the top
+  gives the OOS average, and the shaded region indicates the
+  one-sided 95\% confidence interval implied by the
+  DMW test.  The bottom panel is a detailed view of the top
   panel for $R \geq 50$.}
 \label{fig:empirics1}
 \end{figure}
@@ -2363,13 +2361,13 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
     Sink Models of Equity Premium (CT)}
 \input{empirics/plots/oos-mse-2.tikz}
 \input{empirics/plots/oos-mse-2b.tikz}
-\caption{\protect \textsc{oos} difference in the \protect\textsc{mse}
+\caption{OOS difference in the MSE
   of the prevailing mean benchmark and the kitchen sink model as a
   function of the test sample size, $R$.  Both models forecast the
   equity premium using annual data from 1928--2008.  The solid line
-  gives the \protect \textsc{oos} average, and the shaded region indicates the
-  one-sided 95\% confidence interval implied by the \protect
-  \textsc{dmw} test.  The bottom panel is a detailed view of the top
+  gives the OOS average, and the shaded region indicates the
+  one-sided 95\% confidence interval implied by the 
+  DMW test.  The bottom panel is a detailed view of the top
   panel for $R \geq 50$.}
 \label{fig:empirics2}
 \end{figure}
@@ -2379,10 +2377,10 @@ of the test is less than $(1/2)^{K_2}$, which converges to zero as $T
 \large{OOS MSE of Individual Forecasts of Equity Premium}
 \input{empirics/plots/oos-ind-ks.tikz}
 \input{empirics/plots/oos-ind-pm.tikz}
-\caption{\protect{\textsc{oos} \textsc{mse} of the Prevailing Mean (\textsc{pm}) and
-    Kitchen Sink (\textsc{ks}) models for equity premium prediction as
+\caption{OOS MSE of the Prevailing Mean (PM) and
+    Kitchen Sink (KS) models for equity premium prediction as
     a function of the size of the training sample, $R$.  Please note
-    that the vertical scales are different in the two plots.}}
+    that the vertical scales are different in the two plots.}
 \label{fig:empirics3}
 \end{figure}
 
