@@ -6,6 +6,14 @@
 \usepackage[margin=1in]{geometry}
 \onehalfspacing
 \input{macros}
+\usepackage[charter]{mathdesign}
+\usepackage[osf]{sourcecodepro}
+% This will make copy and pasting easier, and will prevent the
+% abomination that is monospace font ligatures.  Sorry, everyone who
+% really likes ligatures.  Don't worry, the Bitstream Charter font
+% has very, very few ligatures anyway.
+\DisableLigatures{family = tt*}
+\urlstyle{same}
 
 \newcommand{\e}{\varepsilon}
 \newcommand{\eb}{\mathbf{\e}}
