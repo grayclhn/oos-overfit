@@ -8,9 +8,9 @@ jobnames <- LETTERS[1:njobs]
 .lec.CreateStream(jobnames)
 .lec.CurrentStream(jobnames[jobnumber])
                
-require(fwPackage) ## look here for function definitions.
+require(fwPackage, lib.loc = "package") ## look here for function definitions.
 
-dbmain <- dbConnect(dbDriver("SQLite"), "mc/simulations.db")
+dbmain <- dbConnect(dbDriver("SQLite"), "data/simulations.db")
 
 mcDesign <- dbGetQuery(dbmain,
 "select nobs.i as isim, n, kNull, kAlt, norm, coefficients.i as idgp from nobs cross join coefficients")

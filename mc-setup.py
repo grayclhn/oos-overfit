@@ -8,15 +8,15 @@ njobs = 7    # I set this to equal the number of processors on my
              # computer.  Changing its value will change the results
              # of the simulations, since they'll be seeded differently.
 def maindb(sql):
-    print("\t$(sqlite) $(sqliteFlags) mc/simulations.db \"" + sql + ";\"")
+    print("\t$(sqlite) $(sqliteFlags) data/simulations.db \"" + sql + ";\"")
 
 # The main idea is that we're creating a separate temporary database
 # file for each job (to avoid problems that RSQLite has with
 # concurrant writing).  The list 'dbnames' contains the name of each
 # of those temporary databases, and the list 'dbfiles' is the
 # corresponding file name.
-dbnames = ["oosstats" + str(i + 1) + "of" + str(njobs) for i in range(njobs)]
-dbfiles = ["mc/db/" + d + ".db" for d in dbnames]
+dbnames = ["simulations" + str(i + 1) + "of" + str(njobs) for i in range(njobs)]
+dbfiles = ["data/" + d + ".db" for d in dbnames]
 
 intervaltable = "interval"
 difftable     = "diff"
@@ -48,7 +48,7 @@ def makeindex(indexname, sql):
     maindb("drop index if exists " + indexname + "; " + 
            "create index " + indexname + " on " + sql)
 
-print "mc/db/oosstats.created: " + " ".join(dbfiles)
+print "data/simulations.done: " + " ".join(dbfiles)
 maindb(droptable(intervaltable) + droptable(difftable) + droptable(ftesttable) +
        "".join(["attach database '" + d1 + "' as " + d2 + "; " 
                 for (d1,d2) in zip(dbfiles,dbnames)]) +
@@ -57,7 +57,7 @@ maindb(droptable(intervaltable) + droptable(difftable) + droptable(ftesttable) +
        movetable(ftesttable, dbnames) + 
        "".join(["detach database " + d + "; " for d in dbnames]))
 # These commands create views and indices for the new tables
-makeindex("intervalIndex", "interval (label, idgp)")
+# makeindex("intervalIndex", "interval (label, idgp)")
 # makeindex("ftestIndex", "ftest (isim, idgp, label, jobnumber, simIndex)")
 # makeindex("diffIndex", "diff (isim, idgp, transform, ntest, jobnumber, simIndex)")
 makeview(intervaltable, "select ntest, isim, idgp, transform, label, avg(reject) as reject " +
@@ -69,7 +69,7 @@ print "\ttouch $@"
 
 # This is the set of make commands to create the temporary databases.
 for (db, n, j) in zip(dbnames, jsims, range(njobs)):
-    print ("mc/db/" + db + ".db: mc/db/oosstats.R mc/db/nobs.created mc/db/coefficients.created\n"
+    print ("data/" + db + ".db: R/simulations.R data/nobs.done data/coefficients.done | package/fwPackage \n"
            + "\techo 'dbname <- \"$@\"; "
            + "nsim <- " + str(n) + "; " 
            + "jobnumber <- " + str(j+1) + "; "

@@ -1,4 +1,11 @@
+floats
+package/pgfSweave
+package/fwPackage
 VERSION
+
+*.o
+*.so
+
 
 *~
 *.Rhistory

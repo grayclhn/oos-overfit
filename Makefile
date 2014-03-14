@@ -13,10 +13,11 @@
 SHELL        := /bin/bash
 R            := R
 RFLAGS       := --vanilla
+Rscript      := Rscript
 sqlite       := sqlite3
 sqliteFLAGS  := $(empty)
-LATEXMKFLAGS := -pdf -silent
-latexmk  := /usr/local/bin/latexmk
+LATEXMKFLAGS := -pdf
+latexmk  := latexmk
 
 ## define some convenience functions
 object = $(notdir $(basename $(1)))
@@ -28,13 +29,10 @@ addboth = $(addprefix $(1),$(addsuffix $(2),$(3)))
 # aware that the results reported in the paper will change slightly if
 # you change the number of jobs, because of the seeding for the random
 # number generators.
-mcSQL   := $(call addboth,mc/db/,.created,nobs coefficients)
-mcP     := mc/db/oosstats.created 
+mcSQL   := $(call addboth,data/,.done,nobs coefficients)
+mcP     := data/oosstats.done 
 mcDB    := $(mcSQL) $(mcP)
-mcRnw   := $(wildcard mc/*.Rnw)
-
-empiricplots = $(call addboth,empirics/plots/,.pdf,oos-mse-1 oos-mse-1b oos-mse-2 oos-mse-2b forecastplot1 forecastplot2)
-empirictables = $(call addboth,empirics/tables/,.tex,waldtest coeftest)
+mcRnw   := $(wildcard data/*.Rnw)
 
 .PHONY: all mc clean dist burn zip
 .DELETE_ON_ERROR: $(mcDB) 
@@ -43,17 +41,31 @@ empirictables = $(call addboth,empirics/tables/,.tex,waldtest coeftest)
 # Basic execution of the makefile will run all of the tests, then
 # build the final version of the paper.
 all: paper.pdf
-mc: $(mcDB) $(mcRnw:.Rnw=.pdf)# for convenience -- allows 'make mc'
+mc: $(mcDB) $(mcRnw:.Rnw=.pdf) # for convenience -- allows 'make mc'
 
-# The command to generate the final pdfs is pretty straightforward.
-# I'm using the R version of texi2dvi so that it works directly with
-# Sweave files.  Basic texi2dvi is missing some macros.
-$(mcRnw:.Rnw=.tex): %.tex: %.Rnw mc/db/oosstats.created macros.tex
-	cd $(dir $<) && $(R) $(RFLAGS) CMD pgfsweave $(notdir $<) &> $(notdir $<)out; cd $(CURDIR)
-%.pdf: %.tex
-	cd $(dir $<) && $(R) CMD texi2dvi -p $(notdir $<)
-paper.pdf: paper.tex macros.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(empiricplots) $(empirictables)
-	$(latexmk) $(LATEXMKFLAGS) $(notdir $<)
+empfloats:=  floats/empirics-oos-mse-1.tex \
+  floats/empirics-oos-mse-1b.tex floats/empirics-oos-mse-2.tex \
+  floats/empirics-oos-mse-2b.tex floats/empirics-waldtest.tex \
+  floats/empirics-coeftest.tex floats/empirics-oos-ind-ks.tex \
+  floats/empirics-oos-ind-pm.tex
+mcfloats := floats/mc-dmwsize.tex floats/mc-clarkwestsize.tex floats/mc-dmwpower.tex \
+  floats/mc-mccrackensize.tex floats/mc-interval-testerror1.tex \
+  floats/mc-interval-generror1.tex floats/mc-ftest.tex
+floats := $(mcfloats) $(empfloats)
+
+floats: $(floats)
+$(empfloats): floats/%.tex: R/%.R data/empirical-results.RData | floatsdir
+$(mcfloats): floats/%.tex: R/%.R data/simulations.done | floatsdir
+data/empirical-results.RData: R/empirics.R data/goyalwelch2009.csv
+
+$(floats) data/empirical-results.RData:
+	$(Rscript) $(RFLAGS) $<
+
+floatsdir:
+	mkdir -p floats
+
+paper.pdf: paper.tex macros.tex $(floats)
+	$(latexmk) $(LATEXMKFLAGS) $<
 
 # These are the dependencies for the database.  Since all of the
 # tables are stored inside the same file, we can't use the filenames
@@ -62,16 +74,16 @@ paper.pdf: paper.tex macros.tex mc/plot-oos-size.pdf mc/plot-insample-size.pdf m
 # This is facilitated by our naming scheme: the SQL commands to create
 # the table or view 'xxx' are contained in the file 'xxx.sql'.  The R
 # commands to create the table 'xxx' are contained in 'xxx.R'.  The
-# dummy file 'xxx.created' indicates when the table was first created
+# dummy file 'xxx.done' indicates when the table was first created
 # and filled with data.  So we can represent the entire database
 # creation by using two static rules (one for the R files and one for
 # the SQL files) and a bunch of dependencies.
-$(mcSQL): %.created: %.sql
-	$(sqlite) $(sqliteFLAGS) mc/simulations.db < $<
+$(mcSQL): %.done: %.sql
+	$(sqlite) $(sqliteFLAGS) data/simulations.db < $<
 	touch $@
 # The order of this dependency is abitrary; we want to prevent these
 # two commands from being run simultaneously during a parallel make.
-mc/db/coefficients.created: mc/db/nobs.created
+data/coefficients.done: data/nobs.done
 # I use the makefile to parallelize the simulations (this is kind of
 # ghetto, but effective and easy).  Basically, I create several
 # different temporary databases and store simulation results in each
@@ -86,32 +98,21 @@ mc-setup.mk: mc-setup.py
 	python $< > $@
 include mc-setup.mk
 
-## dependencies for the goyal-welch empirics
-empirics: $(empiricplots) $(empirictables)
-$(empirictables) $(empiricplots): empirics/oos-analysis.done
-	touch $@
-
-empirics/oos-analysis.done: empirics/oos-analysis.R empirics/AllData2009.csv
-	cd $(dir $<); Rscript $(RFLAGS) $(notdir $<); cd $(CURDIR)
-	touch $@
-
-# Automatically create an archive file
-archfile = calhoun-oos-overfit.tar.gz
-zip: $(archfile)
-$(archfile): $(filter-out .gitignore goyal/% notes/% slide-plots/% slides.org journal-submission/%, $(shell git ls-tree master -r --name-only)) paper.pdf AllRefs.bib $(empiricplots) $(empirictables) mc/plot-oos-size.pdf mc/plot-insample-size.pdf mc/plot-interval.pdf $(wildcard mc/plots/*.pdf)
-	tar chzf $@ $^
-
-Online: $(archfile)
-	scp $? gcalhoun@econ22.econ.iastate.edu:public_html/software
-	touch $@
+localpackages := package/fwPackage package/pgfSweave
+.SECONDARY: fwPackage_1.0.tar.gz pgfSweave_1.3.0.tar.gz $(tikz)
+pgfSweave_1.3.0.tar.gz fwPackage_1.0.tar.gz: %.tar.gz: package/%_source
+	$(R) CMD build $<
+package/fwPackage: fwPackage_1.0.tar.gz
+package/pgfSweave: pgfSweave_1.3.0.tar.gz
+$(localpackages):
+	$(R) CMD check -o $(@D) $<
+	$(R) CMD INSTALL --byte-compile --library=$(@D) $<
 
 # There are a few other standard targets that remove unnecessary
 # left-over files.
 clean:
-	$(RM) -f $(foreach d,. mc mc/db,$(addprefix $d/,*.prv *.log *.bbl *.aux *.toc *~ *.Rout *.blg *.Rnwout .Rhistory))
+	$(RM) -rf $(foreach d,. mc data,$(addprefix $d/,*.prv *.log *.bbl *.aux *.toc *~ *.Rout *.blg *.Rnwout .Rhistory))
 distclean: clean
-	$(RM) -f mc-setup.mk mc/db/*.created mc/db/*.db mc/*.tex
+	$(RM) -rf mc-setup.mk data/*.done data/*.db floats
 burn: distclean
-	$(RM) -f mc/simulations.db mc/plots/* mc/*.pdf
-	$(RM) -f empirics/*.created mc/plots/* mc/*.pdf mc/tables/*
-	$(RM) -f *.pdf
+	$(RM) -rf *.pdf

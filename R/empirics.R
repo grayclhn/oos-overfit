@@ -1,10 +1,7 @@
-library(lattice)
 library(sandwich)
 library(lmtest)
-library(Hmisc)
-library(tikzDevice)
 
-dfull <- ts(read.csv("AllData2009.csv")[,-1],
+dfull <- ts(read.csv("data/goyalwelch2009.csv")[,-1],
             start = 1871, frequency = 1)
 stock.returns <- (dfull[,"price"] + dfull[,"dividend"]) / lag(dfull[,"price"], -1) - 1
 startyear <- 1928
@@ -77,11 +74,6 @@ tstats.ct <- lapply(RStart:REnd, function(R) oosT(R, fullmodel, dframe, TRUE))
 
 ## make table assessing full-sample model
 fullmod <- lm(fullmodel, data = dframe)
-## assignment prevents display
-temp <- latex(coeftest(fullmod, vcov=NeweyWest(fullmod, prewhite=FALSE, lag=2)),
-              file = "tables/coeftest.tex", digits = 2)
-temp <- latex(waldtest(fullmod, vcov=NeweyWest(fullmod, prewhite=FALSE, lag=2), test="F"),
-              file = "tables/waldtest.tex", digits = 2, caption = "Wald test for the null hypothesis that all of the coefficients in Goyal and Welch's (2008) ``kitchen sink'' model are zero, except for the intercept.", label = "tab:gwinsample")
 
 oosStats <- function(tstats) 
   ts(cbind(PM = sapply(tstats, function(x) x$avg1),
@@ -107,11 +99,6 @@ indplot <- function(name, series, file, height = 2, width = 5.5, xlabel = "",
   dev.off()  
 }
 
-indplot(name = "KS", oos[,"KS"], file = "plots/oos-ind-ks.tikz")
-indplot(name = "PM", oos[,"PM"], file = "plots/oos-ind-pm.tikz", xlabel = "$R$",
-        ticks = c(0, .01, .02, .03, .04, 0.05),
-        labels = c("0", "", "", "", "", "0.05"))
-
 ## make plots of out-of-sample mse
 ## set parameters for  images
 oosplot <- function(series, file, height = 2, width = 5.5, xlabel = "",
@@ -125,30 +112,13 @@ oosplot <- function(series, file, height = 2, width = 5.5, xlabel = "",
        ylab = "MSE Diff.", xlab = xlabel,
        lwd = 0.8,
        col = c("white", "white"))
-  polygon(x = c(x1, x1:xn, xn), y = c(0,series[,"interval"][!is.na(series[,"interval"])],0), col = "gray", lty = "blank")
+  polygon(x = c(x1, x1:xn, xn),
+          y = c(0,series[,"interval"][!is.na(series[,"interval"])],0),
+          col = "gray", lty = "blank")
   lines(c(start(series)[1], end(series)[1]), c(0,0), col = "gray")
   lines(start(series)[1]:end(series)[1], series[,"average"])
   axis(2, at = ticks, labels = labels, cex.axis = .8, las = 1)
   dev.off()
 }
 
-##Average OOS MSE Difference\nfor OLS Equity Premium Forecasts
-oosplot(oos[,c("interval", "average")], file = "plots/oos-mse-1.tikz", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
-
-oos.subset <- oos
-window(oos.subset, end = 49) <- NA
-## Subset of Average OOS MSE Difference\nfor OLS Equity Premium Forecasts
-oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-1b.tikz",
-        xlabel = "$R$", ticks = c(0, -0.025, -.05, -0.075, -.1),
-        labels = c("0", "", "-0.5", "", "-.10"))
-
-## Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts
-oosplot(oos.ct[,c("interval", "average")], file = "plots/oos-mse-2.tikz", ticks = c(0, -1, -2, -3, -4), labels = c("0", "", "-2", "", "-4"))
-     
-
-oos.subset <- oos.ct
-window(oos.subset, end = 49) <- NA
-# Subset of Average OOS MSE Difference\nfor Restricted OLS Equity Premium Forecasts
-oosplot(oos.subset[,c("interval", "average")], file = "plots/oos-mse-2b.tikz",
-        xlabel = "$R$", ticks = c(0, - 0.015/2, -.015, -(0.015 + 0.03)/2, -.03),
-        labels = c("0", "", "", "", "-.03"))
+save.image("data/empirical-results.RData")
