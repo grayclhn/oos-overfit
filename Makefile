@@ -64,7 +64,7 @@ $(floats) data/empirical-results.RData:
 floatsdir:
 	mkdir -p floats
 
-paper.pdf: paper.tex macros.tex $(floats)
+paper.pdf: paper.tex setup.tex $(floats)
 	$(latexmk) $(LATEXMKFLAGS) $<
 
 # These are the dependencies for the database.  Since all of the
