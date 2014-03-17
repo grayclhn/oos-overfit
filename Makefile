@@ -16,7 +16,7 @@ RFLAGS       := --vanilla
 Rscript      := Rscript
 sqlite       := sqlite3
 sqliteFLAGS  := $(empty)
-LATEXMKFLAGS := -pdf
+LATEXMKFLAGS := -pdf -shell-escape
 latexmk  := latexmk
 
 ## define some convenience functions
@@ -115,12 +115,11 @@ mc-setup.mk: mc-setup.py
 	python $< > $@
 include mc-setup.mk
 
-localpackages := package/fwPackage package/pgfSweave
-.SECONDARY: fwPackage_1.0.tar.gz pgfSweave_1.3.0.tar.gz $(tikz)
-pgfSweave_1.3.0.tar.gz fwPackage_1.0.tar.gz: %.tar.gz: package/%_source
+localpackages := package/fwPackage
+.SECONDARY: fwPackage_1.0.tar.gz $(tikz)
+fwPackage_1.0.tar.gz: %.tar.gz: package/%_source
 	$(R) CMD build $<
 package/fwPackage: fwPackage_1.0.tar.gz
-package/pgfSweave: pgfSweave_1.3.0.tar.gz
 $(localpackages):
 #IDGAF	$(R) CMD check -o $(@D) $<
 	$(R) CMD INSTALL --byte-compile --library=$(@D) $<
