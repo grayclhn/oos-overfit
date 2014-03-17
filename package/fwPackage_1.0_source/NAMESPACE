@@ -1,4 +1,15 @@
-export(ForecastErrors,forecasts,rows,GenerateOosPair,
-       model.null,model.alt,expected.loss.future,expected.loss.test,
-       ntest,qmccracken,f.test)
+export(
+  expected.loss.future,
+  expected.loss.test,
+  f.test,
+  ForecastErrors,
+  forecasts,
+  GenerateOosPair,
+  model.null,
+  model.alt,
+  ntest,
+  qmccracken,
+  rows
+  )
+
 useDynLib("fwPackage")
