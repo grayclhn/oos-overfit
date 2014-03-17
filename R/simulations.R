@@ -135,10 +135,12 @@ for (r in rows(mcDesign)) {
     
     X <- rX(r$n, r$kAlt)
     Y <- rY(X, b.vector)
-    oosDifference <- GenerateOosPair(X, Y, seq(from = round(r$n/3, -1) + 10, to = r$n - 2, by = 10), r$kNull, r$kAlt, b.vector)
+    oosDifference <- GenerateOosPair(X, Y, seq(from = round(r$n/3, -1) + 10,
+                                               to = r$n - 10, by = 2), r$kNull, r$kAlt, b.vector)
     #oosDifference <- GenerateOosPair(X, Y, r$n - 50, r$kNull, r$kAlt, b.vector)
 
-    moments <- sapply(transvec, function(trans) getmoments(oosDifference, locfn[[trans]], varfn[[trans]]),
+    moments <- sapply(transvec, function(trans)
+                      getmoments(oosDifference, locfn[[trans]], varfn[[trans]]),
                       USE.NAMES = TRUE, simplify = FALSE)
     generror <- sapply(transvec, function(trans) {
       locfn[[trans]](c(expected.loss.future(model.null(oosDifference)),
