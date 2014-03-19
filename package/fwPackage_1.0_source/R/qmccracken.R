@@ -1,4 +1,4 @@
-qmccracken <- function(kextra, PRratio) {
+qmccracken <- function(kextra, PRratio, scheme = "fix") {
   if (any(kextra > 10 || kextra < 1))
     stop("kextra must be between 1 and 10")
   if (any(PRratio > 2 || PRratio < 0))
@@ -17,7 +17,11 @@ qmccracken <- function(kextra, PRratio) {
   }
   else if (PRratio.length < kextra.length)
     PRratio <- rep(PRratio, length.out = kextra.length)
-  
-  .C("qmccracken", 0L, as.integer(kextra), as.double(PRratio),
-     as.integer(kextra.length), q = double(kextra.length))$q
+
+  switch(scheme,
+         fix = .C("qmccrackenfix", 0L, as.integer(kextra), as.double(PRratio),
+           as.integer(kextra.length), q = double(kextra.length))$q,
+         rec = .C("qmccrackenrec", 0L, as.integer(kextra), as.double(PRratio),
+           as.integer(kextra.length), q = double(kextra.length))$q,
+         stop("That window scheme is unsupported."))
 }

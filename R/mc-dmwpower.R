@@ -10,10 +10,15 @@ dbc <- dbConnect(dbDriver("SQLite"), dbname = "data/simulations.db")
 
 d <- dbGetQuery(dbc, "
 select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
-from interval 
-where label='power' and idgp in (2,3) and transform='difference'
-group by ntest, isim, idgp, transform, label) s 
+               from interval 
+               where label='power'
+                 and ntest >= 10
+                 and idgp in (2,3)
+                 and transform='difference'
+                 and scheme='fix'
+               group by ntest, isim, idgp, transform, label) s 
 join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
+
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
 

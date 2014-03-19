@@ -5,7 +5,17 @@ setClass("oos.forecast",
                         target               = "numeric",
                         nreg                 = "integer"))
 
-forecasts <- function(object,...) object@forecasts
+forecasts <- function(object, scheme = "fix",...) {
+  switch(scheme,
+         fix = object@forecasts,
+         rec = {
+           rforecasts <- sapply(object@forecasts, function(f) f[1])
+           n <- length(rforecasts)
+           lapply(seq_along(rforecasts),
+                  function(i) rforecasts[seq.int(i, n, 1)])
+         },
+         stop("The window scheme is not supported"))
+}
 
 setClass("oos.pair",
          representation(model.null = "oos.forecast",

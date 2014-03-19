@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\input{setup}
+
+\title{Supplamental Appendix for Out-of-Sample Comparisons of Overfit
+  Models}
+\author{Gray Calhoun\thanks{email: gcalhoun@iastate.edu} \\
+  Iowa State University}
+
+\begin{document}
+\maketitle
+
+Fill in the text...
+
+\begin{figure}
+  \centering {\large Simulated Coverage of Recursive One-Sided DMW Interval for
+    $\E_T\oosB$} \input{floats/mc-interval-generror1-rec.tex}
+\caption{Simulated coverage of $\E_T \oosB$ at 90\% confidence using a
+  one-sided interval based on the DMW
+  OOS, plotted as a function of the fraction of
+  observations used in the test sample, $P/T$.  The solid horizontal
+  line denotes the intervals' nominal coverage.}
+\label{fig:interval-T}
+\end{figure}
+\clearpage
+
+\begin{figure}
+  \centering {\large Simulated Rejection Probability of Recursive DMW Test Under
+    $\E_T \oosB \leq 0$} \input{floats/mc-dmwsize-rec.tex}
+  \caption{Simulated rejection probabilities for the DMW
+    OOS $t$-test given $\E_T \oosB \leq 0$ with nominal
+    size 10\%.  Values greater than 10\% indicate that the test
+    rejects the benchmark model too often.  The solid horizontal line
+    indicates the nominal rejection probability.  See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+  \label{fig:ttest-size}
+\end{figure}
+
+\begin{figure}
+  \centering {\large Simulated Rejection Probability of Recursive Clark and West
+    (2006, 2007) \\ Test Under $\E_T \oosB \leq 0$}
+  \input{floats/mc-clarkwestsize-rec.tex}
+  \caption{Simulated rejection probabilities for Clark and West's
+    (2006, 2007) OOS test statistic given $\E_T \oosB
+    \leq 0$ with nominal size 10\%.  Values greater than 10\% indicate
+    that the test rejects the benchmark model too often.  The solid
+    horizontal line indicates the nominal rejection probability.  See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+   \label{fig:clarkwest}
+\end{figure}
+
+\begin{figure}
+  \centering {\large Simulated Rejection Probability of Recursive McCracken
+    (2007) Test \\ Under $\E_T \oosB \leq 0$}
+  \input{floats/mc-mccrackensize-rec.tex}
+  \caption{Simulated rejection probabilities for McCracken's (2007)
+    OOS test statistic given $\E_T \oosB \leq 0$ with
+    nominal size 10\%.  Values greater than 10\% indicate that the
+    test rejects the benchmark model too often.  The solid horizontal
+    line indicates the nominal rejection probability.  See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+  \label{fig:mccracken}
+\end{figure}
+
+\begin{figure}
+  \centering {\large Simulated Rejection Probability of Recursive DMW Test Under
+    $\E_T \oosB > 0$} \input{floats/mc-dmwpower-rec.tex}
+  \caption{Simulated rejection probabilities for the DMW
+    OOS $t$-test given $\E_T \oosB > 0$ with nominal
+    size 10\%.  Values greater than 10\% indicate that the test
+    rejects the benchmark model too often.  The solid horizontal line
+    indicates the nominal rejection probability.  See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+  \label{fig:ttest-power}
+\end{figure}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:
+
+% LocalWords:  McCracken's kilian anatolyev rossi REStud JAppliedEconometrics
+% LocalWords:  goyal welch rfs reputational calhoun Berbee's mixingales Rt tS
+% LocalWords:  Heteroskedasticity Autocorrelation Tt iT th berbee iS de dx ixz
+% LocalWords:  DMW mcleish Rs eq ftestreject lightgray veclen RSQLite zeileis
+% LocalWords:  heteroskedasticity hothorn RNews JStatSoftware harrell campbell
+% LocalWords:  thompson bivariate Welch's multicollinearity Newey newey tw vw
+% LocalWords:  merlevede cltvar dR Scwarz davidson indices lrrrr waldtest Df jt
+% LocalWords:  dmw McCracken MSE OLS mse inoue huber elemstatlearning efron sw
+% LocalWords:  anova akritas jong normalpart coefpart Jong's rproject rsqlite
+% LocalWords:  unrestrictive datasets Heyde's ib oos Mcc MeR StW InK DiM CCS lm
+% LocalWords:  ClM CoS ClW GiW GiR GoW Cla HTF Efr BoB AkA AkP DeD Mcl Dej Rde
+% LocalWords:  Sar Zeh Zei Har CaT NeW MeP HaH AllRefs Diebold jel Whi RoW brc
+% LocalWords:  overrejection overreject fpe JoD iR PeT Giacomini WN Wishart T'V
+% LocalWords:  premultiply const overrejects overrejecting BWB Gia Schwarz HHK
+% LocalWords:  Haf Anatolyev's nonstochastic T'X Sweave tikzDevice pgfSweave
+

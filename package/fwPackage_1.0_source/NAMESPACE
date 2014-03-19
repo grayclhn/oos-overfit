@@ -1,9 +1,11 @@
 export(
   expected.loss.future,
   expected.loss.test,
+  EL,
   f.test,
   ForecastErrors,
   forecasts,
+  GenerateOosForecast,
   GenerateOosPair,
   model.null,
   model.alt,

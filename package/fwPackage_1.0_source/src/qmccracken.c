@@ -1,7 +1,7 @@
 #include <R.h>
 #include <math.h>
 
-void qmccracken(int *whichquantile, int *k, double *pr, int *n, double *q) {
+void qmccrackenfix(int *whichquantile, int *k, double *pr, int *n, double *q) {
   // *whichquantile indicates which table we're using:
   // 0 = .90 -- this is the only one implemented right now.
   // 1 = .95
@@ -22,6 +22,44 @@ void qmccracken(int *whichquantile, int *k, double *pr, int *n, double *q) {
     {1.280,  0.868,  0.663,  0.467,  0.247,  0.153, -0.029, -0.115, -0.227, -0.343, -0.440, -0.502},
     {1.280,  0.844,  0.655,  0.396,  0.182,  0.034, -0.111, -0.224, -0.303, -0.437, -0.543, -0.625},
     {1.280,  0.797,  0.616,  0.348,  0.125, -0.055, -0.210, -0.305, -0.398, -0.559, -0.645, -0.729}
+  };
+  int i, j;
+  double wL, wU;
+  for (j = 0; j < *n; j++) {
+    i = 0;
+    while (pr[j] > PRs[i] && i < 11) {
+      i++;
+    }
+    wL = 1 - (pr[j] - PRs[i-1]) / (PRs[i] - PRs[i-1]);
+    wU = 1 - (PRs[i] - pr[j])   / (PRs[i] - PRs[i-1]);
+    // interpolate between the two nearest critical values.
+    q[j] = (wL * cv[k[j]-1][i-1]) + (wU * cv[k[j]-1][i]);
+  }
+}
+
+// The next function was largely copy and pasted from the previous
+// function. Sorry, brah.
+void qmccrackenrec(int *whichquantile, int *k, double *pr, int *n, double *q) {
+  // *whichquantile indicates which table we're using:
+  // 0 = .90 -- this is the only one implemented right now.
+  // 1 = .95
+  // 2 = .99
+  // *nelem 
+  double PRs[12] = {0.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
+  // First index indicates the number of excess regressors;
+  // second index indicates the ratio P/R;
+  // Values are from McCracken's 2001 paper
+  double cv[10][12] = {
+    {1.280,  0.885,  0.780,  0.657,  0.598,  0.512,  0.443,  0.402,  0.370,  0.330,  0.306,  0.281},
+    {1.280,  0.932,  0.786,  0.614,  0.541,  0.455,  0.361,  0.295,  0.253,  0.235,  0.194,  0.160},
+    {1.280,  0.939,  0.751,  0.551,  0.454,  0.356,  0.279,  0.222,  0.175,  0.108,  0.074,  0.035},
+    {1.280,  0.898,  0.742,  0.562,  0.419,  0.263,  0.169,  0.094,  0.052, -0.014, -0.054, -0.106},
+    {1.280,  0.866,  0.694,  0.461,  0.315,  0.179,  0.062, -0.021, -0.083, -0.145, -0.174, -0.228},
+    {1.280,  0.823,  0.642,  0.394,  0.256,  0.108, -0.011, -0.101, -0.164, -0.218, -0.266, -0.319},
+    {1.280,  0.811,  0.615,  0.359,  0.213,  0.062, -0.088, -0.152, -0.230, -0.305, -0.363, -0.449},
+    {1.280,  0.773,  0.574,  0.329,  0.139,  0.003, -0.131, -0.203, -0.293, -0.383, -0.452, -0.516},
+    {1.280,  0.733,  0.561,  0.273,  0.096, -0.068, -0.187, -0.286, -0.377, -0.437, -0.518, -0.579},
+    {1.280,  0.749,  0.529,  0.226,  0.032, -0.130, -0.248, -0.355, -0.454, -0.524, -0.591, -0.651}
   };
   int i, j;
   double wL, wU;

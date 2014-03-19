@@ -8,15 +8,17 @@ lattice.options(default.theme = ltheme)      ## set as default
 
 dbc <- dbConnect(dbDriver("SQLite"), dbname = "data/simulations.db")
 
-mcpars <- dbGetQuery(dbc, "select count(jobnumber) as njobs from interval")
-dstring <- "
+d <- dbGetQuery(dbc, "
 select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
-from interval 
-where label='%s' and simIndex <= %d and transform = 'difference'
-group by ntest, isim, idgp, transform, label) s 
-join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp"
+               from interval 
+               where label = 'test.error.1'
+                 and ntest >= 10
+                 and simIndex <= 500
+                 and transform = 'difference'
+                 and scheme = 'fix'
+               group by ntest, isim, idgp, transform, label) s
+join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
 
-d <- dbGetQuery(dbc, sprintf(dstring, 'test.error.1', 500))
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
 

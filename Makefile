@@ -40,31 +40,48 @@ mcRnw   := $(wildcard data/*.Rnw)
 
 # Basic execution of the makefile will run all of the tests, then
 # build the final version of the paper.
-all: paper.pdf
+all: paper.pdf appendix.pdf
 mc: $(mcDB) $(mcRnw:.Rnw=.pdf) # for convenience -- allows 'make mc'
 
-empfloats:=  floats/empirics-oos-mse-1.tex \
-  floats/empirics-oos-mse-1b.tex floats/empirics-oos-mse-2.tex \
-  floats/empirics-oos-mse-2b.tex floats/empirics-waldtest.tex \
-  floats/empirics-coeftest.tex floats/empirics-oos-ind-ks.tex \
-  floats/empirics-oos-ind-pm.tex
-mcfloats := floats/mc-dmwsize.tex floats/mc-clarkwestsize.tex floats/mc-dmwpower.tex \
-  floats/mc-mccrackensize.tex floats/mc-interval-testerror1.tex \
-  floats/mc-interval-generror1.tex floats/mc-ftest.tex
+empfloats := \
+  floats/empirics-coeftest.tex \
+  floats/empirics-oos-ind-ks.tex \
+  floats/empirics-oos-ind-pm.tex \
+  floats/empirics-oos-mse-1.tex \
+  floats/empirics-oos-mse-1b.tex \
+  floats/empirics-oos-mse-2.tex \
+  floats/empirics-oos-mse-2b.tex \
+  floats/empirics-waldtest.tex
+mcfloats := \
+  floats/mc-clarkwestsize.tex \
+  floats/mc-dmwsize.tex \
+  floats/mc-dmwpower.tex \
+  floats/mc-ftest.tex \
+  floats/mc-interval-testerror1.tex \
+  floats/mc-interval-generror1.tex \
+  floats/mc-mccrackensize.tex
 floats := $(mcfloats) $(empfloats)
+apfloats := \
+  floats/mc-clarkwestsize-rec.tex \
+  floats/mc-dmwpower-rec.tex \
+  floats/mc-dmwsize-rec.tex \
+  floats/mc-interval-generror1-rec.tex \
+  floats/mc-mccrackensize-rec.tex
 
 floats: $(floats)
 $(empfloats): floats/%.tex: R/%.R data/empirical-results.RData | floatsdir
-$(mcfloats): floats/%.tex: R/%.R data/simulations.done | floatsdir
+$(apfloats) $(mcfloats): floats/%.tex: R/%.R data/simulations.done | floatsdir
 data/empirical-results.RData: R/empirics.R data/goyalwelch2009.csv
 
-$(floats) data/empirical-results.RData:
+$(floats) $(apfloats) data/empirical-results.RData:
 	$(Rscript) $(RFLAGS) $<
 
 floatsdir:
 	mkdir -p floats
 
 paper.pdf: paper.tex setup.tex $(floats)
+appendix.pdf: appendix.tex setup.tex $(apfloats)
+paper.pdf appendix.pdf:
 	$(latexmk) $(LATEXMKFLAGS) $<
 
 # These are the dependencies for the database.  Since all of the

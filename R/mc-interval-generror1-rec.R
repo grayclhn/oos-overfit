@@ -15,14 +15,14 @@ select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
                  and ntest >= 10
                  and simIndex <= 500
                  and transform = 'difference'
-                 and scheme = 'fix'
-               group by ntest, isim, idgp, transform, label) s 
+                 and scheme = 'rec'
+               group by ntest, isim, idgp, transform, label) s
 join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
 
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
 
-tikz(file = "floats/mc-interval-generror1.tex", width=6)
+tikz(file = "floats/mc-interval-generror1-rec.tex", width=6)
 xyplot(I(1 - reject) ~ I(ntest/n)
          | interaction(nlabel, altlabel, normlabel, sep = ", "),
        data = d,
