@@ -3,8 +3,6 @@ create table nobs (i integer primary key, n integer, nlabel text, kNull integer,
 insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values ( 100,  "T=100",  2, "K0=2",      3, "K=3");
 insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values ( 250,  "T=250",  2, "K0=2",      3, "K=3");
 insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values ( 500,  "T=500",  2, "K0=2",      3, "K=3");
-insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values (1000, "T=1000",  2, "K0=2",      3, "K=3");
 insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values ( 100,  "T=100",  2, "K0=n/50",  10, "K=T/10");
 insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values ( 250,  "T=250",  5, "K0=n/50",  25, "K=T/10");
 insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values ( 500,  "T=500", 10, "K0=n/50",  50, "K=T/10");
-insert into nobs (n, nlabel, kNull, nulllabel, kAlt, altlabel) values (1000, "T=1000", 20, "K0=n/50", 100, "K=T/10");
