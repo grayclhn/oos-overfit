@@ -36,7 +36,7 @@ mcRnw   := $(wildcard data/*.Rnw)
 
 .PHONY: all mc clean dist burn zip
 .DELETE_ON_ERROR: $(mcDB) 
-.IGNORE: paper.pdf
+.INTERMEDIATE: fwPackage_1.0.tar.gz
 
 # Basic execution of the makefile will run all of the tests, then
 # build the final version of the paper.
@@ -73,8 +73,10 @@ $(empfloats): floats/%.tex: R/%.R data/empirical-results.RData | floatsdir
 $(apfloats) $(mcfloats): floats/%.tex: R/%.R data/simulations.done | floatsdir
 data/empirical-results.RData: R/empirics.R data/goyalwelch2009.csv
 
-$(floats) $(apfloats) data/empirical-results.RData:
+$(floats) data/empirical-results.RData:
 	$(Rscript) $(RFLAGS) $<
+
+.SECONDARY: $(floats)
 
 floatsdir:
 	mkdir -p floats
@@ -116,7 +118,6 @@ mc-setup.mk: mc-setup.py
 include mc-setup.mk
 
 localpackages := package/fwPackage
-.SECONDARY: fwPackage_1.0.tar.gz $(tikz)
 fwPackage_1.0.tar.gz: %.tar.gz: package/%_source
 	$(R) CMD build $<
 package/fwPackage: fwPackage_1.0.tar.gz
