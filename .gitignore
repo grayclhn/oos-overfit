@@ -21,8 +21,8 @@ data/*.done
 # For R packages
 *.tar.gz
 package/fwPackage
-package/fwPackage_1.0_source/*.o
-package/fwPackage_1.0_source/*.so
+package/fwPackage_1.0_source/src/*.o
+package/fwPackage_1.0_source/src/*.so
 package/*.Rcheck
 
 # For LaTeX
