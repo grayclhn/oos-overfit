@@ -1,6 +1,7 @@
 \usepackage{
   amsmath,
   amsthm,
+  flexisym,
   microtype,
   multicol,
   pgfplots,
@@ -122,7 +123,7 @@
 \newcommand{\couplingConstant}{\ensuremath{2^{(1+\rho)/\rho} B_L}}
 \newcommand{\couplingBeta}[1]{\ensuremath{\beta^{(\rho-2)/2\rho}_{#1}}}
 \newcommand{\couplingBetaSq}[1]{\ensuremath{\beta^{(\rho-2)/\rho}_{#1}}}
-\newcommand{\couplingBound}[1]{\couplingConstant \couplingBeta{#1}}
+\newcommand{\couplingBound}[1]{\couplingConstant \, \couplingBeta{#1}}
 
 \newcommand{\OCoef}{\ensuremath{O_p(\frac{\sqrt{P}}{T})}}
 
