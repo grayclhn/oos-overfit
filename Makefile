@@ -43,7 +43,7 @@ mcRnw   := $(wildcard data/*.Rnw)
 all: paper.pdf appendix.pdf
 mc: $(mcDB) $(mcRnw:.Rnw=.pdf) # for convenience -- allows 'make mc'
 
-empfloats := \
+empfloats = \
   floats/empirics-coeftest.tex \
   floats/empirics-oos-ind-ks.tex \
   floats/empirics-oos-ind-pm.tex \
@@ -52,7 +52,7 @@ empfloats := \
   floats/empirics-oos-mse-2.tex \
   floats/empirics-oos-mse-2b.tex \
   floats/empirics-waldtest.tex
-mcfloats := \
+mcfloats = \
   floats/mc-clarkwestsize.tex \
   floats/mc-dmwsize.tex \
   floats/mc-dmwpower.tex \
@@ -60,17 +60,16 @@ mcfloats := \
   floats/mc-interval-testerror1.tex \
   floats/mc-interval-generror1.tex \
   floats/mc-mccrackensize.tex
-floats := $(mcfloats) $(empfloats)
-apfloats := \
+apfloats = \
   floats/mc-clarkwestsize-rec.tex \
   floats/mc-dmwpower-rec.tex \
   floats/mc-dmwsize-rec.tex \
   floats/mc-interval-generror1-rec.tex \
   floats/mc-mccrackensize-rec.tex
+floats = $(mcfloats) $(empfloats) $(apfloats)
 
-floats: $(floats)
-$(empfloats): floats/%.tex: R/%.R data/empirical-results.RData | floatsdir
-$(apfloats) $(mcfloats): floats/%.tex: R/%.R data/simulations.done | floatsdir
+$(empfloats): floats/%.tex: R/%.R data/empirical-results.RData | floats
+$(apfloats) $(mcfloats): floats/%.tex: R/%.R data/simulations.done | floats
 data/empirical-results.RData: R/empirics.R data/goyalwelch2009.csv
 
 $(floats) data/empirical-results.RData:
@@ -78,10 +77,10 @@ $(floats) data/empirical-results.RData:
 
 .SECONDARY: $(floats)
 
-floatsdir:
+floats:
 	mkdir -p floats
 
-paper.pdf: paper.tex setup.tex $(floats)
+paper.pdf: paper.tex setup.tex $(mcfloats) $(empfloats)
 appendix.pdf: appendix.tex setup.tex $(apfloats)
 paper.pdf appendix.pdf:
 	$(latexmk) $(LATEXMKFLAGS) $<
