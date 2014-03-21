@@ -2358,29 +2358,33 @@ which converges to zero as $T \to \infty$.
 
 \bibliographystyle{abbrvnat}
 \bibliography{references}
+\clearpage
 
-\begin{table}[h]
- \begin{multicols}{2}
-  \begin{itemize}
-  \item log Dividend Price Ratio
-  \item log Earnings Price Ratio
-  \item Stock Market Variance
-  \item Book to Market Ratio
-  \item Net Equity Expansion
-  \item Percent Equity Issuing
-  \item Treasury Bill
-  \item Long Term Yield
-  \item Long Term Rate
-  \item Default Return Spread
-  \item Default Yield Spread
-  \item Inflation
-  \end{itemize}
- \end{multicols}
- \caption{Variables used in Section \ref{sec:empirics} and by Goyal
-   and Welch (2008) to predict the equity premium.  Please see Goyal
-   and Welch's original paper
-   for a detailed description of each variable.}
- \label{tab:equity}
+\begin{table}[tb]
+  \begin{tabularx}{\linewidth}{XX}
+    \toprule
+    Category & Variable \\
+    \midrule
+    Stock market variables
+    & Dividend Price ratio (log) \\
+    & Earnings Price ratio (log) \\
+    & Stock Market Variance \\
+    & Book to Market Ratio \\
+    & Net Equity Expansion \\
+    & Percent Equity Issuing \\\\
+    Interest rate variables
+    & Treasury Bill rate (3 month) \\
+    & Long Term Yield \\
+    & Long Term Rate \\
+    & Default Return Spread \\
+    & Default Yield Spread \\
+    & Inflation \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Variables used to predict the equity premium.
+    Please see Goyal and Welch's original paper \citep{GoW:08}
+    for a detailed description of each variable.}
+  \label{tab:equity}
 \end{table}
 
 \begin{table}[b]
