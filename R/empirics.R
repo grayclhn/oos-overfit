@@ -72,9 +72,6 @@ REnd <- nrow(dframe) - 10
 tstats <-    lapply(RStart:REnd, function(R) oosT(R, fullmodel, dframe, FALSE))
 tstats.ct <- lapply(RStart:REnd, function(R) oosT(R, fullmodel, dframe, TRUE))
 
-## make table assessing full-sample model
-fullmod <- lm(fullmodel, data = dframe)
-
 oosStats <- function(tstats) 
   ts(cbind(PM = sapply(tstats, function(x) x$avg1),
            KS = sapply(tstats, function(x) x$avg2),           
