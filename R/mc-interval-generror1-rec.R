@@ -18,21 +18,22 @@ select * from (select ntest, isim, idgp, transform, label, avg(reject) as reject
                  and scheme = 'rec'
                group by ntest, isim, idgp, transform, label) s
 join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
+dbDisconnect(dbc)
 
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
 
-tikz(file = "floats/mc-interval-generror1-rec.tex", width=6)
+tikz(file = "floats/mc-interval-generror1-rec.tex", width=6, height = 4.5)
 xyplot(I(1 - reject) ~ I(ntest/n)
          | interaction(nlabel, altlabel, normlabel, sep = ", "),
        data = d,
        ylab = "Coverage", xlab = "$P/T$",
+       ylim = c(.8, 1),
        panel = function(x,y,...) {
          panel.lines(c(0,2/3),c(.9,.9), col = "gray")
          panel.xyplot(x,y,...,type = "l")
        },
-       layout = c(4,4),
+       layout = c(4,3),
        par.strip.text = list(cex = .55),
-       index.cond = list(c(13,15,16,14,9,11,12,10,5,7,8,6,1,3,4,2)))
+       index.cond = list(c(3, 6, 9, 12, 2, 5, 8, 11, 1, 4, 7, 10)))
 dev.off()
-dbDisconnect(dbc)

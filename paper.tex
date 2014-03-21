@@ -1364,21 +1364,27 @@ selects the alternative once $T$ is large enough.
 \label{sec:mc}
 
 This section presents two simulations that investigate the accuracy of
-our theory in small samples.%
-\footnote{Simulations were conducted in R \citep{Rde:10} using the
-  MASS \citep{VeR:02}, Matrix \citep{BM:13}, rlecuyer \citep{SR:12},
-  and RSQLite \citep{Jam:10} packages. Graphs were produced in R using
-  Lattice \citep{Sar:10} and tikzDevice \citep{ShB:11:0.6.1} as well
-  as the TikZ and PGF LaTeX packages \citep{Tan:10}} %
-The first looks at the asymptotic normality of the DMW statistic
-centered on either $\E_R \oosA$ or $\E_T \oosB$.  The previous
-section's results imply that centering on the first should give an
-approximately normal statistic and centering on the second should give
-a normal statistic when $P$ is small relative to $T$.  The second
-simulation looks at the size and power of several statistics when
-conducting inference about the difference in the models'
-generalization error.  For all of the simulations, we look at
-fixed-window OOS tests to speed up computation time.
+our theory in small samples.
+We do several Monte Carlo exercises. The first looks at wheather our
+theoretical results for the OOS average are accuarate: whether or not
+the OOS average is approximately normal, and whether it is centered on
+$\E_R \oosA$, $\E_T \oosB$, or somewhere else entierely. The second
+issue is whether or not the \oost\ test is \emph{useful} for
+conducting inference about $\E_T \oosB$. Our theoretical results
+suggest that it may not be, because we require $P^2/T \to 0$ for
+inference about $\E_T \oosB$ to be valid. A highly related issue is
+whether other statistics are useful for conducting inference about
+$\E_T \oosB$---again, our theoretical results suggest that they are
+not.
+
+We use the same DGP for all of these simulations, and it is described
+in the next subsection. Results are presented in the subsection after
+that. Simulations were conducted in R \citep{Rde:10} using the
+\emph{MASS} \citep{VeR:02}, \emph{Matrix} \citep{BM:13}, and
+\emph{rlecuyer} \citep{SR:12} and graphs are produced using
+\emph{Lattice} \citep{Sar:10}. In this paper, we present results for
+the fixed window, but recursive window results are available in a
+separate Appendix and are broadly similary.
 
 \subsection{Setup}
 \label{sec:simulation-design}
@@ -1387,7 +1393,7 @@ The Monte Carlo experiment is intentionally very simple so that we can
 isolate the influence of the models' complexity.  In particular, we do
 not include some features that are common in forecasting
 environments---serial dependence, heteroskedasticity, and complicated
-DGPs.  We simulate data for both studies from the equation
+DGPs. The DGP we use is given by the equation
 \begin{equation}\label{eq:6}
   y_t = x_t'\theta + \e_t,\quad \e_t \sim N(0,1),
   \quad t=1,\dots,T.
@@ -1401,7 +1407,7 @@ independent Standard Normal.  The benchmark model is
 and the alternative model is the DGP \eqref{eq:6}.  We let
 $(K_1,K_2)$ equal either $(2,3)$ or $(T/20,T/10)$ to study our theory
 in its intended application as well as for more parsimonious models.
-We let $T$ equal 100, 250, 500, or 1000.  We also vary $\theta$, and do
+We let $T$ equal 100, 250, or 500.  We also vary $\theta$, and do
 so giving the benchmark and the alternative model comparable weight in
 predicting $y_t$.  Specifically, we set
 \begin{equation*}
@@ -1412,126 +1418,126 @@ predicting $y_t$.  Specifically, we set
 with $c$ equal to zero or one.  When $c$ is one, we're more likely to
 draw values of $X$ and $Y$ that make the estimated larger model more
 accurate than the benchmark, and when $c$ is zero we're unlikely to
-draw such values of $X$ and $Y$.  For all of the studies, $L(x) =
-x^2$.
+draw such values of $X$ and $Y$.  For all of the studies, $L(e) =
+e^2$.
 
-The first set of simulations study how well the theory in
-Section~\ref{sec:oostheory} works in practice.  For each draw of $X$
-and $Y$, we construct a one-sided OOS interval of the
-form
+To study the accuracy of our theoretical approximations, we first
+estmate the coverage probabilities of OOS confidence intervals for
+$\E_R \oosA$ and $\E_T \oosB$. For each draw of $X$ and $Y$, we
+construct the one-sided OOS interval defined in
+Theorem~\ref{res:oostest}:
 \begin{equation*}
   [ \oosA - 1.28 \hat{\sigma}, \infty) \quad\text{with}\quad
   \sh^2 = \frac1P \sum_{t=R+1}^T (D_t - \oosA)^{2}
 \end{equation*}
-for $P$ set to every 10th value between 1 and $2T/3$.  We calculate
-the percentage of these intervals that contain $\E_R \oosA$ and that
-contain $\E_T \oosB$.  Since the data are i.i.d., both of these
-quantities are easy to calculate:
-\begin{equation*}
-  E_R \oosA = \Bigg[\sum_{i=1}^{K_1} (\tilde{\theta}_{iR} - \theta_i)^2 +
-  \sum_{i=K_1+1}^{K_2}\theta_i^2\Bigg] - \sum_{i=1}^{K_2} (\hat{\theta}_{iR} -
-  \theta_i)^2
-\end{equation*}
-and
-\begin{equation*}
-  E_T \oosB = \Bigg[\sum_{i=1}^{K_1} (\tilde{\theta}_{iT} - \theta_i)^2 +
-  \sum_{i=K_1+1}^{K_2}\theta_i^2\Bigg] - \sum_{i=1}^{K_2} (\hat{\theta}_{iT} -
-  \theta_i)^2
-\end{equation*}
-where $\tilde{\theta}$ indicates that the coefficient is estimated
-using only the regressors in the benchmark model and $\hat{\theta}$
-the full model.  We draw 2000 samples for each combination of the
-design parameters.
+for $P = 10,\dots,2T/3$; we then calculate the percentage of
+simulations where these intervals contain $\E_R \oosA$ and the
+percentage that contain $\E_T \oosB$.  Since the data are i.i.d., both
+of these quantities are easy to calculate (see
+Section~\ref{sec:example}). For these calculations, we draw 2000
+samples for each combination of the design parameters.
 
-The second simulation looks at the size and power of the test
-statistics when conducting inference about the models' generalization
-error.  The null hypothesis we test is
+Our second set of results studies whether these different OOS and
+in-sample statistics are valid for testing the null hypothesis
 \begin{equation*}
   H_0:\quad E_T \oosB \leq 0,
 \end{equation*}
-We look at four different statistics---the full-sample $F$-test, the
-DMW $t$-test, the
-OOS $t$-test using McCracken's (2007)
-critical values,%
-\footnote{These critical values are not published for
-  $K_2-K_1>10$, so we do not report them for $K_2 = T/10$.} %
-and Clark and West's (2006, 2007) Gaussian out-of-sample
-statistic.%
-\footnote{Clark and West (2006, 2007) derive their statistic
-using the rolling window estimation scheme.  Here we use the same
-statistic, but with a fixed window scheme.} %
-For the $F$-test, we simply test whether the coefficients on the larger
-model are nonzero.  For the out-of-sample tests, we conduct a
-one-sided test of out-of-sample performance for every 10th value of
-$P$ as before.
+namely that the benchmark model is expected to be more accurate in the
+future than the alternative. Informally, we are interested in whether
+the conditional probability
+\begin{equation*}
+  \Pr[\text{test rejects} \mid E_T \oosB \leq 0] \leq \alpha
+\end{equation*}
+where $\alpha$ is the nominal size of the test. If this inequality
+does not hold, the test statistic is rejecting the benchmark model too
+often.
 
-To estimate each test's size for the null hypothesis, we draw
-samples from the DGP and discard those for which the null does
-not hold, until we have 2000 for each choice of the design parameters.
-The estimated size is the fraction of those samples in which the test
-statistic rejects.
+We look at four different statistics---the full-sample $F$-test, the
+DMW $t$-test, the OOS $t$-test using McCracken's (2007) critical
+values,%
+\footnote{These critical values are not published for $K_2-K_1>10$, so
+  we do not report them for $K_2 = T/10$.} %
+and Clark and West's (2006, 2007) Gaussian out-of-sample statistic.%
+\footnote{Clark and West (2006, 2007) derive their statistic using the
+  rolling window estimation scheme. Here we use the same statistic,
+  but with a fixed window scheme. A supplemental appendix presents
+  results for their statistic, using the recursive window.} %
+For the $F$-test, we simply test whether the coefficients on the
+larger model are nonzero.  For the out-of-sample tests, we conduct a
+one-sided test of out-of-sample performance for every value of $P$ as
+before. For each of these simulations, we discard draws from the DGP
+that violate the null hypothesis $E_T \oosB \leq 0$ and then use the
+remaining samples to calculate the conditional probability that each
+test rejects. The simulations end when 2000 draws have been retained
+for each choice of the design parameters.
 
 \subsection{Results}
 
 We discuss results for the confidence intervals first.
 Figures~\ref{fig:interval-R} and~\ref{fig:interval-T} show the
 coverage probability of these intervals as a function of $P$ for each
-combination of $T$, $K_1$ and $K_2$, and $c$.  The gray horizontal
-line shows the intervals' nominal coverage probability.  Each panel
-displays the coverage for a different choice of interval, centering
-term ($\E_R \oosA$ or $\E_T \oosB$) and combination of design
-parameters.
+combination of $T$, $K_1$ and $K_2$, and $c$.  The nominal coverage is
+90\%.  The gray horizontal line shows the intervals' nominal coverage
+probability.  Each panel displays the coverage for a different choice
+of design parameters.
 
 Figure~\ref{fig:interval-R} gives the results for $\E_R \oosA$.  The
 actual coverage is very close to the nominal coverage except when $P$
 is very small.  The poor behavior for small $P$ is unsurprising, as it
-simply means that the CLT is a poor approximation when the test
-sample is small.  The intervals' good coverage holds even for the
-parsimonious models ($K_1=1$ and $K_2= 3$) which our theory does not
-necessarily apply to.
+simply means that the CLT is a poor approximation when the test sample
+is small. The inteval for $T = 100$, $K = T/10$, and $c = 0$ is the
+worst, with actual coverage near 85\% for most values of $P/T$. But
+the others are much closer to nominal coverage, even for the
+parsimonious models ($K_1=1$ and $K_2= 3$) where one might expect
+the theoretical results to break down.
 
 Figure~\ref{fig:interval-T} gives the results for $\E_T \oosB$.  In
-rows 2, 4, 6, and 8---the overfit models---the coverage is near
-nominal coverage for moderately small values of $P$.  As $P$ increases
-to $2T/3$, the coverage increases to 1.  With the parsimonious model,
-the coverage is near nominal coverage for all $P$ for the one-sided
-interval with $c=1$, but only for moderately small $P$ when $c=0$.
+columns 2 and 4---the overfit models---the coverage is near nominal
+coverage for moderately small values of $P$.  As $P$ increases to
+$2T/3$, the coverage increases above nominal size; near 100\% for some
+DGPs.  With the parsimonious model, the coverage is near nominal
+coverage for all $P$ for the one-sided interval with $c=1$, but only
+for moderately small $P$ when $c=0$.
 
 The behavior for $K_2 = T/10$ is exactly what our theory predicts.
-When $P^2/T$ is small, the coverage is near nominal levels.  The
-behavior as $P$ increases, combined with the results for $\E_R
-\oosA$, indicate that $\E_T \oosB \geq E_R \oosA$ in general.
-Since
-\[E_{T} \oosB = E_{R} \oosA + (E_{T} \oosB - E_{R} \oosA), \] and the
-interval is approximately centered at $\E_R \oosA$, the difference
-$\E_{T} \oosB - E_{R} \oosA$ adds a substantial positive quantity when
-$P^2/T$ is not near zero, increasing the coverage of the one-sided
-interval.
+When $P^2/T$ is small, the coverage is close to nominal levels.  The
+behavior as $P$ increases, combined with the results for $\E_R \oosA$,
+indicate that typically $\E_T \oosB \geq E_R \oosA$.  Since
+\begin{equation*}
+  E_{T} \oosB = E_{R} \oosA + (E_{T} \oosB - E_{R} \oosA),
+\end{equation*}
+and the interval is approximately centered at $\E_R \oosA$, the
+difference $\E_{T} \oosB - E_{R} \oosA$ adds a substantial positive
+quantity when $P^2/T$ is not near zero, increasing the coverage of the
+one-sided interval.
 
-We next present the size simulations,
-Figures~\ref{fig:ftest}--\ref{fig:ttest-power}.  For the OOS tests,
-the conditional rejection probability is plotted for each combination
-of $T$, $K_1$, $K_2$, and $c$ as a function of $P$.  The $F$-test does
-not depend on $P$, so a single value is presented for each
-combination.
+We present the size simulations next, in
+Figures~\ref{fig:ftest}--\ref{fig:ttest-power}.  For the OOS tests
+We plot each OOS test's conditional rejection probability,
+\begin{equation*}
+  \Pr[\text{test rejects} \mid E_T \oosB \leq 0],
+\end{equation*}
+for each combination of $T$, $K_1$, $K_2$, and $c$ as a function of
+$P$.  The $F$-test does not depend on $P$, so we calculate and
+tabluate it's conditional rejection probability as a single value for
+each combination of design parameters.
 
-We'll look at the $F$-test first.  To make comparisons easier, the size
-is displayed as a dot plot in Figure~\ref{fig:ftest}.  Different
-panels display a different combination of $K_1$, $K_2$, and $T$, and
-each individual plot shows the empirical size for each choice of $c$.
-We see immediately that the actual and nominal size are essentially
-equal for $c = 0$, which is unsurprising.  For $c = 0$, the $F$-test is
-exact; moreover, the larger model will almost always be less accurate
-than the smaller one, so conditioning on $\E_T \oosB \leq 0$ is
-almost unrestrictive.  When $c$ increases, though, the $F$-test
-overrejects badly---rejecting at roughly 50\% when $c = 1$ for the
-parsimonious model and from 70\% to 100\% for the overfit model.  As
-our discussion in Section~\ref{sec:insample} predicts, the rejection
-probability increases with $T$ for the overfit model but does not
-depend on $T$ for the small model.
+Table~\ref{fig:ftest} summarizes the simulation results for the
+$F$-test. For $c = 0$, the estimated conditional rejection probability
+is almost exactly equal to the test's nominal size (10\%), which is
+unsurprising.  For $c = 0$, the $F$-test is exact; moreover, the
+larger model will almost always be less accurate than the smaller one,
+so conditioning on $\E_T \oosB \leq 0$ is almost unrestrictive.  When
+$c$ increases, though, the $F$-test overrejects badly---rejecting at
+roughly 50\% when $c = 1$ for the parsimonious model and from 70\% to
+100\% for the overfit model. This agrees with our
+Section~\ref{sec:insample} results and matches results seen in
+empirical practice: the $F$-test rejects the benchmark with very high
+probability, even though it is, by construction, more accurate than
+the alternative model.
 
 Figure~\ref{fig:ttest-size} presents the size estimates for the DMW
-$t$-test.  Again, different panels display results for different
+\oost\ test.  Again, different panels display results for different
 combinations of the design parameters.  Each graph plots the rejection
 probability against $P/T$.  For $K/T=10$, the rejection probability
 falls as $P/T$ increases, from near nominal size when $P/T$ is small
@@ -1564,34 +1570,34 @@ $K=T/10$, the rejection probability is even higher and increases with
 $T$ as well, from a maximum over 50\% when $T=100$ to a maximum of
 nearly 100\% when $T=1000$.
 
-Results using \citepos{Mcc:07} critical values are
-presented in Figure~\ref{fig:mccracken} and are similar to those using
-Clark and West's test.  For $c=0$ the rejection probability is nearly
-the test's nominal size.  For $c=1$, the rejection probability
-increases with $P/T$, from close to the nominal size when $P/T$ is
-small to over 25\% when $P/T = 2/3$.  Note that all of the simulations
-use the parsimonious model.  McCracken's statistic overrejects here
-by slightly less than Clark and West's, but still by a substantial
-amount.
+Results using \citepos{Mcc:07} critical values are presented in
+Figure~\ref{fig:mccracken} and are similar to those using Clark and
+West's test.  For $c=0$ the rejection probability is nearly the test's
+nominal size.  For $c=1$, the rejection probability increases with
+$P/T$, from close to the nominal size when $P/T$ is small to over 25\%
+when $P/T = 2/3$.  Note that all of the simulations use the
+parsimonious model.  McCracken's statistic overrejects here by
+slightly less than Clark and West's, but still by a substantial
+amount. Note that we are unable to plot results for McCracken's
+statistic when $K/T = 10$, which is where the brakdown in Clark and
+West's test is most pronounced.
 
-Since the DMW test tends to have low rejection probability, the
-test's power is a concern.  We'll present some power results,
-simulating from \eqref{eq:1} with $c = 1$ or 2 subject to the
-constraint that $\E_T \oosB > 0$.%
-\footnote{Draws of $X$ and $Y$ with
-  $\E_T \oosB > 0$ are very rare when $c=0$, so we do not present
-  results for that value of $c$.} %
-Figure~\ref{fig:ttest-power} plots
-the power for the DMW test; since the other test statistics greatly
-overreject, we do not present their power.  For $c=1$, the power is
-never greater than nominal size and decreases to zero as $P/T$
-increases for the overfit model.  For $c=2$ the power is better,
-increasing with $P/T$ for a stretch and then decreasing as $P/T$ grows
-beyond approximately 1/4 for the overfit model.  Larger values of $T$
-give a higher peak and greater power overall, but the power still
-falls to nearly zero if $P/T$ is too large (approximately 2/3 in our
-simulations).  The power with the parsimonious model is typically
-quite low but greater than nominal size for $c = 2$.
+Since the DMW test tends to have low rejection probability, the test's
+power is a concern.  Figure~\ref{fig:ttest-power} power results for
+the DMW test, simulating from \eqref{eq:1} with $c = 1$ or 2 subject
+to the constraint that $\E_T \oosB > 0$.%
+\footnote{Draws of $X$ and $Y$ with $\E_T \oosB > 0$ are very rare
+  when $c=0$, so we do not present results for that value of $c$.} %
+Since the other test statistics greatly overreject, we do not present
+their power.  For $c=1$, the power is never greater than nominal size
+and decreases to zero as $P/T$ increases for the overfit model.  For
+$c=2$ the power is better, increasing with $P/T$ at first stretch and
+then decreasing as $P/T$ grows beyond approximately 1/4 for the
+overfit model.  Larger values of $T$ give a higher peak and greater
+power overall, but the power still falls to nearly zero if $P/T$ is
+too large (approximately 2/3 in our simulations).  The power with the
+parsimonious model is typically quite low but greater than nominal
+size for $c = 2$.
 
 Both sets of simulations support our theoretical results.  The first
 simulation confirms that the DMW OOS $t$-test is centered at $\E_R
@@ -1602,9 +1608,9 @@ when $P$ is small and that tests designed to test whether the
 benchmark is true, like the $F$-test and Clark and West's (2006, 2007)
 and McCracken's (2007) OOS tests can reject by much more than their
 nominal size when testing the null $\E_T \oosB \leq 0$.  Moreover,
-these simulations demonstrate that the restriction $P^2/T \to 0$ is
-binding in practice, as the DMW test under-rejects and has very low
-power when it is not satisfied.
+these simulations demonstrate that the restriction that $P$ be small
+is binding in practice, as the DMW test under-rejects and has very low
+power when $P$ is too large.
 
 \section{Empirical analysis of equity premium predictability}
 \label{sec:empirics}
@@ -2568,7 +2574,6 @@ Then
     for a detailed description of each variable.}
   \label{tab:equity}
 \end{table}
-\clearpage
 
 \tryinput{floats/empirics-insample.tex}
 \tryinput{floats/empirics-insample-tuned.tex}
@@ -2578,95 +2583,87 @@ Then
 \insamplecoefs
 \insampletests
 
-\clearpage
-\begin{figure}
-  \centering {\large Simulated Coverage of One-Sided DMW Interval for
-    $\E_R\oosA$} \tryinput{floats/mc-interval-testerror1.tex}
-\caption{Simulated coverage of $\E_R \oosA$ at 90\% confidence using a
-  one-sided interval based on the DMW
-  OOS test, plotted as a function of the fraction of
-  observations used in the test sample, $P/T$.  The solid horizontal
-  line denotes the intervals' nominal coverage.}
+\tryinput{floats/mc-ftest.tex}
+
+\begin{figure}\centering
+  {\large Coverage of DMW OOS interval for $\E_R\oosA$ in simulations}
+  \tryinput{floats/mc-interval-testerror1.tex}
+  \caption{Simulated coverage of $\E_R \oosA$ at 90\% confidence using
+    a one-sided interval based on the DMW \oost\ test, plotted as a
+    function of the fraction of observations used in the test sample,
+    $P/T$. The solid horizontal line denotes the intervals' nominal
+    coverage.}
  \label{fig:interval-R}
 \end{figure}
 \clearpage
-\begin{figure}
-  \centering {\large Simulated Coverage of One-Sided DMW Interval for
-    $\E_T\oosB$} \tryinput{floats/mc-interval-generror1.tex}
-\caption{Simulated coverage of $\E_T \oosB$ at 90\% confidence using a
-  one-sided interval based on the DMW
-  OOS, plotted as a function of the fraction of
-  observations used in the test sample, $P/T$.  The solid horizontal
-  line denotes the intervals' nominal coverage.}
-\label{fig:interval-T}
+
+\begin{figure}\centering
+  {\large Coverage of DMW OOS interval for $\E_T\oosB$ in simulations}
+  \tryinput{floats/mc-interval-generror1.tex}
+  \caption{Simulated coverage of $\E_T \oosB$ at 90\% confidence using
+    a one-sided interval based on the DMW \oost\ test, plotted as a
+    function of the fraction of observations used in the test sample,
+    $P/T$.  The solid horizontal line denotes the intervals' nominal
+    coverage.}
+  \label{fig:interval-T}
 \end{figure}
 \clearpage
 
-\begin{figure}
-  \centering {\large Simulated Rejection Probability of $F$-test Under
-    $\E_T \oosB \leq 0$}
-  \tryinput{floats/mc-ftest.tex}
-  \caption{Simulated rejection probabilities for the $F$-test given
-    $\E_T \oosB \leq 0$ with nominal size 10\%.  Values greater than
-    10\% indicate that the test rejects the benchmark model too often.
-    See Section~\ref{sec:simulation-design} for a discussion of the
-    simulation design.}
-  \label{fig:ftest}
-\end{figure}
-\clearpage
-\begin{figure}
-  \centering {\large Simulated Rejection Probability of DMW Test Under
-    $\E_T \oosB \leq 0$} \tryinput{floats/mc-dmwsize.tex}
-  \caption{Simulated rejection probabilities for the DMW
-    OOS $t$-test given $\E_T \oosB \leq 0$ with nominal
-    size 10\%.  Values greater than 10\% indicate that the test
-    rejects the benchmark model too often.  The solid horizontal line
-    indicates the nominal rejection probability.  See
+\begin{figure}\centering
+  {\large Size of DMW \oost\ test in simulations}
+  \tryinput{floats/mc-dmwsize.tex}
+  \caption{Simulated rejection probabilities for the DMW \oost\ test
+    under the null hypothesis that the benchmark model will forecast
+    better, $\E_T \oosB \leq 0$. The nominal size is 10\% and is
+    marked with a solid horizontal line. Values greater than 10\%
+    indicate that the test rejects the benchmark model too often. See
     Section~\ref{sec:simulation-design} for a discussion of the
     simulation design.}
   \label{fig:ttest-size}
 \end{figure}
+\clearpage
 
-\begin{figure}
-  \centering {\large Simulated Rejection Probability of Clark and West
-    (2006, 2007) \\ Test Under $\E_T \oosB \leq 0$}
+\begin{figure}\centering
+  {\large Size of Clark-West OOS test in simulations}
   \tryinput{floats/mc-clarkwestsize.tex}
   \caption{Simulated rejection probabilities for Clark and West's
-    (2006, 2007) OOS test statistic given $\E_T \oosB
-    \leq 0$ with nominal size 10\%.  Values greater than 10\% indicate
-    that the test rejects the benchmark model too often.  The solid
-    horizontal line indicates the nominal rejection probability.  See
-    Section~\ref{sec:simulation-design} for a discussion of the
-    simulation design.}
+    (2006, 2007) OOS test statistic under the null hypothesis that the
+    benchmark will forecast better, $\E_T \oosB \leq 0$. The nominal
+    size is 10\% and is marked with a solid horizontal line. Values
+    greater than 10\% indicate that the test rejects the benchmark
+    model too often. See Section~\ref{sec:simulation-design} for a
+    discussion of the simulation design.}
    \label{fig:clarkwest}
 \end{figure}
+\clearpage
 
-\begin{figure}
-  \centering {\large Simulated Rejection Probability of McCracken
-    (2007) Test \\ Under $\E_T \oosB \leq 0$}
+\begin{figure}\centering
+  {\large Size of McCracken \oost\ test in simulations}
   \tryinput{floats/mc-mccrackensize.tex}
   \caption{Simulated rejection probabilities for McCracken's (2007)
-    OOS test statistic given $\E_T \oosB \leq 0$ with
-    nominal size 10\%.  Values greater than 10\% indicate that the
-    test rejects the benchmark model too often.  The solid horizontal
-    line indicates the nominal rejection probability.  See
+    \oost\ test under the null hypothesis that the benchmark model is
+    more accurate, $\E_T \oosB \leq 0$. Nominal size is 10\% and is
+    marked with a solid horizontal line. Values greater than 10\%
+    indicate that the test rejects the benchmark model too often. See
     Section~\ref{sec:simulation-design} for a discussion of the
     simulation design.}
   \label{fig:mccracken}
 \end{figure}
+\clearpage
 
-\begin{figure}
-  \centering {\large Simulated Rejection Probability of DMW Test Under
-    $\E_T \oosB > 0$} \tryinput{floats/mc-dmwpower.tex}
-  \caption{Simulated rejection probabilities for the DMW
-    OOS $t$-test given $\E_T \oosB > 0$ with nominal
-    size 10\%.  Values greater than 10\% indicate that the test
-    rejects the benchmark model too often.  The solid horizontal line
-    indicates the nominal rejection probability.  See
+\begin{figure}\centering
+  {\large Power of DMW \oost\ test in simulations}
+  \tryinput{floats/mc-dmwpower.tex}
+  \caption{Simulated rejection probabilities for the DMW \oost\ test
+    under the alternative that the benchmark model is less accurate,
+    $\E_T \oosB > 0$. Nominal size is 10\% and is marked with a solid
+    horizontal line. Values greater than 10\% indicate that the test
+    rejects the benchmark model too often. See
     Section~\ref{sec:simulation-design} for a discussion of the
     simulation design.}
   \label{fig:ttest-power}
 \end{figure}
+\clearpage
 
 \begin{figure}
 \centering
@@ -2684,6 +2681,7 @@ Then
   panel for $R \geq 50$.}
 \label{fig:empirics1}
 \end{figure}
+\clearpage
 
 \begin{figure}
 \centering
@@ -2701,6 +2699,7 @@ Then
   panel for $R \geq 50$.}
 \label{fig:empirics2}
 \end{figure}
+\clearpage
 
 \begin{figure}
 \centering
