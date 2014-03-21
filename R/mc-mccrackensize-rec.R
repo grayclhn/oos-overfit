@@ -22,7 +22,7 @@ join nobs n join coefficients c on n.i=s.isim and c.i=s.idgp")
 d$nlabel <- sprintf("T=%d", d$n)
 d$normlabel <- sprintf("c=%d", d$norm)
 
-tikz(file = "floats/mc-mccrackensize-rec.tex", w = 6)
+tikz(file = "floats/mc-mccrackensize-rec.tex", width = 6, height = 3.5)
 xyplot(reject ~ I(ntest/n) | interaction(nlabel,altlabel,normlabel, sep = ", "),
        data = d[d$altlabel=="K=3" & d$transform == "mccracken",],
        ylab = "Rejection Probability", xlab = "$P/T$",
