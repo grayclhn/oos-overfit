@@ -19,7 +19,7 @@
 \begin{document}
 \maketitle
 
-\begin{abstract}\thispagestyle{empty}\noindent
+\begin{abstract}\noindent
   This paper uses dimension asymptotics to study why overfit linear
   regression models should be compared out-of-sample; we let the
   number of predictors used by the larger model increase with the
@@ -1180,13 +1180,14 @@ are lots of estimates that are both far from zero and far from their
 true values which cause in-sample statistics to incorrectly choose the
 alternative model.
 
-\section{Monte Carlo}\label{sec:mc}
-\newcommand{\thetanorm}{\ensuremath{\lvert \theta \rvert_2}} This
-section presents two simulations that investigate the accuracy of our
-theory in small samples.\footnote{Simulations were conducted in R
-  \citep{Rde:10} using Sweave \citep{Lei:02} and the Lattice
-  \citep{Sar:10}, RSQLite \citep{Jam:10}, tikzDevice
-  \citep{ShB:11:0.6.1}, and pgfSweave \citep{BrS:11:1.2.1} packages.}
+\section{Monte Carlo}
+\label{sec:mc}
+
+This section presents two simulations that investigate the accuracy of
+our theory in small samples.%
+\footnote{Simulations were conducted in R \citep{Rde:10} using Sweave
+  \citep{Lei:02} and the Lattice \citep{Sar:10}, RSQLite
+  \citep{Jam:10}, and tikzDevice \citep{ShB:11:0.6.1} packages.} %
 The first looks at the asymptotic normality of the DMW statistic
 centered on either $\E_R \oosA$ or $\E_T \oosB$.  The previous
 section's results imply that centering on the first should give an
