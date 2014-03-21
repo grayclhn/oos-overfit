@@ -80,9 +80,9 @@ $(floats) data/empirical-results.RData:
 floats:
 	mkdir -p floats
 
-paper.pdf: paper.tex setup.tex $(mcfloats) $(empfloats)
-appendix.pdf: appendix.tex setup.tex $(apfloats)
-paper.pdf appendix.pdf:
+paper.pdf: $(mcfloats) $(empfloats)
+appendix.pdf: $(apfloats)
+paper.pdf appendix.pdf: %.pdf: %.tex setup.tex references.bib
 	$(latexmk) $(LATEXMKFLAGS) $<
 
 # These are the dependencies for the database.  Since all of the
