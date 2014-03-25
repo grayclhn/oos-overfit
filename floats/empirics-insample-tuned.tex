@@ -1,0 +1,48 @@
+\renewcommand\insampletests\relax
+
+\renewcommand\insamplecoefs{%
+  \begin{table}[tb]
+    \begin{tabularx}{\textwidth}{lCCCC}
+      \toprule
+      & \multicolumn{2}{c}{Coefficient estimates}
+      & \multicolumn{2}{c}{$p$-values} \\
+      \cmidrule(lr){2-3} \cmidrule(l){4-5}
+      & Full & Univariate & Full & Univariate \\
+      \midrule Stock market variance & $\enskip4.61$ & $\enskip0.36$ & $0.081$ & $0.870$ \\
+      Book to market ratio & $\enskip4.46$ & $\enskip4.81$ & $0.251$ & $0.027$ \\
+      Dividend to price ratio (log) & $\enskip4.40$ & $\enskip3.91$ & $0.400$ & $0.073$ \\
+      Long term rate & $\enskip3.78$ & $\enskip2.91$ & $0.035$ & $0.184$ \\
+      Long term yield & $\enskip3.23$ & $\!\!-1.25$ & $0.438$ & $0.569$ \\
+      Earnings to price ratio (log) & $\enskip0.79$ & $\enskip3.50$ & $0.849$ & $0.109$ \\
+      Inflation rate & $\enskip0.63$ & $\enskip0.69$ & $0.696$ & $0.754$ \\
+      Default return spread & $\enskip0.53$ & $\!\!-1.74$ & $0.795$ & $0.429$ \\
+      Net equity expansion & $\!\!-1.88$ & $\!\!-4.10$ & $0.626$ & $0.060$ \\
+      Treasury Bill rate & $\!\!-4.38$ & $\!\!-2.47$ & $0.316$ & $0.260$ \\
+      Percent equity issuing & $\!\!-5.56$ & $\!\!-5.10$ & $0.040$ & $0.019$ \\
+      Default yield spread & $\!\!-7.79$ & $\enskip0.79$ & $0.042$ & $0.720$ \\
+      \\
+      Robust $F$-statistic ($12$/$69$ df) & \enskip $3.37$ & & $0.001$ \\
+      $R^2$ & $\enskip 0.23$ \\
+      Adjusted $R^2$ & $\enskip 0.10$ \\
+      \bottomrule \end{tabularx}
+    \caption{Coefficient estimates and model fit for the univariate and full
+      models described in Section \ref{sec:empirics}. The ``Full'' column
+      lists the coefficient estimates from regressing the equity premium on
+      all of the variables listed; the ``Univariate'' column lists the
+      coefficient estimates from a univariate regression of the equity premium
+      on the variable alone. All of the regressions include a constant, but
+      its estimate is not listed. The equity premium is expressed in basis
+      points and all of the regressors are studentized.
+      These models are estimated using U.S. annual data from 1928--2009
+      (81 observations). The standard errors and robust $F$-statistic
+      are calculated using a Newey-West HAC estimator with two lags,
+      implemented in the \emph{sandwich} and \emph{lmtest} R packages
+      \protect\citep{NeW:87,ZeH:02,Zei:04}.}
+    \label{tab:gwinsample}
+  \end{table}
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

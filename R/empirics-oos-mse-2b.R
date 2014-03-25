@@ -11,6 +11,6 @@ window(oos.subset, end = 49) <- NA
 # Premium Forecasts
 oosplot(oos.subset[,c("interval", "average")],
         file = "floats/empirics-oos-mse-2b.tex",
-        xlabel = "$R$",
+        xlabel = "Observations used for training sample ($R$)",
         ticks = c(0, - 0.015/2, -.015, -(0.015 + 0.03)/2, -.03),
         labels = c("0", "", "", "", "-.03"))

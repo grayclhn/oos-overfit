@@ -1496,90 +1496,153 @@ power when it is not satisfied.
 \section{Empirical analysis of equity premium predictability}
 \label{sec:empirics}
 
-This section presents an analysis of equity premium predictability
-similar to \citet{GoW:08}.%
-\footnote{Calculations in this section are done in R \citep{Rde:10}
-  using the lmtest \citep{ZeH:02} and sandwich \citep{Zei:04}
-  packages. Tables and grapsh were prepared with the Hmsic
-  \citep{Har:10} and tikzDevice \citep{ShB:11:0.6.1} R packages as
-  well as the TikZ and PGF LaTeX packages \citep{Tan:10}} %
-We estimate the expected forecasting
-performance of the largest model they consider, a model with 13
-regressors, using 81 observations (annual data from 1928 to 2009).  We
-construct confidence intervals for the difference in performance
-between this model and a prevailing mean benchmark, and do so for
-different values of $R$ and $P$ to examine the effect of the training
-and test sample choice on this OOS statistic.  We find that the
-estimate of the larger model's Mean Squared Error (MSE) decreases relative to the
-benchmark as $R$ increases, but it is never smaller than the
-benchmark's.  This result, combined with the larger model's in-sample
-significance, suggests that there may be a real relationship between
-the equity premium and some of these predictors, but that the
-relationship can not be estimated accurately enough to be useful for
-forecasting and supports \citepos{GoW:08} conclusions.  These results
-hold even when imposing \citepos{CaT:08} restriction that the equity
-premium forecast be non-negative.
+This section presents a study of equity premium predictability based
+on \citet{GoW:08}. Goyal and Welch conduct an out of sample analysis
+of 18 different variables thought, based on previous research, to
+predict the equity premium (calculated as the difference between the
+return on the S\&P 500 index and the T-bill rate).%
+\footnote{\citet{GoW:08} builds on previous research by \citet{BoH:99}
+  and \cite{GoW:03}.} %
+Their analysis has two notable features: they compare different
+predictors across the same time periods and frequency as much as
+possible, making the accuracy of these predictors directly comparable;
+many of the papers that originally proposed these predictors used
+different time periods, methods, or observational frequencies so their
+results were not directly comparable. And Goyal and Welch compare
+these predictors out-of-sample; many of the original studies found
+in-sample evidence of equity premium predictability but did not look
+at out-of-sample evidence.
 
-We'll start with a very brief review.  \citet{GoW:08}
-study the OOS forecasting performance of different variables thought
-to predict the equity premium (calculated as the difference between
-the return on the S\&P 500 index and the T-bill rate).  Some of these
-variables are listed in
-Table~\ref{tab:equity}.%
-\footnote{Table~\ref{tab:equity} only lists the
-  variables used in \citepos{GoW:08} ``kitchen sink''
-  model.  Some of the variables that they use in bivariate models are
-  excluded from this model either because the series are too short or
-  because the variables are linear combinations of other variables.} %
-\citet{GoW:08} estimate the OOS forecasting
-performance of bivariate models of the form
+Goyal and Welch consider many different models; most of them are very
+simple---regression onto a constant and a single stochastic
+predictor---but some are more complicated. They find that essentially
+none of the models outperform a simple benchmark, the prevailing mean
+of the equity premium, and conclude that these variables do not
+predict the equity premium. A large literature has subsequently sought
+to explain or rebut these results, including several responses to
+Goyal and Welch's original working paper published in the same special
+issue of \textit{The Review of Financial Studies} as \citet{GoW:08}.%
+\footnote{Those papers are \citet{CaT:08}, \citet{Coc:08},
+  \citet{BRW:08}, and \citet{LeN:08}.} %
+
+\citet{GoW:08}, as well as \citet{BoH:99}, \citet{LeN:08}, and many
+other authors, propose that instability could explain the OOS failure
+of these models. However, we have shown in this paper that overfit can
+also explain this pattern, significant in-sample results that do not
+hold up out of sample. In this section, we explore the extent to which
+overfit is a potential concern in this data set and estimate the
+expected forecasting performance of the largest model they consider, a
+model with 13 regressors, using 81 observations (annual data from 1928
+to 2009). The predictors are listed in Table~\ref{tab:equity}; please
+see Goyal and Welch's original paper for detailed information about
+these variables.%
+\footnote{Table~\ref{tab:equity} only lists the variables used in
+  \citepos{GoW:08} ``kitchen sink'' model.  Some of the variables that
+  they use are excluded from this model either
+  because the series are too short or because the variables are linear
+  combinations of other variables.} %
+
+\citet{GoW:08} focus primarily on univariate regression models of the
+form
 \[
-r_{t+1} = \beta_0 + \beta_1 x_t + \e_{t+1}
+r_{t+1} = \beta_0 + \beta_1 x_{it} + \e_{t+1}
 \]
 using OLS with a recursive window, where $r_{t+1}$ is the equity
-premium and $x_t$ is a generic predictor, as well as some larger
-models.  They find that these models forecast no better than the
-prevailing mean of the equity premium.
-\citet{CaT:08} find that nonlinear extensions of
-Goyal and Welch's models are more accurate, either imposing sign
-restrictions on the estimated coefficients or imposing that the
-forecast be non-negative, but do not test for significance.
+premium and $x_{it}$ is one of the predictors listed in
+Table~\ref{tab:equity}.%
+\footnote{To make it easier to compare coefficients across variables
+  and models, all of the regressors are studentized before our
+  analysis and the equity premium is reported in basis points.} %
+This focus is consistent with much of the rest of the literature. But
+it is not clear that this approach---using a large number of
+restricted models---is any more reliable than using a single, large
+model. Very few papers in the equity-premium predictability literature
+explicitly account for the multiplicity of model comparisons%
+\footnote{\citet{RaW:06}, \citet{RaZ:12}, and \citet{Cal:13b} are
+  exceptions.} %
+and most widely-used statistics for multiple comparisons are
+derived under the assumption that there is a finite number of
+hypotheses or models (as is the case in \citealp{STW:99c},
+\citealp{Whi:00}, \citealp{Han:05}, and \citealp{LeR:05}), so there is
+little theoretical evidence that they are any more reliable than a
+regression model that encompasses all of the smaller models. Moreover,
+since \citet{GoW:08} (along with most of the rest of the literature)
+want to interpret these univariate regressions as meaningful
+statements about the true relationships between the equity premium and
+the regressors, omitted variable bias is a serious potential issue.
 
-Obviously, \citepos{GoW:08} bivariate models do not
-match the asymptotic theory of this paper, so we restrict our
-attention here to their ``kitchen sink'' model, which includes all of
-the variables, except for a few dropped because of data availability or
-(perfect) multicollinearity.  Formally, the benchmark and alternative models are
-\begin{eqnarray}
-  \label{eq:3}
-  r_{t+1} &=& \mu + \e_{1,t+1} \\
-  \label{eq:2}
-r_{t+1} &=& \beta_0 + \sum_{i=1}^K \beta_{i} x_{it} + \e_{2,t+1}
-\end{eqnarray}
-respectively and are estimated by OLS using the fixed-window scheme.
-The predictors are listed in Table~\ref{tab:equity}; for a detailed
-description of each predictor, please see Goyal and Welch's original
-paper.  In this model, there are 13 regressors (including the constant
-term) and we estimate the coefficients using annual data from 1928 to
-2009.  This makes the ratio $K/T$ equal to about 0.16.  We also
-present results for one of \citepos{CaT:08}
-restricted forecasting models.  For this model, we estimate
-\eqref{eq:3} and \eqref{eq:2}, but impose that $\hat r_{t+1}$ be
-non-negative for each forecast.  We then calculate the OOS test just
-as for the unconstrained model.
+For example, Table~\ref{tab:gwinsample} presents two full-sample
+coefficient estimates for each of the 12 predictors we consider.%
+\footnote{For all of our full sample results, we studentize the
+  regressors to make it easier to compare coefficient estimates and we
+  express the equity premium in basis points.} %
+The first column is the estimator of the coefficient on the listed
+variable in the full regression,
+\begin{equation}\label{eq:30}
+  r_{t+1} = \beta_0 + \sum_{i=1}^{12} \beta_{i} x_{it} + \e_{t+1},
+\end{equation}
+and the third column is the $p$-value associated with a two-sided
+$t$-test that the coefficient is zero in population. The second column
+is the estimator of the coefficient from the univariate regression
+\begin{equation}
+  r_{t+1} = \alpha_i + \gamma_{i} x_{it} + \e_{t+1},
+\end{equation}
+and the fourth column is the $p$-value associated with its $t$-test.%
+\footnote{All of the standard errors were calculated using a
+  Newey-West kernel with two lags.} %
+Some of the coefficient estimates agree, but some do not. The
+coefficient estimate for the \emph{default yield spread}, for example,
+is substantially and significantly negative in the full model ($-7.79$
+with $p$-value $0.042$), but is near zero in the univariate regression
+($0.79$ with $p$-value $0.720$). This pair of results implies that the
+the default yield spread contains information about the equity premium
+but is also correlated with other poor predictors, and that this
+additional correlation adds noise to the univariate regression
+and masks the true relationship. Similarly, \emph{net equity expansion}
+is significant at 10\% in the univariate regression but not in the
+full model ($p$-values of $0.060$ and $0.626$ respectively), which is
+likely attributable to omitted variable bias. So there is merit to
+studying a large model that includes all of the variables.
 
-Table~\ref{tab:gwinsample} gives the results of the full sample
-regression for Equation~\eqref{eq:2}, using Newey-West standard errors
-with two lags \citep{NeW:87}.%
-\footnote{We compare the test statistic
-  to critical values from the $F$-distribution.} %
-The $p$-value is
-very small (less than 0.01), indicating that the coefficients are
-nonzero in population and at least one of these predictors is
-correlated with the equity premium.  As we argue earlier, this result
-does not imply that the model will forecast well, which we look at
-next.
+Results for the full sample estimates of Equation~\eqref{eq:2} are in
+Table~\ref{tab:gwinsample}.%
+\footnote{Calculations in this section are done in R \citep{Rde:10}
+  using the \emph{lmtest} \citep{ZeH:02} and \emph{sandwich}
+  \citep{Zei:04} packages. Tables and graphs were prepared with the
+  \emph{dbframe} \citep{Cal:10b}, \emph{Hmsic} \citep{Har:10},
+  \emph{tikzDevice} \citep{ShB:11:0.6.1}, and \emph{xtable}
+  \citep{Dah:09} R packages as well as the \emph{booktabs}
+  \citep{FeE:05} and \emph{TikZ and PGF} LaTeX packages
+  \citep{Tan:10}}%
+\footnote{We compare the test statistic to critical values from the
+  $F$-distribution, which has been shown to be more reliable when
+  there are many regressors \citep{Ana:12,Cal:11c}.} %
+The last rows of the table list measures of the full-model fit.  The
+$p$-value for the test of full model fit is very small (less than
+0.01), indicating that the coefficients are nonzero in population and
+at least one of these predictors is correlated with the equity
+premium.%
+\footnote{We have done additional analysis to try to identify which
+  predictors were correlated with the equity premium, but none of the
+  individual regressors were significant after correcting for
+  multiplicity. The Bonferroni correction, for example, suggests that
+  an individual $p$-value would need to be less than $0.10/12 \approx
+  0.0083$ for its corresponding coefficint to be significant at the
+  10\% level, but the smallest $p$-value is $0.035$. One can improve
+  on the Bonferroni correction, but a comprehensive analysis is beyond
+  the scope of this paper.} %
+As we argue throughout the paper, this result does not imply that the
+model will forecast well.
 
+To determine whether the full model can forecast well, we use the DMW
+\oost\ test to compare it to a sample mean benchmark,
+\begin{equation}\label{eq:2}
+r_{t+1} = \mu + \e_{1,t+1}.
+\end{equation}
+Both models are estimated by OLS using the fixed-window scheme. We
+also present results for a restricted model proposed by
+\citet{CaT:08} that imposes that $\hat r_{t+1}$ be non-negative for
+each forecast.
 To study the effect of the training sample size on the DMW statistic, we
 calculate the one-sided confidence interval for $\E_T \oosB$ given
 by \eqref{interval-greater} corresponding to the null and alternative
@@ -1588,45 +1651,43 @@ hypotheses
 H_A: \quad E_T \oosB > 0
 \]
 using the fixed-window scheme for each value of $R$ between 20 and
-$T-10$.  The standard deviation is estimated using a Newey-West
+$T-10$. The standard deviation is estimated using a Newey-West
 estimator with $\lfloor P^{1/4}\rfloor$ lags.  For small values of
 $R$, the OOS average is expected to underestimate the performance of
 the larger model relative to the smaller, but this may not hold in
-this particular dataset.
+this particular dataset. For the OOS results, we express the equity
+premium in perecentage points.
 
-Figures~\ref{fig:empirics1} plots the OLS results and
-Figure~\ref{fig:empirics2} imposes \citepos{CaT:08} restriction.  The
+Figure~\ref{fig:empirics1} plots the OLS results and
+Figure~\ref{fig:empirics2} imposes \citepos{CaT:08} restriction. The
 solid line in each figure shows the OOS average, $\oosA$, and the
 shaded region indicates the 95\% one-sided confidence interval implied
-by the DMW test.  Negative numbers indicate that the kitchen sink
-model has higher out-of-sample loss.  We can see that the same
-patterns hold for both models: the performance difference decreases as
-$R$ grows, but the kitchen sink model is never more accurate.  We also
-see that the performance difference decreases suddenly over the period
-$R=29$ to $R=34$ (corresponding to the years 1956--1961).
+by the DMW test.  Negative numbers indicate that the full model has
+higher out-of-sample loss.  We can see that the same patterns hold for
+both models: the performance difference decreases as $R$ grows, but
+the full model is never more accurate.  We also see that the
+performance difference decreases suddenly over the period $R=29$ to
+$R=34$ (corresponding to the years 1956--1961).
 Figure~\ref{fig:empirics3} plots the accuracy of the individual
 forecasts (only for the linear models) and shows that this change is
-the result of a sudden improvement in the kitchen sink model.  This
-change may indicate instability in the underlying relationship, as
-\citet{GoW:08} propose.
+the result of a sudden improvement in the full model.  This change may
+indicate instability in the underlying relationship, as proposed by
+\citet{GoW:08}.
 
 In summary, we fail to reject the null that the benchmark prevailing
-mean model is more accurate than \citepos{GoW:08} kitchen sink.  This
-result is consistent with Goyal and Welch's original analysis.  Unlike
-Goyal and Welch, we attribute this result, at least in part, to
-parameter uncertainty---the full sample results indicate that the
-larger model could predict better than the benchmark with enough
-data.%
+mean model is more accurate than the full model including all of
+\citepos{GoW:08} predictors.  This result is consistent with Goyal and
+Welch's original analysis.  Unlike Goyal and Welch, we attribute this
+result, at least in part, to parameter uncertainty---the full sample
+results indicate that there is a true predictive relationship between
+some of these variables and the equity premium and the larger model
+could predict better than the benchmark with enough data.%
 \footnote{\citet{BWB:10} make a similar point about exchange rate
-models, but see also \citet{Chi:10} and \citet{Gia:10}.} %
-Obviously, this is an illustrative exercise only and is not meant to
-be comprehensive.  In this dataset, there is likely parameter
-instability that we have not addressed, and we have not dealt with
-variable persistence at all.  However, as we mention earlier, our
-requirement that $P$ be small should let our theoretical results
-extend to moderate instability, and the fact that we do not rely on
-the asymptotic distribution of the coefficient estimates should
-mitigate the effect of persistence as well.
+  models, but see also \citet{Chi:10} and \citet{Gia:10}.} %
+These also indicate that combination or shrinkage estimators of the
+full model could significantly improve on the benchmark.%
+\footnote{See \citet{RaZ:12} for a recent review of this
+  literature.} %
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -2358,48 +2419,44 @@ which converges to zero as $T \to \infty$.
 
 \bibliographystyle{abbrvnat}
 \bibliography{references}
+\clearpage
 
-\begin{table}[h]
- \begin{multicols}{2}
-  \begin{itemize}
-  \item log Dividend Price Ratio
-  \item log Earnings Price Ratio
-  \item Stock Market Variance
-  \item Book to Market Ratio
-  \item Net Equity Expansion
-  \item Percent Equity Issuing
-  \item Treasury Bill
-  \item Long Term Yield
-  \item Long Term Rate
-  \item Default Return Spread
-  \item Default Yield Spread
-  \item Inflation
-  \end{itemize}
- \end{multicols}
- \caption{Variables used in Section \ref{sec:empirics} and by Goyal
-   and Welch (2008) to predict the equity premium.  Please see Goyal
-   and Welch's original paper
-   for a detailed description of each variable.}
- \label{tab:equity}
+\begin{table}[tb]
+  \begin{tabularx}{\linewidth}{XX}
+    \toprule
+    Category & Variable \\
+    \midrule
+    Stock market variables
+    & Dividend to price ratio (log) \\
+    & Earnings to price ratio (log) \\
+    & Stock market variance \\
+    & Book to market ratio \\
+    & Net equity expansion \\
+    & Percent equity issuing \\\\
+    Interest rate variables
+    & Treasury Bill rate (3 month) \\
+    & Long term yield \\
+    & Long term rate \\
+    & Default return spread \\
+    & Default yield spread \\
+    & Inflation rate \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Variables used to predict the equity premium
+    (Section~\ref{sec:empirics}).
+    Please see Goyal and Welch's original paper \citep{GoW:08}
+    for a detailed description of each variable.}
+  \label{tab:equity}
 \end{table}
+\clearpage
 
-\begin{table}[b]
- \begin{center}
- \begin{tabular}{lrrrr}\hline\hline
-   \multicolumn{1}{l}{waldtest}&\multicolumn{1}{c}{Res.Df}&\multicolumn{1}{c}{Df}&\multicolumn{1}{c}{F}&\multicolumn{1}{c}{Pr(\textgreater
-     F)}\tabularnewline
-   \hline
-   1&69&&&\\
-   2&81&$-$12&3.4&0.00066 \\
-   \hline
-\end{tabular}
-\caption{Wald test for the null hypothesis that all of the
-  coefficients in Goyal and Welch's (2008) ``kitchen sink'' model are
-  zero, except for the intercept, using the Newey-West
-  variance-covariance matrix.  The p-value is calculated from the $F$
-  distribution.\label{tab:gwinsample}}
-\end{center}
-\end{table}
+\tryinput{floats/empirics-insample.tex}
+\tryinput{floats/empirics-insample-tuned.tex}
+% These macros create tables. They are defined in
+% floats/empirics-insample.tex and possibly overwritten in the next
+% file.
+\insamplecoefs
+\insampletests
 
 \clearpage
 \begin{figure}

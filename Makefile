@@ -44,14 +44,13 @@ all: paper.pdf appendix.pdf
 mc: $(mcDB) $(mcRnw:.Rnw=.pdf) # for convenience -- allows 'make mc'
 
 empfloats = \
-  floats/empirics-coeftest.tex \
+  floats/empirics-insample.tex \
   floats/empirics-oos-ind-ks.tex \
   floats/empirics-oos-ind-pm.tex \
   floats/empirics-oos-mse-1.tex \
   floats/empirics-oos-mse-1b.tex \
   floats/empirics-oos-mse-2.tex \
-  floats/empirics-oos-mse-2b.tex \
-  floats/empirics-waldtest.tex
+  floats/empirics-oos-mse-2b.tex
 mcfloats = \
   floats/mc-clarkwestsize.tex \
   floats/mc-dmwsize.tex \
@@ -68,6 +67,11 @@ apfloats = \
   floats/mc-mccrackensize-rec.tex
 floats = $(mcfloats) $(empfloats) $(apfloats)
 
+## This file can be added by hand to make a more attractive version of
+## the in-sample empirical tables
+floats/empirics-insample-tuned.tex:
+	touch $@
+
 $(empfloats): floats/%.tex: R/%.R data/empirical-results.RData | floats
 $(apfloats) $(mcfloats): floats/%.tex: R/%.R data/simulations.done | floats
 data/empirical-results.RData: R/empirics.R data/goyalwelch2009.csv
@@ -80,7 +84,10 @@ $(floats) data/empirical-results.RData:
 floats:
 	mkdir -p floats
 
-paper.pdf: $(mcfloats) $(empfloats)
+# Note that floats/empirics-insample.tex should be tuned by
+# hand. The R code 
+
+paper.pdf: $(mcfloats) $(empfloats) floats/empirics-insample-tuned.tex
 appendix.pdf: $(apfloats)
 paper.pdf appendix.pdf: %.pdf: %.tex setup.tex references.bib
 	$(latexmk) $(LATEXMKFLAGS) $<
