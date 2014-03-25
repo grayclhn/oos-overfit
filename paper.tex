@@ -19,7 +19,7 @@
 \begin{document}
 \maketitle
 
-\begin{abstract}\thispagestyle{empty}\noindent
+\begin{abstract}\noindent
   This paper uses dimension asymptotics to study why overfit linear
   regression models should be compared out-of-sample; we let the
   number of predictors used by the larger model increase with the
@@ -111,7 +111,7 @@ review of this literature]{Wes:06}.%
 hypotheses that can be tested by in-sample comparisons, \citet{GiW:06}
 derive an OOS test for the null hypothesis that the difference
 between two models' OOS forecasting performance is unpredictable, a
-martingale difference sequence; \citet{GiR:09} test whether the OOS
+martingale difference sequence (MDS); \citet{GiR:09} test whether the OOS
 forecasting performance of a model suffers from a breakdown relative
 to its in-sample performance; and \citet{GiR:10} test whether the
 forecasting performance is stable. However, those papers focus on a
@@ -1180,13 +1180,16 @@ are lots of estimates that are both far from zero and far from their
 true values which cause in-sample statistics to incorrectly choose the
 alternative model.
 
-\section{Monte Carlo}\label{sec:mc}
-\newcommand{\thetanorm}{\ensuremath{\lvert \theta \rvert_2}} This
-section presents two simulations that investigate the accuracy of our
-theory in small samples.\footnote{Simulations were conducted in R
-  \citep{Rde:10} using Sweave \citep{Lei:02} and the Lattice
-  \citep{Sar:10}, RSQLite \citep{Jam:10}, tikzDevice
-  \citep{ShB:11:0.6.1}, and pgfSweave \citep{BrS:11:1.2.1} packages.}
+\section{Monte Carlo}
+\label{sec:mc}
+
+This section presents two simulations that investigate the accuracy of
+our theory in small samples.%
+\footnote{Simulations were conducted in R \citep{Rde:10} using the
+  MASS \citep{VeR:02}, Matrix \citep{BM:13}, rlecuyer \citep{SR:12},
+  and RSQLite \citep{Jam:10} packages. Graphs were produced in R using
+  Lattice \citep{Sar:10} and tikzDevice \citep{ShB:11:0.6.1} as well
+  as the TikZ and PGF LaTeX packages \citep{Tan:10}} %
 The first looks at the asymptotic normality of the DMW statistic
 centered on either $\E_R \oosA$ or $\E_T \oosB$.  The previous
 section's results imply that centering on the first should give an
@@ -1418,13 +1421,17 @@ nominal size when testing the null $\E_T \oosB \leq 0$.  Moreover,
 these simulations demonstrate that the restriction $P^2/T \to 0$ is
 binding in practice, as the DMW test under-rejects and has very low
 power when it is not satisfied.
-\section{Empirical exercise}\label{sec:empirics}
+
+\section{Empirical analysis of equity premium predictability}
+\label{sec:empirics}
+
 This section presents an analysis of equity premium predictability
 similar to \citet{GoW:08}.%
-\footnote{All of the calculations in this
-  section are done in R \citep{Rde:10}.  We also use code provided by
-  \citet{Zeh:02}, \citet{Zei:04}, \citet{Har:10}, and
-  \citet{ShB:11:0.6.1}.} %
+\footnote{Calculations in this section are done in R \citep{Rde:10}
+  using the lmtest \citep{ZeH:02} and sandwich \citep{Zei:04}
+  packages. Tables and grapsh were prepared with the Hmsic
+  \citep{Har:10} and tikzDevice \citep{ShB:11:0.6.1} R packages as
+  well as the TikZ and PGF LaTeX packages \citep{Tan:10}} %
 We estimate the expected forecasting
 performance of the largest model they consider, a model with 13
 regressors, using 81 observations (annual data from 1928 to 2009).  We
