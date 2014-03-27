@@ -1,0 +1,33 @@
+% TikZ commands to draw circles
+\newcommand{\circlefigA}[4]{
+  \begin{tikzpicture}
+    \fill[lightgray] (-#3,-#3) rectangle (#4,#4);
+    % rejection region for F-test
+    \filldraw[fill=white,draw=black] (0,0) circle (#1);
+    % circle of equal generalization error
+    \filldraw[fill=white,draw=black] (1,1) let \p1=(1,1) in circle({veclen(\x1,\y1)});
+    \draw (1,1) let \p1=(1,1) in circle({veclen(\x1,\y1)});
+    \fill [black] (1,1) circle (2pt) node[right] {$M_2 \theta_2$};
+    \draw (0,0) circle (#1);
+    \draw (1,1)--(0,0);
+    % axes
+    \draw[->] (0,0)--(#2,0) node[right] {$e_1 M_2 \bh{2T}$};
+    \draw[->] (0,0)--(0,#2) node[above] {$e_2 M_2 \bh{2T}$};
+  \end{tikzpicture}
+}
+\newcommand{\circlefigB}[4]{
+  \begin{tikzpicture}
+    \fill[white] (-#3,-#3) rectangle (#4,#4);
+    % rejection region for F-test
+    \fill[lightgray] (0,0) circle (#1);
+    % circle of equal generalization error
+    \fill[white] (1,1) let \p1=(1,1) in circle({veclen(\x1,\y1)});
+    \draw (0,0) circle (#1);
+    \draw (1,1) let \p1=(1,1) in circle({veclen(\x1,\y1)});
+    \fill [black] (1,1) circle (2pt) node[right] {$M_2 \theta_2$};
+    \draw (1,1)--(0,0);
+    % axes
+    \draw[->] (0,0)--(#2,0) node[right] {$e_1 M_2 \bh{2T}$};
+    \draw[->] (0,0)--(0,#2) node[above] {$e_2 M_2 \bh{2T}$};
+  \end{tikzpicture}
+}
