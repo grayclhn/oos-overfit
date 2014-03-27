@@ -1622,7 +1622,7 @@ predict the equity premium (calculated as the difference between the
 return on the S\&P 500 index and the T-bill rate).%
 \footnote{\citet{GoW:08} builds on previous research by \citet{BoH:99}
   and \cite{GoW:03}.} %
-Their analysis has two notable features: they compare different
+Their analysis has two notable features: Goyal and Welch compare different
 predictors across the same time periods and frequency as much as
 possible, making the accuracy of these predictors directly comparable;
 many of the papers that originally proposed these predictors used
@@ -1668,10 +1668,7 @@ r_{t+1} = \beta_0 + \beta_1 x_{it} + \e_{t+1}
 \]
 using OLS with a recursive window, where $r_{t+1}$ is the equity
 premium and $x_{it}$ is one of the predictors listed in
-Table~\ref{tab:equity}.%
-\footnote{To make it easier to compare coefficients across variables
-  and models, all of the regressors are studentized before our
-  analysis and the equity premium is reported in basis points.} %
+Table~\ref{tab:equity}.
 This focus is consistent with much of the rest of the literature. But
 it is not clear that this approach---using a large number of
 restricted models---is any more reliable than using a single, large
@@ -1695,7 +1692,7 @@ coefficient estimates for each of the 12 predictors we consider.%
 \footnote{For all of our full sample results, we studentize the
   regressors to make it easier to compare coefficient estimates and we
   express the equity premium in basis points.} %
-The first column is the estimator of the coefficient on the listed
+The first column is the estimator of the coefficient on the
 variable in the full regression,
 \begin{equation*}
   r_{t+1} = \beta_0 + \sum_{i=1}^{12} \beta_{i} x_{it} + \e_{t+1},
@@ -1727,20 +1724,16 @@ Results for the full sample estimates of these models are in
 Table~\ref{tab:gwinsample}.%
 \footnote{Calculations in this section are done in R \citep{Rde:10}
   using the \emph{lmtest} \citep{ZeH:02} and \emph{sandwich}
-  \citep{Zei:04} packages. Tables and graphs were prepared with the
-  \emph{dbframe} \citep{Cal:10b}, \emph{Hmsic} \citep{Har:10},
-  \emph{tikzDevice} \citep{ShB:11:0.6.1}, and \emph{xtable}
-  \citep{Dah:09} R packages as well as the \emph{booktabs}
-  \citep{FeE:05} and \emph{TikZ and PGF} LaTeX packages
-  \citep{Tan:10}}%
+  \citep{Zei:04} packages.}%
 \footnote{We compare the test statistic to critical values from the
-  $F$-distribution, which has been shown to be more reliable when
-  there are many regressors \citep{Ana:12,Cal:11c}.} %
+  $F$-distribution, which have been shown to be more reliable than
+  Chi-squared critical values when there are many regressors
+  \citep{Ana:12,Cal:11c}.} %
 The last rows of the table list measures of the full-model fit.  The
 $p$-value for the test of full model fit is very small (less than
-0.01), indicating that the coefficients are nonzero in population and
-at least one of these predictors is correlated with the equity
-premium.%
+0.01), indicating that some of the coefficients are nonzero in
+population and at least one of these predictors is correlated with the
+equity premium.%
 \footnote{We have done additional analysis to try to identify which
   predictors were correlated with the equity premium, but none of the
   individual regressors were significant after correcting for
@@ -1748,8 +1741,8 @@ premium.%
   an individual $p$-value would need to be less than $0.10/12 \approx
   0.0083$ for its corresponding coefficient to be significant at the
   10\% level, but the smallest $p$-value is $0.035$. One can improve
-  on the Bonferroni correction, but a comprehensive analysis is beyond
-  the scope of this paper.} %
+  on the Bonferroni correction, of course, but a comprehensive
+  analysis is beyond the scope of this paper.} %
 As we argue throughout the paper, this result does not imply that the
 model will forecast well.
 
@@ -1804,7 +1797,7 @@ could predict better than the benchmark with enough data.%
 \footnote{\citet{BWB:10} make a similar point about exchange rate
   models, but see also \citet{Chi:10} and \citet{Gia:10}.} %
 These also indicate that combination or shrinkage estimators of the
-full model could significantly improve on the benchmark.%
+full model have the potential to significantly improve on the benchmark.%
 \footnote{See \citet{RaZ:12} for a recent review of this
   literature.} %
 
