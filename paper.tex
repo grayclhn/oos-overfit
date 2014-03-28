@@ -1027,7 +1027,7 @@ This behavior is formalized in Theorem~\ref{res:insample2}.
 \end{thm}
 
 The condition~\ref{eq:27} requires that the acceptance region of
-$\Lambda$ eventually contains any finite cylindar centered at the
+$\Lambda$ eventually contains any finite cylinder centered at the
 origin. Again,~\eqref{eq:15} implies that statistics like the BIC
 will always choose the smaller model for some DGPs, even when the
 larger model will give more accurate forecasts. Both models may be
@@ -1350,7 +1350,7 @@ so the center of the conditional distribution of $\bh{2T}$ given $\E_T
 \oosB \leq 0$ is outside the acceptance region of the $F$-test. When
 this is the case, the conditional probability that $\bh{2T}$ falls in
 the rejection region is less than 1/2, since $M_2 \bh{2T}$ is
-uniformly distributed on the cylindar
+uniformly distributed on the cylinder
 \begin{equation*}
   (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
   \theta_2'M_2' M_2 \theta_2 + d
@@ -1358,18 +1358,18 @@ uniformly distributed on the cylindar
 for some positive $d$.
 
 The AIC behaves essentially the same way. For the BIC, the radius of
-the cylander centered at the origin increases with $T$ and eventually
-encompasses the cylander centered at $M_2 \theta_2$, so it never
+the cylinder centered at the origin increases with $T$ and eventually
+encompasses the cylinder centered at $M_2 \theta_2$, so it never
 selects the alternative once $T$ is large enough.
 \section{Monte Carlo}
 \label{sec:mc}
 
 This section presents two simulations that investigate the accuracy of
 our theory in small samples.
-We do several Monte Carlo exercises. The first looks at wheather our
-theoretical results for the OOS average are accuarate: whether or not
+We do several Monte Carlo exercises. The first looks at whether our
+theoretical results for the OOS average are accurate: whether or not
 the OOS average is approximately normal, and whether it is centered on
-$\E_R \oosA$, $\E_T \oosB$, or somewhere else entierely. The second
+$\E_R \oosA$, $\E_T \oosB$, or somewhere else entirely. The second
 issue is whether or not the \oost\ test is \emph{useful} for
 conducting inference about $\E_T \oosB$. Our theoretical results
 suggest that it may not be, because we require $P^2/T \to 0$ for
@@ -1385,7 +1385,7 @@ that. Simulations were conducted in R \citep{Rde:10} using the
 \emph{rlecuyer} \citep{SR:12} and graphs are produced using
 \emph{Lattice} \citep{Sar:10}. In this paper, we present results for
 the fixed window, but recursive window results are available in a
-separate Appendix and are broadly similary.
+separate Appendix and are broadly similar.
 
 \subsection{Setup}
 \label{sec:simulation-design}
@@ -1423,7 +1423,7 @@ draw such values of $X$ and $Y$.  For all of the studies, $L(e) =
 e^2$.
 
 To study the accuracy of our theoretical approximations, we first
-estmate the coverage probabilities of OOS confidence intervals for
+estimate the coverage probabilities of OOS confidence intervals for
 $\E_R \oosA$ and $\E_T \oosB$. For each draw of $X$ and $Y$, we
 construct the one-sided OOS interval defined in
 Theorem~\ref{res:oostest}:
@@ -1486,7 +1486,7 @@ Figure~\ref{fig:interval-R} gives the results for $\E_R \oosA$.  The
 actual coverage is very close to the nominal coverage except when $P$
 is very small.  The poor behavior for small $P$ is unsurprising, as it
 simply means that the CLT is a poor approximation when the test sample
-is small. The inteval for $T = 100$, $K = T/10$, and $c = 0$ is the
+is small. The interval for $T = 100$, $K = T/10$, and $c = 0$ is the
 worst, with actual coverage near 85\% for most values of $P/T$. But
 the others are much closer to nominal coverage, even for the
 parsimonious models ($K_1=1$ and $K_2= 3$) where one might expect
@@ -1520,7 +1520,7 @@ We plot each OOS test's conditional rejection probability,
 \end{equation*}
 for each combination of $T$, $K_1$, $K_2$, and $c$ as a function of
 $P$.  The $F$-test does not depend on $P$, so we calculate and
-tabluate it's conditional rejection probability as a single value for
+tabulate it's conditional rejection probability as a single value for
 each combination of design parameters.
 
 Table~\ref{fig:ftest} summarizes the simulation results for the
@@ -1580,7 +1580,7 @@ when $P/T = 2/3$.  Note that all of the simulations use the
 parsimonious model.  McCracken's statistic overrejects here by
 slightly less than Clark and West's, but still by a substantial
 amount. Note that we are unable to plot results for McCracken's
-statistic when $K/T = 10$, which is where the brakdown in Clark and
+statistic when $K/T = 10$, which is where the breakdown in Clark and
 West's test is most pronounced.
 
 Since the DMW test tends to have low rejection probability, the test's
@@ -2491,10 +2491,10 @@ event $\E_T \oosB = -d$.
 
 Since $M_2 \bh{2T}$ is normal, this conditional distribution is
 invariant to reflection across the axes defined by the eigenvectors of
-its covariance matrix. So when $\theta_2$ lies outside the cylindar
+its covariance matrix. So when $\theta_2$ lies outside the cylinder
 that contains the acceptance region of $\Lambda$, i.e. when
 $\theta_2'M_2' V_T M_2 \theta_2 > c$, we have%
-\footnote{To keep the notation in these equations managable, define
+\footnote{To keep the notation in these equations manageable, define
   the information set $\Gs = \sigma(\E_T \oosB \leq 0,~ \theta_2'M_2'
   V_T M_2 \theta_2 > c)$.} %
 \begin{align*}
@@ -2740,10 +2740,12 @@ Since $\delta$ is arbitrarily close to zero, this completes the proof.
 %%% TeX-master: "paper"
 %%% End:
 
-%  LocalWords:  ClM Mcc ClW MeR StW InK CCS CoS GiW GiR BRC HTF BoH
+%  LocalWords:  ClM Mcc ClW MeR StW InK CCS CoS GiW GiR BRC HTF BoH '
 %  LocalWords:  Tib BaN AIC BoB AkA AkP Efr iR eq FPE th Dou iS iT dx
 %  LocalWords:  JoD ixz Mcl RHS MSE homoskedastic Joh Widom TrW Sil
 %  LocalWords:  BFP dy LLNs VeR rlecuyer RSQLite Sar tikzDevice TikZ
 %  LocalWords:  PGF LaTeX jt test's CaT Coc BRW LeN RaW RaZ LeR ZeH
 %  LocalWords:  lmtest Zei dbframe Hmsic Har xtable Dah booktabs FeE
-%  LocalWords:  Bonferroni BWB Gia MeP indices Schwarz HaH Jong
+%  LocalWords:  Bonferroni BWB Gia MeP indices Schwarz HaH Jong i1 1R
+%  LocalWords:  overcorrect 'X 's 2P i' 2i 2m 4C De eigenvectors 'M
+%  LocalWords:  2'M 1'M
