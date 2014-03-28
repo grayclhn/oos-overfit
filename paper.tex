@@ -1026,7 +1026,7 @@ This behavior is formalized in Theorem~\ref{res:insample2}.
   \end{equation}
 \end{thm}
 
-The condition~\label{eq:27} requires that the acceptance region of
+The condition~\ref{eq:27} requires that the acceptance region of
 $\Lambda$ eventually contains any finite cylindar centered at the
 origin. Again,~\eqref{eq:15} implies that statistics like the BIC
 will always choose the smaller model for some DGPs, even when the
@@ -1300,8 +1300,9 @@ For the $F$-test we have, as before,
 \begin{equation*}
   F = \tfrac{T}{s^2 (K_2 - K_1)} \bh{2T}' M_2' M_2 \bh{2T}.
 \end{equation*}
-We know that $\sqrt{T}(F - 1)$ is asymptotically normal
-\citep{Cal:11c} so the test accepts if
+We know that $\sqrt{T}(F - 1)$ is asymptotically normal since its
+numerator is Chi-squared with $K_2-K_1$ degrees of freedom and obeys a
+CLT.  The test accepts if
 \begin{equation}\label{eq:26}
   \tfrac{T}{s^2 (K_2 - K_1)} \bh{2T}' M_2' M_2 \bh{2T}
   \leq 1 + \delta / \sqrt{T},
@@ -1341,7 +1342,7 @@ Figure~\ref{fig:rreject}~(a) plots the rejection region given $\E_T
 \oosB \leq 0$ and the shaded region in Figure~\ref{fig:rreject}~(b)
 plots the acceptance region given $\E_T \oosB \leq 0$.
 
-In the picture, the unknown coefficients satisfy
+In the picture, the true coefficients $\theta_2$ satisfy
 \begin{equation*}
 \theta_2'M_2'M_2\theta_2 > \var(\e_t)^{1/2} ((K_2 - K_1) / T)^{1/2}
 \end{equation*}
@@ -2480,7 +2481,7 @@ For any $d \geq 0$, the event $\E_T \oosB = -d$ implies that
 \end{equation*}
 which can be expressed as
 \begin{equation}\label{eq:34}
-  d + \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T}
+  d + \theta_2'M_2' M_2 \theta_2 + \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T}
   = (\bh{2T} - \theta_2)' M_2'M_2 (\bh{2T} - \theta_2) \quad a.s.
 \end{equation}
 $M_2 \bh{2T}$ is normally distributed conditional on $\bh{1T}$ and
@@ -2517,7 +2518,6 @@ for large enough $T$. Then
   & \quad + \Pr[\bh{2T}' V_T M_2 \bh{2T} > c \text{~~and~~ }
   \theta_2'M_2' V_T M_2 \theta_2 \leq c \mid \E_T \oosB \leq 0].
 \end{align*}
-
 The second term is nonnegative by design. By conditioning on
 $\theta_2'M_2' V_T M_2 \theta_2 > c$ our earlier argument shows that
 the first term is greater than or equal to $(1 - \delta) / 2$. Since
@@ -2533,22 +2533,22 @@ As in the proof of Theorem~\ref{res:insample1}, let $(\e_{t+h}, x_{t})
   \geq \E_T (y_{T+\h+1} - x_{2T+1}'\bh{2T})^2 \quad a.s.
 \end{equation*}
 which can be expressed as
-\begin{equation}\label{eq:34}
-  \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T}
+\begin{equation}\label{eq:2}
+  \theta_2'M_2 M_2'\theta_2 + \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T}
   \geq (\bh{2T} - \theta_2)' M_2'M_2 (\bh{2T} - \theta_2) \quad a.s.
 \end{equation}
 $M_2 \bh{2T}$ is normally distributed conditional on $\bh{1T}$ and
 $M_1 \bh{2T}$, and is a.s. contained in the sphere defined
-by~\eqref{eq:34} conditional on $\bh{1T}$, $M_1 \bh{2T}$, and the
+by~\eqref{eq:2} conditional on $\bh{1T}$, $M_1 \bh{2T}$, and the
 event $\E_T \oosB \geq 0$.
 
 Let $\delta$ be a small arbitrary constant, define $\theta^*$ as
 \begin{gather*}
   \theta^* = \argmax_\theta \theta' M_2' M_2 \theta \\
-  s.t.\ \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T} = (\theta - \theta_2)' M_2'M_2 (\theta - \theta_2)
+  s.t.\quad \theta_2'M_2'M_2\theta_2 +  \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T} = (\theta - \theta_2)' M_2'M_2 (\theta - \theta_2)
 \end{gather*}
-($\theta^*$ depends on $\bh{1T}$ and $M_1 \bh{2T}$) and choose $c$ so
-that
+($\theta^*$ is stochastic and depends on $\bh{1T}$ and $M_1 \bh{2T}$)
+and choose $c$ so that
 \begin{equation*}
   \Pr[ \theta^{* \prime} M_2 M_2 \theta^* > c] < \delta.
 \end{equation*}
