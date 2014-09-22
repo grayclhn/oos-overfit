@@ -3,14 +3,15 @@
 
 \title{Out-of-Sample Comparisons of Overfit Models}
 \author{Gray Calhoun\thanks{email: gcalhoun@iastate.edu. I
-    would like to thank Julian Betts, Helle Bunzel, Marjorie Flavin,
+    would like to thank Julian Betts, Helle Bunzel,
+    St\'ephane Bonhomme, Marjorie Flavin,
     Nir Jaimovich, Lutz Kilian, Ivana Komunjer, Michael McCracken,
     Seth Pruitt, Ross Starr, Jim Stock, Yixiao Sun, Allan Timmermann,
     Hal White, several anonymous referees, participants at the 2010
     Midwest Economics Association Annual Meetings, the 2010
     International Symposium on Forecasting, the 2010 Joint Statistical
     Meetings, the 2011 NBER-NSF Time-Series
-    Conference, and in many seminars at UCSD, and espeically
+    Conference, and in many seminars at UCSD, and especially
     Graham Elliott for their valuable suggestions, feedback and advice
     in writing this paper.  I would also like to thank Amit Goyal for
     providing computer code and data for his 2008 RFS paper
@@ -161,7 +162,7 @@ We focus on linear regression models estimated with a fixed window
 for simplicity, but our basic conclusions should be true for other
 models and estimation strategies as well.  Under this
 asymptotic theory, where the number of regressors $K$ increases with $T$
-so that $\lim K/T$ is positive and less than one,
+so that the limit of $K/T$ is positive and less than one,
 the OLS coefficient estimator is no longer
 consistent or asymptotically normal \citep{Hub:73} and has positive
 variance in the limit.  We show that, even so, the usual OOS average
@@ -203,12 +204,12 @@ It is important to realize that we are not \emph{advocating} linear
 regression for highly overparametrized models. If $K$ is very large
 relative to $T$, researchers will often want to use some form of
 shrinkage forecast, for example the LASSO \citep{Tib:96} or a factor
-model \citep{StW:02,BaN:02}. Our main focus in practice is settings
+model \citep{StW:02,BaN:02}. Our main focus is practical settings
 where $K$ is \emph{moderately} large and it is not clear whether
-overfit will dominate the results. In such settings that, it is
-important to understand the behavior of different evaluation criteria
-when $K$ is large, in case overfit is a concern, and to have reliable
-methods for estimating the models' performance, which is the goal of
+overfit will dominate the results. In these settings it is
+crucial to understand the behavior of different evaluation criteria
+when $K$ is large, in case overfit does turn out to be a concern, and to have reliable
+methods for estimating these overfit models' performance. This is the goal of
 this paper.
 
 Our theoretical results partially justify OOS comparisons when
@@ -232,7 +233,7 @@ estimation of the difference in the two models' performance,
 and $P^2/T \to 0$ is required for valid confidence
 intervals and inference.  For larger $P$, the OOS comparisons remain
 asymptotically normal, but are centered on the forecasting performance
-associated with the period-$R$ estimates.  In practice, researchers
+associated with the period $R$ estimates.  In practice, researchers
 typically use large values of $P$, so these studies may be too
 pessimistic about their models' future accuracy if they use the DMW
 test.  Section~\ref{sec:oostheory} lays out the asymptotic behavior of
@@ -241,8 +242,8 @@ the DMW test under this limit theory.
 Popular in-sample tests and model selection criteria, like the Wald
 test and the AIC, do not help forecasters in this setting. We show
 that these statistics do not select the more accurate model when
-choosing between overfit models. For many DGPs the Wald test and the
-will choose the larger alternative model over a small benchmark model
+choosing between overfit models. For many DGPs the Wald test
+will choose the larger model over a small benchmark
 with probability much greater than its nominal size, regardless of
 which model is more accurate, and the AIC behaves similarly. The BIC,
 however, chooses the benchmark model with probability approaching one
@@ -288,8 +289,8 @@ Finally, this paper introduces a new method of proof for OOS
 statistics.  We use a coupling argument (Berbee's Lemma, 1979) to show
 that sequences of OOS loss behave like mixingales when the
 underlying series are absolutely regular, even if the forecasts depend
-on non-convergent estimators.  Moreover, transformations of these
-processes also behave like mixingales when recentered, so 
+on non-convergent estimators.  Moreover, we also show that transformations of these
+processes behave like mixingales after they are appropriately recentered, so
 many arguments used to prove asymptotic
 results for Near Epoch Dependent (NED) functions of mixing processes
 can be used for these OOS processes with only slight modification.
@@ -300,7 +301,8 @@ Section~\ref{sec:theory} gives the main theoretical results for the
 DMW OOS test, shows that standard in-sample tests reject the
 benchmark model too often when it is misspecified but more accurate than the
 alternative, and shows that standard model selection methods can run
-into similar problems. Section~\ref{sec:mc}
+into similar problems. Section~\ref{sec:theory} also presents an
+example DGP that illustrates these results. Section~\ref{sec:mc}
 presents a Monte Carlo study supporting our theoretical results.
 Section~\ref{sec:empirics} applies the OOS statistic to
 \citepos{GoW:08} dataset for equity premium prediction, and
@@ -395,7 +397,8 @@ of the models that existed at the time of their study outperform a
 random walk. This finding has been remarkably durable and has spawned
 an enormous literature; see \cite{Mar:95}, \cite{KiT:03},
 \cite{CCP:05}, \cite{EnW:05}, \cite{Ros:05}, and \cite{BWB:10}, among
-many others.
+many others. Research in financial markets has found a similar pattern,
+e.g. \cite{BoH:99}, \citet{GoW:08,GoW:03}, and \citet{Tim:08}.
 
 Most theoretical research on these statistics, such as \citet{DiM:95}, \citet{Wes:96},
 and \cite{Mcc:07}, has focused on using the \oost\ statistic to test
@@ -702,8 +705,8 @@ $\sqrt{P} (\oosA - \E_R \oosA)$ is asymptotically normal as $P \to
 \infty$. This application of the CLT is complicated by a hidden source
 of dependence---the training sample estimators $\bh{iR}$. Under
 conventional asymptotic theory, we would replace each $\bh{iR}$ with
-its pseudotrue value $\theta_i$ and apply the CLT to $\sqrt{P}
-L(y_{t+\h} - x_{it}'\theta_i)$, with some complications potentially
+its pseudotrue value $\theta_i$ and apply the CLT to
+$L(y_{t+\h} - x_{it}'\theta_i)$, with some complications potentially
 arising from the replacement (as in \citealp{Wes:96},
 \citealp{ClM:01}, or \citealp{Mcc:07}, for example). But we can not
 make that replacement here, because our asymptotic approximation
@@ -777,7 +780,7 @@ weakly dependent mixingales, ensuring Lemma~\ref{res-mixingale}.
 The next Lemma connects $E_R \oosA$ to $\E_T \oosB$, the difference in
 the models' generalization error. Under conventional asymptotics,
 these quantities are generally close. But they are not for overfit
-models, and the models will tend to forecast better when estimated over the
+models and the models will tend to forecast better when estimated over the
 full sample than over the training sample. Consequently, OOS
 comparisons will penalize overfit models too much unless the test
 sample is small relative to the total data set.
@@ -808,8 +811,7 @@ strong.
 Finally, we can use Lemmas~\ref{res-mixingale}
 and~\ref{res-convergence} to show that the DMW test is asymptotically
 normal and centered at $\E_T \oosB$, as long as
-Assumption~\ref{asmp-4}b holds. This theorem only establishes the
-asymptotic distribution, though.
+Assumption~\ref{asmp-4}b holds.
 
 \begin{thm}\label{res-oost}
   Suppose that Assumptions \ref{asmp-1}--\ref{asmp-5} hold (including
@@ -837,12 +839,12 @@ variance of the OOS average positive by letting $P \to \infty$ with
 $R$ fixed; in this paper, $R \to \infty$ but the variance remains
 positive since $K \to \infty$ (quickly) as well.
 
-When $K_1$ and $K_2$ are fixed, West's (1996) and McCracken's (2007)
-asymptotic theories apply and the \oost\ test remains normal as long
+If $K_1$ and $K_2$ were finite, West's (1996) and McCracken's (2007)
+asymptotic theories would apply and the \oost\ test would remain normal as long
 as $P/T \to 0$, even if $\sigma^2 \to 0$. Under that asymptotic
 approximation, the variance will converge to zero whenever the true
 DGP is nested in both of the forecasting models. The same principles
-may apply in our setting if $K_1$ and $K_2$ grow slowly, so $K_2/T \to
+may also apply if $K_1$ and $K_2$ grow slowly, with $K_2/T \to
 0$. It is likely that a second order expansion along the lines of
 \citet{Mcc:07} would lead to asymptotic normality for that
 intermediate case, but we leave that issue to future research.
@@ -877,7 +879,7 @@ alternative model in the future.
 \noindent
 The results for confidence intervals in Theorem~\ref{res:oostest}
 follow immediately from Theorem~\ref{res-oost},
-but~\eqref{eq:23} requires additional steps.
+but~\eqref{eq:23} requires additional proof.
 
 \subsection{Failure of in-sample statistics for forecast evaluation}
 \label{sec:insample}
@@ -906,7 +908,7 @@ hypotheses under increasing-$K$ asymptotics.%
 To simplify the presentation and the intuition we only derive results
 for nested models and for MSE loss, but the conclusions hold much more
 generally.%
-\footnote{Also, define $M_1 = [I_{K_1} \ 0_{K_1 \times (K_2 - K_1)}]$
+\footnote{In this section, we define $M_1 = [I_{K_1} \ 0_{K_1 \times (K_2 - K_1)}]$
   and $M_2 = [0_{(K_2 - K_1) \times K_2} \ I_{K_2 - K_1}]$ as the
   selection matrices that return the first $K_1$ and the last $K_2 -
   K_1$ elements of $\theta_2$, and assume that the regressors are
@@ -954,8 +956,7 @@ formalized in Theorem~\ref{res:insample1}.
 
   Then there exist DGPs satisfying these assumptions such that
   \begin{equation}\label{eq:11}
-    \liminf_{T \to \infty} \E( \Lambda \mid \E_T \oosB \leq 0 )
-    \to^p \gamma > 1/2 - \delta.
+    \liminf_{T \to \infty} \E( \Lambda \mid \E_T \oosB \leq 0 ) \geq 1/2.
   \end{equation}
 \end{thm}
 
@@ -963,14 +964,15 @@ As we state above,~\eqref{eq:11} means that, with high probability,
 the benchmark model is rejected even when it is more accurate. In
 general, $\delta$ can be made arbitrarily small by increasing the
 region enclosed by $\1\{\bh{2T}'M_2' V_T M_2\bh{2T}\}$ and DGPs can be
-chosen to put $\gamma$ arbitrarily close to 1 while still satisfying
+chosen to put the limiting quantity in~\eqref{eq:11}
+arbitrarily close to 1 while still satisfying
 the assumptions of the Theorem.  The DGPs and
 statistics used in Theorem~\ref{res:insample1} are simple and
 common. They include correctly specified linear models with normal and
 homoskedastic errors; and the statistics that meet the restrictions on
 $\Lambda$ include the $F$-test and AIC.
 
-For example, the $F$-statistic to test the null hypothesis that the
+For example, the $F$-statistic for the null hypothesis that the
 benchmark model is correctly specified is known to have the form
 \begin{equation*}
   F = \frac{\bh{2T}' M_2' ( M_2 (X_{2T}'X_{2T})^{-1} M_2' )^{-1} M_2
@@ -984,11 +986,7 @@ error. Then let $c$ be any number greater than 1 and define
 \end{equation*}
 If Assumption~\ref{asmp-2} holds and $s^2$ is consistent then $V_T$
 has uniformly bounded eigenvalues and has rank $K_2 - K_1$, so it
-satisfies~\eqref{eq:25}.%
-\footnote{If it is surprising that these conditions hold for any $c >
-  1$, remember that the $F$ random variable converges to 1 in
-  probability as both degrees of freedom diverge to $\infty$ since its
-  numerator and denominator both obey the LLN.} %
+satisfies~\eqref{eq:25}.
 Robust variations of the Wald test can obviously satisfy~\eqref{eq:25}
 for similar reasons, and the AIC for nested linear models is
 equivalent to using the $F$-test with the critical value %
@@ -1016,7 +1014,7 @@ This behavior is formalized in Theorem~\ref{res:insample2}.
   Theorem~\ref{res:insample1}. Also assume that, for any finite scalar
   $c$,
   \begin{equation}\label{eq:27}
-    \Pr[\Lambda \leq \1\{\bh{2T}'M_2' M_2\bh{2T} > c \}] \to 1
+    \Pr[\Lambda \leq \1\{\bh{2T}'M_2'J M_2\bh{2T} > c \}] \to 1
     \quad \text{as } T \to \infty.
   \end{equation}
 
@@ -1026,7 +1024,7 @@ This behavior is formalized in Theorem~\ref{res:insample2}.
   \end{equation}
 \end{thm}
 
-The condition~\ref{eq:27} requires that the acceptance region of
+The condition~\eqref{eq:27} requires that the acceptance region of
 $\Lambda$ eventually contains any finite cylinder centered at the
 origin. Again,~\eqref{eq:15} implies that statistics like the BIC
 will always choose the smaller model for some DGPs, even when the
@@ -1057,7 +1055,7 @@ $F$-test and Wald test in Theorem~\ref{res:insample1}.
 \label{sec:example}
 
 This subsection illustrates the previous theoretical results with a
-concrete Let $L(e) = e^2$ and $h = 1$. Suppose that the benchmark is
+concrete example. Let $L(e) = e^2$ and $h = 1$. Suppose that the benchmark is
 nested in the alternative and $(x_{2t}, \e_{2,t+1}) \sim i.i.d.\
 N(0,I)$, and let $y_{t+1} = x_{2t}'\theta_2 + \e_{2,t+1}$
 be the DGP. Also assume that $K_2/T \to c_2$ and $K_1 / T \to c_1 <
@@ -1065,15 +1063,15 @@ c_2$.
 
 The first part of this subsection shows how the assumptions in
 Section~\ref{sec:asmp} are satisfied and the second part
-demonstrates asymptotic normality of the DMW OOS $t$-test. The third
+demonstrates asymptotic normality of the DMW \oost\ test. The third
 part explicitly shows that $\E_R \oosA$ converges to $\E_T \oosB$ only
 when the test sample is small. And the last part demonstrates that the
-$F$-test, AIC, and BIC do not indicate which model will be more
+$F$-test does not indicate which model will be more
 accurate in the future, even in this simple example.
 
 \subsubsection*{Fulfillment of Assumptions 1--5}
 
-We will go through the assumptions one by one. The first Assumption is
+We will go through the assumptions one by one. The first is
 a condition on the dependence and moments of the process. Since the
 DGP is i.i.d. Normal, these conditions are satisfied trivially.
 
@@ -1099,20 +1097,20 @@ similar argument, but we are unaware of any papers that explicitly
 derive moments for this eigenvalue.
 
 For the conditional expectation of %
-$\sum_{s,t=U}^{V-\h} \e_{i,t+\h} \e_{i,s+\h} x_{i,s} x_{i,t}'$,
+$\sum_{s,t=U}^{V-1} \e_{i,t+1} \e_{i,s+1} x_{i,s} x_{i,t}'$,
 independence implies that
 \begin{equation*}
   \E\Big(
-  \sum_{s,t=U}^{V-\h} \e_{i,s+\h} \e_{i,t+\h} x_{is}x_{it}'
+  \sum_{s,t=U}^{V-1} \e_{i,s+1} \e_{i,t+1} x_{is}x_{it}'
   \mBig
   x_{i1},\dots,x_{i,U-1};
-  \sum_{s=U}^{V-\h} x_{is} x_{is}';
-  x_{i,V-\h+1},\dots,x_{i,T-\h}
+  \sum_{s=U}^{V-1} x_{is} x_{is}';
+  x_{i,V},\dots,x_{i,T-1}
   \Big)
-  = \sum_{s=U}^{V-\h} x_{is} x_{is}'.
+  = \sum_{s=U}^{V-1} x_{is} x_{is}'.
 \end{equation*}
 The largest eigenvalue of this last matrix is of order $K_i + V - U$,
-as discussed, and it has at most $V-\h - U + 1$ nonzero eigenvalues,
+as discussed, and it has at most $V - U$ nonzero eigenvalues,
 ensuring that both~\eqref{eq:28} and~\eqref{eq:8} hold.
 
 Assumption~\ref{asmp-3} restricts the loss function and the realized
@@ -1130,7 +1128,7 @@ requires the kernel of the HAC variance estimator to be continuous at
 zero; it is straightforward to construct an estimator that satisfies
 this condition. However, in this section we will use the estimator
 \begin{equation*}
-  \sh^2 = \frac{1}{n} \sum_{t=R+1}^{T-1} (D_t - \oosA)^2
+  \sh^2 = \frac{1}{P} \sum_{t=R+1}^{T-1} (D_t - \oosA)^2
 \end{equation*}
 which does not satisfy Assumption~\ref{asmp-5} but nevertheless is
 consistent for the conditional variance of $\oosA$ because the
@@ -1385,7 +1383,7 @@ that. Simulations were conducted in R \citep{Rde:10} using the
 \emph{rlecuyer} \citep{SR:12} and graphs are produced using
 \emph{Lattice} \citep{Sar:10}. In this paper, we present results for
 the fixed window, but recursive window results are available in a
-separate Appendix and are broadly similar.
+separate Appendix and are similar.
 
 \subsection{Setup}
 \label{sec:simulation-design}
@@ -1478,9 +1476,8 @@ We discuss results for the confidence intervals first.
 Figures~\ref{fig:interval-R} and~\ref{fig:interval-T} show the
 coverage probability of these intervals as a function of $P$ for each
 combination of $T$, $K_1$ and $K_2$, and $c$.  The nominal coverage is
-90\%.  The gray horizontal line shows the intervals' nominal coverage
-probability.  Each panel displays the coverage for a different choice
-of design parameters.
+90\% and is represented with a gray horizontal line. Each panel
+displays the coverage for a different choice of design parameters.
 
 Figure~\ref{fig:interval-R} gives the results for $\E_R \oosA$.  The
 actual coverage is very close to the nominal coverage except when $P$
@@ -1514,7 +1511,7 @@ one-sided interval.
 
 We present the size simulations next, in
 Figures~\ref{fig:ftest}--\ref{fig:ttest-power}.  For the OOS tests
-We plot each OOS test's conditional rejection probability,
+we plot each OOS test's conditional rejection probability,
 \begin{equation*}
   \Pr[\text{test rejects} \mid E_T \oosB \leq 0],
 \end{equation*}
@@ -2563,9 +2560,9 @@ Since $\delta$ is arbitrarily close to zero, this completes the proof.
 
 \qed
 
-\bibliographystyle{abbrvnat}
-\bibliography{references}
 \clearpage
+
+\tryinput{floats/mc-ftest.tex}
 
 \begin{table}[tb]
   \begin{tabularx}{\linewidth}{XX}
@@ -2602,8 +2599,6 @@ Since $\delta$ is arbitrarily close to zero, this completes the proof.
 % file.
 \insamplecoefs
 \insampletests
-
-\tryinput{floats/mc-ftest.tex}
 
 \begin{figure}\centering
   {\large Coverage of DMW OOS interval for $\E_R\oosA$ in simulations}
@@ -2714,7 +2709,7 @@ Since $\delta$ is arbitrarily close to zero, this completes the proof.
   function of the test sample size, $R$.  Both models forecast the
   equity premium using annual data from 1928--2008.  The solid line
   gives the OOS average, and the shaded region indicates the
-  one-sided 95\% confidence interval implied by the 
+  one-sided 95\% confidence interval implied by the
   DMW test.  The bottom panel is a detailed view of the top
   panel for $R \geq 50$.}
 \label{fig:empirics2}
@@ -2733,6 +2728,11 @@ Since $\delta$ is arbitrarily close to zero, this completes the proof.
 \label{fig:empirics3}
 \end{figure}
 
+\clearpage
+
+\bibliographystyle{abbrvnat}
+\bibliography{references}
+
 \end{document}
 
 %%% Local Variables:
@@ -2748,4 +2748,4 @@ Since $\delta$ is arbitrarily close to zero, this completes the proof.
 %  LocalWords:  lmtest Zei dbframe Hmsic Har xtable Dah booktabs FeE
 %  LocalWords:  Bonferroni BWB Gia MeP indices Schwarz HaH Jong i1 1R
 %  LocalWords:  overcorrect 'X 's 2P i' 2i 2m 4C De eigenvectors 'M
-%  LocalWords:  2'M 1'M
+%  LocalWords:  2'M 1'M DiM GoW Cla Whi RoW HHK Rde
