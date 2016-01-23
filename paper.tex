@@ -21,25 +21,24 @@
 \maketitle
 
 \begin{abstract}\noindent
-  This paper uses dimension asymptotics to study why overfit linear
-  regression models should be compared out-of-sample; we let the
-  number of predictors used by the larger model increase with the
+  This paper uses dimension asymptotics to study the behavior of
+  out-of-sample (OOS) test statistics when they are used to compare
+  ``overfit'' linear regression models. Under these asymptotics, the
+  number of predictors used by the larger model increases with the
   number of observations so that their ratio remains uniformly
-  positive.  Our analysis gives a theoretical motivation for using
-  out-of-sample (OOS) comparisons: the DMW OOS test allows a forecaster to
-  conduct inference about the expected future accuracy of his or her
-  models when one or both is overfit.  We show analytically and
-  through Monte Carlo that standard full-sample test statistics can
-  not test hypotheses about this performance.  Our paper also shows
-  that popular test and training sample sizes may give misleading
-  results if researchers are concerned about overfit.  We show that
-  $P^2/T$ must converge to zero for the DMW test to give valid
-  inference about the expected forecast accuracy, otherwise the test
-  measures the accuracy of the estimates constructed using only the
-  training sample.  In empirical research, $P$ is typically much
-  larger than this.  Our simulations indicate that using large values
-  of $P$ with the DMW test gives undersized tests with low power, so
-  this practice may favor simple benchmark models too much.
+  positive. This analysis gives a theoretical motivation for using
+  out-of-sample (OOS) comparisons: the Diebold-Mariano-West OOS $t$-test
+  (Diebold and Mariano, 1995, \textit{JBES}, and West, 1996,
+  \textit{Econometrica}) allows a forecaster to conduct inference
+  about the models' generalization error, an important measure of
+  forecast accuracy that conditions on the models' parameter estimates.
+  We show analytically and through Monte Carlo that standard full-sample
+  test statistics can not test hypotheses about this measure of performance.
+  Our paper also suggests that comparisons of overfit models require small
+  OOS test samples. If $P$ denotes the number of observations used for the
+  OOS comparison and $T$ the total number of observations, $P^2/T$ must
+  converge to zero for the OOS $t$-test to be centered on the model's
+  generalization error.
 
 \noindent JEL Classification: C12, C22, C52, C53
 
