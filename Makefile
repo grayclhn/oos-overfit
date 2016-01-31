@@ -89,7 +89,8 @@ floats:
 
 paper.pdf: $(mcfloats) $(empfloats) floats/empirics-insample-tuned.tex
 appendix.pdf: $(apfloats)
-paper.pdf appendix.pdf: %.pdf: %.tex setup.tex references.bib VERSION.tex
+paper.pdf appendix.pdf: %.pdf: %.tex \
+  setup.tex latex-tools-0.2.1/references.bib VERSION.tex
 	$(latexmk) $(LATEXMKFLAGS) $<
 
 # These are the dependencies for the database.  Since all of the
