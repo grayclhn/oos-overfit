@@ -1,8 +1,11 @@
+\date{\VERSION}
 \usepackage{
   amsmath,
   amsthm,
   booktabs,
+  fancyhdr,
   flexisym,
+  ifdraft,
   microtype,
   multicol,
   pgfplots,
@@ -21,6 +24,14 @@
 \DisableLigatures{family = tt*}
 \urlstyle{same}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\ifdraft{
+  \pagestyle{fancy}
+  \chead{\footnotesize\slshape\VERSION}
+  \lhead{}
+  \rhead{}
+  \renewcommand{\headrulewidth}{0pt}
+}{}
 
 \usetikzlibrary{calc}
 \usetikzlibrary{fit}

@@ -30,12 +30,12 @@ addboth = $(addprefix $(1),$(addsuffix $(2),$(3)))
 # you change the number of jobs, because of the seeding for the random
 # number generators.
 mcSQL   := $(call addboth,data/,.done,nobs coefficients)
-mcP     := data/oosstats.done 
+mcP     := data/oosstats.done
 mcDB    := $(mcSQL) $(mcP)
 mcRnw   := $(wildcard data/*.Rnw)
 
-.PHONY: all mc clean dist burn zip
-.DELETE_ON_ERROR: $(mcDB) 
+.PHONY: all mc clean dist burn zip VERSION.tex
+.DELETE_ON_ERROR: $(mcDB)
 .INTERMEDIATE: fwPackage_1.0.tar.gz
 
 # Basic execution of the makefile will run all of the tests, then
@@ -89,7 +89,7 @@ floats:
 
 paper.pdf: $(mcfloats) $(empfloats) floats/empirics-insample-tuned.tex
 appendix.pdf: $(apfloats)
-paper.pdf appendix.pdf: %.pdf: %.tex setup.tex references.bib
+paper.pdf appendix.pdf: %.pdf: %.tex setup.tex references.bib VERSION.tex
 	$(latexmk) $(LATEXMKFLAGS) $<
 
 # These are the dependencies for the database.  Since all of the
@@ -130,6 +130,10 @@ package/fwPackage: fwPackage_1.0.tar.gz
 $(localpackages):
 #IDGAF	$(R) CMD check -o $(@D) $<
 	$(R) CMD INSTALL --byte-compile --library=$(@D) $<
+
+# Write version and commit info from Git to a LaTeX file.
+VERSION.tex:
+	echo "\newcommand\VERSION{$$(latex-tools-0.2.1/version_git.sh)}" > $@
 
 # There are a few other standard targets that remove unnecessary
 # left-over files.
