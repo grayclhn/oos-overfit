@@ -16,8 +16,6 @@ RFLAGS       := --vanilla
 Rscript      := Rscript
 sqlite       := sqlite3
 sqliteFLAGS  := $(empty)
-LATEXMKFLAGS := -pdf -shell-escape
-latexmk  := latexmk
 
 ## define some convenience functions
 object = $(notdir $(basename $(1)))
@@ -91,7 +89,7 @@ paper.pdf: $(mcfloats) $(empfloats) floats/empirics-insample-tuned.tex
 appendix.pdf: $(apfloats)
 paper.pdf appendix.pdf: %.pdf: %.tex \
   setup.tex latex-tools-0.2.1/references.bib VERSION.tex
-	$(latexmk) $(LATEXMKFLAGS) $<
+	texi2dvi -p -q $<
 
 # These are the dependencies for the database.  Since all of the
 # tables are stored inside the same file, we can't use the filenames
