@@ -11,82 +11,10 @@
 \begin{document}
 \maketitle
 
-This appendix presents simulation results that accompany
-\citet{Cal:15b}. The Monte Carlo here is exactly the same as presented
-in \citet{Cal:15b}, except that a recursive window is used. Please read
-the original paper for further details.
+\input{appendix_contents.tex}
 
-\begin{itemize}
-
-\item Figure 1 in this Appendix corresponds to Figure 3 in the
-  original paper.
-\item Figure 2 corresponds to Figure 4 in the paper.
-\item Figure 3 corresponds to Figure 5 in the paper.
-\item Figure 4 corresponds to Figure 6 in the paper.
-\item Figure 5 corresponds to Figure 7 in the paper.
-
-\end{itemize}
-
-\nocite{DiM:95,Wes:96,Mcc:07,ClW:06,ClW:07}
 \bibliographystyle{abbrvnat}
 \bibliography{latex-tools-0.2.1/references}
-
-\begin{figure}[b]\centering
-  {\large Coverage of recursive DMW OOS interval in simulations}
-  \input{floats/mc-interval-generror1-rec.tex}
-  \caption{Simulated coverage of $\E_T \oosB$ at 90\% confidence using
-    a one-sided interval based on the recursive DMW \oost\ test,
-    plotted as a function of the fraction of observations used in the
-    test sample, $P/T$.  The solid horizontal line denotes the
-    intervals' nominal coverage.}
-  \label{fig:interval-T}
-\end{figure}
-
-\begin{figure}\centering
-  {\large Size of recursive DMW \oost\ test in simulations}
-  \input{floats/mc-dmwsize-rec.tex}
-  \caption{Simulated rejection probabilities for the recursive DMW
-    \oost\ test under the null hypothesis that the benchmark model is
-    more accurate, $\E_T \oosB \leq 0$. Nominal size is 10\% and is
-    marked with a solid horizontal line. Values greater than 10\%
-    indicate that the test rejects the benchmark model too often.}
-  \label{fig:ttest-size}
-\end{figure}
-
-\begin{figure}\centering
-  {\large Size of recursive Clark-West OOS test in simulations}
-  \input{floats/mc-clarkwestsize-rec.tex}
-  \caption{Simulated rejection probabilities for Clark and West's
-    (2006, 2007) recursive OOS test statistic under the null
-    hypothesis that the benchmark model is more accurate, $\E_T \oosB
-    \leq 0$. Nominal size is 10\% and is marked with a solid
-    horizontal line. Values greater than 10\% indicate that the test
-    rejects the benchmark model too often.}
-  \label{fig:clarkwest}
-\end{figure}
-
-\begin{figure}\centering
-  {\large Size of recursive McCracken \oost\ test in simulations}
-  \input{floats/mc-mccrackensize-rec.tex}
-  \caption{Simulated rejection probabilities for McCracken's (2007)
-    recursive \oost\ test under the null hypothesis that the benchmark
-    model is more accurate, $\E_T \oosB \leq 0$. Nominal size is 10\%
-    and is marked with a solid horizontal line. Values greater than
-    10\% indicate that the test rejects the benchmark model too
-    often.}
-  \label{fig:mccracken}
-\end{figure}
-
-\begin{figure}\centering
-  {\large Power of recursive DMW \oost\ test in simulations}
-  \input{floats/mc-dmwpower-rec.tex}
-  \caption{Simulated rejection probabilities for the recursive DMW
-    \oost\ test under the alternative that the benchmark model is less
-    accurate, $\E_T \oosB > 0$. Nominal size is 10\% and is marked
-    with a solid horizontal line. Values greater than 10\% indicate
-    that the test rejects the benchmark model too often.}
-  \label{fig:ttest-power}
-\end{figure}
 \end{document}
 
 %%% Local Variables:

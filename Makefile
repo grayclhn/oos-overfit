@@ -87,7 +87,7 @@ floats:
 
 paper.pdf: $(mcfloats) $(empfloats) floats/empirics-insample-tuned.tex
 appendix.pdf: $(apfloats)
-paper.pdf appendix.pdf: %.pdf: %.tex \
+paper.pdf appendix.pdf: %.pdf: %.tex appendix_contents.tex \
   setup.tex latex-tools-0.2.1/references.bib
 	texi2dvi -p -q $<
 
