@@ -32,7 +32,7 @@ mcP     := data/oosstats.done
 mcDB    := $(mcSQL) $(mcP)
 mcRnw   := $(wildcard data/*.Rnw)
 
-.PHONY: all mc clean dist burn zip VERSION.tex
+.PHONY: all mc clean dist burn zip
 .DELETE_ON_ERROR: $(mcDB)
 .INTERMEDIATE: fwPackage_1.0.tar.gz
 
@@ -88,7 +88,7 @@ floats:
 paper.pdf: $(mcfloats) $(empfloats) floats/empirics-insample-tuned.tex
 appendix.pdf: $(apfloats)
 paper.pdf appendix.pdf: %.pdf: %.tex \
-  setup.tex latex-tools-0.2.1/references.bib VERSION.tex
+  setup.tex latex-tools-0.2.1/references.bib
 	texi2dvi -p -q $<
 
 # These are the dependencies for the database.  Since all of the
@@ -129,10 +129,6 @@ package/fwPackage: fwPackage_1.0.tar.gz
 $(localpackages):
 #IDGAF	$(R) CMD check -o $(@D) $<
 	$(R) CMD INSTALL --byte-compile --library=$(@D) $<
-
-# Write version and commit info from Git to a LaTeX file.
-VERSION.tex:
-	echo "\newcommand\VERSION{$$(latex-tools-0.2.1/version_git.sh)}" > $@
 
 # There are a few other standard targets that remove unnecessary
 # left-over files.
