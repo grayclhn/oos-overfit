@@ -45,3 +45,8 @@ _region_.*
 *.out
 *.prv/
 *.toc
+
+paper*.sh
+appendix*.sh
+*.stderr
+*.stdout

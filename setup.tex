@@ -155,7 +155,18 @@
 \newcommand{\Gs}{\mathcal{G}}
 \newcommand{\Fs}{\mathcal{F}}
 
-%%% Local Variables: 
+\usepackage{bashful}
+
+% Check if shell commands can be executed
+\ifnum\pdfshellescape=1
+% Yes, enabled
+\newcommand{\VERSION}{\splice{echo `git log -1 --date=short --format=\%cd`, version `git describe --tag`}}
+\else
+% No, disabled
+\providecommand\VERSION{}
+\fi
+
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: paper.tex
-%%% End: 
+%%% End:
