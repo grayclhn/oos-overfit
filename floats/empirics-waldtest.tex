@@ -1,0 +1,18 @@
+% latex.default(waldtest(fullmod, vcov = NeweyWest(fullmod, prewhite = FALSE,      lag = 2), test = "F"), file = "floats/empirics-waldtest.tex",      digits = 2, caption = "Wald test for the null hypothesis that all of the coefficients\n                   in Goyal and Welch's (2008) ``kitchen sink'' model are zero,\n                   except for the intercept.",      label = "tab:gwinsample") 
+%
+\begin{table}[!tbp]
+\caption{Wald test for the null hypothesis that all of the coefficients
+                   in Goyal and Welch's (2008) ``kitchen sink'' model are zero,
+                   except for the intercept.\label{tab:gwinsample}} 
+\begin{center}
+\begin{tabular}{lrrrr}
+\hline\hline
+\multicolumn{1}{l}{waldtest}&\multicolumn{1}{c}{Res.Df}&\multicolumn{1}{c}{Df}&\multicolumn{1}{c}{F}&\multicolumn{1}{c}{Pr(\textgreater F)}\tabularnewline
+\hline
+1&$69$&$$&$$&$$\tabularnewline
+2&$81$&$-12$&$3.4$&$0.00066$\tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
