@@ -62,9 +62,9 @@ theory for statistics constructed from these prediction errors
 designed to approximate the behavior of the statistics when one of the
 models is overfit.  In doing so, we provide a theoretical
 justification for forecasters to use out-of-sample (OOS) instead of in-sample
-comparisons: the DMW OOS test%
-\footnote{In this paper, we will refer to the basic OOS $t$-test
-  studied by \citet{DiM:95} and \citet{Wes:96} as the DMW test.} %
+comparisons: the DMW OOS test\footnote{%
+  In this paper, we will refer to the basic OOS $t$-test studied by
+  \citet{DiM:95} and \citet{Wes:96} as the DMW test.} %
 allows a forecaster to conduct
 inference about the expected future accuracy of his or her models when
 one or both is overfit.  We show analytically and through Monte Carlo simulations
@@ -104,10 +104,10 @@ of the subsequent research by \citet{Mcc:00, Mcc:07}, \citet{CCS:01},
 \citet{Ana:07}, and others relaxes several of Diebold and Mariano's
 and West's assumptions, but maintains the stationarity and dependence
 conditions that permit in-sample comparisons \citep[see][for a
-review of this literature]{Wes:06}.%
-\footnote{Like us, \citet{Ana:07} allows the number of regressors to
-  increase with $T$.  But in that paper, the number of regressors
-  increases slowly enough that the OLS coefficients are consistent and
+review of this literature]{Wes:06}.\footnote{%
+  Like us, \citet{Ana:07} allows the number of regressors to increase
+  with $T$.  But in that paper, the number of regressors increases
+  slowly enough that the OLS coefficients are consistent and
   asymptotically normal.} %
 \citet{GiW:06} and
 \citet{GiR:09, GiR:10} are exceptions.  Instead of focusing on
@@ -170,9 +170,9 @@ variance in the limit.  We show that, even so, the usual OOS average
 is asymptotically normal and can consistently estimate the difference
 between the models' generalization error, the expected loss in the
 future conditional on the data available in period
-$T$.%
-\footnote{See, for example, \citet{HTF:08} for a discussion of
-  generalization error.} %
+$T$.\footnote{%
+  See, for example, \citet{HTF:08} for a discussion of generalization
+  error.} %
 Under these asymptotics, the generalization
 error does not converge to the expected performance of the pseudotrue
 models, so existing in-sample and OOS comparisons measure different
@@ -182,17 +182,17 @@ the model that is closer to the true DGP in population can forecast
 worse.  In such a situation, a standard in-sample comparison would
 correctly reject the null hypothesis that the benchmark is true, and
 an OOS comparison would correctly fail to reject the null that the
-benchmark is more accurate.%
-\footnote{In a pair of papers similar to
-  ours, \citet{ClM:12,ClM:12b} study in-sample and OOS tests that
-  the larger model has nonzero coefficients that are too close to zero
-  to expect the model to forecast more accurately.  Like this paper,
-  they argue that the larger model can be true but less accurate.
-  However, they focus on an aspect of the DGP that makes this
-  phenomenon likely, while we focus on the coefficient estimates that
-  produce less accurate forecasts.  Moreover, the implications of our
-  asymptotic theories are different and their papers do not provide
-  reasons to do OOS comparisons.} %
+benchmark is more accurate.\footnote{%
+  In a pair of papers similar to ours, \citet{ClM:12,ClM:12b} study
+  in-sample and OOS tests that the larger model has nonzero
+  coefficients that are too close to zero to expect the model to
+  forecast more accurately.  Like this paper, they argue that the
+  larger model can be true but less accurate.  However, they focus on
+  an aspect of the DGP that makes this phenomenon likely, while we
+  focus on the coefficient estimates that produce less accurate
+  forecasts.  Moreover, the implications of our asymptotic theories
+  are different and their papers do not provide reasons to do OOS
+  comparisons.} %
 Also note that, in this situation, a model that performs well
 in-sample can perform badly out-of-sample even if there are no
 structural breaks or other forms of instability.  Researchers
@@ -248,34 +248,34 @@ will choose the larger model over a small benchmark
 with probability much greater than its nominal size, regardless of
 which model is more accurate, and the AIC behaves similarly. The BIC,
 however, chooses the benchmark model with probability approaching one
-even when the \emph{alternative} model is more accurate.%
-\footnote{Our result holds for a broad class of full-sample
-  statistics, but there may be other potential statistics that mimic
-  the OOS test and remain valid. Exploring such statistics is left for
-  future research.} %
+even when the \emph{alternative} model is more accurate.\footnote{%
+  Our result holds for a broad class of full-sample statistics, but
+  there may be other potential statistics that mimic the OOS test and
+  remain valid. Exploring such statistics is left for future
+  research.} %
 This result holds even though modifications of the $F$-test are valid
 under this asymptotic theory, as shown by \citet{BoB:95},
 \citet{AkA:00}, \citet{AkP:04}, \citet{Cal:11c}, and \citet{Ana:12},
-among others.%
-\footnote{Also see \citet{Efr:86,Efr:04} for a discussion of naive
-  in-sample loss comparisons.} %
+among others.\footnote{%
+  Also see \citet{Efr:86,Efr:04} for a discussion of naive in-sample
+  loss comparisons.} %
 Moreover, under this asymptotic theory, many recent OOS test
 statistics, such as those derived by \cite{ClM:01,ClM:05},
 \citet{Mcc:07}, and \citet{ClW:06,ClW:07} should have the same
-problems as in-sample tests.%
-\footnote{Our theoretical results apply directly to \citepos{Mcc:07}
-  OOS $t$-test, since it simply proposes more liberal critical values
-  for the same test statistic that we study.  Since
-  \citet{ClW:06,ClW:07} use a finite length estimation window, our
-  asymptotics are incompatible with theirs and prevent us from
-  studying their test directly, as well as \citepos{GiW:06} and other
-  tests based on \citepos{GiW:06} asymptotics.  But \clws\ test can be
-  viewed as a stochastic adjustment to the critical values of the
-  usual \oost\ test, so our conclusions should apply informally as
-  well.  Specifically, we show that the DMW test rejects with
-  probability equal to nominal size when the estimated benchmark model
-  is expected to be more accurate, so more liberal critical values
-  result in overrejection.} %
+problems as in-sample tests.\footnote{%
+  Our theoretical results apply directly to \citepos{Mcc:07} OOS
+  $t$-test, since it simply proposes more liberal critical values for
+  the same test statistic that we study.  Since \citet{ClW:06,ClW:07}
+  use a finite length estimation window, our asymptotics are
+  incompatible with theirs and prevent us from studying their test
+  directly, as well as \citepos{GiW:06} and other tests based on
+  \citepos{GiW:06} asymptotics.  But \clws\ test can be viewed as a
+  stochastic adjustment to the critical values of the usual \oost\
+  test, so our conclusions should apply informally as well.
+  Specifically, we show that the DMW test rejects with probability
+  equal to nominal size when the estimated benchmark model is expected
+  to be more accurate, so more liberal critical values result in
+  overrejection.} %
 These tests are also designed to reject the benchmark when the
 alternative model is true, and so they may reject too often when the
 benchmark is misspecified but more accurate.  Obviously, since the
@@ -362,8 +362,9 @@ estimation strategy,
 where
 \begin{equation*}
   \bh{it} = \Big(\sum_{s=1}^{R-\h} x_{is}x_{is}'\Big)^{-1} \sum_{s=1}^{R-\h}
-  x_{is} y_{s+\h}, \qquad \text{for } i=1,2;\ t = R+1,\dots, T - \h.%
-\footnote{It may not be clear why we are using the index $t$ in $\bh{it}$,
+  x_{is} y_{s+\h}, \qquad
+  \text{for } i=1,2;\ t = R+1,\dots, T - \h.\footnote{%
+    It may not be clear why we are using the index $t$ in $\bh{it}$,
     since $\bh{it} = \bh{iR}$ almost surely for all $t \leq T-h$.
     But $\bh{it}$ will be defined for $t > T-\h$
     soon and will not equal $\bh{iR}$ for those values of $t$.} %
@@ -372,9 +373,9 @@ where
 The models are then compared by their forecast performance over the test
 sample. There are many statistics that have been considered in the
 literature, but we focus on perhaps the most natural, the DMW \oost\
-test \citep{DiM:95,Wes:96}.%
-\footnote{The core insights of our paper apply to other OOS statistics
-  as well.} %
+test \citep{DiM:95,Wes:96}.\footnote{%
+  The core insights of our paper apply to other OOS statistics as
+  well.} %
 This statistic is based on
 the difference in the models' loss over the test sample, $\oosA$,
 defined as
@@ -426,9 +427,9 @@ the performance of the two models.
 
 Under conventional fixed-$K$ asymptotic theory, $\E_T \oosB$ would
 converge in probability to the difference in the expected loss
-associated with the pseudotrue models,%
-\footnote{This statement is subject to the usual assumptions: some
-  form of stationarity, bounded moments, and weak dependence.} %
+associated with the pseudotrue models,\footnote{%
+  This statement is subject to the usual assumptions: some form of
+  stationarity, bounded moments, and weak dependence.} %
 \begin{equation}\label{eq:22}
   \E L(y_{t+\h} - x_{1t}'\theta_{1}) - \E L(y_{t+\h} - x_{2t}'\theta_{2}).
 \end{equation}
@@ -704,8 +705,8 @@ prevents $x_{it}'\bh{iR}$ from converging to $x_{it}'\theta_i$.
 
 Instead, we show that $D_t - \E_R D_t$ is an $L_2$-mixingale that
 satisfies the CLT. Mixingales satisfy a weak-dependence condition
-similar to MDSes,%
-\footnote{An array $Z_{n,t}$ and an increasing sequence of \sfields
+similar to MDSes,\footnote{%
+  An array $Z_{n,t}$ and an increasing sequence of \sfields
   $\Gs_{n,t}$ is an \emph{$L_2$-mixingale of size $-1/2$} if there is
   an array of constants $\{c_{n,t}\}$ and a sequence of constants
   $\zeta_l = O(l^{-1/2 - \delta})$ for some $\delta > 0$ such that
@@ -721,9 +722,9 @@ similar to MDSes,%
 but they have some limitations. Transformations of mixingales are
 typically not themselves mixingales, which means that CLTs for
 mixingale processes require additional assumptions to hold beyond the
-mixingale property.%
-\footnote{See \citet{Jon:97} for an illustration. We will borrow
-  heavily from his results in our proofs.} %
+mixingale property.\footnote{%
+  See \citet{Jon:97} for an illustration. We will borrow heavily from
+  his results in our proofs.} %
 This is in contrast to Near Epoch Dependent (NED) processes, which
 retain the NED property after transformations. \citep[See chapter 17
 of][for further discussion of these properties.]{Dav:94} But the OOS
@@ -886,24 +887,25 @@ model.  This is a different issue than whether or not full-sample
 tests are valid for testing hypotheses about the pseudotrue
 coefficients of the models; as \citet{Cal:11c} and \citet{Ana:12}
 demonstrate, variations of the Wald test can be valid for those
-hypotheses under increasing-$K$ asymptotics.%
-\footnote{\citet{Ana:12} shows that the Wald test is invalid in
-  general and gives an adjustment that corrects the critical values;
-  he also shows that the $F$-test is asymptotically valid under
-  certain conditions on the distribution of the regressors.
-  \citet{Cal:11c} shows that the $F$-test is asymptotically invalid
-  without Anatolyev's constraint, even under homoskedasticity, and
-  provides a correction that gives valid tests.  Both papers only
-  consider independent observations.} %
+hypotheses under increasing-$K$ asymptotics.\footnote{%
+  \citet{Ana:12} shows that the Wald test is invalid in general and
+  gives an adjustment that corrects the critical values; he also shows
+  that the $F$-test is asymptotically valid under certain conditions
+  on the distribution of the regressors.  \citet{Cal:11c} shows that
+  the $F$-test is asymptotically invalid without Anatolyev's
+  constraint, even under homoskedasticity, and provides a correction
+  that gives valid tests.  Both papers only consider independent
+  observations.} %
 To simplify the presentation and the intuition we only derive results
 for nested models and for MSE loss, but the conclusions hold much more
-generally.%
-\footnote{In this section, we define $M_1 = [I_{K_1} \ 0_{K_1 \times (K_2 - K_1)}]$
-  and $M_2 = [0_{(K_2 - K_1) \times K_2} \ I_{K_2 - K_1}]$ as the
-  selection matrices that return the first $K_1$ and the last $K_2 -
-  K_1$ elements of $\theta_2$, and assume that the regressors are
-  ordered so that the first $K_1$ elements of $x_{2,t}$ correspond to
-  $x_{1,t}$.} %
+generally.\footnote{%
+  In this section, we define
+  $M_1 = [I_{K_1} \ 0_{K_1 \times (K_2 - K_1)}]$ and
+  $M_2 = [0_{(K_2 - K_1) \times K_2} \ I_{K_2 - K_1}]$ as the
+  selection matrices that return the first $K_1$ and the last
+  $K_2 - K_1$ elements of $\theta_2$, and assume that the regressors
+  are ordered so that the first $K_1$ elements of $x_{2,t}$ correspond
+  to $x_{1,t}$.} %
 
 The full-sample statistics we study in this paper share a common
 property. They choose the alternative model when the distance between
@@ -1443,14 +1445,15 @@ often.
 
 We look at four different statistics---the full-sample $F$-test, the
 DMW $t$-test, the OOS $t$-test using McCracken's (2007) critical
-values,%
-\footnote{These critical values are not published for $K_2-K_1>10$, so
-  we do not report them for $K_2 = T/10$.} %
-and Clark and West's (2006, 2007) Gaussian out-of-sample statistic.%
-\footnote{Clark and West (2006, 2007) derive their statistic using the
-  rolling window estimation scheme. Here we use the same statistic,
-  but with a fixed window scheme. A supplemental appendix presents
-  results for their statistic, using the recursive window.} %
+values,\footnote{%
+  These critical values are not published for $K_2-K_1>10$, so we do
+  not report them for $K_2 = T/10$.} %
+and Clark and West's (2006, 2007) Gaussian out-of-sample
+statistic.\footnote{%
+  Clark and West (2006, 2007) derive their statistic using the rolling
+  window estimation scheme. Here we use the same statistic, but with a
+  fixed window scheme. A supplemental appendix presents results for
+  their statistic, using the recursive window.} %
 For the $F$-test, we simply test whether the coefficients on the
 larger model are nonzero.  For the out-of-sample tests, we conduct a
 one-sided test of out-of-sample performance for every value of $P$ as
@@ -1573,9 +1576,9 @@ West's test is most pronounced.
 Since the DMW test tends to have low rejection probability, the test's
 power is a concern.  Figure~\ref{fig:ttest-power} power results for
 the DMW test, simulating from \eqref{eq:1} with $c = 1$ or 2 subject
-to the constraint that $\E_T \oosB > 0$.%
-\footnote{Draws of $X$ and $Y$ with $\E_T \oosB > 0$ are very rare
-  when $c=0$, so we do not present results for that value of $c$.} %
+to the constraint that $\E_T \oosB > 0$.\footnote{%
+  Draws of $X$ and $Y$ with $\E_T \oosB > 0$ are very rare when $c=0$,
+  so we do not present results for that value of $c$.} %
 Since the other test statistics greatly overreject, we do not present
 their power.  For $c=1$, the power is never greater than nominal size
 and decreases to zero as $P/T$ increases for the overfit model.  For
@@ -1607,9 +1610,9 @@ This section presents a study of equity premium predictability based
 on \citet{GoW:08}. Goyal and Welch conduct an out of sample analysis
 of 18 different variables thought, based on previous research, to
 predict the equity premium (calculated as the difference between the
-return on the S\&P 500 index and the T-bill rate).%
-\footnote{\citet{GoW:08} builds on previous research by \citet{BoH:99}
-  and \cite{GoW:03}.} %
+return on the S\&P 500 index and the T-bill rate).\footnote{%
+  \citet{GoW:08} builds on previous research by \citet{BoH:99} and
+  \cite{GoW:03}.} %
 Their analysis has two notable features: Goyal and Welch compare different
 predictors across the same time periods and frequency as much as
 possible, making the accuracy of these predictors directly comparable;
@@ -1628,9 +1631,10 @@ of the equity premium, and conclude that these variables do not
 predict the equity premium. A large literature has subsequently sought
 to explain or rebut these results, including several responses to
 Goyal and Welch's original working paper published in the same special
-issue of \textit{The Review of Financial Studies} as \citet{GoW:08}.%
-\footnote{Those papers are \citet{CaT:08}, \citet{Coc:08},
-  \citet{BRW:08}, and \citet{LeN:08}.} %
+issue of \textit{The Review of Financial Studies} as
+\citet{GoW:08}.\footnote{%
+  Those papers are \citet{CaT:08}, \citet{Coc:08}, \citet{BRW:08}, and
+  \citet{LeN:08}.} %
 
 \citet{GoW:08}, as well as \citet{BoH:99}, \citet{LeN:08}, and many
 other authors, propose that instability could explain the OOS failure
@@ -1642,12 +1646,12 @@ expected forecasting performance of the largest model they consider, a
 model with 13 regressors, using 81 observations (annual data from 1928
 to 2009). The predictors are listed in Table~\ref{tab:equity}; please
 see Goyal and Welch's original paper for detailed information about
-these variables.%
-\footnote{Table~\ref{tab:equity} only lists the variables used in
+these variables.\footnote{%
+  Table~\ref{tab:equity} only lists the variables used in
   \citepos{GoW:08} ``kitchen sink'' model.  Some of the variables that
-  they use are excluded from this model either
-  because the series are too short or because the variables are linear
-  combinations of other variables.} %
+  they use are excluded from this model either because the series are
+  too short or because the variables are linear combinations of other
+  variables.} %
 
 \citet{GoW:08} focus primarily on univariate regression models of the
 form
@@ -1661,8 +1665,8 @@ This focus is consistent with much of the rest of the literature. But
 it is not clear that this approach---using a large number of
 restricted models---is any more reliable than using a single, large
 model. Very few papers in the equity-premium predictability literature
-explicitly account for the multiplicity of model comparisons%
-\footnote{\citet{RaW:06}, \citet{RaZ:12}, and \citet{Cal:15} are
+explicitly account for the multiplicity of model comparisons\footnote{%
+  \citet{RaW:06}, \citet{RaZ:12}, and \citet{Cal:15} are
   exceptions.} %
 and most widely-used statistics for multiple comparisons are
 derived under the assumption that there is a finite number of
@@ -1676,8 +1680,9 @@ statements about the true relationships between the equity premium and
 the regressors, omitted variable bias is a serious potential issue.
 
 For example, Table~\ref{tab:gwinsample} presents two full-sample
-coefficient estimates for each of the 12 predictors we consider.%
-\footnote{For all of our full sample results, we studentize the
+coefficient estimates for each of the 12 predictors we
+consider.\footnote{%
+  For all of our full sample results, we studentize the
   regressors to make it easier to compare coefficient estimates and we
   express the equity premium in basis points.} %
 The first column is the estimator of the coefficient on the
@@ -1691,9 +1696,10 @@ is the estimator of the coefficient from the univariate regression
 \begin{equation*}
   r_{t+1} = \alpha_i + \gamma_{i} x_{it} + \e_{t+1},
 \end{equation*}
-and the fourth column is the $p$-value associated with its $t$-test.%
-\footnote{All of the standard errors were calculated using a
-  Newey-West kernel with two lags.} %
+and the fourth column is the $p$-value associated with its
+$t$-test.\footnote{%
+  All of the standard errors were calculated using a Newey-West kernel
+  with two lags.} %
 Some of the coefficient estimates agree, but some do not. The
 coefficient estimate for the \emph{default yield spread}, for example,
 is substantially and significantly negative in the full model ($-7.79$
@@ -1709,11 +1715,11 @@ likely attributable to omitted variable bias. So there is merit to
 studying a large model that includes all of the variables.
 
 Results for the full sample estimates of these models are in
-Table~\ref{tab:gwinsample}.%
-\footnote{Calculations in this section are done in R \citep{Rde:10}
-  using the \emph{lmtest} \citep{ZeH:02} and \emph{sandwich}
-  \citep{Zei:04} packages.}%
-\footnote{We compare the test statistic to critical values from the
+Table~\ref{tab:gwinsample}.\footnote{%
+  Calculations in this section are done in R \citep{Rde:10} using the
+  \emph{lmtest} \citep{ZeH:02} and \emph{sandwich} \citep{Zei:04}
+  packages.}\footnote{%
+  We compare the test statistic to critical values from the
   $F$-distribution, which have been shown to be more reliable than
   Chi-squared critical values when there are many regressors
   \citep{Ana:12,Cal:11c}.} %
@@ -1721,16 +1727,16 @@ The last rows of the table list measures of the full-model fit.  The
 $p$-value for the test of full model fit is very small (less than
 0.01), indicating that some of the coefficients are nonzero in
 population and at least one of these predictors is correlated with the
-equity premium.%
-\footnote{We have done additional analysis to try to identify which
-  predictors were correlated with the equity premium, but none of the
-  individual regressors were significant after correcting for
-  multiplicity. The Bonferroni correction, for example, suggests that
-  an individual $p$-value would need to be less than $0.10/12 \approx
-  0.0083$ for its corresponding coefficient to be significant at the
-  10\% level, but the smallest $p$-value is $0.035$. One can improve
-  on the Bonferroni correction, of course, but a comprehensive
-  analysis is beyond the scope of this paper.} %
+equity premium.\footnote{%
+  We have done additional analysis to try to identify which predictors
+  were correlated with the equity premium, but none of the individual
+  regressors were significant after correcting for multiplicity. The
+  Bonferroni correction, for example, suggests that an individual
+  $p$-value would need to be less than $0.10/12 \approx 0.0083$ for
+  its corresponding coefficient to be significant at the 10\% level,
+  but the smallest $p$-value is $0.035$. One can improve on the
+  Bonferroni correction, of course, but a comprehensive analysis is
+  beyond the scope of this paper.} %
 As we argue throughout the paper, this result does not imply that the
 model will forecast well.
 
@@ -1781,13 +1787,13 @@ Welch's original analysis.  Unlike Goyal and Welch, we attribute this
 result, at least in part, to parameter uncertainty---the full sample
 results indicate that there is a true predictive relationship between
 some of these variables and the equity premium and the larger model
-could predict better than the benchmark with enough data.%
-\footnote{\citet{BWB:10} make a similar point about exchange rate
-  models, but see also \citet{Chi:10} and \citet{Gia:10}.} %
+could predict better than the benchmark with enough data.\footnote{%
+  \citet{BWB:10} make a similar point about exchange rate models, but
+  see also \citet{Chi:10} and \citet{Gia:10}.} %
 These also indicate that combination or shrinkage estimators of the
-full model have the potential to significantly improve on the benchmark.%
-\footnote{See \citet{RaZ:12} for a recent review of this
-  literature.} %
+full model have the potential to significantly improve on the
+benchmark.\footnote{%
+  See \citet{RaZ:12} for a recent review of this literature.} %
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -2180,8 +2186,8 @@ long as
 \end{equation*}
 and
 \begin{equation*}
-  \SumOuterBlock{i} \E_R Z_i^2 - \SumOuterBlock{i} \ZSqCE \to^p 0.%
-\footnote{Note that $\sigma^2 \in \mathcal{F}_t$ for
+  \SumOuterBlock{i} \E_R Z_i^2 - \SumOuterBlock{i} \ZSqCE \to^p 0.\footnote{%
+    Note that $\sigma^2 \in \mathcal{F}_t$ for
     all $t \geq R$, so Hall and Heyde's condition (3.21) is
     unnecessary---see the remarks after their result.} %
 \end{equation*}
@@ -2480,10 +2486,11 @@ Since $M_2 \bh{2T}$ is normal, this conditional distribution is
 invariant to reflection across the axes defined by the eigenvectors of
 its covariance matrix. So when $\theta_2$ lies outside the cylinder
 that contains the acceptance region of $\Lambda$, i.e. when
-$\theta_2'M_2' V_T M_2 \theta_2 > c$, we have%
-\footnote{To keep the notation in these equations manageable, define
-  the information set $\Gs = \sigma(\E_T \oosB \leq 0,~ \theta_2'M_2'
-  V_T M_2 \theta_2 > c)$.} %
+$\theta_2'M_2' V_T M_2 \theta_2 > c$, we have\footnote{%
+  To keep the notation in these equations manageable, define the
+  information set
+  $\Gs = \sigma(\E_T \oosB \leq 0,~ \theta_2'M_2' V_T M_2 \theta_2 >
+  c)$.} %
 \begin{align*}
   \Pr[ \bh{2T}' M_2' V_T M_2 \bh{2T} \leq c \mid \Gs]
   &= \E\Big( \Pr[ \bh{2T}'M_2' V_T M_2 \bh{2T} \leq c \mid \Gs,~\bh{1T},~M_1 \bh{2T}] \mid \Gs \Big) \\
