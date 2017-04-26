@@ -162,7 +162,7 @@
 % Check if shell commands can be executed
 \ifnum\pdfshellescape=1
 % Yes, enabled
-\newcommand{\VERSION}{\splice{echo `git log -1 --date=short --format=\%cd`, version `git describe --tag`}}
+\newcommand{\VERSION}{\splice{echo `git log -1 --date=short --format=\%cd`, `git rev-parse --abbrev-ref HEAD`: `git describe --tag`}}
 \else
 % No, disabled
 \providecommand\VERSION{}
