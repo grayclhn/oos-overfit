@@ -1,0 +1,84 @@
+\subsection{Proof of Theorem \ref{res-oost}}
+We can rewrite the centered \oost\ statistic as
+\[
+\sqrt{P}(\oosA - \E_T \oosB)/\sh
+= \frac{\sigma}{\sh}\, \Big( \sqrt{P}(\oosA - \E_R \oosA)/\sigma
++ \sqrt{P}(\E_R \oosA - \E_T \oosB)/\sigma \Big)
+\]
+so Lemma \ref{res-mixingale} and \ref{res-convergence} ensure that
+this term is asymptotically standard normal as long as $\sigma/\sh
+\to^p 1$. Since $\sigma$ is almost surely positive, this convergence
+is equivalent to $\sigma^2 - \sh^2 \to^p 0$.
+
+The proof that $\sigma^2 - \sh^2 \to^p 0$ follows \citepos{JoD:00}
+Theorem 2.1 closely.  We start by defining similar quantities to
+theirs, borrowing their notation when possible to make the
+similarities apparent. Let $b_T \equiv \lfloor \gamma/\delta \rfloor$,
+define $\kernelB{x}$ as in Equation \eqref{eq:13}, and define the following
+terms as in \citet{JoD:00}:
+\begin{align*}
+  \varianceTermI &\equiv
+  \varianceTermIDefn,\\ \varianceTermII &\equiv \vtSum
+  \varianceTermIIa\\& \quad \times \varianceTermIIb,\\
+  \varianceTermIII &\equiv \vtSum \varianceTermIIIa\\
+  &\quad \times \varianceTermIIb,\\
+  \varianceTermIV &\equiv \vtSum \varianceTermIIIa \\
+  &\quad\times \varianceTermIVb.
+\end{align*}
+These definitions give the inequalities
+\begin{align*}
+  \lVert \sh^2 - \sigma^2 \rVert_1 &
+  \leq \lVert \sh^2 - \varianceTermI \rVert_1
+  + \lVert \varianceTermI - \varianceTermII \rVert_1
+  + \lVert \varianceTermII - \varianceTermIII \rVert_1
+  + \lVert \varianceTermIII - \varianceTermIV \rVert_1\\ & \quad
+  + \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1
+  + \lVert \E_R\varianceTermIII - \E_R\varianceTermIV \rVert_1
+  + \lVert \E_R\varianceTermII - \E_R\varianceTermIII \rVert_1\\ & \quad
+  + \lVert \E_R\varianceTermI - \E_R\varianceTermII \rVert_1
+  + \lVert \E_R \varianceTermI - \sigma^2 \rVert_1
+  \\ &
+  \leq  \lVert \sh^2 - \varianceTermI \rVert_1
+  + 2(\lVert \varianceTermI - \varianceTermII \rVert_1
+      + \lVert \varianceTermII - \varianceTermIII \rVert_1
+      + \lVert \varianceTermIII - \varianceTermIV \rVert_1) \\
+  & \quad + \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1
+  + \lVert \E_R \varianceTermI - \sigma^2 \rVert_1.
+\end{align*}
+De Jong and Davidson (2000) prove that
+\begin{equation*}
+\lim_{\delta\to0} \limsup_{T\to\infty} \lVert \varianceTermI -
+\varianceTermII\rVert_1 = 0,
+\end{equation*}
+\begin{equation*}
+\lim_{\delta\to0} \limsup_{T\to\infty} \lVert \varianceTermII - \varianceTermIII
+\rVert_1 = 0,
+\end{equation*}
+\begin{equation*}
+\lim_{\delta\to0} \limsup_{T\to\infty} \lVert \varianceTermIII - \varianceTermIV
+\rVert_1 = 0,
+\end{equation*}
+and
+\begin{equation*}
+\lim \lVert \E_R \varianceTermI - \sigma^2 \rVert_1 = 0.
+\end{equation*}
+Their proofs of these four convergence results use the fact that NED
+functions of mixing processes are also mixingale processes and do not
+use any other properties specific to NED processes, so their results
+hold here as well.  We do need to modify their proofs that
+\begin{equation*}
+  \lVert \varianceTermIV - \E_R \varianceTermIV \rVert_1 \to 0
+\end{equation*}
+and
+\begin{equation*}
+  \lVert \sh^2 - \varianceTermI \rVert_1 \to 0
+\end{equation*}
+for all positive $\delta$, though, since those proofs exploit NED
+properties. These results are presented as Lemmas~\ref{lem:a2}
+and~\ref{lem:a6} respectively.  \qed
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

@@ -1,0 +1,135 @@
+\markright{}
+
+\begin{figure}\centering
+  {\large Coverage of DMW OOS interval for $\E_R\oosA$ in simulations}
+  \tryinput{floats/mc-interval-testerror1.tex}
+  \caption{Simulated coverage of $\E_R \oosA$ at 90\% confidence using
+    a one-sided interval based on the DMW \oost\ test, plotted as a
+    function of the fraction of observations used in the test sample,
+    $P/T$. The solid horizontal line denotes the intervals' nominal
+    coverage.}
+ \label{fig:interval-R}
+\end{figure}
+\clearpage
+
+\begin{figure}\centering
+  {\large Coverage of DMW OOS interval for $\E_T\oosB$ in simulations}
+  \tryinput{floats/mc-interval-generror1.tex}
+  \caption{Simulated coverage of $\E_T \oosB$ at 90\% confidence using
+    a one-sided interval based on the DMW \oost\ test, plotted as a
+    function of the fraction of observations used in the test sample,
+    $P/T$.  The solid horizontal line denotes the intervals' nominal
+    coverage.}
+  \label{fig:interval-T}
+\end{figure}
+\clearpage
+
+\begin{figure}\centering
+  {\large Size of DMW \oost\ test in simulations}
+  \tryinput{floats/mc-dmwsize.tex}
+  \caption{Simulated rejection probabilities for the DMW \oost\ test
+    under the null hypothesis that the benchmark model will forecast
+    better, $\E_T \oosB \leq 0$. The nominal size is 10\% and is
+    marked with a solid horizontal line. Values greater than 10\%
+    indicate that the test rejects the benchmark model too often. See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+  \label{fig:ttest-size}
+\end{figure}
+\clearpage
+
+\begin{figure}\centering
+  {\large Size of Clark-West OOS test in simulations}
+  \tryinput{floats/mc-clarkwestsize.tex}
+  \caption{Simulated rejection probabilities for Clark and West's
+    (2006, 2007) OOS test statistic under the null hypothesis that the
+    benchmark will forecast better, $\E_T \oosB \leq 0$. The nominal
+    size is 10\% and is marked with a solid horizontal line. Values
+    greater than 10\% indicate that the test rejects the benchmark
+    model too often. See Section~\ref{sec:simulation-design} for a
+    discussion of the simulation design.}
+   \label{fig:clarkwest}
+\end{figure}
+\clearpage
+
+\begin{figure}\centering
+  {\large Size of McCracken \oost\ test in simulations}
+  \tryinput{floats/mc-mccrackensize.tex}
+  \caption{Simulated rejection probabilities for McCracken's (2007)
+    \oost\ test under the null hypothesis that the benchmark model is
+    more accurate, $\E_T \oosB \leq 0$. Nominal size is 10\% and is
+    marked with a solid horizontal line. Values greater than 10\%
+    indicate that the test rejects the benchmark model too often. See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+  \label{fig:mccracken}
+\end{figure}
+\clearpage
+
+\begin{figure}\centering
+  {\large Power of DMW \oost\ test in simulations}
+  \tryinput{floats/mc-dmwpower.tex}
+  \caption{Simulated rejection probabilities for the DMW \oost\ test
+    under the alternative that the benchmark model is less accurate,
+    $\E_T \oosB > 0$. Nominal size is 10\% and is marked with a solid
+    horizontal line. Values greater than 10\% indicate that the test
+    rejects the benchmark model too often. See
+    Section~\ref{sec:simulation-design} for a discussion of the
+    simulation design.}
+  \label{fig:ttest-power}
+\end{figure}
+\clearpage
+
+\begin{figure}
+\centering
+\large{Difference in OOS MSE of Prevailing Mean and\\ Kitchen
+    Sink Models of Equity Premium (OLS)}
+\tryinput{floats/empirics-oos-mse-1.tex}
+\tryinput{floats/empirics-oos-mse-1b.tex}
+\caption{OOS difference in the MSE
+  of the prevailing mean benchmark and the kitchen sink model as a
+  function of the test sample size, $R$.  Both models forecast the
+  equity premium using annual data from 1928--2008.  The solid line
+  gives the OOS average, and the shaded region indicates the
+  one-sided 95\% confidence interval implied by the
+  DMW test.  The bottom panel is a detailed view of the top
+  panel for $R \geq 50$.}
+\label{fig:empirics1}
+\end{figure}
+\clearpage
+
+\begin{figure}
+\centering
+\large{Difference in OOS MSE of Prevailing Mean and\\ Kitchen
+    Sink Models of Equity Premium (CT)}
+\tryinput{floats/empirics-oos-mse-2.tex}
+\tryinput{floats/empirics-oos-mse-2b.tex}
+\caption{OOS difference in the MSE
+  of the prevailing mean benchmark and the kitchen sink model as a
+  function of the test sample size, $R$.  Both models forecast the
+  equity premium using annual data from 1928--2008.  The solid line
+  gives the OOS average, and the shaded region indicates the
+  one-sided 95\% confidence interval implied by the
+  DMW test.  The bottom panel is a detailed view of the top
+  panel for $R \geq 50$.}
+\label{fig:empirics2}
+\end{figure}
+\clearpage
+
+\begin{figure}
+\centering
+\large{OOS MSE of Individual Forecasts of Equity Premium}
+\tryinput{floats/empirics-oos-ind-ks.tex}
+\tryinput{floats/empirics-oos-ind-pm.tex}
+\caption{OOS MSE of the Prevailing Mean (PM) and
+    Kitchen Sink (KS) models for equity premium prediction as
+    a function of the size of the training sample, $R$.  Please note
+    that the vertical scales are different in the two plots.}
+\label{fig:empirics3}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

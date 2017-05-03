@@ -1,0 +1,707 @@
+\section{Theoretical results}
+\label{sec:theory}
+
+This section lays out our theoretical results. The first subsection
+presents results for the DMW \oost\ test; we show that it is
+asymptotically normal when one or both forecasting models is overfit.
+(i.e., under our increasing-$K$ asymptotic approximation.) We also
+present a new limitation on these statistics---OOS comparisons heavily
+penalize overfit models unless the size of the test sample is a very
+small proportion of the total sample size, which will not be practical
+in much applied research. The second subsection presents results for
+full-sample statistics and shows that widely used test statistics and
+model selection criteria are misleading when choosing a model for
+forecasting. In contrast to OOS comparisons, these full-sample
+criteria choose overfit models too often, even when they are less
+accurate than simple benchmark models. These results are somewhat
+abstract, so the third subsection works through an example DGP in
+detail.
+
+\subsection{Asymptotic normality of the DMW test}
+\label{sec:oostheory}
+
+This section has two main conceptual results. The first,
+Lemma~\ref{res-mixingale}, shows that the OOS average, $\oosA$, is
+asymptotically normal as the size of the test sample grows, even when
+the models are overfit. But $\oosA$ is centered at $\E_R \oosA$, the
+difference in the generalization error of the models estimated over
+the \emph{training sample}, which is not the quantity of interest to
+forecasters. Forecasters will generally want to estimate or test
+hypotheses about the difference in the generalization error of the
+models estimated with the full sample, $\E_T \oosB$. Our second
+result, Lemma~\ref{res-convergence}, shows that these quantities are
+approximately equal only when the test sample is very small relative
+to the total sample size. In particular, we show that $\oosA$ is a
+consistent estimator of $\E_T \oosB$ when $P/T \to 0$ and is
+asymptotically normal with mean $\E_T \oosB$ when $P^2/T \to 0$. After
+establishing these Lemmas, we then show that the \oost\ test is
+asymptotically standard normal and can be used to test hypotheses
+about $\E_T \oosB$, which requires the two Lemmas as well as a
+consistent estimator of the variance of the OOS average.
+
+In the first result, we show that
+$\sqrt{P} (\oosA - \E_R \oosA)$ is asymptotically normal as $P \to
+\infty$. This application of the CLT is complicated by a hidden source
+of dependence---the training sample estimators $\bh{iR}$. Under
+conventional asymptotic theory, we would replace each $\bh{iR}$ with
+its pseudotrue value $\theta_i$ and apply the CLT to
+$L(y_{t+\h} - x_{it}'\theta_i)$, with some complications potentially
+arising from the replacement (as in \citealp{Wes:96},
+\citealp{ClM:01}, or \citealp{Mcc:07}, for example). But we can not
+make that replacement here, because our asymptotic approximation
+prevents $x_{it}'\bh{iR}$ from converging to $x_{it}'\theta_i$.
+
+Instead, we show that $D_t - \E_R D_t$ is an $L_2$-mixingale that
+satisfies the CLT. Mixingales satisfy a weak-dependence condition
+similar to MDSes,\footnote{%
+  An array $Z_{n,t}$ and an increasing sequence of \sfields
+  $\Gs_{n,t}$ is an \emph{$L_2$-mixingale of size $-1/2$} if there is
+  an array of constants $\{c_{n,t}\}$ and a sequence of constants
+  $\zeta_l = O(l^{-1/2 - \delta})$ for some $\delta > 0$ such that
+  \begin{equation*}
+    \lVert \E(Z_{n,t} \mid \Gs_{n,t-l}) \rVert_2
+    \leq c_{n,t} \zeta_l
+    \qquad\text{and}\qquad
+    \lVert Z_{n,t} - \E(Z_{n,t} \mid \Gs_{n,t+l}) \rVert_2
+    \leq c_{n,t} \zeta_{l+1}.
+  \end{equation*}
+  Mixingales were introduced and developed by
+  \citet{Mcl:74,Mcl:75,Mcl:75b,Mcl:77}.} %
+but they have some limitations. Transformations of mixingales are
+typically not themselves mixingales, which means that CLTs for
+mixingale processes require additional assumptions to hold beyond the
+mixingale property.\footnote{%
+  See \citet{Jon:97} for an illustration. We will borrow heavily from
+  his results in our proofs.} %
+This is in contrast to Near Epoch Dependent (NED) processes, which
+retain the NED property after transformations. \citep[See chapter 17
+of][for further discussion of these properties.]{Dav:94} But the OOS
+loss has more structure than most mixingales and behaves like an NED
+process in important respects. (The key result here is
+Lemma~\ref{lem:a2} in the Appendix.) Lemma~\ref{res-mixingale} presents the
+CLT that we use later, and Section~\ref{sec:example} works through an
+i.i.d. example in detail. For i.i.d. observations, the OOS loss is an
+MDS and is easier to work with.
+
+\begin{lem}\label{res-mixingale}
+  If Assumptions~\ref{asmp-1}--\ref{asmp-3} hold then $\{D_t - \E_R
+  D_t, \mathcal F_t\}$ is an $L_2$-mixingale of size $-1/2$.
+  Moreover
+  \begin{equation}
+    \sqrt{P}(\oosA - \E_R \oosA)/\sigma \to^d N(0,1)
+  \end{equation}
+  as $P \to \infty$ if $\sigma^2$ is uniformly almost surely positive,
+  where $\sigma^2 = \var_R(\sqrt{P} \oosA)$ (which is equal to $P
+  \E_R(\bar{D}_R - \E_R \bar{D}_R)^2$).
+\end{lem}
+
+It may be helpful to compare Lemma~\ref{res-mixingale} to the method
+of proof in \citet{GiW:06}. \citet{GiW:06} show that the OOS average
+is asymptotically normal when the forecasts are estimated with a fixed
+length rolling window. In that case, each $\bh{it}$ depends on only
+the most recent $R$ observations and, since $R$ is fixed in their
+theory, the forecast errors $y_{t+\h} - x_{it}'\bh{it}$ are themselves
+mixing processes. Transformations of their forecast errors are
+still obviously mixing processes and obey the CLT.
+
+In our paper, $R$ is not fixed and the forecast errors are not a
+convenient weakly-dependent process, since the estimation error in
+$\bh{it}$ introduces strong dependence. Consequently,
+transformations of the forecast errors are not weakly dependent
+either. But this additional dependence has a special form and can be
+removed by subtracting the conditional mean; specifically $g(y_{t+\h} -
+x_{it}'\bh{it})$ is not weakly dependent but $g(y_{t+\h} -
+x_{it}'\bh{it}) - \E_R g(y_{t+\h} - x_{it}'\bh{it})$ is.
+Assumptions~\ref{asmp-1}--\ref{asmp-3} allow us to show directly
+that $D_t - \E_R D_t$ and (crucially) $D^2_t - \E_R D_t^2$ are both
+weakly dependent mixingales, ensuring Lemma~\ref{res-mixingale}.
+
+The next Lemma connects $E_R \oosA$ to $\E_T \oosB$, the difference in
+the models' generalization error. Under conventional asymptotics,
+these quantities are generally close. But they are not for overfit
+models and the models will tend to forecast better when estimated over the
+full sample than over the training sample. Consequently, OOS
+comparisons will penalize overfit models too much unless the test
+sample is small relative to the total data set.
+
+\begin{lem} \label{res-convergence}
+  Under Assumptions \ref{asmp-1}--\ref{asmp-4}a,
+  \begin{equation}\label{eq:7}
+    \E_T \oosB - \E_R \oosA = O_p(\sqrt{P/T}) + o_p(P^{-1/2})
+    + o_p(Q^{-1/2}).
+  \end{equation}
+\end{lem}
+We can view $\E_T \oosB - \E_R \oosA$ as noise introduced by
+approximating the performance of the full-sample estimates with that
+of the partial-sample estimates. The key term on the RHS
+of~\eqref{eq:7} in practice is $O_p(\sqrt{P/T})$---unless $P/T$ is
+small, this noise dominates the OOS average, making it an inconsistent
+estimator of $\E_T \oosB$. The $o_p(P^{-1/2})$ term is completely
+unrestrictive in our applications because we will multiply the OOS
+average by at most $\sqrt{P}$ (for the CLT). And the $o_p(Q^{-1/2})$
+term has some implications for interpreting these results: we can only
+measure the average performance of the forecasting models for an
+extended period in the future, long enough that the future
+observations are essentially independent of the current
+information. For $Q=1$, for example, the dependence between
+$y_{T+\h+1}$ and the current information set $\Fs_T$ may be very
+strong.
+
+Finally, we can use Lemmas~\ref{res-mixingale}
+and~\ref{res-convergence} to show that the DMW test is asymptotically
+normal and centered at $\E_T \oosB$, as long as
+Assumption~\ref{asmp-4}b holds.
+
+\begin{thm}\label{res-oost}
+  Suppose that Assumptions \ref{asmp-1}--\ref{asmp-5} hold (including
+  \ref{asmp-4}b), that $\gamma \to \infty$ and $\gamma/P \to 0$ as $T
+  \to \infty$, and that $\sigma^2$ is uniformly a.s. positive. Define
+  $\sh^2$ to be the usual OOS HAC estimator of the asymptotic variance
+  of $\oosA$,
+  \begin{equation}
+    \sh^2 \equiv P^{-1} \oosSum{s,t}{1} (D_t - \oosA)(D_s - \oosA)
+    \vWeight.
+  \end{equation}
+  Then
+  \begin{equation}
+    \sqrt{P}(\oosA - \E_T\oosB)/\sh \to^d N(0,1).
+  \end{equation}
+\end{thm}
+
+The requirement that $\sigma^2$ be uniformly a.s. positive is not
+restrictive under our asymptotic theory. Since the models'
+coefficients are estimated with uncertainty in the limit, the two
+models give different forecasts even if they both nest the DGP.  This
+is intuitively similar to \citepos{GiW:06} rolling-window result, but
+comes from different asymptotic theory; Giacomini and White keep the
+variance of the OOS average positive by letting $P \to \infty$ with
+$R$ fixed; in this paper, $R \to \infty$ but the variance remains
+positive since $K \to \infty$ (quickly) as well.
+
+If $K_1$ and $K_2$ were finite, West's (1996) and McCracken's (2007)
+asymptotic theories would apply and the \oost\ test would remain normal as long
+as $P/T \to 0$, even if $\sigma^2 \to 0$. Under that asymptotic
+approximation, the variance will converge to zero whenever the true
+DGP is nested in both of the forecasting models. The same principles
+may also apply if $K_1$ and $K_2$ grow slowly, with $K_2/T \to
+0$. It is likely that a second order expansion along the lines of
+\citet{Mcc:07} would lead to asymptotic normality for that
+intermediate case, but we leave that issue to future research.
+
+Finally, Theorem~\ref{res:oostest} establishes that the DMW test can be
+use to construct confidence intervals for $\E_T \oosB$ and test
+hypotheses about $\E_T \oosB$. In particular, forecasters will often
+want to test the null hypothesis that $\E_T \oosB \leq 0$, meaning
+that the benchmark model is expected to be more accurate than the
+alternative model in the future.
+
+\begin{thm}\label{res:oostest}
+  Suppose that the conditions of Theorem
+  \ref{res-oost} hold. Then each of the usual Gaussian
+  confidence intervals,
+  \begin{gather}
+    [\oosA - z_{\alpha/2} \, \sh /
+    \sqrt{P}, \oosA + z_{\alpha/2} \sh / \sqrt{P}],\label{interval-twosided} \\
+    [\oosA - z_{\alpha} \, \sh / \sqrt{P}, +\infty), \label{interval-greater}
+    \intertext{and}
+    (-\infty, \oosA + z_{\alpha} \, \sh / \sqrt{P}],
+  \end{gather}
+  contains $\E_T\oosB$ with probability $\alpha$ in the limit, with
+  $z_{\alpha}$ the $1-\alpha$ quantile of the standard normal
+  distribution. If, in addition, $\lim \Pr[\E_T \oosB \leq 0]$ is
+  positive then
+  \begin{equation}\label{eq:23}
+    \lim \Pr[P^{1/2}\oosA/\sh > z_{\alpha} \mid \E_T
+    \oosB \leq 0] \leq \alpha.
+  \end{equation}
+\end{thm}
+\noindent
+The results for confidence intervals in Theorem~\ref{res:oostest}
+follow immediately from Theorem~\ref{res-oost},
+but~\eqref{eq:23} requires additional proof.
+
+\subsection{Failure of in-sample statistics for forecast evaluation}
+\label{sec:insample}
+
+In this subsection we look at the behavior of some full-sample
+statistics under the same asymptotic theory as before.  We show that
+these statistics, which include common tests such as the Wald test as
+well as model selection criteria such as the AIC, do not measure the
+models' generalization error and consequently do not indicate which
+model will be more accurate in the future. Some of these statistics
+will tend to choose the larger model regardless of which model will be
+more accurate in the future, whereas others tend to choose the smaller
+model.  This is a different issue than whether or not full-sample
+tests are valid for testing hypotheses about the pseudotrue
+coefficients of the models; as \citet{Cal:11c} and \citet{Ana:12}
+demonstrate, variations of the Wald test can be valid for those
+hypotheses under increasing-$K$ asymptotics.\footnote{%
+  \citet{Ana:12} shows that the Wald test is invalid in general and
+  gives an adjustment that corrects the critical values; he also shows
+  that the $F$-test is asymptotically valid under certain conditions
+  on the distribution of the regressors.  \citet{Cal:11c} shows that
+  the $F$-test is asymptotically invalid without Anatolyev's
+  constraint, even under homoskedasticity, and provides a correction
+  that gives valid tests.  Both papers only consider independent
+  observations.} %
+To simplify the presentation and the intuition we only derive results
+for nested models and for MSE loss, but the conclusions hold much more
+generally.\footnote{%
+  In this section, we define
+  $M_1 = [I_{K_1} \ 0_{K_1 \times (K_2 - K_1)}]$ and
+  $M_2 = [0_{(K_2 - K_1) \times K_2} \ I_{K_2 - K_1}]$ as the
+  selection matrices that return the first $K_1$ and the last
+  $K_2 - K_1$ elements of $\theta_2$, and assume that the regressors
+  are ordered so that the first $K_1$ elements of $x_{2,t}$ correspond
+  to $x_{1,t}$.} %
+
+The full-sample statistics we study in this paper share a common
+property. They choose the alternative model when the distance between
+a subset of their coefficient estimates and the origin exceeds a
+threshold, and choose the benchmark otherwise. For the Wald test, for
+example, this threshold is chosen so that the test has correct size
+when those coefficients are zero in population. For small models that
+can be consistently estimated, these coefficient estimates are close
+to their true values and so this criterion can be a reasonable proxy
+for the relative accuracy of the larger model.
+
+But for overfit models, the estimates will typically be far from both
+their pseudotrue values and also from zero. In that case, the Wald test and
+the AIC will both tend to choose the larger model even when it is less
+accurate than the smaller benchmark model. This phenomenon is driven
+by the dimensionality of the alternative model, since there are more
+potential values of the coefficient estimator that are far from zero
+when it has many elements. The threshold for the Wald test and the AIC
+is set by construction to be a bounded distance from the origin, and
+every other statistic that shares this property has the same behavior
+and can reject the benchmark model with high probability, even when
+it is more accurate. This behavior is
+formalized in Theorem~\ref{res:insample1}.
+
+\begin{thm}\label{res:insample1}
+  Suppose Assumptions~\ref{asmp-1}--\ref{asmp-4} hold and let
+  $\Lambda$ be a model selection statistic that takes the values zero
+  or one; $\Lambda = 0$ indicates that the benchmark model is chosen
+  and $\Lambda = 1$ indicates the alternative.  Moreover, assume that
+  $L(e) = e^2$ and that there exist a deterministic scalar $c$
+  and a sequence of possibly random matrices $V_T$ such that
+  \begin{equation}\label{eq:25}
+    \limsup_{T \to \infty}
+    \Pr[\Lambda \geq \1\{\bh{2T}'M_2' V_T M_2\bh{2T} > c \}]
+    \to 0
+  \end{equation}
+  where the eigenvalues of $V_T$ are uniformly bounded in probability,
+  $\plim \rank(V_T)/T > 0$, and neither $V_T$ nor $c$ depend on
+  $\theta$ or the value of $\bh{2T}$.
+
+  Then there exist DGPs satisfying these assumptions such that
+  \begin{equation}\label{eq:11}
+    \liminf_{T \to \infty} \E( \Lambda \mid \E_T \oosB \leq 0 ) \geq 1/2.
+  \end{equation}
+\end{thm}
+
+As we state above,~\eqref{eq:11} means that, with high probability,
+the benchmark model is rejected even when it is more accurate. In
+general, $\delta$ can be made arbitrarily small by increasing the
+region enclosed by $\1\{\bh{2T}'M_2' V_T M_2\bh{2T}\}$ and DGPs can be
+chosen to put the limiting quantity in~\eqref{eq:11}
+arbitrarily close to 1 while still satisfying
+the assumptions of the Theorem.  The DGPs and
+statistics used in Theorem~\ref{res:insample1} are simple and
+common. They include correctly specified linear models with normal and
+homoskedastic errors; and the statistics that meet the restrictions on
+$\Lambda$ include the $F$-test and AIC.
+
+For example, the $F$-statistic for the null hypothesis that the
+benchmark model is correctly specified is known to have the form
+\begin{equation*}
+  F = \frac{\bh{2T}' M_2' ( M_2 (X_{2T}'X_{2T})^{-1} M_2' )^{-1} M_2
+    \bh{2T}}{s^2 (K_2 - K_1)}
+\end{equation*}
+where $s^2$ is the usual estimator of the variance of the regression
+error. Then let $c$ be any number greater than 1 and define
+\begin{equation*}
+  V_T = M_2' \big( M_2 \big(\tfrac{1}{s^2 (K_2 - K_1)} X_{2T}'X_{2T}\big)^{-1}
+  M_2' \big)^{-1} M_2'.
+\end{equation*}
+If Assumption~\ref{asmp-2} holds and $s^2$ is consistent then $V_T$
+has uniformly bounded eigenvalues and has rank $K_2 - K_1$, so it
+satisfies~\eqref{eq:25}.
+Robust variations of the Wald test can obviously satisfy~\eqref{eq:25}
+for similar reasons, and the AIC for nested linear models is
+equivalent to using the $F$-test with the critical value %
+$(e^{2 (K_2 - K_1) / T} - 1) \cdot (T - K_2) / (K_2 - K_1)$, %
+which converges to a finite limit, so the AIC satisfies~\eqref{eq:25}
+as well.
+
+For statistics that don't satisfy~\eqref{eq:25}, the behavior can be
+quite different. The BIC, for example, can also be written in terms of
+the $F$-statistic and is equivalent to using the critical value $(T \,
+e^{2 (K_2 - K_1) / T} - 1) \cdot (T - K_2) / (K_2 - K_1)$. This
+critical value diverges as $T \to \infty$, ensuring that~\eqref{eq:25}
+fails for any $c$. For this statistic, we have the opposite problem as
+before: when the alternative model is \emph{more} accurate, the
+coefficient estimates of the larger model are contained in a bounded
+region of the parameter space. Since the acceptance region of the BIC
+grows, it eventually contains \emph{any} bounded region of the
+parameter space. For large enough $T$, the BIC will always choose the
+\emph{smaller model}, even when the larger model is more accurate.
+
+This behavior is formalized in Theorem~\ref{res:insample2}.
+\begin{thm}\label{res:insample2}
+  Suppose Assumptions~\ref{asmp-1}--\ref{asmp-4} hold, let $L(e) =
+  e^2$, and let $\Lambda$ be a model selection statistic as in
+  Theorem~\ref{res:insample1}. Also assume that, for any finite scalar
+  $c$,
+  \begin{equation}\label{eq:27}
+    \Pr[\Lambda \leq \1\{\bh{2T}'M_2'J M_2\bh{2T} > c \}] \to 1
+    \quad \text{as } T \to \infty.
+  \end{equation}
+
+  Then there exist DGPs satisfying these assumptions such that
+  \begin{equation}\label{eq:15}
+    \E( \Lambda \mid \E_T \oosB \geq 0 ) \to^p 0.
+  \end{equation}
+\end{thm}
+
+The condition~\eqref{eq:27} requires that the acceptance region of
+$\Lambda$ eventually contains any finite cylinder centered at the
+origin. Again,~\eqref{eq:15} implies that statistics like the BIC
+will always choose the smaller model for some DGPs, even when the
+larger model will give more accurate forecasts. Both models may be
+overfit, in that both $K_1/T$ and $K_2/T$ may both be positive in the
+limit; the key is that $(K_2 - K_1)/T$ is also positive in the limit.
+
+It is important to remember that previous research, such as
+\citet{Cal:11c} and \citet{Ana:12}, does not predict these
+results. When $\Lambda$ represents a test statistic, the test may have
+correct size for the null hypothesis that the additional coefficients
+on the larger model are zero. The results in this subsection are being
+driven by the full-sample statistics' behavior when the smaller model
+is misspecified but more accurate.
+
+Any statistic that uses the distance of the models' estimated
+coefficients from a set point (the origin being the most common) is
+poorly suited for choosing between overfit forecasting models. These
+models only forecast well when their coefficient estimates are close
+to their pseudotrue values, which can be far from the origin or any
+other prespecified
+point. Depending on the statistic, it can be biased towards choosing
+the larger model or the smaller model. Formal in-sample \emph{tests}
+will likely be biased towards the larger model, as we show for the
+$F$-test and Wald test in Theorem~\ref{res:insample1}.
+
+\subsection{An extended simple example}
+\label{sec:example}
+
+This subsection illustrates the previous theoretical results with a
+concrete example. Let $L(e) = e^2$ and $h = 1$. Suppose that the benchmark is
+nested in the alternative and $(x_{2t}, \e_{2,t+1}) \sim i.i.d.\
+N(0,I)$, and let $y_{t+1} = x_{2t}'\theta_2 + \e_{2,t+1}$
+be the DGP. Also assume that $K_2/T \to c_2$ and $K_1 / T \to c_1 <
+c_2$.
+
+The first part of this subsection shows how the assumptions in
+Section~\ref{sec:asmp} are satisfied and the second part
+demonstrates asymptotic normality of the DMW \oost\ test. The third
+part explicitly shows that $\E_R \oosA$ converges to $\E_T \oosB$ only
+when the test sample is small. And the last part demonstrates that the
+$F$-test does not indicate which model will be more
+accurate in the future, even in this simple example.
+
+\subsubsection*{Fulfillment of Assumptions 1--5}
+
+We will go through the assumptions one by one. The first is
+a condition on the dependence and moments of the process. Since the
+DGP is i.i.d. Normal, these conditions are satisfied trivially.
+
+Assumption~\ref{asmp-2} deals with the design matrix. In this example,
+we directly assume that $K_2$ and $K_1$ grow at the correct rates so
+the the assumption is satisfied. The variance of $y_{t+1}$ given
+$\Fs_t$ is simply the unconditional variance of $\e_{2,t+1}$, which is
+1; and the eigenvalues of $\E x_{2t} x_{2t}$ all equal 1 as well; and
+so they are all uniformly positive and finite as required.
+
+Assumption~\ref{asmp-2} also requires the eigenvalues of $S^{-1}
+X_{iS}'X_{iS}$ to be positive and finite, and for the largest
+eigenvalue of $S^{-1} X_{iS}'X_{iS}$ to be bounded in $L_3$.  These
+results follow from developments in random matrix theory.
+\citet{Gem:80} establishes that the largest eigenvalue of
+$X_{iS}'X_{iS}$ is of order $S + K_i$ and \citet{Joh:01} shows that it
+converges in distribution to the Tracy-Widom law of order 1
+\citep{TrW:96}, which has finite 3rd moments. \citet{Sil:85} and
+\citet{BFP:98} prove similar results for the smallest eigenvalue.
+Assumption~\ref{asmp-2} also requires the largest eigenvalue of
+$(X_{iS}'X_{iS})^{-1}$ be bounded in $L_3$; this should follow from a
+similar argument, but we are unaware of any papers that explicitly
+derive moments for this eigenvalue.
+
+For the conditional expectation of %
+$\sum_{s,t=U}^{V-1} \e_{i,t+1} \e_{i,s+1} x_{i,s} x_{i,t}'$,
+independence implies that
+\begin{equation*}
+  \E\Big(
+  \sum_{s,t=U}^{V-1} \e_{i,s+1} \e_{i,t+1} x_{is}x_{it}'
+  \mBig
+  x_{i1},\dots,x_{i,U-1};
+  \sum_{s=U}^{V-1} x_{is} x_{is}';
+  x_{i,V},\dots,x_{i,T-1}
+  \Big)
+  = \sum_{s=U}^{V-1} x_{is} x_{is}'.
+\end{equation*}
+The largest eigenvalue of this last matrix is of order $K_i + V - U$,
+as discussed, and it has at most $V - U$ nonzero eigenvalues,
+ensuring that both~\eqref{eq:28} and~\eqref{eq:8} hold.
+
+Assumption~\ref{asmp-3} restricts the loss function and the realized
+OOS loss. In this example, we have
+\begin{equation*}
+  D_t^* =^d D_t = (e_{2,t+1} + x_{2t}'\theta_2 - x_{1t}'\bh{1t})^2
+  - (e_{2,t+1} + x_{2t}'(\theta_2 - \bh{2t}))^2
+\end{equation*}
+which has bounded $\rho$th moments by construction. The loss function
+is differentiable and $L'(e) = 2 e$, so \eqref{eq:29} holds as well.
+
+Finally, Assumption~\ref{asmp-4} deals with the choice of test and
+training sample and holds automatically. And Assumption~\ref{asmp-5}
+requires the kernel of the HAC variance estimator to be continuous at
+zero; it is straightforward to construct an estimator that satisfies
+this condition. However, in this section we will use the estimator
+\begin{equation*}
+  \sh^2 = \frac{1}{P} \sum_{t=R+1}^{T-1} (D_t - \oosA)^2
+\end{equation*}
+which does not satisfy Assumption~\ref{asmp-5} but nevertheless is
+consistent for the conditional variance of $\oosA$ because the
+underlying observations are independent.
+
+\subsubsection*{Asymptotic normality of the OOS average, Lemma 1}
+
+This subsection walks through Lemma 1's CLT. Since the observations in
+this example are i.i.d., we do not need to use mixingale theory to
+derive the results, but the OOS process is still affected by the
+estimation error in $\bh{1t}$ and $\bh{2t}$ and has a high degree of
+dependence. This dependence makes the OOS process an MDS, and MDS
+asymptotic theory replaces mixingale theory in this example.
+
+By construction, we have
+\begin{equation*}
+  D_t =
+  \begin{cases}
+    2 \e_{t+1} (x_{2t}'\bh{2R} - x_{1t}'\bh{1R})
+    + (x_{2t}'\theta_2 - x_{1t}'\bh{1R})^2
+    - (x_{2t}'\theta_2 - x_{2t}'\bh{2R})^2
+    & \text{if } t < T \\
+    2 \e_{t+1} (x_{2t}'\bh{2T} - x_{1t}'\bh{1T})
+    + (x_{2t}'\theta_2 - x_{1t}'\bh{1T})^2
+    - (x_{2t}'\theta_2 - x_{2t}'\bh{2T})^2
+    & \text{if } t > T
+  \end{cases}
+\end{equation*}
+and so we can explicitly derive the components of
+Lemma~\ref{res-mixingale}. First,
+\begin{multline*}
+  D_t - \E_R D_t
+  = 2 \e_{t+1} (x_{2t}'\bh{2R} - x_{1t}'\bh{1R})
+  + \Big\{(x_{2t}'\theta_2 - x_{1t}'\bh{1R})^2
+          - \E_R (x_{2t}'\theta_2 - x_{1t}'\bh{1R})^2 \Big\} \\
+  - \Big\{(x_{2t}'\theta_2 - x_{2t}'\bh{2R})^2
+          - \E_R (x_{2t}'\theta_2 - x_{2t}'\bh{2R})^2 \Big\}
+\end{multline*}
+for $t < T$. Since the underlying observations are i.i.d., $\E_{t-1}
+D_t = \E_R D_t$ a.s.\ and consequently $\{D_t - \E_R D_t, \Fs_{t};
+t=R+1,\dots,T-1\}$ is an MDS.
+
+Although transformations of $D_t - \E_R D_t$ will obviously not be
+MDSes in general, it should be clear that transformations of $D_t$
+will be MDSes after subtracting their conditional mean; i.e.
+\begin{equation*}
+  \{g(D_t) - \E_R g(D_t); \Fs_t; t = R+1,\dots,T-1\}
+\end{equation*}
+is an MDS as long as
+$g(D_t)$ has finite mean, but $g(D_t - \E_R D_t)$ is not. This MDS
+result holds because $x_t$ and $y_{t+1}$ are independent of $\bh{1R}$
+and $\bh{2R}$, so
+\begin{equation*}\begin{split}
+  \E_R g(D_t)
+  &= \int g\Big((x_1'\bh{1R})^2 - (x_2'\bh{2R})^2
+       + 2 y (x'\bh{2R} - x'\bh{1R})\Big) \, f(y, x) \, dx \, dy \\
+  &= \E_{t-1} g(D_t)
+\end{split}\end{equation*}
+a.s., where $f$ is the density of $(y_{t+1}, x_{2t})$ and $x_1$
+denotes the first $K_1$ elements of $x$. This result parallels our
+results for mixingales in the general case.
+
+As a result, $\oosA$ and $(1/P) \sum_{t=R+1}^{T-1} D_t^2$ both obey
+LLNs: $\oosA \to^p \E_R \oosA$ and
+\begin{equation*}
+  (1/P) \sum_{t=R+1}^{T-1} D_t^2 \to^p \E_R D_T^2.
+\end{equation*}
+Moreover, these convergence results imply that $\sh^2 - \var_R
+\sqrt{P} \oosA \to^p 0$. And so
+\begin{equation*}
+  \sqrt{P} \oosA/\sh \to N(0,1)
+\end{equation*}
+by the MDS CLT.
+
+\subsubsection*{Convergence of $\E_R \oosA$ to $\E_T \oosB$, Lemma 2}
+
+This subsection works through Lemma~\ref{res-convergence}. In this
+example, the difference between $\E_R \oosA$ and $\E_T \oosB$ equals
+\begin{equation*}
+  \begin{split}
+    \E_R \oosA - \E_T \oosB &= \Big\{(\bh{1R} - \theta_1)'(\bh{1R} -
+    \theta_1) -
+    (\bh{2R} - \theta_2)'(\bh{2R} - \theta_2)\Big\} \\
+    & \quad - \Big\{(\bh{1T} - \theta_1)'(\bh{1T} - \theta_1) -
+    (\bh{2T} - \theta_2)'(\bh{2T} - \theta_2)\Big\} \\
+    &\begin{split}
+      =\ep{T}'\Big\{
+      & \tilde{X}_{1R}(X_{1R}'X_{1R})^{-2} \tilde{X}_{1R}'
+      - X_{1T}(X_{1T}'X_{1T})^{-2} X_{1T}' \\
+      & - \tilde{X}_{2R}(X_{2R}'X_{2R})^{-2} \tilde{X}_{2R}'
+      + X_{2T}(X_{2T}'X_{2T})^{-2} X_{2T}'
+      \Big\}\ep{T}.
+    \end{split}
+  \end{split}
+\end{equation*}
+with $\tilde{X}_{iR}$ the $T \times K_i$ matrix $[X_{iR}'\ 0]'$. This
+last term is a quadratic form and the regressors and errors are
+assumed to be normal, so we can find the rate that the difference
+converges to zero in probability by calculating its first two moments.
+
+The mean difference is
+\begin{equation*}
+  \begin{split}
+  \E(\E_R \oosA - \E_T \oosB)
+      &=O\Big(\max_i \E \tr \big\{
+        \tilde{X}_{iR}(X_{iR}'X_{iR})^{-2} \tilde{X}_{iR}
+        - X_{iT}(X_{iT}'X_{iT})^{-2} X_{iT} \big\} \Big) \\
+      &=O\Big(\max_i \tr \big\{\E (X_{1R}'X_{1R})^{-1}
+         - \E (X_{1T}'X_{1T})^{-1} \big\}\Big) \\
+      &=O( K_1 P / (R-K_1)(T-K_1)) \\
+      &=O(P/T)
+    \end{split}
+\end{equation*}
+The first equality follows from the expectation of a quadratic form,
+the second from routine manipulations of the trace operator, and the
+third from the moments of the inverse Wishart distribution.
+
+Similarly, the variance of the difference is
+\begin{align*}
+  \var(\E_R & \oosA - \E_T \oosB) \\ &=
+  O\Big(\max_i \E\big[\tr((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1})\big]^2
+  + 2 \tr \E\big((X_{iR}'X_{iR})^{-2} - (X_{iT}'X_{iT})^{-2}\big) \\
+  &\qquad - \big[\tr \E((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}) \big]^2 \Big)\\
+  &= O(P/T)^2.
+\end{align*}
+So, in this example, $P^{1/2}(\E_R \oosA - \E_T \oosB) \to^p 0$
+if $P^3/T^2 \to 0$, which is slightly weaker than the general
+requirement that $P^2/T \to 0$.  If $\lim P^3/T^2 > 0$ the OOS average
+still obeys the MDS CLT, but it is not centered correctly at $\E_T
+\oosB$.
+
+\subsubsection*{Behavior of the F-test}
+
+This part illustrates the behavior of full-sample statistics in our
+simple example. To simplify the presentation even more, assume that
+the full-sample design matrix is orthogonal in-sample, not just in
+population, so $X_{2T}'X_{2T} = T \cdot I_{K_2 \times K_2}$, and again
+let $M_1$ and $M_2$ be the selection matrices for the first $K_1$ and
+the last $K_2-K_1$ elements of $\theta_2$. In this example,
+\begin{equation*}
+  M_2 \bh{2T} \sim
+  N(M_2 \theta_2, (1/T) \, I_{K_2-K_1})
+\end{equation*}
+and, conditional on $\E_T \oosB = 0$, the density of $M_2 \bh{2T}$
+concentrates uniformly on the surface of the sphere centered at $M_2
+\theta_2$ and passing through the origin:
+\begin{equation*}
+  (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
+  \theta_2'M_2' M_2 \theta_2.
+\end{equation*}
+To see intuitively that it must pass through the origin, note that the
+two models will give identical forecasts when $\bh{2T} = 0$ since the
+regressors are orthogonal. (Identical forecasts obviously have the
+same MSE.)
+
+This region is a cylinder in the original space, $\Re^{K_2}$.  We can
+also represent the null $\E_T \oosB \leq 0$ by conditioning on $\E_T
+\oosB = -d$ for a fixed positive constant $c$. In that case, the
+density of $M_2 \bh{2T}$ concentrates on the sphere
+\begin{equation*}
+  (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
+  \theta_2'M_2' M_2 \theta_2 + d
+\end{equation*}
+which has the same center but larger radius.
+
+For the $F$-test we have, as before,
+\begin{equation*}
+  F = \tfrac{T}{s^2 (K_2 - K_1)} \bh{2T}' M_2' M_2 \bh{2T}.
+\end{equation*}
+We know that $\sqrt{T}(F - 1)$ is asymptotically normal since its
+numerator is Chi-squared with $K_2-K_1$ degrees of freedom and obeys a
+CLT.  The test accepts if
+\begin{equation}\label{eq:26}
+  \tfrac{T}{s^2 (K_2 - K_1)} \bh{2T}' M_2' M_2 \bh{2T}
+  \leq 1 + \delta / \sqrt{T},
+\end{equation}
+where $\delta$ is chosen to determine the size of the test. In other
+words, the test accepts if $M_2 \bh{2T}$ falls in the sphere centered
+at the origin with radius $s ((K_2 - K_1) / T)^{1/2} +
+O_p(1/\sqrt{T})$.
+
+\input{floats/circles}
+\begin{figure}
+  \centering
+  \begin{tabular}{cc}
+  \subfloat[]{\circlefigA{1}{2.5}{1.4}{4.5}\label{fig:circleA}} &
+  \subfloat[]{\circlefigB{1}{2.5}{1.4}{4.5}\label{fig:circleB}}
+  \end{tabular}
+  \caption{Graphs indicating the rejection region and region of equal
+    generalization error for the models discussed in Section
+    \ref{sec:insample}.  The smaller model has no estimated parameters
+    and the larger has two coefficients.  The shaded regions in
+    Figures (a) and (b) show the rejection region and the acceptance
+    region respectively of the full-sample test given $\E_T \oosB \leq
+    0$. Here $e_1 = (1,0)$ and $e_2 = (0,1)$ are the first and second
+    selection vectors, so the horizontal axes represent changes in the
+    first unique element of $\bh{2T}$ and the vertical axes represent
+    changes in the second unique element.}
+\label{fig:rreject}
+\end{figure}
+
+This is perhaps best illustrated with a picture.
+Figure~\ref{fig:rreject} plots these quantities when $K_2 - K_1 =
+2$. The circle centered at the origin plots the threshold for the
+$F$-test; when $M_2 \bh{iT}$ falls outside this circle, the $F$-test
+rejects. The circle centered at $M_2 \theta_2$ plots the set of points
+for which $\E_T \oosB = 0$. The shaded region in
+Figure~\ref{fig:rreject}~(a) plots the rejection region given $\E_T
+\oosB \leq 0$ and the shaded region in Figure~\ref{fig:rreject}~(b)
+plots the acceptance region given $\E_T \oosB \leq 0$.
+
+In the picture, the true coefficients $\theta_2$ satisfy
+\begin{equation*}
+\theta_2'M_2'M_2\theta_2 > \var(\e_t)^{1/2} ((K_2 - K_1) / T)^{1/2}
+\end{equation*}
+so the center of the conditional distribution of $\bh{2T}$ given $\E_T
+\oosB \leq 0$ is outside the acceptance region of the $F$-test. When
+this is the case, the conditional probability that $\bh{2T}$ falls in
+the rejection region is less than 1/2, since $M_2 \bh{2T}$ is
+uniformly distributed on the cylinder
+\begin{equation*}
+  (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
+  \theta_2'M_2' M_2 \theta_2 + d
+\end{equation*}
+for some positive $d$.
+
+The AIC behaves essentially the same way. For the BIC, the radius of
+the cylinder centered at the origin increases with $T$ and eventually
+encompasses the cylinder centered at $M_2 \theta_2$, so it never
+selects the alternative once $T$ is large enough.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

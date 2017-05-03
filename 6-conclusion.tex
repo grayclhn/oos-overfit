@@ -1,0 +1,41 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper gives a theoretical motivation for using OOS comparisons:
+the DMW OOS test allows a forecaster to conduct inference about
+the expected future accuracy of his or her models when one or both is
+overfit.  We show analytically and through Monte Carlo that standard
+full-sample test statistics can not test hypotheses about this
+performance.
+
+Our paper also shows that popular test and training sample sizes may
+give misleading results if researchers are concerned about overfit.
+We show that $P^2/T$ must converge to zero for the DMW test to give
+valid inference about the expected forecast accuracy, otherwise the
+test measures the accuracy of the estimates constructed using only the
+training sample.  In empirical research, $P$ is typically much larger
+than this.  Our simulations indicate that using large values of $P$
+with the DMW test gives undersized tests with low power, so this
+practice may favor simple benchmark models too much.  Existing
+corrections, proposed by \citet{ClM:01,ClM:05}, \citet{Mcc:07} and
+\citet{ClW:06,ClW:07}, seem to correct too much, though, and reject
+too often when the benchmark model is more accurate.
+
+More work remains.  The requirement that $P^2/T$ converge to zero is
+limiting, as it implies that in typical macroeconomic datasets, only a
+handful of observations should be used for testing.  This requirement
+can be relaxed only slightly; $P = O(T^{1/2})$ is required for the
+OOS test to have nontrivial power in general, but there are loss
+functions and DGPs for which some relaxation is possible.  This
+constraint could be mitigated by extending our results to
+cross-validation or other resampling strategies, or by constructing
+full-sample statistics that allow inference about $\E_T \bar{D}_T$.
+It would also be useful to extend our results to other forecasting
+models and to explore how stationarity could be relaxed, but such
+extensions are less important than improving the available statistics.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

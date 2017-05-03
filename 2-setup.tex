@@ -1,0 +1,345 @@
+\section{Setup and assumptions}
+\label{sec:assumptions}
+
+The first part of this section will describe the environment in detail
+and set up our models and notation. The second part lists the
+assumptions underlying our theoretical results.
+
+\subsection{Notation and forecasting environment}
+
+We assume the following forecasting environment. There are two
+competing linear models that give forecasts for the target,
+$y_{t+\h}$:
+\begin{equation*}
+y_{t+\h} = x_{1t}'\theta_1 + \e_{1,t+h}, \quad\text{and}\quad
+y_{t+\h} = x_{2t}'\theta_2 + \e_{2,t+h};
+\end{equation*}
+$t = 1,\dots,T-h$, $\h$ is the forecast horizon and the
+variables $y_t$, $x_{1t}$, and $x_{2t}$ are all known in period $t$.
+The coefficients $\theta_1$ and $\theta_2$ minimize the population
+Mean Square Error, so
+\begin{equation*}
+  \theta_i = \argmin_\theta \sum_{t=1}^{T-\h} \E (y_{t+\h} - x_{it}'\theta)^2,
+\end{equation*}
+making $\e_{i,t+\h}$ uncorrelated with $x_{i,t}$; $\e_{i,t+\h}$ can exhibit
+serial correlation so both of the linear models may be misspecified.
+Let $\mathcal{F}_t = \sigma(y_1, x_1, \dots, y_t, x_t)$ be the information
+set available in period $t$,
+with $x_t$ the vector of all stochastic elements of $x_{1t}$ and $x_{2t}$ after
+removing duplicates, and let $\E_t$ and $\var_t$ denote the
+conditional mean and variance given $\mathcal{F}_t$.  The first model
+uses $K_1$ regressors, and the second uses $K_2$.  Without loss of
+generality, assume that $K_1 \leq K_2$. At least one of the models is
+overfit, which we represent asymptotically by letting $K_2$ grow with
+$T$ quickly enough that $\lim K_2/T$ is positive; $K_1$ may grow with
+$T$ as well. Since the models change with $T$, a
+stochastic array underlies all of our asymptotic theory, but we
+suppress that notation to simplify the presentation.
+
+In the settings we are interested in, a forecaster observes the data
+$(y_t,x_t)$ for periods 1 through $T$ and divides these observations
+into an estimation sample of the first $R$ observations and a test
+sample of the remaining $P$ observations. The forecaster then compares
+the models' performance over the test sample, which entails
+constructing two sequences of forecasts with a fixed-window
+estimation strategy,
+\begin{equation*}
+\hat y_{i,t+\h} = x_{it}'\hat{\theta}_{it}, \qquad \text{for } i=1,2;
+\ t = R+1,\dots,T-h,
+\end{equation*}
+where
+\begin{equation*}
+  \bh{it} = \Big(\sum_{s=1}^{R-\h} x_{is}x_{is}'\Big)^{-1} \sum_{s=1}^{R-\h}
+  x_{is} y_{s+\h}, \qquad
+  \text{for } i=1,2;\ t = R+1,\dots, T - \h.\footnote{%
+    It may not be clear why we are using the index $t$ in $\bh{it}$,
+    since $\bh{it} = \bh{iR}$ almost surely for all $t \leq T-h$.
+    But $\bh{it}$ will be defined for $t > T-\h$
+    soon and will not equal $\bh{iR}$ for those values of $t$.} %
+\end{equation*}
+
+The models are then compared by their forecast performance over the test
+sample. There are many statistics that have been considered in the
+literature, but we focus on perhaps the most natural, the DMW \oost\
+test \citep{DiM:95,Wes:96}.\footnote{%
+  The core insights of our paper apply to other OOS statistics as
+  well.} %
+This statistic is based on
+the difference in the models' loss over the test sample, $\oosA$,
+defined as
+\begin{equation*}
+  \oosA \equiv P^{-1} \oosSum{t}{1} D_t
+\end{equation*}
+where
+\begin{equation*}
+  D_t = L(y_{t+\h} - x_{1t}'\bh{1t}) - L(y_{t+\h} - x_{2t}'\bh{2t}),
+\end{equation*}
+and $L$ is a known loss function. The \oost\ test is defined as
+$\sqrt{P} \oosA / \sh$, where $\sh^2$ is an estimator of the
+asymptotic variance of $\oosA$. (Possibly a Heteroskedasticity- and
+Autocorrelation-Consistent, or HAC, estimator.)
+
+Most theoretical research on these statistics, such as \citet{DiM:95}, \citet{Wes:96},
+and \cite{Mcc:07}, has focused on using the \oost\ statistic to test
+hypotheses about the pseudotrue values $\theta_1$ and $\theta_2$.  In
+particular, that research focuses on testing the null hypothesis that
+\begin{equation*}
+  \E L(y_{t+\h} - x_{1t}'\theta_{1}) = \E L(y_{t+\h} - x_{2t}'\theta_{2}).
+\end{equation*}
+But the population quantities in this equation do not determine which
+model is more accurate in practice. The models'
+accuracy will also depend on the specific estimates of $\theta_1$ and
+$\theta_2$ used to produce the forecasts.
+
+When the forecaster will use one of the models to make a number of
+predictions (call it $Q$) in the future, the quantity of interest
+becomes
+\begin{equation*}
+  \E_T \oosB = Q^{-1} \sum_{t=T+1}^{T+Q} \E_T D_t,
+\end{equation*}
+where $D_t$ is defined as before,
+\begin{equation*}
+  D_t = L(y_{t+\h} - x_{1t}'\bh{1t}) - L(y_{t+\h} - x_{2t}'\bh{2t}),
+\end{equation*}
+but now uses the full-sample estimates of the models' parameters,
+\begin{equation*}
+  \bh{it} = \Big(\sum_{s=1}^{T-\h} x_{is}x_{is}'\Big)^{-1} \sum_{s=1}^{T-\h}
+  x_{is} y_{s+\h}, \qquad \text{for } i=1,2;\ t = T+1,\dots, T + Q.
+\end{equation*}
+If $\E_T \oosB$ is positive, the second model is expected to forecast
+better than the first over the next $Q$ periods, and if $\E_T \oosB$
+is negative then the first model is better. We use a conditional
+expectation because the coefficient estimates in $\oosB$ are
+stochastic but known in period $T$, and their values will determine
+the performance of the two models.
+
+Under conventional fixed-$K$ asymptotic theory, $\E_T \oosB$ would
+converge in probability to the difference in the expected loss
+associated with the pseudotrue models,\footnote{%
+  This statement is subject to the usual assumptions: some form of
+  stationarity, bounded moments, and weak dependence.} %
+\begin{equation}\label{eq:22}
+  \E L(y_{t+\h} - x_{1t}'\theta_{1}) - \E L(y_{t+\h} - x_{2t}'\theta_{2}).
+\end{equation}
+But if $K_2$ increases with $T$ these quantities can have different
+limits. For a simple example, assume squared-error loss, let $x_{1,t}
+= 1$ for all $t$, and let $(y_{t+\h},x_{2,t})$ be i.i.d. $N(0,
+\Sigma)$.  Then the difference between $\E_T \oosB$ and
+the in quantity~\eqref{eq:22} is
+\begin{align*}
+  \E_T \oosB - \big(\E L(y_{t+\h} - x_{1t}'\theta_{1}&) - \E L(y_{t+\h} - x_{2t}'\theta_{2})\big) \\
+  &= \big(\E_T (y_{T+\h+1} - \bh{1,T})^2 -
+     \E_T (y_{T+\h+1} - x_{T+1}'\bh{2,T})^2\big) \\
+     &\quad - \big(\E y_{T+\h+1}^2 - \E (y_{T+\h+1} - x_{T+1}'\theta_2)^2 \big)\\
+  &= (\bh{2,t} - \theta_2)' \var(x_{2,t})\, (\bh{2,t} - \theta_2) + o_p(1).
+\end{align*}
+This last term has expectation equal to $\var(y_T) \frac{K_2}{T - K_2 - 1}$ and
+would converge to zero in probability if $K_2$ were fixed, but does not when $\lim
+K_2 / T > 0$. In Section~\ref{sec:oostheory} we show that the \oost\
+statistic can estimate $\E_T \oosB$ under our increasing $K$
+asymptotics and does not estimate the expected loss associated with
+the pseudotrue coefficients.
+
+The conditional expectation $\E_T \oosB$ has been studied heavily in
+cross-sectional settings with independent observations. In such a
+setting, $\E_T \oosB$ is equal to the difference in the models'
+\emph{generalization error}, which has been used widely as a measure
+of model accuracy in the machine
+learning literature \citep[see][for further discussion]{HTF:08}.
+Moreover, with i.i.d. observations, the expectation of $\E_T \oosB$
+equals \citepos{Aka:69} Final Prediction Error (FPE). Both
+generalization error and FPE are defined by a model's
+performance on a new, independent, data set, but, for lack of a better
+term, we will call $\E_T \oosB$ the ``difference in generalization error''
+for the rest of the paper with hopefully no risk of confusion.
+
+Finally, define the following notation.  The $l_v$-norm for vectors in
+$\Re^p$ (with $p$ arbitrary) is denoted $\lvert \cdot \rvert_v$, and
+the $L_v$-norm for $L_v$-integrable random variables is $\lVert \cdot
+\rVert_v$.  The functions $\eigen_i(\cdot)$ take a square-matrix
+argument and return its $i$th eigenvalue (with $\eigen_{i}(A) \leq
+\eigen_{i+1}(A)$ for any matrix $A$).  All limits are taken as $T \to
+\infty$ unless stated otherwise.
+
+\subsection{Assumptions}
+\label{sec:asmp}
+
+The next conditions are assumed to hold throughout the paper.  The first
+assumption controls the dependence of the underlying random array.
+The second lays out the details of our asymptotic approximation.
+The third assumption controls the
+smoothness of the loss function and bounds the moments of the
+difference in the models' performance; the fourth assumption describes
+the behavior of the estimation and test windows.  And the last
+assumption describes the kernel used to estimate the OOS average's
+asymptotic variance.
+
+\begin{asmp}\label{asmp-1}
+  The random array $\{y_t,x_t\}$ is strictly stationary and absolutely regular
+  with coefficients $\beta_j$ of size $-\rho/(\rho-2)$; $\rho$ is
+  greater than two and discussed further in Assumption \ref{asmp-3}.
+\end{asmp}
+
+This assumption is a standard condition on the dependence of the
+underlying stochastic array. The only novelty is that we use
+absolute regularity instead of strong or uniform mixing as our
+weak dependence condition; absolute regularity admits a particular
+coupling argument, \emph{Berbee's Lemma} \citep[reproduced in this
+paper as Lemma A.1 for reference]{Ber:79} that is
+unavailable for strong mixing sequences. Absolute regularity
+implies uniform mixing but is more restrictive than strong mixing,
+so this assumption is not unduly strong.
+For a detailed discussion of these weak dependence conditions,
+please see \citet{Dav:94} or \citet{Dou:94}.
+
+Our strict stationarity assumption is also somewhat stronger than is
+typically used; \citet{Wes:96} and \citet{Mcc:07}, for example,
+present results assuming covariance stationarity of the loss
+associated with the pseudotrue models. We need to make a stronger
+assumption because we will need to prove asymptotic results when the
+$\bh{it}$ remain random---so we would need covariance stationarity to
+hold for almost all estimates of $\theta_i$ and not just for the
+pseudotrue value. The only way to guarantee that condition is to
+assume strict stationarity for the underlying stochastic processes.
+
+The next assumption describes our asymptotic experiment.
+\begin{asmp}\label{asmp-2}
+  The number of regressors for each model, $K_1$ and $K_2$, are less
+  than $R$ and $(K_2-K_0)/T$ is uniformly positive;
+  $K_0$ is the number of regressors shared by the two models ($(K_1 - K_0)/T$
+  may be uniformly positive as well, but is not required to be).
+
+  The variance of $y_{t+\h}$ given $\mathcal{F}_t$ is uniformly
+  positive and finite and all of the eigenvalues of the covariance
+  matrix of $x_t$ are uniformly positive and finite as well.
+  Moreover,
+  \begin{equation}
+    \eigen_{\max}(X_{iS}'X_{iS}) = O_{L_3}(S),
+  \end{equation}
+  \begin{equation}
+    \eigen_{\max}((X_{iS}'X_{iS})^{-1}) = O_{L_3}(1/S),
+  \end{equation}
+  \begin{multline}\label{eq:28}
+    \eigen_{\max}\Bigg(\E\Big(
+    \sum_{s,t=U}^{V-\h} \e_{i,s+\h} \e_{i,t+\h} x_{is}x_{it}'
+    \mBig
+    x_{i1},\dots,x_{i,U-1};
+    \sum_{s=U}^{V-\h} x_{is} x_{is}';
+    x_{i,V-\h+1},\dots,x_{i,T-\h}
+    \Big)\Bigg) \\
+    = O_{L_3}(\max(V-U, K_i)),
+  \end{multline}
+  and
+  \begin{multline}\label{eq:8}
+    \tr \E\Big(
+    \sum_{s,t=U}^{V-\h} \e_{i,s+\h} \e_{i,t+\h} x_{is}x_{it}'
+    \mBig
+    x_{i1},\dots,x_{i,U-1};
+    \sum_{s=U}^{V-\h} x_{is} x_{is}';
+    x_{i,V-\h+1},\dots,x_{i,T-\h}
+    \Big)\Bigg) \\
+    = O_{L_3}((V-U) \times K_i)
+  \end{multline}
+  for large enough $T$, where $S = R,\dots,T$, $1 \leq U \leq V - \h
+  \leq T - \h$, $i = 1,2$,
+  \[ X_{iS} \equiv [x_{i1} \quad \dots \quad x_{i,S-\h}]' \qquad
+  \text{and} \qquad \ep{iS} = (\e_{i,1+\h}, \dots, \e_{i,S})'.\]
+
+  Additionally, the Euclidean norms of the pseudotrue coefficients,
+  $\theta_1$ and $\theta_2$, satisfy $|\theta_1|_2 = O(1)$ and
+  $|\theta_2|_2 = O(1)$.
+\end{asmp}
+
+The assumption on $K_1$ and $K_2$ is crucial to the paper; we assume
+that the model complexity grows with $T$ fast enough to break
+consistency. This assumption is how we derive an asymptotic
+concept of ``overfit.''
+
+The assumption that $y_{t+\h}$ and $x_t$ have positive and finite
+variance is straightforward. The conditions on the eigenvalues are
+technical and control the behavior of the OLS estimator as the number
+of regressors gets large---the third and fourth assumptions are
+nonstandard but can be easily verified under, for example,
+independence. Section~\ref{sec:example} contains such an example. The
+restrictions on the pseudotrue coefficients ensure that the regression
+model doesn't dominate the variance of $y_{t+\h}$ in the limit.
+
+The next assumption establishes moment conditions for the OOS loss
+process and smoothness conditions for the loss function itself. The
+moment conditions are standard and apply to $D_t$, and the smoothness
+conditions are relatively weak.
+
+\begin{asmp}\label{asmp-3}
+  The loss function $L$ is continuous, has finite left and right
+  derivatives, and $L(0) = 0$.  There is a constant $B_L$ and a
+  function $L'$ that bounds the left and right derivative of $L$ at
+  every point such that $\|D_t\|_\rho \leq B_L$; $\|D_t^*\|_\rho \leq
+  B_L$ for all $t$, where
+  \begin{equation}
+    D_t^* = L(y^* - x_1^{*\prime}\hat\theta_{1t})
+    - L(y^* - x_2^{*\prime}\hat\theta_{2t})
+  \end{equation}
+  and $(y^*, x_1^*, x_2^*)$ equals $(y_t, x_{1t}, x_{2t})$ in
+  distribution but is independent of $\mathcal{F}_T$ ($\rho$ is defined
+  in Assumption~\ref{asmp-1}); and
+  \begin{equation}\label{eq:29}
+    \| L'(y^* - x_{i}^{*\prime} (\alpha \bh{iR} + (1-\alpha) \bh{iT})) \|_2
+    \leq B_L
+  \end{equation}
+  for any $\alpha \in [0,1]$.
+\end{asmp}
+
+The differentiability condition in Assumption~\ref{asmp-3} is weak and
+allows the loss function itself to be non-differentiable; for example,
+absolute error and many asymmetric loss functions satisfy this
+assumption. The assumption makes use of both $(y_{t+\h}, x_{1t},
+x_{2t})$ and $(y^*, x_1^*, x_2^*)$ because the period $t$ observations
+can be dependent on $\bh{iT}$ in complicated ways. When the underlying
+observations are independent these assumptions can simplify
+considerably.
+
+The next assumption controls the growth of the test and
+training samples.
+\begin{asmp} \label{asmp-4} (a) $P, R, Q \to\infty$ as $T \to
+  \infty$. (b) $P^2/T \to 0$ and $P/Q \to 0$ as $T \to \infty$.
+\end{asmp}
+
+The requirements that $P$ and $R$ grow with $T$ are common. Parts of
+the assumption are new, in particular the requirement that $P^2/T \to
+0$.  See Lemma~\ref{res-convergence} for a discussion of its
+implications.  In practical terms, this assumption requires that the
+test sample be large and that the training sample be much larger, by
+enough that including or excluding the test sample does not affect the
+estimates of $\theta_1$ or $\theta_2$ very much.
+
+A final assumption restricts the class of variance estimators we will
+consider.  We use the same class of estimators studied by
+\citet{JoD:00} (their class $\mathcal{K}$); see
+their paper for further discussion.
+
+\begin{asmp}
+  \label{asmp-5} $W$ is a kernel from
+$\Re$ to $[-1,1]$ such that $W(0) = 1$, $W(x) = W(-x)$ for all $x$,
+\begin{equation}
+  \int_{-\infty}^{\infty} \lvert W(x) \rvert dx < \infty, \quad
+  \int_{-\infty}^{\infty} \lvert \psi(x) \rvert dx < \infty
+\end{equation}
+with
+\begin{equation}
+  \psi(x) = \frac1{\sqrt{2\pi}} \int_{-\infty}^{\infty} W(z) e^{ixz}dz,
+\end{equation}
+and $W(\cdot)$ is continuous at zero and all but a finite number of
+points.
+\end{asmp}
+
+These assumptions are broadly similar to those existing in the
+literature, with some differences in our assumptions relating the
+estimated coefficients to future values of the DGP.
+Section~\ref{sec:example} contains an extended example that shows how
+these assumptions are satisfied in a simple setting.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

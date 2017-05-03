@@ -1,0 +1,266 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Consider two sequences of length $P$ of prediction errors, the result
+of forecasting the same variable with two different estimated models.
+Both models are estimated with $R$ observations, collectively called
+the {\em estimation window}, and are used to forecast an additional
+$P$ observations, called the {\em test sample}.  There are $T$
+observations in all, and $R+P=T$.  This paper introduces a new limit
+theory for statistics constructed from these prediction errors
+designed to approximate the behavior of the statistics when one of the
+models is overfit.  In doing so, we provide a theoretical
+justification for forecasters to use out-of-sample (OOS) instead of in-sample
+comparisons: the DMW OOS test\footnote{%
+  In this paper, we will refer to the basic OOS $t$-test studied by
+  \citet{DiM:95} and \citet{Wes:96} as the DMW test.} %
+allows a forecaster to conduct
+inference about the expected future accuracy of his or her models when
+one or both is overfit.  We show analytically and through Monte Carlo simulations
+that standard full-sample test statistics can not test hypotheses
+about this performance.
+
+Our paper also shows that popular test and training sample sizes may
+give misleading results if researchers are concerned about overfit.
+We show that $P^2/T$ must converge to zero for the DMW test to give
+valid inference about the expected forecast accuracy, otherwise the
+test measures the accuracy of the estimates constructed using only the
+training sample.  In empirical research, $P$ is typically much larger
+than this.  Our simulations indicate that using large values of $P$
+with the DMW test gives undersized tests with low power, so this
+practice may favor simple benchmark models too much.  Existing
+corrections, proposed by \citet{ClM:01,ClM:05}, \citet{Mcc:07} and
+\citet{ClW:06,ClW:07}, seem to overcorrect for this problem, though, and reject
+too often when the benchmark model is more accurate.
+
+Although OOS comparisons have been popular in Macroeconomics and
+Finance since \citepos{MeR:83} seminal study of exchange rate models,
+it has been unclear from a theoretical perspective whether or not the
+statistics are useful.  Empirical researchers often cite ``overfit''
+or ``instability'' as reasons for using OOS comparisons, as in
+\citet{StW:03}, but neither term is precisely defined or formalized.
+Compounding this problem, the asymptotic distributions of these
+statistics are derived under conditions that rule out either
+instability or overfit and allow a researcher to use a conventional
+in-sample comparison---a variation of the $F$-test, for example.  As
+\citet{InK:04} argue, the statistics themselves are designed to test
+hypotheses that can be tested by these in-sample statistics.  For
+example, \citet{DiM:95} and \citet{Wes:96} derive the limiting
+distributions of many popular OOS test statistics under conditions
+that would justify these full-sample tests.  Much
+of the subsequent research by \citet{Mcc:00, Mcc:07}, \citet{CCS:01},
+\citet{ClM:01,ClM:05}, \citet{CoS:02,CoS:04}, \citet{ClW:06,ClW:07},
+\citet{Ana:07}, and others relaxes several of Diebold and Mariano's
+and West's assumptions, but maintains the stationarity and dependence
+conditions that permit in-sample comparisons \citep[see][for a
+review of this literature]{Wes:06}.\footnote{%
+  Like us, \citet{Ana:07} allows the number of regressors to increase
+  with $T$.  But in that paper, the number of regressors increases
+  slowly enough that the OLS coefficients are consistent and
+  asymptotically normal.} %
+\citet{GiW:06} and
+\citet{GiR:09, GiR:10} are exceptions.  Instead of focusing on
+hypotheses that can be tested by in-sample comparisons, \citet{GiW:06}
+derive an OOS test for the null hypothesis that the difference
+between two models' OOS forecasting performance is unpredictable, a
+martingale difference sequence (MDS); \citet{GiR:09} test whether the OOS
+forecasting performance of a model suffers from a breakdown relative
+to its in-sample performance; and \citet{GiR:10} test whether the
+forecasting performance is stable. However, those papers focus on a
+particular OOS estimation strategy and do not address why OOS
+comparisons might be useful as a general strategy.
+
+Since in-sample and OOS statistics require similar assumptions and
+test similar hypotheses, one might expect that they would give similar
+results.  They do not.  In-sample analyses tend to support more
+complicated theoretical models and OOS analyses support simple
+benchmarks, as seen in \citet{MeR:83}, \citet{StW:03}, and
+\citet{GoW:08}.  Since these different approaches strongly influence
+the outcome of research, it is important to know when each is
+appropriate.  The explanations in favor of OOS comparisons claim
+that they should be more robust to unmodeled instability
+\citep{ClM:05,GiW:06,GiR:09,GiR:10} or to overfit
+\citep{Mcc:98,Cla:04}.  Both explanations presume that the in-sample
+comparison is invalid and the OOS comparisons are more reliable.  Of
+course, as \citet{InK:04,InK:06} point out, both in-sample and OOS
+methods could be valid, but the OOS methods could have lower power.
+
+In this paper, we study the ``overfit'' possibility and leave
+``instability'' to future research. This paper uses dimension
+asymptotics to study the behavior of OOS comparisons when at least
+one of the models is overfit---the number of its regressors
+increases with the number of observations so that their ratio remains
+positive.  Although overfit is sometimes used to describe the
+situation where a forecaster chooses from many different models,
+i.e. \emph{data-mining} or \emph{data-snooping}, we view these as
+separate issues.  Procedures that account for the presence of many
+models have been, and are continuing to be, developed \citep[see, for
+example,][]{Whi:00,Han:05,RoW:05,HHK:10,ClM:12b}, but it is unclear
+whether those procedures should themselves use in-sample or OOS
+comparisons.  Understanding the difference between in-sample and OOS
+comparisons in the context of a simple comparison between two models
+is necessary before resolving any new issues that arise with multiple
+comparisons. Moreover, the empirical research that motivates
+this paper uses \emph{pseudo} OOS comparisons and not
+true OOS comparisons.  Even if a true OOS comparison
+could account for some forms of data-snooping better than
+\citepos{Whi:00} BRC or its extensions, in-sample and pseudo
+OOS comparisons would both be affected by the data-snooping, a
+point also made by \citet{InK:04}.
+
+We focus on linear regression models estimated with a fixed window
+for simplicity, but our basic conclusions should be true for other
+models and estimation strategies as well.  Under this
+asymptotic theory, where the number of regressors $K$ increases with $T$
+so that the limit of $K/T$ is positive and less than one,
+the OLS coefficient estimator is no longer
+consistent or asymptotically normal \citep{Hub:73} and has positive
+variance in the limit.  We show that, even so, the usual OOS average
+is asymptotically normal and can consistently estimate the difference
+between the models' generalization error, the expected loss in the
+future conditional on the data available in period
+$T$.\footnote{%
+  See, for example, \citet{HTF:08} for a discussion of generalization
+  error.} %
+Under these asymptotics, the generalization
+error does not converge to the expected performance of the pseudotrue
+models, so existing in-sample and OOS comparisons measure different
+quantities and should be expected to give different results for
+reasons beyond simple size and power comparisons.  Under our limit theory,
+the model that is closer to the true DGP in population can forecast
+worse.  In such a situation, a standard in-sample comparison would
+correctly reject the null hypothesis that the benchmark is true, and
+an OOS comparison would correctly fail to reject the null that the
+benchmark is more accurate.\footnote{%
+  In a pair of papers similar to ours, \citet{ClM:12,ClM:12b} study
+  in-sample and OOS tests that the larger model has nonzero
+  coefficients that are too close to zero to expect the model to
+  forecast more accurately.  Like this paper, they argue that the
+  larger model can be true but less accurate.  However, they focus on
+  an aspect of the DGP that makes this phenomenon likely, while we
+  focus on the coefficient estimates that produce less accurate
+  forecasts.  Moreover, the implications of our asymptotic theories
+  are different and their papers do not provide reasons to do OOS
+  comparisons.} %
+Also note that, in this situation, a model that performs well
+in-sample can perform badly out-of-sample even if there are no
+structural breaks or other forms of instability.  Researchers
+have argued that a breakdown of in-sample forecasting ability
+indicates a structural break (see \citealp{BoH:99}, and
+\citealp{StW:03}, among others), but we show that this breakdown
+can be caused by overfit as well.
+
+It is important to realize that we are not \emph{advocating} linear
+regression for highly overparametrized models. If $K$ is very large
+relative to $T$, researchers will often want to use some form of
+shrinkage forecast, for example the LASSO \citep{Tib:96} or a factor
+model \citep{StW:02,BaN:02}. Our main focus is practical settings
+where $K$ is \emph{moderately} large and it is not clear whether
+overfit will dominate the results. In these settings it is
+crucial to understand the behavior of different evaluation criteria
+when $K$ is large, in case overfit does turn out to be a concern, and to have reliable
+methods for estimating these overfit models' performance. This is the goal of
+this paper.
+
+Our theoretical results partially justify OOS comparisons when
+researchers want to
+choose a model for forecasting.  Although there has been little
+emphasis on hypothesis testing in this setting, testing is usually
+appropriate: there is usually a familiar benchmark model in place, and
+the cost of incorrectly abandoning the benchmark for a less accurate
+alternative model is higher than the cost of incorrectly failing to
+switch to a more accurate alternative.  We show that the DMW test
+lets the forecaster control the probability of the first error, just
+as with conventional hypothesis testing.
+
+But we also identify new practical limitations for applying the DMW
+test to overfit models.
+Since the models' coefficients are imprecisely estimated in the limit,
+the test sample must be small enough that the model estimated over the
+training sample is similar to the one that will be estimated over the
+full sample.  In particular, $P/T \to 0$ is required for consistent
+estimation of the difference in the two models' performance,
+and $P^2/T \to 0$ is required for valid confidence
+intervals and inference.  For larger $P$, the OOS comparisons remain
+asymptotically normal, but are centered on the forecasting performance
+associated with the period $R$ estimates.  In practice, researchers
+typically use large values of $P$, so these studies may be too
+pessimistic about their models' future accuracy if they use the DMW
+test.  Section~\ref{sec:oostheory} lays out the asymptotic behavior of
+the DMW test under this limit theory.
+
+Popular in-sample tests and model selection criteria, like the Wald
+test and the AIC, do not help forecasters in this setting. We show
+that these statistics do not select the more accurate model when
+choosing between overfit models. For many DGPs the Wald test
+will choose the larger model over a small benchmark
+with probability much greater than its nominal size, regardless of
+which model is more accurate, and the AIC behaves similarly. The BIC,
+however, chooses the benchmark model with probability approaching one
+even when the \emph{alternative} model is more accurate.\footnote{%
+  Our result holds for a broad class of full-sample statistics, but
+  there may be other potential statistics that mimic the OOS test and
+  remain valid. Exploring such statistics is left for future
+  research.} %
+This result holds even though modifications of the $F$-test are valid
+under this asymptotic theory, as shown by \citet{BoB:95},
+\citet{AkA:00}, \citet{AkP:04}, \citet{Cal:11c}, and \citet{Ana:12},
+among others.\footnote{%
+  Also see \citet{Efr:86,Efr:04} for a discussion of naive in-sample
+  loss comparisons.} %
+Moreover, under this asymptotic theory, many recent OOS test
+statistics, such as those derived by \cite{ClM:01,ClM:05},
+\citet{Mcc:07}, and \citet{ClW:06,ClW:07} should have the same
+problems as in-sample tests.\footnote{%
+  Our theoretical results apply directly to \citepos{Mcc:07} OOS
+  $t$-test, since it simply proposes more liberal critical values for
+  the same test statistic that we study.  Since \citet{ClW:06,ClW:07}
+  use a finite length estimation window, our asymptotics are
+  incompatible with theirs and prevent us from studying their test
+  directly, as well as \citepos{GiW:06} and other tests based on
+  \citepos{GiW:06} asymptotics.  But \clws\ test can be viewed as a
+  stochastic adjustment to the critical values of the usual \oost\
+  test, so our conclusions should apply informally as well.
+  Specifically, we show that the DMW test rejects with probability
+  equal to nominal size when the estimated benchmark model is expected
+  to be more accurate, so more liberal critical values result in
+  overrejection.} %
+These tests are also designed to reject the benchmark when the
+alternative model is true, and so they may reject too often when the
+benchmark is misspecified but more accurate.  Obviously, since the
+distribution of these statistics converges to the normal when $P/T \to
+0$ (with the number of regressors fixed), these statistics behave like
+the DMW test when $P$ is small, but should overreject the benchmark
+when $P$ is large. Section~\ref{sec:insample} presents our theoretical
+results for full-sample statistics and Section~\ref{sec:mc} presents
+Monte Carlo evidence to support these claims.
+
+Finally, this paper introduces a new method of proof for OOS
+statistics.  We use a coupling argument (Berbee's Lemma, 1979) to show
+that sequences of OOS loss behave like mixingales when the
+underlying series are absolutely regular, even if the forecasts depend
+on non-convergent estimators.  Moreover, we also show that transformations of these
+processes behave like mixingales after they are appropriately recentered, so
+many arguments used to prove asymptotic
+results for Near Epoch Dependent (NED) functions of mixing processes
+can be used for these OOS processes with only slight modification.
+
+The rest of the paper proceeds as follows.
+Section~\ref{sec:assumptions} introduces our notation and assumptions.
+Section~\ref{sec:theory} gives the main theoretical results for the
+DMW OOS test, shows that standard in-sample tests reject the
+benchmark model too often when it is misspecified but more accurate than the
+alternative, and shows that standard model selection methods can run
+into similar problems. Section~\ref{sec:theory} also presents an
+example DGP that illustrates these results. Section~\ref{sec:mc}
+presents a Monte Carlo study supporting our theoretical results.
+Section~\ref{sec:empirics} applies the OOS statistic to
+\citepos{GoW:08} dataset for equity premium prediction, and
+Section~\ref{sec:conclusion} concludes.  Proofs and supporting results
+are listed in the Appendix.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

@@ -1,0 +1,44 @@
+\markright{}
+\tryinput{floats/mc-ftest.tex}
+
+\begin{table}[tb]
+  \begin{tabularx}{\linewidth}{XX}
+    \toprule
+    Category & Variable \\
+    \midrule
+    Stock market variables
+    & Dividend to price ratio (log) \\
+    & Earnings to price ratio (log) \\
+    & Stock market variance \\
+    & Book to market ratio \\
+    & Net equity expansion \\
+    & Percent equity issuing \\\\
+    Interest rate variables
+    & Treasury Bill rate (3 month) \\
+    & Long term yield \\
+    & Long term rate \\
+    & Default return spread \\
+    & Default yield spread \\
+    & Inflation rate \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Variables used to predict the equity premium
+    (Section~\ref{sec:empirics}).
+    Please see Goyal and Welch's original paper \citep{GoW:08}
+    for a detailed description of each variable.}
+  \label{tab:equity}
+\end{table}
+
+\tryinput{floats/empirics-insample.tex}
+\tryinput{floats/empirics-insample-tuned.tex}
+% These macros create tables. They are defined in
+% floats/empirics-insample.tex and possibly overwritten in the next
+% file.
+\insamplecoefs
+\insampletests
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

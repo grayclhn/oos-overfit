@@ -1,0 +1,113 @@
+\subsection{Proof of Lemma \ref{res-convergence}}
+\newcommand{\resConvgRHS}[1]{\ensuremath{\E(L(y^* - x_1^{*\prime}\bh{1#1}) - L(y^{*} -
+x_2^{*\prime}\bh{2#1}) \mid \bh{#1})}}
+\newcommand{\resConvgEstDiff}[1]{\ensuremath{\E(L(y^{*} -
+    x_{#1}^{*\prime}\bh{#1R}) \mid \bh{R}) -
+\E(L(y^{*} - x_{#1}^{*\prime}\bh{#1T}) \mid \bh{T})}}
+\newcommand{\resConvgEstDiffRV}[1]{\ensuremath{L(y^{*} -
+    x_{#1}^{*\prime}\bh{#1R}) - L(y^{*} - x_{#1}^{*\prime}\bh{#1T})}}
+
+Equation~\eqref{eq:7} holds if we show
+\begin{gather}
+\E_R \oosA = \resConvgRHS{R} + o_p(P^{-1/2}),\label{eq:18}\\
+\E_T \oosB = \resConvgRHS{T} + o_p(Q^{-1/2}),\label{eq:19}
+\intertext{and}
+\resConvgEstDiff{i} = O_p(\sqrt{P/T}),\label{eq:20}
+\end{gather}
+where $\hat\theta_R = (\hat\theta_{1R}, \hat\theta_{2R})$,
+$\hat\theta_T = (\hat\theta_{1T}, \hat\theta_{2T})$, and $y^{*}$,
+$x_1^{*}$ and $x_2^{*}$ are random variables drawn from the joint
+distribution of $(y_{t+\h},x_{1t},x_{2t})$ independently of
+$\mathcal{F}_T$.
+
+\begin{proof}[Proof of~\eqref{eq:18} and~\eqref{eq:19}]
+For~\eqref{eq:18}, define $D_t^*$ for each $t=R+1,R+2,\dots,T-h$ so
+that
+\begin{equation*}
+  \| D_t^* - D_t \|_2 \leq 2^{(1+\rho)/\rho} B_L \beta_{t-R}^{(\rho-2)/2\rho}
+\end{equation*}
+and
+\begin{equation*}
+  \E_R D_t^* = \E(L(y^* - x_1^{*\prime}\hat\theta_{1R}) -
+  L(y^* - x_2^{*\prime}\hat\theta_{2R}) \mid \hat\theta_R) \qquad a.s.
+\end{equation*}
+Lemma~\ref{lem-basic-coupling} ensures that these $D_t^*$ exist.
+Now,
+\begin{align*}
+  \Big\lVert \E_R \oosA - \E\Big(P^{-1} \sum_{t=R+1}^{T-h} D_t^* \mid
+  \hat\theta_R\Big) \Big\rVert_2
+  &= \Big\lVert \E_R\Big( \oosA - P^{-1} \sum_{t=R+1}^{T-h} D_t^*
+  \Big) \Big\rVert_2 \\
+  &\leq P^{-1} \sum_{t=R+1}^{T-h} \lVert D_t - D_t^* \rVert_2\\
+  &= O(P^{-1}) \sum_{t=R+1}^{T-h} \beta_{t-R}^{(\rho-2)/2\rho}
+\end{align*}
+and this last term is $o(P^{-1/2})$ by assumption.
+Essentially the same argument proves~\eqref{eq:19} as well.
+\end{proof}
+
+\begin{proof}[Proof of~\eqref{eq:20}]
+Assumption~\ref{asmp-3} and the definition of the OLS estimator
+ensure that
+\begin{align*}
+  \|L(y^{*} -  x_i^{*\prime} \bh{iR}) - L(y^{*} - x_i^{*\prime} \bh{iT}) \|_1
+  &\leq B_{L} \| x_i^{*\prime} (\bh{iR} - \bh{iT}) \|_2 \\
+  &\leq B_{L} \, \| x_i^{*\prime} [(X_{iT}'X_{iT})^{-1} -
+  (X_{iR}'X_{iR})^{-1}] X_{iR}' \eb_{iR} \|_2 \\
+  &\quad+ B_L \, \| x_i^{*\prime}
+  (X_{iT}'X_{iT})^{-1}[X_{iT}'\eb_{iT} - X_{iR}
+  \eb_{iR} ] \|_2 .
+\end{align*}
+
+To simplify notation, define $V = (X_{iT}'X_{iT})^{-1} -
+(X_{iR}'X_{iR})^{-1}$ and $W = X_{iR}'\eb_{iR} \eb_{iR}'X_{iR}$. The
+first term in the upper bound satisfies
+\begin{align*}
+  \| x_i^{*\prime} V X_{iR}' \eb_{iR} \|_2^2
+  &\leq \eigen_{K_i}(\E x_i^* x_i^{*\prime}) \cdot \E \tr\big( V^2 W \big) \\
+  &= O(1) \cdot \E \tr\{ V^2 \E(W \mid
+  X_{iR}'X_{iR}, x_{i,R-\h+1} x_{i,R-\h+1}',\dots, x_{i,T-\h} x_{i,T-\h}')\}
+\end{align*}
+by assumption. Observe that
+\begin{multline*}
+  \E \tr\{ V^2 \E(W \mid X_{iR}'X_{iR}, x_{i,R-\h+1} x_{i,R-\h+1}',\dots, x_{i,T-\h} x_{i,T-\h}')\}
+  \\ \leq
+  \Big\rVert \sum_{i=1}^{K_i} \eigen_i^2 \big(V\big) \Big\rVert_{3/2}
+  \big\rVert \eigen_{K_i}(\E(W \mid
+  X_{iR}'X_{iR}, x_{i,R-\h+1} x_{i,R-\h+1}',\dots, x_{i,T-\h} x_{i,T-\h}')) \big\rVert_3.
+\end{multline*}
+The second term in this product is $O(R)$ by
+Assumption~\ref{asmp-2}. To bound the first term, note that
+$(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}$ has rank $P$ and
+each of its nonzero eigenvalues is bounded in absolute value by the
+eigenvalues of $(X_{iR}'X_{iR})^{-1}$. The eigenvalues of
+$(X_{iR}'X_{iR})^{-1}$ are $O_{L_3}(1/R)$ by Assumption~\ref{asmp-2}, so
+\begin{equation*}
+  \Big\|\sum_{j=1}^{K_i}
+  \eigen_j^2(V)\Big\|_{3/2}
+  \leq \Big\|\sum_{j=K_i - P+1}^{K_i} \eigen_j^2(V) \Big\|_{3/2}
+  = O(P/R^2).
+\end{equation*}
+Consequently,
+\begin{equation*}
+  \E \tr\bigg\{[(X_{iT}'X_{iT})^{-1} - (X_{iR}'X_{iR})^{-1}]^2
+  X_{iR}'\eb_{iR} \eb_{iR}X_{iR} \bigg\} = O(P/R)
+\end{equation*}
+and so
+\begin{equation*}
+  \| x_i^{*\prime} [(X_{iT}'X_{iT})^{-1} -
+  (X_{iR}'X_{iR})^{-1}] X_{iR}' \eb_{iR} \|_2 = O(\sqrt{P/R}).
+\end{equation*}
+
+A similar argument proves that
+\begin{equation*}
+  \big\| x_i^{*\prime} (X_{iR}'X_{iR})^{-1}
+  [X_{iT}'\eb_{iT} - X_{iR} \eb_{iR} ] \big\|_2 =  O(\sqrt{P/R}),
+\end{equation*}
+completing the proof.
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

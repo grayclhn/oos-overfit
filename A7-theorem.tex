@@ -1,0 +1,45 @@
+
+
+
+\subsection{Proof of Theorem~\ref{res:insample2}}
+As in the proof of Theorem~\ref{res:insample1}, let $(\e_{t+h}, x_{t})
+\sim i.i.d.\ N(0,I)$ and let $\theta_1 = 0$. The event $\E_T \oosB
+\geq 0$ implies that
+\begin{equation*}
+  \E_T (y_{T+\h+1} - x_{1T+1}'\bh{1T})^2
+  \geq \E_T (y_{T+\h+1} - x_{2T+1}'\bh{2T})^2 \quad a.s.
+\end{equation*}
+which can be expressed as
+\begin{equation}\label{eq:2}
+  \theta_2'M_2 M_2'\theta_2 + \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T}
+  \geq (\bh{2T} - \theta_2)' M_2'M_2 (\bh{2T} - \theta_2) \quad a.s.
+\end{equation}
+$M_2 \bh{2T}$ is normally distributed conditional on $\bh{1T}$ and
+$M_1 \bh{2T}$, and is a.s. contained in the sphere defined
+by~\eqref{eq:2} conditional on $\bh{1T}$, $M_1 \bh{2T}$, and the
+event $\E_T \oosB \geq 0$.
+
+Let $\delta$ be a small arbitrary constant, define $\theta^*$ as
+\begin{gather*}
+  \theta^* = \argmax_\theta \theta' M_2' M_2 \theta \\
+  s.t.\quad \theta_2'M_2'M_2\theta_2 +  \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T} = (\theta - \theta_2)' M_2'M_2 (\theta - \theta_2)
+\end{gather*}
+($\theta^*$ is stochastic and depends on $\bh{1T}$ and $M_1 \bh{2T}$)
+and choose $c$ so that
+\begin{equation*}
+  \Pr[ \theta^{* \prime} M_2 M_2 \theta^* > c] < \delta.
+\end{equation*}
+
+Then, we have for large enough $T$
+\begin{align*}
+  \E(\Lambda \mid \E_T \oosB \geq 0) &\leq
+  \Pr[\bh{2T}'M_2'M_2\bh{2T} > c \mid \E_T \oosB \geq 0) \\
+  &\leq \delta
+\end{align*}
+Since $\delta$ is arbitrarily close to zero, this completes the proof.\qed
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

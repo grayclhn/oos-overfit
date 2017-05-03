@@ -1,0 +1,86 @@
+\subsection{Proof of Theorem \ref{res:oostest}}
+Coverage of the confidence intervals is immediate from
+Theorem~\ref{res-oost}, so we will present a proof of~\eqref{eq:23}.
+By Lemma~\ref{res-convergence}, we know that $\E_R \oosA - \E_T \oosB
+\to^p 0$, so
+\begin{equation*}
+  \Pr[\E_R \oosA \leq 0] - \Pr[\E_T \oosB \leq 0] \to 0.
+\end{equation*}
+Now we can use Lemma~\ref{lem-basic-coupling} to define $D_t^*$ as in
+the proofs of Lemma~\ref{res-mixingale} and~\ref{res-convergence} so
+that $\E_R D_t^* = \E_{t-l} D_t^*$ a.s. and
+\[
+\lVert D_t - D_t^* \rVert_2 \leq \couplingBound{l}
+\]
+and define $\oosA^* = P^{-1} \sum_{t=R+1}^{T-\h} D_t^*$. Then
+\begin{equation*}
+  \lVert \sqrt{P} \oosA - \sqrt{P} \oosA^* \rVert_2
+  \leq P^{-1/2} \sum_{t=R+1}^{T-\h} \lVert \oosA - \oosA^* \rVert_2
+  = o(1),
+\end{equation*}
+and, consequently, we have convergence in probability of the following
+vectors:
+\begin{equation*}
+  (\sqrt{P} \oosA^*/\sigma,\ \E_R \oosA) -
+  (\sqrt{P} \oosA/\sh,\ \E_T \oosB) \to^p 0,
+\end{equation*}
+where we are implicitly using consistency of $\sh^2$ for $\sigma^2$.
+More importantly, this implies convergence in distribution of these
+vectors, so
+\begin{equation*}
+  \Pr[\sqrt{P} \oosA^* / \sigma > z_\alpha
+  \text{ and } \E_R \oosA \leq 0]
+  - \Pr[\sqrt{P} \oosA / \sh > z_\alpha \text{ and }
+  \E_T \oosB \leq 0] \to 0.
+\end{equation*}
+
+For large enough $T$, both $\Pr[\E_R \oosA \leq 0]$ and $\Pr[\E_T
+\oosB \leq 0]$ are positive (the second by assumption, the first by
+convergence to the second) so (for these $T$)
+\begin{align}\label{eq:31}
+  \Pr[\sqrt{P} \oosA^* / \sigma > z_\alpha
+  \mid \E_R \oosA \leq 0] &=
+  \frac{\Pr[\sqrt{P} \oosA^* / \sigma > z_\alpha \text{ and }
+    \E_R \oosA \leq 0]}{\Pr[\E_R \oosA \leq 0]}
+\intertext{and}\label{eq:32}
+  \Pr[\sqrt{P} \oosA / \sh > z_\alpha
+  \mid \E_T \oosB \leq 0] &=
+  \frac{\Pr[\sqrt{P} \oosA / \sh > z_\alpha \text{ and }
+    \E_T \oosB \leq 0]}{\Pr[\E_T \oosB \leq 0]}
+\end{align}
+almost surely. Since the terms on the RHS of Equations~\eqref{eq:31}
+and~\eqref{eq:32} converge to the same limit in probability, we have
+\begin{equation*}
+  \Pr[\sqrt{P} \oosA / \sh > z_\alpha  \mid \E_T \oosB \leq 0]
+  - \Pr[\sqrt{P} \oosA^* / \sigma > z_\alpha \mid \E_R \oosA \leq 0]
+  \to^p 0
+\end{equation*}
+and it suffices to show that
+\begin{equation*}
+  \plim \Pr[\sqrt{P} \oosA^* / \sigma > z_\alpha \mid \E_R \oosA \leq 0]
+  \leq \alpha.
+\end{equation*}
+
+To establish this inequality, we have
+\begin{align*}
+  \Pr[\sqrt{P} \oosA^* / \sigma > z_\alpha \mid \E_R \oosA \leq 0]
+  &\leq \Pr[\sqrt{P} (\oosA^* - \E_R \oosA) / \sigma > z_\alpha
+  \mid \E_R \oosA \leq 0] \\
+  &\leq \E\big(
+  \Pr[\sqrt{P} (\oosA^* - \E_R \oosA) / \sigma > z_\alpha \mid \Fs_R]
+  \mid \E_R \oosA \leq 0\big).
+\end{align*}
+By construction,
+\begin{equation*}
+  \Pr[\sqrt{P} (\oosA^* - \E_R \oosA) / \sigma > z_\alpha \mid \Fs_R]
+  \to \alpha
+\end{equation*}
+since generated pseudo OOS observations in each $D_t^*$ are
+independent of $\Fs_R$, completing the proof.
+\qed
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

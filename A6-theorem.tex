@@ -1,0 +1,59 @@
+\subsection{Proof of Theorem~\ref{res:insample1}}
+
+Let $(\e_{t+h}, x_{t}) \sim i.i.d.\ N(0,I)$ and let $\theta_1 = 0$.
+For any $d \geq 0$, the event $\E_T \oosB = -d$ implies that
+\begin{equation*}
+  \E_T (y_{T+\h+1} - x_{1T+1}'\bh{1T})^2
+  = \E_T (y_{T+\h+1} - x_{2T+1}'\bh{2T})^2 - d \quad a.s.
+\end{equation*}
+which can be expressed as
+\begin{equation}\label{eq:34}
+  d + \theta_2'M_2' M_2 \theta_2 + \bh{1T}'\bh{1T} - \bh{2T}'M_1'M_1\bh{2T}
+  = (\bh{2T} - \theta_2)' M_2'M_2 (\bh{2T} - \theta_2) \quad a.s.
+\end{equation}
+$M_2 \bh{2T}$ is normally distributed conditional on $\bh{1T}$ and
+$M_1 \bh{2T}$, and is distributed on the surface of the sphere defined
+by~\eqref{eq:34} conditional on $\bh{1T}$, $M_1 \bh{2T}$, and the
+event $\E_T \oosB = -d$.
+
+Since $M_2 \bh{2T}$ is normal, this conditional distribution is
+invariant to reflection across the axes defined by the eigenvectors of
+its covariance matrix. So when $\theta_2$ lies outside the cylinder
+that contains the acceptance region of $\Lambda$, i.e. when
+$\theta_2'M_2' V_T M_2 \theta_2 > c$, we have\footnote{%
+  To keep the notation in these equations manageable, define the
+  information set
+  $\Gs = \sigma(\E_T \oosB \leq 0,~ \theta_2'M_2' V_T M_2 \theta_2 >
+  c)$.} %
+\begin{align*}
+  \Pr[ \bh{2T}' M_2' V_T M_2 \bh{2T} \leq c \mid \Gs]
+  &= \E\Big( \Pr[ \bh{2T}'M_2' V_T M_2 \bh{2T} \leq c \mid \Gs,~\bh{1T},~M_1 \bh{2T}] \mid \Gs \Big) \\
+  & < 1/2
+\end{align*}
+since the inner conditional probability is less than 1/2.
+
+Now let $\delta > 0$ be an arbitrary but small constant, and choose
+$\theta_2$ far enough from the origin to ensure that
+\begin{equation*}
+  \Pr[\theta_2'M_2' V_T M_2 \theta_2 \leq c] \leq \delta
+\end{equation*}
+for large enough $T$. Then
+\begin{align*}
+  \E(\Lambda \mid \E_T \oosB \leq 0) &
+  \geq \Pr[\bh{2T}' M_2' V_T M_2 \bh{2T} > c \mid \E_T \oosB \leq 0] \\
+  &= \Pr[\bh{2T}' M_2' V_T M_2 \bh{2T} > c \text{~~and~~}
+  \theta_2'M_2' V_T M_2 \theta_2 > c \mid \E_T \oosB  \leq 0] \\
+  & \quad + \Pr[\bh{2T}' V_T M_2 \bh{2T} > c \text{~~and~~ }
+  \theta_2'M_2' V_T M_2 \theta_2 \leq c \mid \E_T \oosB \leq 0].
+\end{align*}
+The second term is nonnegative by design. By conditioning on
+$\theta_2'M_2' V_T M_2 \theta_2 > c$ our earlier argument shows that
+the first term is greater than or equal to $(1 - \delta) / 2$. Since
+$\delta$ is arbitrarily small, this completes the proof.
+\qed
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

@@ -1,0 +1,65 @@
+\subsection{Proof of Lemma \ref{res-mixingale}}
+We will start by proving that $\{D_t - \E_R D_t, \Fs_t\}$ is an
+$L_2$-mixingale of size $-1/2$; $D_t$ is $\Fs_t$-measurable and so it
+suffices to prove that
+\begin{equation}\label{eq:24}
+  \| \E_{t-l} D_t  - \E_R D_t \|_2 \leq 2^{2 + 1/\rho} B_L \, \couplingBeta{l}
+\end{equation}
+for $l = 1,\dots,t-R$, since $\couplingBeta{l} = O(l^{-1/2 - \delta})$
+for some $\delta > 0$ by assumption. Fix $R$, $t$ and $l$ and use
+Lemma \ref{lem-basic-coupling} to define $D_t^*$ so that
+\[
+\E_R D_t^* = \E_{t-l} D_t^* \quad a.s.
+\]
+and
+\[
+\lVert D_t - D_t^* \rVert_2 \leq \couplingBound{l}.
+\]
+Then
+\begin{align*}
+\lVert \E_{t-l} D_t - \E_R D_t \rVert_2 & \leq
+\lVert \E_{t-l} D_t - \E_{t-l} D_t^* \rVert_2  + \lVert \E_{t-l} D_t^* - \E_R D_t \rVert_2 \\
+&\leq 2 \lVert D_t - D_t^* \rVert_2 \\
+&\leq 2^{2 + 1/\rho}\ B_L\ \couplingBeta{l}.\tag*{\qed}
+\end{align*}
+
+\noindent Asymptotic normality follows from~\eqref{eq:24} using a
+modification of \citepos{Jon:97} CLTs for mixingale and NED arrays.
+Define
+\begin{equation*}
+  Z_i = \ZDef
+\end{equation*}
+where $b_T$ is a sequence that satisfies $b_T\leq P$,
+$b_T\to\infty$, and $b_T/P\to 0$.  The same arguments used in
+\citepos{Jon:97} Theorem 1 show that
+\begin{equation*}
+   \SumOuterBlock{i} Z_i = P^{-1/2} \oosSum{s}{1} (D_t - \E_R D_t) + o_p(1).
+\end{equation*}
+and
+\begin{equation*}
+  \SumOuterBlock{i} Z_i = \SumOuterBlock{i} (Z_i - E_{R + (i-1)b_T}
+  Z_i) + o_p(1).
+\end{equation*}
+Note that $\{Z_i - E_{R + (i-1)b_T} Z_i,\mathcal{F}_{R + i b_T}\}_i$ is an
+MDS by construction, so \citepos{HaH:80} Theorem 3.2 and Corollary
+3.1 ensure that $\sigma^{-1} \SumOuterBlock{i} Z_i \to^d N(0,1) $ as
+long as
+\begin{equation*}
+  \sigma^2 - \SumOuterBlock{i} \E_R Z_i^2 \to^p 0,
+\end{equation*}
+and
+\begin{equation*}
+  \SumOuterBlock{i} \E_R Z_i^2 - \SumOuterBlock{i} \ZSqCE \to^p 0.\footnote{%
+    Note that $\sigma^2 \in \mathcal{F}_t$ for
+    all $t \geq R$, so Hall and Heyde's condition (3.21) is
+    unnecessary---see the remarks after their result.} %
+\end{equation*}
+The first equation holds as in \citet{Jon:97} (see the proof
+of his Theorem 2); the second is ensured by
+Lemma~\ref{lem:a2}. \qed
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:
