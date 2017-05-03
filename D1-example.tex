@@ -10,202 +10,125 @@ independence and these proofs continue to demonstrate the key elements
 of the main proofs. The second section presents additional Monte Carlo
 simulations.
 
-\section{An extended simple example}
+\section{Extended simple example}
 \label{sec:example}
 
-This section illustrates the previous theoretical results with a
-concrete example. Let $L(e) = e^2$ and $h = 1$. Suppose that the benchmark is
-nested in the alternative and $(x_{2t}, \e_{2,t+1}) \sim i.i.d.\
-N(0,I)$, and let $y_{t+1} = x_{2t}'\theta_2 + \e_{2,t+1}$
-be the DGP. Also assume that $K_2/T \to c_2$ and $K_1 / T \to c_1 <
-c_2$.
+Throughout this section, let the DGP and alternative model both be
+\[
+  y_{t+1} = x_{2t}'\theta_2 + \e_{2,t+1}
+\]
+with $(x_{2t}, \e_{2,t+1}) \sim i.i.d.\ N(0,I)$ and assume that this
+model nests the benchmark model. Also let $L(e) = e^2$
+and $h = 1$; assume that $K_1/T \to c_1$ and $K_2/T \to c_t$; and
+define
+\[
+  \sh^2 = (1/P) \oosSum{t}{1} (D_t - \oosA)^2.
+\]
 
-The first part of this section shows how the assumptions in
-Section~\ref{sec:asmp} are satisfied and the second part
-demonstrates asymptotic normality of the DMW \oost\ test. The third
-part explicitly shows that $\E_R \oosA$ converges to $\E_T \oosB$ only
-when the test sample is small. And the last part demonstrates that the
-$F$-test does not indicate which model will be more
-accurate in the future, even in this simple example.
+The first
+subsection shows that the DMW \oost\ test is asymptotically normal. The
+second directly shows that $\E_R \oosA$ converges to
+$\E_T \oosB$ only when the test sample is small. And the last
+subsection demonstrates that the $F$-test does not indicate which
+model will be more accurate in the future, even when its finite sample
+distribution is known.
 
-\subsection{Fulfillment of Assumptions 1--5}
+\subsection{Asymptotic normality of the OOS average (Lemma 1)}
 
-We will go through the assumptions one by one. The first is
-a condition on the dependence and moments of the process. Since the
-DGP is i.i.d. Normal, these conditions are satisfied trivially.
+This subsection proves directly that the DMW $t$-test is
+asymptotically normal and can be seen as a special case of
+Lemma~\ref{res-mixingale}. Since the underlying observations are
+independent, we can use asymptotic arguments for MDSes here instead of
+those for mixingales.  This substitution simplifies the proof
+considerably and highlights the role of the conditional expectation
+and conditional variance in this setting.  In particular, we will show
+that
+\begin{equation}
+  \sh^2 / \var_R(\sqrt{P} \oosA) \to^p 1
+\end{equation}
+and
+\begin{equation}
+  \sqrt{P} (\oosA - \E_R \oosA) / \sh \to^d N(0,1).
+\end{equation}
 
-Assumption~\ref{asmp-2} deals with the design matrix. In this example,
-we directly assume that $K_2$ and $K_1$ grow at the correct rates so
-the the assumption is satisfied. The variance of $y_{t+1}$ given
-$\Fs_t$ is simply the unconditional variance of $\e_{2,t+1}$, which is
-1; and the eigenvalues of $\E x_{2t} x_{2t}$ all equal 1 as well; and
-so they are all uniformly positive and finite as required.
-
-Assumption~\ref{asmp-2} also requires the eigenvalues of $S^{-1}
-X_{iS}'X_{iS}$ to be positive and finite, and for the largest
-eigenvalue of $S^{-1} X_{iS}'X_{iS}$ to be bounded in $L_3$.  These
-results follow from developments in random matrix theory.
-\citet{Gem:80} establishes that the largest eigenvalue of
-$X_{iS}'X_{iS}$ is of order $S + K_i$ and \citet{Joh:01} shows that it
-converges in distribution to the Tracy-Widom law of order 1
-\citep{TrW:96}, which has finite 3rd moments. \citet{Sil:85} and
-\citet{BFP:98} prove similar results for the smallest eigenvalue.
-Assumption~\ref{asmp-2} also requires the largest eigenvalue of
-$(X_{iS}'X_{iS})^{-1}$ be bounded in $L_3$; this should follow from a
-similar argument, but we are unaware of any papers that explicitly
-derive moments for this eigenvalue.
-
-For the conditional expectation of %
-$\sum_{s,t=U}^{V-1} \e_{i,t+1} \e_{i,s+1} x_{i,s} x_{i,t}'$,
-independence implies that
-\begin{equation*}
-  \E\Big(
-  \sum_{s,t=U}^{V-1} \e_{i,s+1} \e_{i,t+1} x_{is}x_{it}'
-  \mBig
-  x_{i1},\dots,x_{i,U-1};
-  \sum_{s=U}^{V-1} x_{is} x_{is}';
-  x_{i,V},\dots,x_{i,T-1}
-  \Big)
-  = \sum_{s=U}^{V-1} x_{is} x_{is}'.
-\end{equation*}
-The largest eigenvalue of this last matrix is of order $K_i + V - U$,
-as discussed, and it has at most $V - U$ nonzero eigenvalues,
-ensuring that both~\eqref{eq:28} and~\eqref{eq:8} hold.
-
-Assumption~\ref{asmp-3} restricts the loss function and the realized
-OOS loss. In this example, we have
-\begin{equation*}
-  D_t^* =^d D_t = (e_{2,t+1} + x_{2t}'\theta_2 - x_{1t}'\bh{1t})^2
-  - (e_{2,t+1} + x_{2t}'(\theta_2 - \bh{2t}))^2
-\end{equation*}
-which has bounded $\rho$th moments by construction. The loss function
-is differentiable and $L'(e) = 2 e$, so \eqref{eq:29} holds as well.
-
-Finally, Assumption~\ref{asmp-4} deals with the choice of test and
-training sample and holds automatically. And Assumption~\ref{asmp-5}
-requires the kernel of the HAC variance estimator to be continuous at
-zero; it is straightforward to construct an estimator that satisfies
-this condition. However, in this section we will use the estimator
-\begin{equation*}
-  \sh^2 = \frac{1}{P} \sum_{t=R+1}^{T-1} (D_t - \oosA)^2
-\end{equation*}
-which does not satisfy Assumption~\ref{asmp-5} but nevertheless is
-consistent for the conditional variance of $\oosA$ because the
-underlying observations are independent.
-
-\subsection{Asymptotic normality of the OOS average, Lemma 1}
-
-This section walks through Lemma 1's CLT. Since the observations in
-this example are i.i.d., we do not need to use mixingale theory to
-derive the results, but the OOS process is still affected by the
-estimation error in $\bh{1t}$ and $\bh{2t}$ and has a high degree of
-dependence. This dependence makes the OOS process an MDS, and MDS
-asymptotic theory replaces mixingale theory in this example.
-
-By construction, we have
-\begin{equation*}
+By construction,
+\begin{equation}\label{eq:3}
   D_t =
   \begin{cases}
     2 \e_{t+1} (x_{2t}'\bh{2R} - x_{1t}'\bh{1R})
     + (x_{2t}'\theta_2 - x_{1t}'\bh{1R})^2
     - (x_{2t}'\theta_2 - x_{2t}'\bh{2R})^2
-    & \text{if } t < T \\
+    & \text{if\ } t < T \\
     2 \e_{t+1} (x_{2t}'\bh{2T} - x_{1t}'\bh{1T})
     + (x_{2t}'\theta_2 - x_{1t}'\bh{1T})^2
     - (x_{2t}'\theta_2 - x_{2t}'\bh{2T})^2
-    & \text{if } t > T
+    & \text{if\ } t \geq T.
   \end{cases}
-\end{equation*}
-and so we can explicitly derive the components of
-Lemma~\ref{res-mixingale}. First,
-\begin{multline*}
-  D_t - \E_R D_t
-  = 2 \e_{t+1} (x_{2t}'\bh{2R} - x_{1t}'\bh{1R})
-  + \Big\{(x_{2t}'\theta_2 - x_{1t}'\bh{1R})^2
-          - \E_R (x_{2t}'\theta_2 - x_{1t}'\bh{1R})^2 \Big\} \\
-  - \Big\{(x_{2t}'\theta_2 - x_{2t}'\bh{2R})^2
-          - \E_R (x_{2t}'\theta_2 - x_{2t}'\bh{2R})^2 \Big\}
-\end{multline*}
-for $t < T$. Since the underlying observations are i.i.d., $\E_{t-1}
-D_t = \E_R D_t$ a.s.\ and consequently $\{D_t - \E_R D_t, \Fs_{t};
-t=R+1,\dots,T-1\}$ is an MDS.
-
-Although transformations of $D_t - \E_R D_t$ will obviously not be
-MDSes in general, it should be clear that transformations of $D_t$
-will be MDSes after subtracting their conditional mean; i.e.
+\end{equation}
+Since $(y_{t+1}, x_{2t})$ is independent of $\bh{R}$ and $\bh{t}$,
+\eqref{eq:3} ensures that
 \begin{equation*}
-  \{g(D_t) - \E_R g(D_t); \Fs_t; t = R+1,\dots,T-1\}
+  D_t - \E_{t-1} D_t = D_t - \E_R D_t
 \end{equation*}
-is an MDS as long as
-$g(D_t)$ has finite mean, but $g(D_t - \E_R D_t)$ is not. This MDS
-result holds because $x_t$ and $y_{t+1}$ are independent of $\bh{1R}$
-and $\bh{2R}$, so
-\begin{equation*}\begin{split}
-  \E_R g(D_t)
-  &= \int g\Big((x_1'\bh{1R})^2 - (x_2'\bh{2R})^2
-       + 2 y (x'\bh{2R} - x'\bh{1R})\Big) \, f(y, x) \, dx \, dy \\
-  &= \E_{t-1} g(D_t)
-\end{split}\end{equation*}
-a.s., where $f$ is the density of $(y_{t+1}, x_{2t})$ and $x_1$
-denotes the first $K_1$ elements of $x$. This result parallels our
-results for mixingales in the general case.
+almost surely and, consequently, that
+$\{D_t - \E_R D_t, \Fs_{t}; t=R+1,\dots,T-1\}$ is an MDS.
 
+Moreover, independence also ensures that
+$\{g(D_t) - \E_R g(D_t); \Fs_t; t = R+1,\dots,T-1\}$
+is an MDS for any measurable $g$ as long as
+$g(D_t)$ has finite mean.
 As a result, $\oosA$ and $(1/P) \sum_{t=R+1}^{T-1} D_t^2$ both obey
-LLNs: $\oosA \to^p \E_R \oosA$ and
+MDS LLNs: $\oosA \to^p \E_R \oosA$ and
 \begin{equation*}
-  (1/P) \sum_{t=R+1}^{T-1} D_t^2 \to^p \E_R D_T^2.
+  (1/P) \sum_{t=R+1}^{T-1} (D_t^2 - \E_R D_t^2) \to^p 0,
 \end{equation*}
-Moreover, these convergence results imply that $\sh^2 - \var_R
-\sqrt{P} \oosA \to^p 0$. And so
+implying that $\sh^2/\var_R(\sqrt{P} \oosA) \to^p 0$.
+Asymptotic normality,
 \begin{equation*}
-  \sqrt{P} \oosA/\sh \to N(0,1)
+  \sqrt{P} (\oosA - \E_R \oosA )/\sh \to N(0,1),
 \end{equation*}
-by the MDS CLT.
+holds by the MDS CLT.
 
-\subsection{Convergence of $\E_R \oosA$ to $\E_T \oosB$, Lemma 2}
+\subsection{Convergence of $\E_R \oosA$ to the generalization error}
 
-This section works through Lemma~\ref{res-convergence}. In this
-example, the difference between $\E_R \oosA$ and $\E_T \oosB$ equals
-\begin{equation*}
-  \begin{split}
-    \E_R \oosA - \E_T \oosB &= \Big\{(\bh{1R} - \theta_1)'(\bh{1R} -
-    \theta_1) -
-    (\bh{2R} - \theta_2)'(\bh{2R} - \theta_2)\Big\} \\
+This subsection directly calculates the rate of convergence for
+$\E_R \oosA - \E_T \oosB$. From \eqref{eq:3}, this difference can
+be expressed as
+\begin{align}
+    \E_R \oosA - \E_T \oosB &= \Big\{(\bh{1R} - \theta_1)'(\bh{1R} - \theta_1) -
+    (\bh{2R} - \theta_2)'(\bh{2R} - \theta_2)\Big\} \notag \\
     & \quad - \Big\{(\bh{1T} - \theta_1)'(\bh{1T} - \theta_1) -
     (\bh{2T} - \theta_2)'(\bh{2T} - \theta_2)\Big\} \\
-    &\begin{split}
-      =\ep{T}'\Big\{
-      & \tilde{X}_{1R}(X_{1R}'X_{1R})^{-2} \tilde{X}_{1R}'
-      - X_{1T}(X_{1T}'X_{1T})^{-2} X_{1T}' \\
-      & - \tilde{X}_{2R}(X_{2R}'X_{2R})^{-2} \tilde{X}_{2R}'
+    &=\ep{T}'\Big\{
+      \tilde{X}_{1R}(X_{1R}'X_{1R})^{-2} \tilde{X}_{1R}'
+      - X_{1T}(X_{1T}'X_{1T})^{-2} X_{1T}' \notag \\
+      & \quad  - \tilde{X}_{2R}(X_{2R}'X_{2R})^{-2} \tilde{X}_{2R}'
       + X_{2T}(X_{2T}'X_{2T})^{-2} X_{2T}'
-      \Big\}\ep{T}.
-    \end{split}
-  \end{split}
-\end{equation*}
-with $\tilde{X}_{iR}$ the $T \times K_i$ matrix $[X_{iR}'\ 0]'$. This
-last term is a quadratic form and the regressors and errors are
-assumed to be normal, so we can find the rate that the difference
-converges to zero in probability by calculating its first two moments.
+      \Big\}\ep{T} \label{eq:4}
+\end{align}
+with $\tilde{X}_{iR}$ the $T \times K_2$ matrix $[X_{iR}'\ 0]'$.  We
+can directly calculate the rate that the first two moments of the RHS
+of~\eqref{eq:4} converge to zero since~\eqref{eq:4} is a quadratic
+form and all of the underlying random variables are normal.
 
-The mean difference is
+The order of the expected value of this difference is
 \begin{equation*}
   \begin{split}
   \E(\E_R \oosA - \E_T \oosB)
       &=O\Big(\max_i \E \tr \big\{
         \tilde{X}_{iR}(X_{iR}'X_{iR})^{-2} \tilde{X}_{iR}
         - X_{iT}(X_{iT}'X_{iT})^{-2} X_{iT} \big\} \Big) \\
-      &=O\Big(\max_i \tr \big\{\E (X_{1R}'X_{1R})^{-1}
-         - \E (X_{1T}'X_{1T})^{-1} \big\}\Big) \\
+      &=O\Big(\max_i \tr \big\{\E (X_{iR}'X_{iR})^{-1}
+         - \E (X_{iT}'X_{iT})^{-1} \big\}\Big) \\
       &=O( K_1 P / (R-K_1)(T-K_1)) \\
-      &=O(P/T)
+      &=O(P/T).
     \end{split}
 \end{equation*}
-The first equality follows from the expectation of a quadratic form,
-the second from routine manipulations of the trace operator, and the
-third from the moments of the inverse Wishart distribution.
-
-Similarly, the variance of the difference is
+The first equality follows from well-known formulas for the
+expectation of a quadratic form, the second from routine manipulations
+of the trace operator, and the third from the moments of the inverse
+Wishart distribution.
+Similarly, the order of the variance of the difference is
 \begin{align*}
   \var(\E_R & \oosA - \E_T \oosB) \\ &=
   O\Big(\max_i \E\big[\tr((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1})\big]^2
@@ -213,64 +136,76 @@ Similarly, the variance of the difference is
   &\qquad - \big[\tr \E((X_{iR}'X_{iR})^{-1} - (X_{iT}'X_{iT})^{-1}) \big]^2 \Big)\\
   &= O(P/T)^2.
 \end{align*}
-So, in this example, $P^{1/2}(\E_R \oosA - \E_T \oosB) \to^p 0$
-if $P^3/T^2 \to 0$, which is slightly weaker than the general
-requirement that $P^2/T \to 0$.  If $\lim P^3/T^2 > 0$ the OOS average
-still obeys the MDS CLT, but it is not centered correctly at $\E_T
-\oosB$.
+Consequently, $P^{1/2}(\E_R \oosA - \E_T \oosB) \to^p 0$ if
+$P^3/T^2 \to 0$ for this DGP, which is slightly weaker than the
+general requirement for Lemma~\ref{res-convergence} that
+$P^2/T \to 0$. When this condition is violated, i.e. if
+$\lim P^3/T^2 > 0$, the results from the previous subsection continue
+to hold and the OOS average still obeys the MDS CLT. However, it is
+centered on $\E_R \oosA$ and not $\E_T \oosB$.
 
 \subsection{Behavior of the F-test}
 
-This part illustrates the behavior of full-sample statistics in our
-simple example. To simplify the presentation even more, assume that
-the full-sample design matrix is orthogonal in-sample, not just in
-population, so $X_{2T}'X_{2T} = T \cdot I_{K_2 \times K_2}$, and again
-let $M_1$ and $M_2$ be the selection matrices for the first $K_1$ and
-the last $K_2-K_1$ elements of $\theta_2$. In this example,
-\begin{equation*}
-  M_2 \bh{2T} \sim
-  N(M_2 \theta_2, (1/T) \, I_{K_2-K_1})
-\end{equation*}
-and, conditional on $\E_T \oosB = 0$, the density of $M_2 \bh{2T}$
-concentrates uniformly on the surface of the sphere centered at $M_2
-\theta_2$ and passing through the origin:
-\begin{equation*}
-  (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
-  \theta_2'M_2' M_2 \theta_2.
-\end{equation*}
-To see intuitively that it must pass through the origin, note that the
-two models will give identical forecasts when $\bh{2T} = 0$ since the
-regressors are orthogonal. (Identical forecasts obviously have the
-same MSE.)
+This subsection shows that, in this example, the F-test fails to test
+hypotheses about the generalization error.
+To further simplify the presentation, assume that the full-sample
+design matrix is orthogonal in-sample, not just in population, so
+$X_{2T}'X_{2T} = T \cdot I_{K_2 \times K_2}$, and let $M_1$ and
+$M_2$ be the selection matrices for the first $K_1$ and the last
+$K_2-K_1$ elements of $\theta_2$.
 
-This region is a cylinder in the original space, $\Re^{K_2}$.  We can
-also represent the null $\E_T \oosB \leq 0$ by conditioning on $\E_T
-\oosB = -d$ for a fixed positive constant $c$. In that case, the
-density of $M_2 \bh{2T}$ concentrates on the sphere
+Under these additional assumptions,
+$M_2 \bh{2T} \sim N(M_2 \theta_2, (1/T) \, I_{K_2-K_1})$. More
+importantly, given $\E_T \oosB = - c$ for any
+$c > -\theta_2'M_2'M_2\theta_2$, the estimator $M_2 \bh{2T}$ is
+distributed uniformly on the cylinder in $\Re^k$ defined by
 \begin{equation*}
-  (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
-  \theta_2'M_2' M_2 \theta_2 + d
+  \{\bh{2T} : (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
+  \theta_2'M_2' M_2 \theta_2 + c\},
 \end{equation*}
-which has the same center but larger radius.
+which is centered at $M_2\theta_2$. When $\E_T \oosB = 0$ this
+cylinder passes through the origin.  Values of $\bh{2T}$ that satisfy
+with the hypothesis $\E_T \oosB \leq 0$, i.e. that the smaller model
+is more accurate than the larger model, lie outside that cylinder and
+values of $\bh{2T}$ satisfying $\E_T \oosB > 0$ lie inside that
+cylinder.
 
-For the $F$-test we have, as before,
+The F statistic for testing the null hypothesis $M_2'\theta = \eta$
+can be expressed as
 \begin{equation*}
-  F = \tfrac{T}{s^2 (K_2 - K_1)} \bh{2T}' M_2' M_2 \bh{2T}.
+  F = \tfrac{T}{s^2 (K_2 - K_1)} (\bh{2T}' M_2' - \eta') (M_2 \bh{2T} - \eta)
 \end{equation*}
-We know that $\sqrt{T}(F - 1)$ is asymptotically normal since its
-numerator is Chi-squared with $K_2-K_1$ degrees of freedom and obeys a
-CLT.  The test accepts if
+and $\sqrt{T}(F - 1)$ is asymptotically normal---its numerator is
+Chi-squared with $K_2-K_1$ degrees of freedom and obeys the CLT and
+its denominator obeys the LLN.
+Consequently, this test will fail to reject the null hypothesis that
+$M_2 \theta_2 = 0$ when it satisfies the inequality
 \begin{equation}\label{eq:26}
   \tfrac{T}{s^2 (K_2 - K_1)} \bh{2T}' M_2' M_2 \bh{2T}
   \leq 1 + \delta / \sqrt{T},
 \end{equation}
 where $\delta$ is chosen to determine the size of the test. In other
-words, the test accepts if $M_2 \bh{2T}$ falls in the sphere centered
-at the origin with radius $s ((K_2 - K_1) / T)^{1/2} +
-O_p(1/\sqrt{T})$.
+words, the test fails to reject its implied null hypotheses whenever
+$M_2 \bh{2T}$ falls in the sphere centered at the origin with radius
+$s ((K_2 - K_1) / T)^{1/2} + O_p(1/\sqrt{T})$.
+
+Consequently, when $M_2\theta_2$ is in the rejection region of the
+F-test, the probability that the test will reject given
+$\E_T \oosB \leq 0$ is necessarily greater than 50\%, with the
+probability increasing as the length of $M_2\theta_2$ increases. So
+$\theta_2$ can be chosen to make the rejection probability given
+$\E_T \oosB \leq 0$ arbitrarily close to 1.
+
+Similarly, when $2 M_2\theta_2$ is in the F-test's acceptance region,
+then the acceptance region contains all of the parameter estimates
+satisfying $\E_T \oosB > 0$---i.e. all of the parameter estimates that
+would make the larger model forecast more accurately. So $\theta_2$
+can also be chosen to make the conditional rejection probability given
+$\E_T \oosB > 0$ have any value between $0$ and the nominal size of
+the test.
 
 \input{floats/circles}
-\begin{figure}
+\begin{figure}[t!]
   \centering
   \begin{tabular}{cc}
   \subfloat[]{\circlefigA{1}{2.5}{1.4}{4.5}\label{fig:circleA}} &
@@ -289,35 +224,41 @@ O_p(1/\sqrt{T})$.
 \label{fig:rreject}
 \end{figure}
 
-This is perhaps best illustrated with a picture.
-Figure~\ref{fig:rreject} plots these quantities when $K_2 - K_1 =
-2$. The circle centered at the origin plots the threshold for the
+These relationships are perhaps best illustrated with a picture.
+Figure~\ref{fig:rreject} (a) plots these quantities when $K_2 - K_1 =
+2$. The black circle centered at the origin plots the threshold for the
 $F$-test; when $M_2 \bh{iT}$ falls outside this circle, the $F$-test
-rejects. The circle centered at $M_2 \theta_2$ plots the set of points
-for which $\E_T \oosB = 0$. The shaded region in
+rejects. The black circle centered at $M_2 \theta_2$ plots the set of points
+for which $\E_T \oosB = 0$. The lighter shaded region in
 Figure~\ref{fig:rreject}~(a) plots the rejection region given $\E_T
-\oosB \leq 0$ and the shaded region in Figure~\ref{fig:rreject}~(b)
-plots the acceptance region given $\E_T \oosB \leq 0$.
+\oosB \leq 0$ and the darker shaded region in Figure~\ref{fig:rreject}~(b)
+plots the acceptance region given $\E_T \oosB \leq 0$. The dark
+gray lines in each figure represent contour lines for the sampling
+density of $M_2 \bh{2T}$ given rejection or acceptance.
 
 In the picture, the true coefficients $\theta_2$ satisfy
 \begin{equation*}
 \theta_2'M_2'M_2\theta_2 > \var(\e_t)^{1/2} ((K_2 - K_1) / T)^{1/2}
 \end{equation*}
-so the center of the conditional distribution of $\bh{2T}$ given $\E_T
-\oosB \leq 0$ is outside the acceptance region of the $F$-test. When
-this is the case, the conditional probability that $\bh{2T}$ falls in
-the rejection region is less than 1/2, since $M_2 \bh{2T}$ is
-uniformly distributed on the cylinder
-\begin{equation*}
-  (M_2 \bh{2T} - M_2 \theta_2)'(M_2 \bh{2T} - M_2 \theta_2) =
-  \theta_2'M_2' M_2 \theta_2 + d
-\end{equation*}
-for some positive $d$.
+so the center of the conditional distribution of $\bh{2T}$ given
+$\E_T \oosB \leq 0$ is outside the acceptance region of the
+$F$-test. As can be seen from the figure, the F-test has a rejection
+probability greater than 50\% when $\E_T \oosB \leq 0$ holds, since
+most of the density of $M_2 \bh{T2}$ is not close to the origin. By
+moving $M_2 \theta$ to other points outside the acceptance region of
+the F-test, we can make its rejection probability under this null
+arbitrarily close to one. Similarly, by moving $M_2 \theta_2$ to
+points inside the F-test's acceptance region, we can make its
+power to reject the hypothesis $\E_T \oosB \leq 0$ when it is
+false arbitrarily close to zero.
 
-The AIC behaves essentially the same way. For the BIC, the radius of
-the cylinder centered at the origin increases with $T$ and eventually
-encompasses the cylinder centered at $M_2 \theta_2$, so it never
-selects the alternative once $T$ is large enough.
+In summary, the F-test can not be used for inference on the models'
+forecasting performance. It does not control size for the null
+$\E_T \oosB \leq 0$ and it has arbitrarily low power to detect the
+alternative $\E_T \oosB > 0$ for some parameter values. Full-sample
+model selection statistics like the AIC and BIC, which add or discard
+covariates based on how far their coefficient estimates are from zero,
+behave similarly.
 
 %%% Local Variables:
 %%% mode: latex
